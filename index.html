@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>死亡如风，常伴吾身</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="学习随笔">
+<meta property="og:type" content="website">
+<meta property="og:title" content="死亡如风，常伴吾身">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="死亡如风，常伴吾身">
+<meta property="og:description" content="学习随笔">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="死亡如风，常伴吾身">
+<meta name="twitter:description" content="学习随笔">
+  
+    <link rel="alternate" href="/atom.xml" title="死亡如风，常伴吾身" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">死亡如风，常伴吾身</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">good good study,day day up!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-1050螺旋矩阵" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/25/1050螺旋矩阵/" class="article-date">
+  <time datetime="2018-11-25T07:45:55.000Z" itemprop="datePublished">2018-11-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/25/1050螺旋矩阵/">1050螺旋矩阵</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1050-螺旋矩阵-25"><a href="#1050-螺旋矩阵-25" class="headerlink" title="1050. 螺旋矩阵(25)"></a>1050. 螺旋矩阵(25)</h1><p>时间限制200 ms<br>内存限制64 MB<br>代码长度限制16KB<br>作者 CHEN, Yue</p>
+<p>本题要求将给定的N个正整数按非递增的顺序，填入“螺旋矩阵”。所谓“螺旋矩阵”，是指从左上角第1个格子开始，按顺时针螺旋方向填充。要求矩阵的规模为m行n列，满足条：m*n等于N；m&gt;=n；且m-n取所有可能值中的最小值。<br>输入格式：<br>输入在第1行中给出一个正整数N，第2行给出N个待填充的正整数。所有数字不超过10^4，相邻数字以空格分隔。<br>输出格式：<br>输出螺旋矩阵。每行n个数字，共m行。相邻数字以1个空格分隔，行末不得有多余空格。<br>输入样例：<br>12<br>37 76 20 98 76 42 53 95 60 81 58 93<br>输出样例：<br>98 95 93<br>42 37 81<br>53 20 76<br>58 60 76</p>
+<h4 id="解法一：难点有两个，一个算出m和n，另一个是螺旋填充。思路是：用四个变量isEast、isSouth…来记录当前行径方向，通过判断前进方向是否满足条件来转变方向。要注意的是，在判断是否可以按当前前进方向继续前进的时候，要预先往前进一位，看看这个位是否超出或者已被填充，那么就要求进位之后不能超出数二维数组范围，于是建立一个-m-2-n-2-的二维矩阵，填充的是中间m-n的部分，这样就不会出现越界情况。"><a href="#解法一：难点有两个，一个算出m和n，另一个是螺旋填充。思路是：用四个变量isEast、isSouth…来记录当前行径方向，通过判断前进方向是否满足条件来转变方向。要注意的是，在判断是否可以按当前前进方向继续前进的时候，要预先往前进一位，看看这个位是否超出或者已被填充，那么就要求进位之后不能超出数二维数组范围，于是建立一个-m-2-n-2-的二维矩阵，填充的是中间m-n的部分，这样就不会出现越界情况。" class="headerlink" title="解法一：难点有两个，一个算出m和n，另一个是螺旋填充。思路是：用四个变量isEast、isSouth…来记录当前行径方向，通过判断前进方向是否满足条件来转变方向。要注意的是，在判断是否可以按当前前进方向继续前进的时候，要预先往前进一位，看看这个位是否超出或者已被填充，那么就要求进位之后不能超出数二维数组范围，于是建立一个(m+2)*(n+2)的二维矩阵，填充的是中间m*n的部分，这样就不会出现越界情况。"></a>解法一：难点有两个，一个算出m和n，另一个是螺旋填充。思路是：用四个变量isEast、isSouth…来记录当前行径方向，通过判断前进方向是否满足条件来转变方向。要注意的是，在判断是否可以按当前前进方向继续前进的时候，要预先往前进一位，看看这个位是否超出或者已被填充，那么就要求进位之后不能超出数二维数组范围，于是建立一个(m+2)*(n+2)的二维矩阵，填充的是中间m*n的部分，这样就不会出现越界情况。</h4><hr>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123;<span class="keyword">return</span> a &gt; b;&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;num;</span><br><span class="line">    <span class="keyword">int</span> m,n;</span><br><span class="line">    <span class="keyword">double</span> d=<span class="built_in">sqrt</span>((<span class="keyword">double</span>)num);<span class="comment">//强制类型转化需给类型符加上‘()’,sqrt()参数和返回值均为double。</span></span><br><span class="line">    <span class="keyword">if</span> ((d-(<span class="keyword">int</span>)d) != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= (<span class="keyword">int</span>)d; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span> ((num % i) != <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                n = i</span><br><span class="line">                m = num / n;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> m = n = (<span class="keyword">int</span>)d;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; arr(num, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; i++)</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; arr[i];</span><br><span class="line">    sort(arr.begin(), arr.end(), cmp);</span><br><span class="line">    <span class="built_in">vector</span>&lt; <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; show(m+<span class="number">2</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n+<span class="number">2</span>, <span class="number">0</span>));   <span class="comment">//多两位，防止访问非法</span></span><br><span class="line">    <span class="keyword">int</span> i= <span class="number">1</span>, j = <span class="number">1</span>; <span class="comment">//ii行，jj列</span></span><br><span class="line">    <span class="keyword">int</span> isEast = <span class="number">1</span>, isSouth = <span class="number">0</span>, isWest = <span class="number">0</span>, isNorth = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= num; k++)&#123;</span><br><span class="line">        show[i][j] = arr[k - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (isEast&amp;&amp;(j==n||show[i][j+<span class="number">1</span>]!= <span class="number">0</span>))&#123;</span><br><span class="line">            isEast = <span class="number">0</span>;</span><br><span class="line">            isSouth = <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isSouth&amp;&amp;(i==m||show[i+<span class="number">1</span>][j] != <span class="number">0</span>))&#123;</span><br><span class="line">            isSouth = <span class="number">0</span>;</span><br><span class="line">            isWest = <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isWest&amp;&amp;(j==<span class="number">1</span>||show[i][j<span class="number">-1</span>]!=<span class="number">0</span>))&#123;</span><br><span class="line">            isWest = <span class="number">0</span>;</span><br><span class="line">            isNorth = <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isNorth&amp;&amp;(i==<span class="number">1</span>||show[i<span class="number">-1</span>][j]!= <span class="number">0</span>))&#123;</span><br><span class="line">            isNorth = <span class="number">0</span>;</span><br><span class="line">            isEast = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (isEast) j++;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (isSouth)   i++;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (isWest) j--;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (isNorth) i--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)&#123;</span><br><span class="line">          <span class="keyword">if</span> (j != <span class="number">1</span>) <span class="built_in">printf</span>(<span class="string">" "</span>);</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; show[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="解法二：螺旋填充路线对应矩阵下标关系依次填充。"><a href="#解法二：螺旋填充路线对应矩阵下标关系依次填充。" class="headerlink" title="解法二：螺旋填充路线对应矩阵下标关系依次填充。"></a>解法二：螺旋填充路线对应矩阵下标关系依次填充。</h4><hr>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> N)</span> </span>&#123;<span class="comment">//寻找N=m*n,m-n最小</span></span><br><span class="line">	<span class="keyword">int</span> i = <span class="built_in">sqrt</span>((<span class="keyword">double</span>)N);</span><br><span class="line">	<span class="keyword">while</span> (i &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (N % i == <span class="number">0</span>)</span><br><span class="line">			<span class="keyword">return</span> i;</span><br><span class="line">		i--;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">cmp</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123; <span class="keyword">return</span> a &gt; b; &#125;<span class="comment">//cmp 区分不了'='</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> N, m, n, t = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;N);</span><br><span class="line">	n = func(N);</span><br><span class="line">	m = N / n;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a(N);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a[i]);</span><br><span class="line">	sort(a.begin(), a.end(), cmp);</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; b(m, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n));<span class="comment">//vector&lt;int&gt;b[m][n];编译出错</span></span><br><span class="line">	<span class="keyword">int</span> level = m / <span class="number">2</span> + m % <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; level; i++) &#123;<span class="comment">//加上t&lt;=N-1的作用：应对奇数行时后三循环无效，因此第一个循环可以不加t&lt;=N-1。</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &lt;= n - <span class="number">1</span> - i&amp;&amp; t &lt;= N - <span class="number">1</span>; j++) &#123;</span><br><span class="line">			b[i][j] = a[t++];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt;= m - <span class="number">2</span> - i &amp;&amp; t &lt;= N - <span class="number">1</span>; j++) &#123;</span><br><span class="line">			b[j][n - <span class="number">1</span> - i] = a[t++];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = n - i - <span class="number">1</span>; j &gt;= i &amp;&amp; t &lt;= N - <span class="number">1</span>; j--) &#123;</span><br><span class="line">			b[m - <span class="number">1</span> - i][j] = a[t++];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = m - <span class="number">2</span> - i; j &gt;= i + <span class="number">1</span> &amp;&amp; t &lt;= N - <span class="number">1</span>; j--) &#123;</span><br><span class="line">			b[j][i] = a[t++];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (j != <span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">" "</span>);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d"</span>, b[i][j]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="总结：解法二的求m-n的方法理论上用时更少更简单，只要找到一次n-i-0即可，而解法一可能需要多次n-i-0保留最后一次。"><a href="#总结：解法二的求m-n的方法理论上用时更少更简单，只要找到一次n-i-0即可，而解法一可能需要多次n-i-0保留最后一次。" class="headerlink" title="总结：解法二的求m,n的方法理论上用时更少更简单，只要找到一次n%i==0即可，而解法一可能需要多次n%i==0保留最后一次。"></a>总结：解法二的求m,n的方法理论上用时更少更简单，只要找到一次n%i==0即可，而解法一可能需要多次n%i==0保留最后一次。</h3><h3 id="螺旋填充过程个人认为解法一的更有趣一点，解法一下标与螺旋关系设置循环初始值、结尾值次数较多易出错。"><a href="#螺旋填充过程个人认为解法一的更有趣一点，解法一下标与螺旋关系设置循环初始值、结尾值次数较多易出错。" class="headerlink" title="螺旋填充过程个人认为解法一的更有趣一点，解法一下标与螺旋关系设置循环初始值、结尾值次数较多易出错。"></a>螺旋填充过程个人认为解法一的更有趣一点，解法一下标与螺旋关系设置循环初始值、结尾值次数较多易出错。</h3><p><img src="1050螺旋矩阵/美滋滋.jpg" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/25/1050螺旋矩阵/" data-id="cjowocmq40000msus4dqfug9w" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-C++-reference-array" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/22/C++-reference-array/" class="article-date">
+  <time datetime="2018-11-22T15:01:38.000Z" itemprop="datePublished">2018-11-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/22/C++-reference-array/">C++ Reference Array</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>   template &lt; class T, size_t N &gt; class array;<br>1.Array class<br>Arrays are fixed-size sequence containers: they hold a specific number of elements ordered in a strict linear sequence.<br>1.数组类<br>数组是固定大小的序列容器：它们包含以严格线性序列排序的特定数量的元素。</p>
+<p>Internally, an array does not keep any data other than the elements it contains (not even its size, which is a template parameter, fixed on compile time). It is as efficient in terms of storage size as an ordinary array declared with the language’s bracket syntax ([]). This class merely adds a layer of member and global functions to it, so that arrays can be used as standard containers.<br>在内部，数组不保留除其包含的元素之外的任何数据（甚至不是它的大小，这是一个模板参数，在编译时固定）。它在存储大小方面与使用语言括号语法（[]）声明的普通数组一样高效。这个类只是为它添加了一层成员函数和全局函数，因此数组可以用作标准容器。</p>
+<p>Unlike the other standard containers, arrays have a fixed size and do not manage the allocation of its elements through an allocator: they are an aggregate type encapsulating a fixed-size array of elements. Therefore, they cannot be expanded or contracted dynamically (see vector for a similar container that can be expanded).<br>与其他标准容器不同，数组具有固定大小，并且不通过分配器管理其元素的分配：它们是封装固定大小元素数组的聚合类型。因此，它们不能动态扩展或收缩（参见可扩展的类似容器的向量）。</p>
+<p>Zero-sized arrays are valid, but they should not be dereferenced (members front, back, and data).<br>零大小的数组是有效的，但不应该取消引用它们（成员前面，后面和数据）。</p>
+<p>Unlike with the other containers in the Standard Library, swapping two array containers is a linear operation that involves swapping all the elements in the ranges individually, which generally is a considerably less efficient operation. On the other side, this allows the iterators to elements in both containers to keep their original container association.<br>与标准库中的其他容器不同，交换两个数组容器是一种线性操作，涉及单独交换范围中的所有元素，这通常是效率相当低的操作。另一方面，这允许两个容器中的元素的迭代器保持其原始容器关联。</p>
+<p>Another unique feature of array containers is that they can be treated as tuple objects: The <array> header overloads the get function to access the elements of the array as if it was a tuple, as well as specialized tuple_size and tuple_element types.<br>数组容器的另一个独特功能是它们可以被视为元组对象：<array>头重载get函数以访问数组的元素，就像它是一个元组一样，以及专门的tuple_size和tuple_element类型。</array></array></p>
+<p>2.Container properties<br>Sequence<br>Elements in sequence containers are ordered in a strict linear sequence. Individual elements are accessed by their position in this sequence.<br>Contiguous storage<br>The elements are stored in contiguous memory locations, allowing constant time random access to elements. Pointers to an element can be offset to access other elements.<br>Fixed-size aggregate<br>The container uses implicit constructors and destructors to allocate the required space statically. Its size is compile-time constant. No memory or time overhead.<br>容器属性<br>序列<br>序列容器中的元素按严格的线性顺序排序。 各个元素按其顺序访问它们的位置。<br>连续存储<br>元素存储在连续的存储器位置，允许对元素进行恒定时间随机访问。 可以偏移元素的指针以访问其他元素。<br>固定大小的聚合<br>容器使用隐式构造函数和析构函数静态分配所需的空间。 它的大小是编译时常量。 没有内存或时间开销。<br>3.Template parameters<br>T<br>Type of the elements contained.<br>Aliased as member type array::value_type.<br>N<br>Size of the array, in terms of number of elements.<br>In the reference for the array member functions, these same names are assumed for the template parameters.<br>T<br>包含的元素的类型。<br>别名为成员类型array :: value_type。<br>N<br>根据元素数量，数组的大小。<br>在数组成员函数的引用中，假定模板参数具有相同的名称。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/22/C++-reference-array/" data-id="cjowocmqe0001msusvhw7z1j2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-李亚伟测试文章" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/21/李亚伟测试文章/" class="article-date">
+  <time datetime="2018-11-21T14:59:50.000Z" itemprop="datePublished">2018-11-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/21/李亚伟测试文章/">李亚伟测试文章</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这是我的第一个博客</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/21/李亚伟测试文章/" data-id="cjowocmqk0003msusiv3ievev" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/21/hello-world/" class="article-date">
+  <time datetime="2018-11-21T13:42:30.967Z" itemprop="datePublished">2018-11-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/21/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/21/hello-world/" data-id="cjowocmqh0002msus346usqls" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/11/25/1050螺旋矩阵/">1050螺旋矩阵</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/22/C++-reference-array/">C++ Reference Array</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/21/李亚伟测试文章/">李亚伟测试文章</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/21/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 kyrie2to11<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
