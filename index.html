@@ -69,6 +69,47 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-1076wifi密码" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/25/1076wifi密码/" class="article-date">
+  <time datetime="2018-11-25T15:22:25.000Z" itemprop="datePublished">2018-11-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/25/1076wifi密码/">1076wifi密码</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1076 Wifi密码 （15 分）<br>下面是微博上流传的一张照片：“各位亲爱的同学们，鉴于大家有时需要使用 wifi，又怕耽误亲们的学习，现将 wifi 密码设置为下列数学题答案：A-1；B-2；C-3；D-4；请同学们自己作答，每两日一换。谢谢合作！！~”—— 老师们为了促进学生学习也是拼了…… 本题就要求你写程序把一系列题目的答案按照卷子上给出的对应关系翻译成 wifi 的密码。这里简单假设每道选择题都有 4 个选项，有且只有 1 个正确答案。<br><img src="/assets/试卷照片.jpg" alt="试卷照片"><br>输入格式：<br>输入第一行给出一个正整数 N（≤ 100），随后 N 行，每行按照 编号-答案 的格式给出一道题的 4 个选项，T 表示正确选项，F 表示错误选项。选项间用空格分隔。<br>输出格式：<br>在一行中输出 wifi 密码。<br>输入样例：<br>8<br>A-T B-F C-F D-F<br>C-T B-F A-F D-F<br>A-F D-F C-F B-T<br>B-T A-F C-F D-F<br>B-F D-T A-F C-F<br>A-T C-F B-F D-F<br>D-T B-F C-F A-F<br>C-T A-F B-F D-F<br>输出样例：</p>
+<h2 id="13224143"><a href="#13224143" class="headerlink" title="13224143"></a>13224143</h2><h3 id="解法一：获取N行输入，每行找到’T’前两位字符的下标，输出对应数字。"><a href="#解法一：获取N行输入，每行找到’T’前两位字符的下标，输出对应数字。" class="headerlink" title="解法一：获取N行输入，每行找到’T’前两位字符的下标，输出对应数字。"></a>解法一：获取N行输入，每行找到’T’前两位字符的下标，输出对应数字。</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> n;</span><br><span class="line">  <span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">  getchar();<span class="comment">//清空缓存区‘\n’,\n为getline终止符</span></span><br><span class="line">  <span class="built_in">string</span> s;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">     getline(<span class="built_in">cin</span>,s);</span><br><span class="line">     <span class="built_in">cout</span>&lt;&lt;s[s.find(<span class="string">'T'</span>)<span class="number">-2</span>]-<span class="string">'A'</span>+<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="解法2：以字符串接受输入-包括n值-，若s-size-3-amp-amp-s-2-’T’则输出。"><a href="#解法2：以字符串接受输入-包括n值-，若s-size-3-amp-amp-s-2-’T’则输出。" class="headerlink" title="解法2：以字符串接受输入(包括n值)，若s.size()==3&amp;&amp;s[2]==’T’则输出。"></a>解法2：以字符串接受输入(包括n值)，若s.size()==3&amp;&amp;s[2]==’T’则输出。</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; s)</span><br><span class="line">        <span class="keyword">if</span>(s.size()==<span class="number">3</span>&amp;&amp;s[<span class="number">2</span>]==<span class="string">'T'</span>) <span class="built_in">cout</span> &lt;&lt; s[<span class="number">0</span>]-<span class="string">'A'</span>+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Obviously-the-second-is-better"><a href="#Obviously-the-second-is-better" class="headerlink" title="Obviously,the second is better!"></a>Obviously,the second is better!</h2><p><img src="/assets/cloebenet.jpg" alt="cloebenet"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://kyrie2to11.github.io/2018/11/25/1076wifi密码/" data-id="cjox1vat400006ouscnbmru0m" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-1050螺旋矩阵" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/11/25/1050螺旋矩阵/" class="article-date">
@@ -102,7 +143,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/25/1050螺旋矩阵/" data-id="cjowrcp6o00001gusfvtx1ntm" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/25/1050螺旋矩阵/" data-id="cjox1vatr00046ous4k4mxfe4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -145,7 +186,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/22/C++-reference-array/" data-id="cjowrcp7400021gus7c5fpwer" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/22/C++-reference-array/" data-id="cjox1vatf00016ous4go562tj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -182,7 +223,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/21/李亚伟测试文章/" data-id="cjowrcp7600031gus6tao6u6g" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/21/李亚伟测试文章/" data-id="cjox1vatp00036ous3a4ouylh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -227,7 +268,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/21/hello-world/" data-id="cjowrcp6z00011gusqynib06p" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/21/hello-world/" data-id="cjox1vatj00026ouskyais33p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -266,6 +307,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/11/25/1076wifi密码/">1076wifi密码</a>
+          </li>
         
           <li>
             <a href="/2018/11/25/1050螺旋矩阵/">1050螺旋矩阵</a>
