@@ -69,6 +69,48 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-1054求平均值" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/27/1054求平均值/" class="article-date">
+  <time datetime="2018-11-27T09:28:05.000Z" itemprop="datePublished">2018-11-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/27/1054求平均值/">1054求平均值</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1054 求平均值 （20 分）<br>作者: CHEN, Yue<br>单位: 浙江大学<br>时间限制: 400 ms<br>内存限制: 64 MB<br>代码长度限制: 16 KB<br>本题的基本要求非常简单：给定 N 个实数，计算它们的平均值。但复杂的是有些输入数据可能是非法的。一个“合法”的输入是 [−1000,1000] 区间内的实数，并且最多精确到小数点后 2 位。当你计算平均值的时候，不能把那些非法的数据算在内。<br>输入格式：<br>输入第一行给出正整数 N（≤100）。随后一行给出 N 个实数，数字间以一个空格分隔。<br>输出格式：<br>对每个非法输入，在一行中输出 ERROR: X is not a legal number，其中 X 是输入。最后在一行中输出结果：The average of K numbers is Y，其中 K 是合法输入的个数，Y 是它们的平均值，精确到小数点后 2 位。如果平均值无法计算，则用 Undefined 替换 Y。如果 K 为 1，则输出 The average of 1 number is Y。<br>输入样例 1：<br>7<br>5 -3.2 aaa 9999 2.3.4 7.123 2.35<br>输出样例 1：<br>ERROR: aaa is not a legal number<br>ERROR: 9999 is not a legal number<br>ERROR: 2.3.4 is not a legal number<br>ERROR: 7.123 is not a legal number<br>The average of 3 numbers is 1.38<br>输入样例 2：<br>2<br>aaa -9999<br>输出样例 2：<br>ERROR: aaa is not a legal number<br>ERROR: -9999 is not a legal number<br>The average of 0 numbers is Undefined</p>
+<h3 id="sscanf-从一个字符串中读进与指定格式相符的数据"><a href="#sscanf-从一个字符串中读进与指定格式相符的数据" class="headerlink" title="sscanf()-从一个字符串中读进与指定格式相符的数据"></a>sscanf()-从一个字符串中读进与指定格式相符的数据</h3><h3 id="sprintf-–-字符串格式化命令，主要功能是把格式化的数据写入某个字符串中"><a href="#sprintf-–-字符串格式化命令，主要功能是把格式化的数据写入某个字符串中" class="headerlink" title="sprintf() – 字符串格式化命令，主要功能是把格式化的数据写入某个字符串中"></a>sprintf() – 字符串格式化命令，主要功能是把格式化的数据写入某个字符串中</h3><hr>
+<p>sscanf:<br>int sscanf ( const char <em> s, const char </em> format, …);<br>Read formatted data from string<br>Reads data from s and stores them according to parameter format into the locations given by the additional arguments, as if scanf was used, but reading from s instead of the standard input (stdin).</p>
+<h2 id="The-additional-arguments-should-point-to-already-allocated-objects-of-the-type-specified-by-their-corresponding-format-specifier-within-the-format-string"><a href="#The-additional-arguments-should-point-to-already-allocated-objects-of-the-type-specified-by-their-corresponding-format-specifier-within-the-format-string" class="headerlink" title="The additional arguments should point to already allocated objects of the type specified by their corresponding format specifier within the format string."></a>The additional arguments should point to already allocated objects of the type specified by their corresponding format specifier within the format string.</h2><p>sprintf:<br>Write formatted data to string<br>Composes a string with the same text that would be printed if format was used on printf, but instead of being printed, the content is stored as a C string in the buffer pointed by str.<br>The size of the buffer should be large enough to contain the entire resulting string (see snprintf for a safer version).<br>A terminating null character is automatically appended after the content.</p>
+<h2 id="After-the-format-parameter-the-function-expects-at-least-as-many-additional-arguments-as-needed-for-format"><a href="#After-the-format-parameter-the-function-expects-at-least-as-many-additional-arguments-as-needed-for-format" class="headerlink" title="After the format parameter, the function expects at least as many additional arguments as needed for format."></a>After the format parameter, the function expects at least as many additional arguments as needed for format.</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;// sscanf、sprintf 头文件</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;//strlen 包含在cstring 或string.h</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> n,cnt=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">double</span> temp,sum=<span class="number">0.0</span>;</span><br><span class="line">  <span class="keyword">char</span> a[<span class="number">50</span>],b[<span class="number">50</span>];</span><br><span class="line">  <span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;a;</span><br><span class="line">    <span class="built_in">sscanf</span>(a,<span class="string">"%lf"</span>,&amp;temp);</span><br><span class="line">    <span class="built_in">sprintf</span>(b,<span class="string">"%.2lf"</span>,temp);</span><br><span class="line">    <span class="keyword">int</span> flag=<span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="built_in">strlen</span>(a);j++)&#123;</span><br><span class="line">         <span class="keyword">if</span>(a[j]!=b[j])flag=<span class="number">1</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="keyword">if</span>(flag||temp&lt;<span class="number">-1000</span>||temp&gt;<span class="number">1000</span>)&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"ERROR: %s is not a legal number\n"</span>,a);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">      cnt++;</span><br><span class="line">      sum+=temp;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//average写成avrage导致输出出错</span></span><br><span class="line"> <span class="keyword">if</span>(cnt==<span class="number">1</span>)<span class="built_in">printf</span>(<span class="string">"The average of 1 number is %.2lf"</span>,sum);</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(cnt==<span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">"The average of 0 numbers is Undefined"</span>);</span><br><span class="line">  <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"The average of %d numbers is %.2lf"</span>,cnt,sum/cnt);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="总结：peaceful"><a href="#总结：peaceful" class="headerlink" title="总结：peaceful"></a>总结：peaceful</h3><p><img src="//kyrie2to11.github.io/2018/11/27/1054求平均值/peaceful.jpg" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://kyrie2to11.github.io/2018/11/27/1054求平均值/" data-id="cjozk8qyv0002isushz4amdks" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-1052卖个萌" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/11/26/1052卖个萌/" class="article-date">
@@ -101,7 +143,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/26/1052卖个萌/" data-id="cjoyhiym60000b0usqy6hmztr" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/26/1052卖个萌/" data-id="cjozk8qyb0001isusuai06eox" class="article-share-link">Share</a>
       
       
     </footer>
@@ -144,7 +186,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/25/1076wifi密码/" data-id="cjoyhiyo10005b0us0cv4jhlj" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/25/1076wifi密码/" data-id="cjozk8qyz0003isuseytgp6p9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -187,7 +229,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/25/1050螺旋矩阵/" data-id="cjoyhiync0001b0uspyro5aub" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/25/1050螺旋矩阵/" data-id="cjozk8qy30000isusjjcvt50d" class="article-share-link">Share</a>
       
       
     </footer>
@@ -230,7 +272,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/22/C++-reference-array/" data-id="cjoyhiyni0003b0usoldj5n47" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/22/C++-reference-array/" data-id="cjozk8qz20004isusvmwnwuko" class="article-share-link">Share</a>
       
       
     </footer>
@@ -267,7 +309,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/21/李亚伟测试文章/" data-id="cjoyhiyne0002b0usdfq7dtij" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/21/李亚伟测试文章/" data-id="cjozk8qzb0006isuszhql2g1p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -312,7 +354,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/21/hello-world/" data-id="cjoyhiyny0004b0usukkkydj7" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/21/hello-world/" data-id="cjozk8qz60005isusiyhrz1am" class="article-share-link">Share</a>
       
       
     </footer>
@@ -353,6 +395,10 @@
       <ul>
         
           <li>
+            <a href="/2018/11/27/1054求平均值/">1054求平均值</a>
+          </li>
+        
+          <li>
             <a href="/2018/11/26/1052卖个萌/">1052卖个萌</a>
           </li>
         
@@ -366,10 +412,6 @@
         
           <li>
             <a href="/2018/11/22/C++-reference-array/">C++ Reference Array</a>
-          </li>
-        
-          <li>
-            <a href="/2018/11/21/李亚伟测试文章/">李亚伟测试文章</a>
           </li>
         
       </ul>
