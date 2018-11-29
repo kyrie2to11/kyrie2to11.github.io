@@ -69,6 +69,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-1060爱丁顿数" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/29/1060爱丁顿数/" class="article-date">
+  <time datetime="2018-11-29T06:01:39.000Z" itemprop="datePublished">2018-11-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/29/1060爱丁顿数/">1060爱丁顿数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1060 爱丁顿数 （25 分）<br>作者: CHEN, Yue<br>单位: 浙江大学<br>时间限制: 250 ms<br>内存限制: 64 MB<br>代码长度限制: 16 KB<br>英国天文学家爱丁顿很喜欢骑车。据说他为了炫耀自己的骑车功力，还定义了一个“爱丁顿数” E ，即满足有 E 天骑车超过 E 英里的最大整数 E。据说爱丁顿自己的 E 等于87。<br>现给定某人 N 天的骑车距离，请你算出对应的爱丁顿数 E（≤N）。<br>输入格式：<br>输入第一行给出一个正整数 N (≤10<br>​5<br>​​)，即连续骑车的天数；第二行给出 N 个非负整数，代表每天的骑车距离。<br>输出格式：<br>在一行中给出 N 天的爱丁顿数。<br>输入样例：<br>10<br>6 7 6 9 3 10 8 2 7 8<br>输出样例：<br>6</p>
+<hr>
+<h3 id="解法一；n连续天数用于控制输入temp，a-1000000-用于存储每个输入引起的-lt-temp的a-i-遍历寻找a-i-gt-i的最大i。"><a href="#解法一；n连续天数用于控制输入temp，a-1000000-用于存储每个输入引起的-lt-temp的a-i-遍历寻找a-i-gt-i的最大i。" class="headerlink" title="解法一；n连续天数用于控制输入temp，a[1000000]用于存储每个输入引起的&lt;temp的a[i]++;遍历寻找a[i]&gt;=i的最大i。"></a>解法一；n连续天数用于控制输入temp，a[1000000]用于存储每个输入引起的&lt;temp的a[i]++;遍历寻找a[i]&gt;=i的最大i。</h3><hr>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> n,temp,a[<span class="number">1000000</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">  <span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;temp;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;temp;i++)&#123;</span><br><span class="line">        a[i]++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">int</span> atin=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">1000000</span>;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(a[i]&gt;=i)&#123;</span><br><span class="line">      <span class="keyword">if</span>(i&gt;atin)atin=i;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;atin&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="解法二：从下标1开始存储n天的公里数在a-1000000-中，对n个数据从大到小排序，i表示了骑车的天数，那么满足a-i-gt-i的最大值即所求atin。"><a href="#解法二：从下标1开始存储n天的公里数在a-1000000-中，对n个数据从大到小排序，i表示了骑车的天数，那么满足a-i-gt-i的最大值即所求atin。" class="headerlink" title="解法二：从下标1开始存储n天的公里数在a[1000000]中，对n个数据从大到小排序，i表示了骑车的天数，那么满足a[i] &gt; i的最大值即所求atin。"></a>解法二：从下标1开始存储n天的公里数在a[1000000]中，对n个数据从大到小排序，i表示了骑车的天数，那么满足a[i] &gt; i的最大值即所求atin。</h3><hr>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">1000000</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">cmp</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a &gt; b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a[i]);</span><br><span class="line">    sort(a+<span class="number">1</span>, a+n+<span class="number">1</span>, cmp);</span><br><span class="line">    <span class="keyword">int</span> atin = <span class="number">0</span>, p = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(atin &lt;= n &amp;&amp; a[p] &gt; p) &#123;</span><br><span class="line">        atin++;</span><br><span class="line">        p++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d"</span>, atin);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="总结：解法一测试点3运行超时，占用内存比解法二大，解法二吊锤解法一了。"><a href="#总结：解法一测试点3运行超时，占用内存比解法二大，解法二吊锤解法一了。" class="headerlink" title="总结：解法一测试点3运行超时，占用内存比解法二大，解法二吊锤解法一了。"></a>总结：解法一测试点3运行超时，占用内存比解法二大，解法二吊锤解法一了。</h3><p><img src="//kyrie2to11.github.io/2018/11/29/1060爱丁顿数/怎么回事小老弟.jpg" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://kyrie2to11.github.io/2018/11/29/1060爱丁顿数/" data-id="cjp27uwd80000xousjgywxsjd" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-1054求平均值" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/11/27/1054求平均值/" class="article-date">
@@ -101,7 +146,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/27/1054求平均值/" data-id="cjozk8qyv0002isushz4amdks" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/27/1054求平均值/" data-id="cjp27uwdq0003xous202ot254" class="article-share-link">Share</a>
       
       
     </footer>
@@ -143,7 +188,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/26/1052卖个萌/" data-id="cjozk8qyb0001isusuai06eox" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/26/1052卖个萌/" data-id="cjp27uwdt0004xous7dtvztc2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -186,7 +231,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/25/1076wifi密码/" data-id="cjozk8qyz0003isuseytgp6p9" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/25/1076wifi密码/" data-id="cjp27uwdn0002xoushij8edda" class="article-share-link">Share</a>
       
       
     </footer>
@@ -229,7 +274,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/25/1050螺旋矩阵/" data-id="cjozk8qy30000isusjjcvt50d" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/25/1050螺旋矩阵/" data-id="cjp27uwdk0001xousfur6i9p0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -272,7 +317,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/22/C++-reference-array/" data-id="cjozk8qz20004isusvmwnwuko" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/22/C++-reference-array/" data-id="cjp27uwe20007xouszc0dme7j" class="article-share-link">Share</a>
       
       
     </footer>
@@ -309,7 +354,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/21/李亚伟测试文章/" data-id="cjozk8qzb0006isuszhql2g1p" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/21/李亚伟测试文章/" data-id="cjp27uwe00006xousp6nkpibp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -354,7 +399,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://kyrie2to11.github.io/2018/11/21/hello-world/" data-id="cjozk8qz60005isusiyhrz1am" class="article-share-link">Share</a>
+      <a data-url="http://kyrie2to11.github.io/2018/11/21/hello-world/" data-id="cjp27uwdw0005xousphkf3ije" class="article-share-link">Share</a>
       
       
     </footer>
@@ -395,6 +440,10 @@
       <ul>
         
           <li>
+            <a href="/2018/11/29/1060爱丁顿数/">1060爱丁顿数</a>
+          </li>
+        
+          <li>
             <a href="/2018/11/27/1054求平均值/">1054求平均值</a>
           </li>
         
@@ -408,10 +457,6 @@
         
           <li>
             <a href="/2018/11/25/1050螺旋矩阵/">1050螺旋矩阵</a>
-          </li>
-        
-          <li>
-            <a href="/2018/11/22/C++-reference-array/">C++ Reference Array</a>
           </li>
         
       </ul>
