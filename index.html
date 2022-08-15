@@ -102,8 +102,8 @@ npm全称Node Package Manager，它是Nodejs的包管理器。</li>
 </ol>
 <h3 id="2-打开本地端口，预览页面"><a href="#2-打开本地端口，预览页面" class="headerlink" title="2.打开本地端口，预览页面"></a>2.打开本地端口，预览页面</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 
-<h3 id="3-新建一篇博客，默认为post"><a href="#3-新建一篇博客，默认为post" class="headerlink" title="3.新建一篇博客，默认为post"></a>3.新建一篇博客，默认为post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;my blog name&quot;</span></span><br></pre></td></tr></table></figure>
-<p>默认为post，可在_config.yml内调整#writing标签下调整default_layout更改。</p>
+<h3 id="3-新建一篇博客，默认为post类型"><a href="#3-新建一篇博客，默认为post类型" class="headerlink" title="3.新建一篇博客，默认为post类型"></a>3.新建一篇博客，默认为post类型</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;my blog name&quot;</span></span><br><span class="line">$ hexo new draft <span class="string">&quot;my blog name&quot;</span><span class="comment">#新建draft类型博客，暂不发布</span></span><br></pre></td></tr></table></figure>
+<p>默认为post类型，可在_config.yml内调整#writing标签下调整default_layout更改。</p>
 <p>进行主要内容的创作 ···</p>
 <h3 id="4-部署到远程站点"><a href="#4-部署到远程站点" class="headerlink" title="4.部署到远程站点"></a>4.部署到远程站点</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>首次部署前需要<br>1.创建名称为kyrie2to11.github.io的github仓库，注意仓库名只能为个人github账户名.github.io<br>2.在本地任意文件夹内利用git bash产生 ssh key</p>
