@@ -114,12 +114,14 @@ npm全称Node Package Manager，它是Nodejs的包管理器。</li>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url: https://github.com/kyrie2to11/kyrie2to11.github.io.git</span><br></pre></td></tr></table></figure>
 <p>  deployment模块更改</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://github.com/kyrie2to11/kyrie2to11.github.io.git</span><br><span class="line">  branch: gh-pages</span><br></pre></td></tr></table></figure>
-
+<h3 id="5-hexo命令"><a href="#5-hexo命令" class="headerlink" title="5.hexo命令"></a>5.hexo命令</h3><p>以上命令需要cd到文件夹&#x2F;jarvis才有效<br>hexo n “postName”   # 新建文章<br>hexo clean       # 清除缓存<br>hexo g           # 生成静态网页<br>hexo s           # 本地预览<br>hexo d           # 部署到Github</p>
+<h3 id="6-博客备份"><a href="#6-博客备份" class="headerlink" title="6.博客备份"></a>6.博客备份</h3><p>新建一个blog_backup仓库（private）,创建完成后，在VScode终端中执行以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git init       # 初始化仓库</span><br><span class="line">git add .       # 添加文件到暂存区</span><br><span class="line">git commit -m &quot;first commit&quot;   # 将暂存区内容添加到仓库</span><br><span class="line">git branch -M main     # 重命名分支为main</span><br><span class="line">git remote add origin https://github.com/kyrie2to11/Blog_backup.git # 添加到远程版本库</span><br><span class="line">git push -u origin main     # 提交到Github</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/kyrie2to11/kyrie2to11.github.io.git/2022/08/14/test/" data-id="cl6u4sux30000tcuicy9xgynx" data-title="test" class="article-share-link">Share</a>
+      <a data-url="https://github.com/kyrie2to11/kyrie2to11.github.io.git/2022/08/14/test/" data-id="cl6u6bfd700018cui66o0d3kd" data-title="test" class="article-share-link">Share</a>
       
       
       
@@ -170,7 +172,7 @@ npm全称Node Package Manager，它是Nodejs的包管理器。</li>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://github.com/kyrie2to11/kyrie2to11.github.io.git/2022/08/14/hello-world/" data-id="cl6u4sux60001tcui8pk16lsl" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="https://github.com/kyrie2to11/kyrie2to11.github.io.git/2022/08/14/hello-world/" data-id="cl6u6bfd100008cui3o9u390d" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
