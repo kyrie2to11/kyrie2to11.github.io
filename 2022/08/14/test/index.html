@@ -28,7 +28,7 @@
 <meta property="og:description" content="记录hexo搭建博客过程 Go Go Go!1.安装hexoInstalling Hexo is quite easy and only requires the following beforehand:  Node.js (Should be at least Node.js 10.13, recommends 12.0 or higher) GitIf your computer alrea">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-14T12:32:11.000Z">
-<meta property="article:modified_time" content="2022-08-25T03:32:40.608Z">
+<meta property="article:modified_time" content="2022-09-05T06:33:08.486Z">
 <meta property="article:author" content="jarvis">
 <meta name="twitter:card" content="summary">
 
@@ -199,7 +199,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-25 11:32:40" itemprop="dateModified" datetime="2022-08-25T11:32:40+08:00">2022-08-25</time>
+      <time title="修改时间：2022-09-05 14:33:08" itemprop="dateModified" datetime="2022-09-05T14:33:08+08:00">2022-09-05</time>
     </span>
 
   
@@ -257,6 +257,11 @@ npm全称Node Package Manager，它是Nodejs的包管理器。</li>
 <h3 id="9-远程部署后只显示内容，未加载主题"><a href="#9-远程部署后只显示内容，未加载主题" class="headerlink" title="9.远程部署后只显示内容，未加载主题"></a>9.远程部署后只显示内容，未加载主题</h3><p>问题描述：<br>本地部署正常加载主题和内容，部署到github后打开网页只加载内容不加载主题</p>
 <p>问题解决：<br>_config.yml文件#URL设置错误，误将#URL模块内的url:设置为与#Deployment模块内的repo:相同。<br>参考知乎问题下Erain的回答。链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/319817323">https://www.zhihu.com/question/319817323</a><br>具体改正如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url: https://github.com/kyrie2to11/kyrie2to11.github.io.git #此url设置错误,改为下一行</span><br><span class="line"></span><br><span class="line">url: https://kyrie2to11.github.io/</span><br></pre></td></tr></table></figure>
+<p>更改设置并部署后，强制刷新浏览器（shift+F5）即可。</p>
+<hr>
+<p>问题描述：<br>Hexo d部署报错之spawn failed</p>
+<p>问题解决：<br>修改配置文件中的repo<br>具体改正如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repo: git@github.com:kyrie2to11/kyrie2to11.github.io.git</span><br></pre></td></tr></table></figure>
 <p>更改设置并部署后，强制刷新浏览器（shift+F5）即可。</p>
 <h3 id="10-hexo卸载"><a href="#10-hexo卸载" class="headerlink" title="10.hexo卸载"></a>10.hexo卸载</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall -g hexo-cli</span><br></pre></td></tr></table></figure>
 
