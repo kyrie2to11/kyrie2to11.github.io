@@ -189,7 +189,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-09-06 19:10:30 / 修改时间：20:10:37" itemprop="dateCreated datePublished" datetime="2022-09-06T19:10:30+08:00">2022-09-06</time>
+      <time title="创建时间：2022-09-06 19:10:30 / 修改时间：20:19:29" itemprop="dateCreated datePublished" datetime="2022-09-06T19:10:30+08:00">2022-09-06</time>
     </span>
 
   
@@ -202,8 +202,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="1-number-of-tensor’s-dimension"><a href="#1-number-of-tensor’s-dimension" class="headerlink" title="1.number of tensor’s dimension"></a>1.number of tensor’s dimension</h2><p>‘’’<br>python<br>import torch<br>t&#x3D;torch.ones(1,2,3,4) #创建dim&#x3D;4,size&#x3D;[1,2,3,4]的tensor<br>t #显示t<br>t.size() #显示t的size<br>‘’’<br>通过tensor t的显示可以看出，tensor的dim&#x3D;从外到遇到第一个元素的 ‘[‘ 个数</p>
-<h2 id="2-index-of-tensor’s-dimension"><a href="#2-index-of-tensor’s-dimension" class="headerlink" title="2.index of tensor’s dimension"></a>2.index of tensor’s dimension</h2><p>‘’’<br>t.flatten(start_dim&#x3D;0).size()<br>t.flatten(start_dim&#x3D;1).size()<br>t.flatten(start_dim&#x3D;2).size()<br>t.flatten(start_dim&#x3D;3).size()<br>t.flatten(start_dim&#x3D;-1).size()<br>‘’’<br>通过把t从各个dim展平判断出tensor t的dim下标依次是[0,1,2,3],另外dim 3&#x3D;&#x3D;-1.<br>p.s. torch.flatten() method介绍见：<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/generated/torch.flatten.html#torch.flatten">https://pytorch.org/docs/stable/generated/torch.flatten.html#torch.flatten</a></p>
+          <h2 id="1-number-of-tensor’s-dimension"><a href="#1-number-of-tensor’s-dimension" class="headerlink" title="1.number of tensor’s dimension"></a>1.number of tensor’s dimension</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python </span><br><span class="line">import torch </span><br><span class="line">t=torch.ones(1,2,3,4) #创建dim=4,size=[1,2,3,4]的tensor</span><br><span class="line">t #显示t</span><br><span class="line">t.size() #显示t的size</span><br></pre></td></tr></table></figure>
+<p>通过tensor t的显示可以看出，tensor的dim&#x3D;从外到遇到第一个元素的 ‘[‘ 个数</p>
+<h2 id="2-index-of-tensor’s-dimension"><a href="#2-index-of-tensor’s-dimension" class="headerlink" title="2.index of tensor’s dimension"></a>2.index of tensor’s dimension</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">t.flatten(start_dim=0).size()</span><br><span class="line">t.flatten(start_dim=1).size()</span><br><span class="line">t.flatten(start_dim=2).size()</span><br><span class="line">t.flatten(start_dim=3).size()</span><br><span class="line">t.flatten(start_dim=-1).size()</span><br></pre></td></tr></table></figure>
+<p>通过把t从各个dim展平判断出tensor t的dim下标依次是[0,1,2,3],另外dim 3&#x3D;&#x3D;-1。</p>
+<h2 id="note："><a href="#note：" class="headerlink" title="note："></a>note：</h2><p>关于torch.flatten()此method介绍见：<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/generated/torch.flatten.html#torch.flatten">https://pytorch.org/docs/stable/generated/torch.flatten.html#torch.flatten</a></p>
 
       
     </div>
