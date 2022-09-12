@@ -120,7 +120,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -159,6 +159,84 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/12/%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A522-9-5-22-9-11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/12/%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A522-9-5-22-9-11/" class="post-title-link" itemprop="url">进度汇报22.9.5-22.9.11</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-09-12 08:41:48 / 修改时间：09:00:25" itemprop="dateCreated datePublished" datetime="2022-09-12T08:41:48+08:00">2022-09-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="进度汇报（2022-9-5-2022-9-11）"><a href="#进度汇报（2022-9-5-2022-9-11）" class="headerlink" title="进度汇报（2022.9.5-2022.9.11）"></a>进度汇报（2022.9.5-2022.9.11）</h2><ol>
+<li>对照论文理解了zeroq代码，并对distill data部分的total_loss进行修改,实验证明在分类任务上原total_loss的部分成分对量化后的精度影响极小，top-1 accuracy 波动在0.01%左右。</li>
+<li>阅读投稿JMLC一篇文章的手稿和相关论文，对疑问点进行评论。</li>
+<li>阅读2021模型量化最新综述。</li>
+</ol>
+<h2 id="本周计划"><a href="#本周计划" class="headerlink" title="本周计划"></a>本周计划</h2><ol>
+<li>阅读论文FP8 Quantization: The Power of the Exponent(2022.8)尝试复现</li>
+<li>阅读论文Post training 4-bit quantization of convolutional networks for rapid-deployment(2018)</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/07/Model-Compression-Overview/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -187,9 +265,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-09-07 10:39:59 / 修改时间：21:55:14" itemprop="dateCreated datePublished" datetime="2022-09-07T10:39:59+08:00">2022-09-07</time>
+      <time title="创建时间：2022-09-07 10:39:59" itemprop="dateCreated datePublished" datetime="2022-09-07T10:39:59+08:00">2022-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-12 08:39:56" itemprop="dateModified" datetime="2022-09-12T08:39:56+08:00">2022-09-12</time>
     </span>
 
   
@@ -202,14 +286,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="1-Designing-efficient-NN-model-architectures"><a href="#1-Designing-efficient-NN-model-architectures" class="headerlink" title="1.Designing efficient NN model architectures"></a>1.Designing efficient NN model architectures</h1><p>present situation  </p>
+          <h1 id="I-INTRODUCTION"><a href="#I-INTRODUCTION" class="headerlink" title="I. INTRODUCTION"></a>I. INTRODUCTION</h1><h2 id="1-Designing-efficient-NN-model-architectures"><a href="#1-Designing-efficient-NN-model-architectures" class="headerlink" title="1.Designing efficient NN model architectures"></a>1.Designing efficient NN model architectures</h2><p>present situation  </p>
 <ol>
 <li>手动优化微观结构如内核类型(深度卷积或低秩分解)</li>
 <li>手动优化宏观结构如模块(residual、inception)</li>
 <li>自动优化如Automated machine learning (AutoML) and Neural Architecture Search (NAS)</li>
 </ol>
-<h1 id="2-Co-designing-NN-architecture-and-hardware-together"><a href="#2-Co-designing-NN-architecture-and-hardware-together" class="headerlink" title="2.Co-designing NN architecture and hardware together"></a>2.Co-designing NN architecture and hardware together</h1><p>硬件与nn结构共同设计或者针对不同的硬件平台调整神经网络架构。主要mootivation是nn不同组件的开销是依赖于硬件的。</p>
-<h1 id="3-Pruning"><a href="#3-Pruning" class="headerlink" title="3.Pruning"></a>3.Pruning</h1><ol>
+<h2 id="2-Co-designing-NN-architecture-and-hardware-together"><a href="#2-Co-designing-NN-architecture-and-hardware-together" class="headerlink" title="2.Co-designing NN architecture and hardware together"></a>2.Co-designing NN architecture and hardware together</h2><p>硬件与nn结构共同设计或者针对不同的硬件平台调整神经网络架构。主要mootivation是nn不同组件的开销是依赖于硬件的。</p>
+<h2 id="3-Pruning"><a href="#3-Pruning" class="headerlink" title="3.Pruning"></a>3.Pruning</h2><ol>
 <li>unstructured pruning</li>
 </ol>
 <ul>
@@ -225,26 +309,49 @@
 <li>positive: still permitting dense matrix operations.  </li>
 <li>negative: aggressive structured pruning often leads to significant accuracy degradation.</li>
 </ul>
-<h1 id="4-Knowledge-distillation"><a href="#4-Knowledge-distillation" class="headerlink" title="4.Knowledge distillation"></a>4.Knowledge distillation</h1><ul>
+<h2 id="4-Knowledge-distillation"><a href="#4-Knowledge-distillation" class="headerlink" title="4.Knowledge distillation"></a>4.Knowledge distillation</h2><ul>
 <li>motivation: training a large model and then using it as a teacher to train a more compact model.  </li>
 <li>positive:  mix knowledge distillation with prior method(i.e.也就是quantization and pruning ) has succeed</li>
 <li>negative:  a major challenge here is to achieve a high compression ratio with distillation alone.non-negligible accuracy degradation with aggressive compression.</li>
 </ul>
-<h1 id="5-Quantization"><a href="#5-Quantization" class="headerlink" title="5.Quantization"></a>5.Quantization</h1><ul>
+<h2 id="5-Quantization"><a href="#5-Quantization" class="headerlink" title="5.Quantization"></a>5.Quantization</h2><ul>
 <li>present situation: has shown great and consistent success in both training and inference.this survey focused on inference.</li>
 <li>shortcoming: very difficult to go below half-precision without significant tuning, and most of the recent quantization research has focused on inference.</li>
 </ul>
-<h1 id="5-Similarity-of-Quantization-and-Neuroscience"><a href="#5-Similarity-of-Quantization-and-Neuroscience" class="headerlink" title="5.Similarity of Quantization and Neuroscience"></a>5.Similarity of Quantization and Neuroscience</h1><ul>
+<h2 id="6-Similarity-of-Quantization-and-Neuroscience"><a href="#6-Similarity-of-Quantization-and-Neuroscience" class="headerlink" title="6.Similarity of Quantization and Neuroscience"></a>6.Similarity of Quantization and Neuroscience</h2><ul>
 <li>motivation: work in neuroscience that suggests that the human brain stores information in a discrete&#x2F;quantized form, rather than in a continuous form.</li>
 </ul>
-<h2 id="BASIC-CONCEPTS-OF-QUANTIZATION"><a href="#BASIC-CONCEPTS-OF-QUANTIZATION" class="headerlink" title="BASIC CONCEPTS OF QUANTIZATION"></a>BASIC CONCEPTS OF QUANTIZATION</h2><ul>
+<h1 id="II-GENERAL-HISTORY-OF-QUANTIZATION"><a href="#II-GENERAL-HISTORY-OF-QUANTIZATION" class="headerlink" title="II. GENERAL HISTORY OF QUANTIZATION"></a>II. GENERAL HISTORY OF QUANTIZATION</h1><h1 id="III-BASIC-CONCEPTS-OF-QUANTIZATION"><a href="#III-BASIC-CONCEPTS-OF-QUANTIZATION" class="headerlink" title="III. BASIC CONCEPTS OF QUANTIZATION"></a>III. BASIC CONCEPTS OF QUANTIZATION</h1><ul>
 <li>Problem Setup and Notations  </li>
 <li>Uniform Quantization  </li>
 <li>Symmetric and Asymmetric Quantization</li>
 <li>Range Calibration Algorithms: Static vs Dynamic Quantization  </li>
 <li>Quantization Granularity</li>
 <li>Non-Uniform Quantization</li>
-<li>Fine-tuning Methods</li>
+<li>Fine-tuning Methods  <ul>
+<li>Quantization-Aware Training</li>
+<li>Stochastic Quantization</li>
+</ul>
+</li>
+</ul>
+<h1 id="IV-ADVANCED-CONCEPTS-QUANTIZATION-BELOW-8-BITS"><a href="#IV-ADVANCED-CONCEPTS-QUANTIZATION-BELOW-8-BITS" class="headerlink" title="IV. ADVANCED CONCEPTS: QUANTIZATION BELOW 8 BITS"></a>IV. ADVANCED CONCEPTS: QUANTIZATION BELOW 8 BITS</h1><ul>
+<li>Simulated and Integer-only Quantization</li>
+<li>Mixed-Precision Quantization</li>
+<li>Hardware Aware Quantization</li>
+<li>Distillation-Assisted Quantization</li>
+<li>Extreme Quantization<ul>
+<li>Quantization Error Minimization</li>
+<li>Improved Loss function</li>
+<li>Improved Training Method</li>
+</ul>
+</li>
+<li>Vector Quantization</li>
+</ul>
+<h1 id="V-QUANTIZATION-AND-HARDWARE-PROCESSORS"><a href="#V-QUANTIZATION-AND-HARDWARE-PROCESSORS" class="headerlink" title="V. QUANTIZATION AND HARDWARE PROCESSORS"></a>V. QUANTIZATION AND HARDWARE PROCESSORS</h1><h1 id="VI-FUTURE-DIRECTIONS-FOR-RESEARCH-IN-QUANTIZATION"><a href="#VI-FUTURE-DIRECTIONS-FOR-RESEARCH-IN-QUANTIZATION" class="headerlink" title="VI. FUTURE DIRECTIONS FOR RESEARCH IN QUANTIZATION"></a>VI. FUTURE DIRECTIONS FOR RESEARCH IN QUANTIZATION</h1><ul>
+<li>Quantization Software</li>
+<li>Hardware and NN Architecture Co-Design</li>
+<li>Coupled Compression Methods</li>
+<li>Quantized Training</li>
 </ul>
 
       
@@ -900,75 +1007,6 @@
 <h3 id="Lidar信息占融合后的主体"><a href="#Lidar信息占融合后的主体" class="headerlink" title="Lidar信息占融合后的主体"></a>Lidar信息占融合后的主体</h3><h3 id="图像复原做的太多感觉没意思"><a href="#图像复原做的太多感觉没意思" class="headerlink" title="图像复原做的太多感觉没意思"></a>图像复原做的太多感觉没意思</h3><p>图像复原需要找到合适的应用场景；影响系统 视频监控 、、、</p>
 <p>高层任务难突破</p>
 <h3 id="去雨-transformer刷点最高"><a href="#去雨-transformer刷点最高" class="headerlink" title="去雨 transformer刷点最高"></a>去雨 transformer刷点最高</h3><h3 id="原来都是自己给的压力，刚入学大家水平都差不多，以后再也不自我加压了"><a href="#原来都是自己给的压力，刚入学大家水平都差不多，以后再也不自我加压了" class="headerlink" title="原来都是自己给的压力，刚入学大家水平都差不多，以后再也不自我加压了"></a>原来都是自己给的压力，刚入学大家水平都差不多，以后再也不自我加压了</h3>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/08/18/%E5%85%B3%E4%BA%8Epytorch%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jarvis">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarvis's Blog">
-      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Jarvis's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/08/18/%E5%85%B3%E4%BA%8Epytorch%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5/" class="post-title-link" itemprop="url">关于pytorch代码学习策略</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-08-18 09:03:45 / 修改时间：09:06:28" itemprop="dateCreated datePublished" datetime="2022-08-18T09:03:45+08:00">2022-08-18</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="首先承认自己基本看不懂Zeroq的代码"><a href="#首先承认自己基本看不懂Zeroq的代码" class="headerlink" title="首先承认自己基本看不懂Zeroq的代码"></a>首先承认自己基本看不懂Zeroq的代码</h3><h3 id="其次要问师兄以快速解决问题"><a href="#其次要问师兄以快速解决问题" class="headerlink" title="其次要问师兄以快速解决问题"></a>其次要问师兄以快速解决问题</h3><h3 id="问的策略是，列出一个表格来，协商一个时间，一项一项逐个问"><a href="#问的策略是，列出一个表格来，协商一个时间，一项一项逐个问" class="headerlink" title="问的策略是，列出一个表格来，协商一个时间，一项一项逐个问"></a>问的策略是，列出一个表格来，协商一个时间，一项一项逐个问</h3>
       
     </div>
 
