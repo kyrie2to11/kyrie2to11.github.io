@@ -1150,7 +1150,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-10-24 11:07:07" itemprop="dateModified" datetime="2022-10-24T11:07:07+08:00">2022-10-24</time>
+      <time title="修改时间：2022-10-25 16:17:54" itemprop="dateModified" datetime="2022-10-25T16:17:54+08:00">2022-10-25</time>
     </span>
 
   
@@ -1234,6 +1234,87 @@
 <li>跑通MNIST数据集上的QAT量化demo</li>
 <li>完成学科前沿作业;准备数理统计考试</li>
 </ol>
+<hr>
+<h2 id="进度汇报-（2022-10-24-2022-10-30）"><a href="#进度汇报-（2022-10-24-2022-10-30）" class="headerlink" title="进度汇报 （2022.10.24-2022.10.30）"></a>进度汇报 （2022.10.24-2022.10.30）</h2><ol>
+<li>实验:将ZeroQ蒸馏出的数据用在SQuant中间层激励的剪切范围确定上,效果如下：<table>
+<thead>
+<tr>
+<th align="left">Experiment</th>
+<th align="left">Model</th>
+<th align="left">Dataset</th>
+<th align="left">W-bit</th>
+<th align="left">A-bit</th>
+<th align="left">Top-1 Accuracy</th>
+<th align="left">Top-5 Accuracy</th>
+<th align="left">Clip Range Setting</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">rand(μ&#x3D;0,σ&#x3D;1)</td>
+<td align="left">Resnet18</td>
+<td align="left">8bit</td>
+<td align="left">8bit</td>
+<td align="left">ImageNet</td>
+<td align="left">73.012%</td>
+<td align="left">91.036%</td>
+<td align="left">sigma &#x3D; 25</td>
+</tr>
+<tr>
+<td align="left">rand(μ&#x3D;0,σ&#x3D;1)</td>
+<td align="left">Resnet18</td>
+<td align="left">8bit</td>
+<td align="left">8bit</td>
+<td align="left">ImageNet</td>
+<td align="left">73.066%</td>
+<td align="left">90.990%</td>
+<td align="left">sigma &#x3D; 30</td>
+</tr>
+<tr>
+<td align="left">rand(μ&#x3D;0,σ&#x3D;1)</td>
+<td align="left">Resnet18</td>
+<td align="left">8bit</td>
+<td align="left">8bit</td>
+<td align="left">ImageNet</td>
+<td align="left">73.030%</td>
+<td align="left">90.994%</td>
+<td align="left">sigma &#x3D; 35</td>
+</tr>
+<tr>
+<td align="left">rand(μ&#x3D;0,σ&#x3D;1)</td>
+<td align="left">Resnet18</td>
+<td align="left">8bit</td>
+<td align="left">8bit</td>
+<td align="left">ImageNet</td>
+<td align="left">73.090%</td>
+<td align="left">91.044%</td>
+<td align="left">sigma &#x3D; 40</td>
+</tr>
+<tr>
+<td align="left">ZeroQ Refined Data</td>
+<td align="left">Resnet18</td>
+<td align="left">8bit</td>
+<td align="left">8bit</td>
+<td align="left">ImageNet</td>
+<td align="left">72.854%</td>
+<td align="left">91.008%</td>
+<td align="left">sigma &#x3D; 25</td>
+</tr>
+<tr>
+<td align="left">ZeroQ Refined Data</td>
+<td align="left">Resnet18</td>
+<td align="left">8bit</td>
+<td align="left">8bit</td>
+<td align="left">ImageNet</td>
+<td align="left">67.308%</td>
+<td align="left">87.524%</td>
+<td align="left">sigma &#x3D; 0</td>
+</tr>
+</tbody></table>
+</li>
+<li>跑通MNIST数据集上的QAT量化demo</li>
+<li></li>
+</ol>
+<h2 id="本周计划-7"><a href="#本周计划-7" class="headerlink" title="本周计划"></a>本周计划</h2><p>1.<br>2.<br>3. 准备数理统计考试</p>
 
       
     </div>
