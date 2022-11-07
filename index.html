@@ -997,7 +997,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-06 23:54:41" itemprop="dateModified" datetime="2022-11-06T23:54:41+08:00">2022-11-06</time>
+      <time title="修改时间：2022-11-07 11:03:43" itemprop="dateModified" datetime="2022-11-07T11:03:43+08:00">2022-11-07</time>
     </span>
 
   
@@ -1201,15 +1201,24 @@
 <td align="left">90.948%</td>
 <td align="left">sigma &#x3D; 25</td>
 </tr>
+<tr>
+<td align="left">结论：在原模型上统计clip range相较于叠加了量化error再统计clip range,最终的精度出现轻微下降，符合猜测</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
 </tbody></table>
-结论：在原模型上统计clip range相较于叠加了量化error再统计clip range,最终的精度出现轻微下降，符合猜测</li>
+</li>
 <li>解决了上周实验出现的中间层activation异常偏大的bug</li>
-<li>初步改出了fp32模拟量化到fp8的代码，实验结果loss异常</li>
+<li>初步改出了fp32模拟量化到fp8的代码,在resnet18上实验效果不理想</li>
 </ol>
 <h2 id="本周计划-8"><a href="#本周计划-8" class="headerlink" title="本周计划"></a>本周计划</h2><ol>
-<li>debug fp32模拟量化到fp8代码,跑出初步结果</li>
-<li>阅读论文 Hybrid 8-bit Floating Point (HFP8) Training and Inference for Deep Neural Networks (2019)</li>
-<li>处理作业，准备考试</li>
+<li>结合相关论文,改进fp8模拟量化</li>
+<li>组会准备;考试准备</li>
 </ol>
 
       
