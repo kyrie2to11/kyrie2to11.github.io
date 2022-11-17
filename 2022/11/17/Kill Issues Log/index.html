@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kyrie2to11.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Issue Method    PytorchCV package Image Classification and Segmentation Models   Parameter-Argument Defining-Calling   Positional 传参时前面不带 “变量名&#x3D;”, 顺序不可变   Keyword 传参时前面加上 “变量名&#x3D;”, 顺序可变   Cl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Log">
+<meta property="og:url" content="https://kyrie2to11.github.io/2022/11/17/Kill%20Issues%20Log/index.html">
+<meta property="og:site_name" content="Jarvis&#39;s Blog">
+<meta property="og:description" content="Issue Method    PytorchCV package Image Classification and Segmentation Models   Parameter-Argument Defining-Calling   Positional 传参时前面不带 “变量名&#x3D;”, 顺序不可变   Keyword 传参时前面加上 “变量名&#x3D;”, 顺序可变   Cl">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-17T03:12:15.000Z">
+<meta property="article:modified_time" content="2022-11-17T09:19:10.884Z">
+<meta property="article:author" content="jarvis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kyrie2to11.github.io/2022/11/17/Kill%20Issues%20Log/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kyrie2to11.github.io/2022/11/17/Kill%20Issues%20Log/","path":"2022/11/17/Kill Issues Log/","title":"Log"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Log | Jarvis's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jarvis's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活，沉淀自己</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jarvis</p>
+  <div class="site-description" itemprop="description">记录学习和生活，留下时光的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/11/17/Kill%20Issues%20Log/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Log | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Log
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-11-17 11:12:15 / 修改时间：17:19:10" itemprop="dateCreated datePublished" datetime="2022-11-17T11:12:15+08:00">2022-11-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PytorchCV package</td>
+<td>Image Classification and Segmentation Models</td>
+</tr>
+<tr>
+<td>Parameter-Argument</td>
+<td>Defining-Calling</td>
+</tr>
+<tr>
+<td>Positional</td>
+<td>传参时前面不带 “变量名&#x3D;”, 顺序不可变</td>
+</tr>
+<tr>
+<td>Keyword</td>
+<td>传参时前面加上 “变量名&#x3D;”, 顺序可变</td>
+</tr>
+<tr>
+<td>Class</td>
+<td>实例化后用self指代</td>
+</tr>
+<tr>
+<td>Method</td>
+<td>类中定义的函数</td>
+</tr>
+<tr>
+<td>Self</td>
+<td>类的方法与普通的函数只有一个特别的区别——必须有一个额外的第一个参数名称, 按照惯例它的名称是self</td>
+</tr>
+<tr>
+<td>model.modules(), model.named_modules(), model.children(), model.named_children(), model.parameters()</td>
+<td>返回iterable可遍历；具有__iter__()或__getitem__()方法的对象，Python就认为它是一个iterable</td>
+</tr>
+<tr>
+<td>卷积神经网络基本原理</td>
+<td>MAC(Multiply Accumulates)乘加</td>
+</tr>
+<tr>
+<td>FLOPs</td>
+<td>is abbreviation of floating operations which includes mul &#x2F; add &#x2F; div … etc.</td>
+</tr>
+<tr>
+<td>FLOPS</td>
+<td>floating point operations per second</td>
+</tr>
+<tr>
+<td>MACs</td>
+<td>stands for multiply–accumulate operation that performs a &lt;- a + (b x c).</td>
+</tr>
+<tr>
+<td>《TVM: End-to-End Optimization Stack for Deep Learning》</td>
+<td>TVM是陈天奇领导的一个DL加速框架项目。它处于DL框架（如tensorflow、pytorch）和硬件后端（如CUDA、OpenCL）之间，兼顾了前者的易用性和后者的执行效率。</td>
+</tr>
+<tr>
+<td>Pytorch Hook 函数</td>
+<td>hook 函数用以获取我们不方便获得的一些中间变量</td>
+</tr>
+<tr>
+<td>Magic Method <strong>call</strong>()</td>
+<td>将对象当方法使用</td>
+</tr>
+<tr>
+<td>Magic Method <strong>new</strong>()</td>
+<td>创建类实例的静态方法</td>
+</tr>
+<tr>
+<td>Magic Method <strong>repr</strong>()</td>
+<td>直接输出某个实例化对象，默认情况下输出是“类名+object at+内存地址”，可重写获得想要的属性信息</td>
+</tr>
+<tr>
+<td>Magic Method <strong>del</strong>()</td>
+<td>销毁对象</td>
+</tr>
+<tr>
+<td>Magic Method <strong>dir</strong>()</td>
+<td>列出对象的所有属性名、方法名</td>
+</tr>
+<tr>
+<td>Magic Method <strong>dict</strong>()</td>
+<td>查看对象内部所有属性名和属性值组成的字典dict</td>
+</tr>
+<tr>
+<td>conda配置文件.condarc</td>
+<td>.condarc是conda 应用程序的配置文件，在用户家目录（windows：C:usersusername，linux：&#x2F;home&#x2F;username&#x2F;）</td>
+</tr>
+<tr>
+<td>conda查看配置</td>
+<td>conda config –show</td>
+</tr>
+<tr>
+<td>conda添加更新镜像源</td>
+<td>conda config –add channels …</td>
+</tr>
+<tr>
+<td>conda删除更新镜像源</td>
+<td>conda config –remove channels …</td>
+</tr>
+<tr>
+<td>conda 代理</td>
+<td>conda config –set proxy_servers.http … config –set proxy_servers.https …</td>
+</tr>
+<tr>
+<td>深度学习—激活函数</td>
+<td>Sigmoid、tanh、ReLU、ReLU6及变体P-R-Leaky、ELU、SELU、Swish、Mish、Maxout、hard-sigmoid、hard-swish</td>
+</tr>
+<tr>
+<td>CUDA Toolkit</td>
+<td>Nvidia 官方提供的 CUDA Toolkit 是一个完整的工具安装包，其中提供了 Nvidia 驱动程序、开发 CUDA 程序相关的开发工具包等可供安装的选项</td>
+</tr>
+<tr>
+<td>cudatoolkit</td>
+<td>Anaconda 在安装 Pytorch 等会使用到 CUDA 的框架时，会自动为用户安装 cudatoolkit，其主要包含应用程序在使用 CUDA 相关的功能时所依赖的动态链接库。在安装了 cudatoolkit 后，只要系统上存在与当前的 cudatoolkit 所兼容的 Nvidia 驱动，则已经编译好的 CUDA 相关的程序就可以直接运行，而不需要安装完整的 Nvidia 官方提供的 CUDA Toolkit</td>
+</tr>
+<tr>
+<td>linux之ls -l命令</td>
+<td>得到一个目录下的文件和子目录的详细信息，一共包含9列</td>
+</tr>
+<tr>
+<td>Linux中bashrc位置</td>
+<td>&#x2F;etc&#x2F;.bashrc</td>
+</tr>
+<tr>
+<td>.bashrc用途</td>
+<td>个性化指令；设置环境变量,所有环境变量名都是大写，Linux区分大小写</td>
+</tr>
+<tr>
+<td>.bashrc 路径修改</td>
+<td>“export PATH&#x3D;$PATH:路径” ，在原来PATH的后面继续添加了新的路径，在运行特定指令时，系统会逐个位置去寻找文件。 $PATH 表示原先设定的路径，不能遗漏。不同于DOS&#x2F;Windows，Unix类系统的环境变量的路径用冒号:分割，而不是分号;</td>
+</tr>
+<tr>
+<td>.bashrc修改生效</td>
+<td>source &#x2F;etc&#x2F;.bashrc</td>
+</tr>
+<tr>
+<td>.bashrc文件没了怎么办？</td>
+<td>从如下路径拷贝一份原始的.bashrc文件到用户home目录下:cp &#x2F;etc&#x2F;skel&#x2F;.bashrc ~&#x2F;</td>
+</tr>
+<tr>
+<td>nvcc: command not found</td>
+<td>1. nvcc安装在&#x2F;usr&#x2F;local&#x2F;cuda&#x2F;bin；2.添加路径 export LD_LIBRARY_PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;cuda&#x2F;lib；export PATH&#x3D;$PATH:&#x2F;usr&#x2F;local&#x2F;cuda&#x2F;bin；3. 更新配置文件 source ~&#x2F;.bashrc</td>
+</tr>
+<tr>
+<td>linux中的“~”、“&#x2F;”、“.&#x2F;”</td>
+<td>~” ：表示主目录，也就是当前登录用户的用户目录。“&#x2F;” ：是指根目录：就是所有目录最顶层的目录。“.&#x2F;” ：表示当前目录。“..” ：表示上级目录</td>
+</tr>
+<tr>
+<td>nvcc -V</td>
+<td>查看当前CUDA的版本，即实际安装的CUDA版本</td>
+</tr>
+<tr>
+<td>nvidia-smi</td>
+<td>不仅可以查看当前NVIDIA驱动的版本，还可以查询与此驱动相匹配的CUDA版本，虽是匹配，但是CUDA的版本可以略低于此时驱动匹配的CUDA版本，因此，我们可以安装版本高一点的驱动，来兼容不同版本的CUDA！</td>
+</tr>
+<tr>
+<td>linux 命令 wq</td>
+<td>write and quit</td>
+</tr>
+<tr>
+<td>linux 命令 wq!</td>
+<td>forcely write and quit</td>
+</tr>
+<tr>
+<td>linux 命令 x</td>
+<td>storage and quit</td>
+</tr>
+<tr>
+<td>ImageNet 数据集</td>
+<td>ImageNet 是一个计算机视觉系统识别项目，是目前世界上最大的图像识别数据库。此项目由斯坦福大学李飞飞等教授于 2009 年发起.ImageNet 中目前共有 14,197,122 幅图像，总共分为 21,841 个类别（synsets），通常我们所说的 ImageNet 数据集其实是指 ISLVRC2012 比赛用的子数据集，其中 train 有 1,281,167 张照片和标签，共 1000 类，大概每类 1300 张图片，val 有 50,000 副图像，每类 50 个数据，test 有 100,000 副图片，每类 100 个数据。</td>
+</tr>
+<tr>
+<td>Linux 命令 echo</td>
+<td>1.打印输出 echo -e “hello\tworld” 2.覆盖echo Hello World &gt; log.txt3.追加 echo Hello World &gt;&gt; log.txt</td>
+</tr>
+<tr>
+<td>python print 格式符%</td>
+<td>print (“His name is %s”%(“Aviad”))；print (“He is %d years old”%(25))；print (“His height is %.2f m”%(1.83234)</td>
+</tr>
+<tr>
+<td>python print 格式化字符串f</td>
+<td>print(f’{A}的类型为{type(A)}’)</td>
+</tr>
+<tr>
+<td>python print 转义字符 \</td>
+<td>\n表示换行，\t表示制表符，\r表示回车，\f表示换页</td>
+</tr>
+<tr>
+<td>python print print+format组合</td>
+<td>print(“{1} {0} {1}”.format(“hello”, “world”) ) # 设置指定位置,输出为’world hello world’</td>
+</tr>
+<tr>
+<td>解决每次打开终端都需要source .bashrc问题</td>
+<td>登录Linux时，执行顺序可以总结为：&#x2F;etc&#x2F;profile→ (<del>&#x2F;.bash_profile | ~&#x2F;.bash_login | ~&#x2F;.profile)→</del>&#x2F;.bashrc →&#x2F;etc&#x2F;bashrc 故只需在&#x2F;etc&#x2F;profile 或 ~&#x2F;.bash_profile 文件中添加：</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># ~/.bash_profile</span><br><span class="line">if [ -f ~/.bashrc ]; then</span><br><span class="line">    . ~/.bashrc                </span><br><span class="line">fi </span><br><span class="line"></span><br><span class="line"># /etc/profile</span><br><span class="line"> if [ -f /etc/.bashrc ]; then </span><br><span class="line">     . /etc/.bashrc</span><br><span class="line"> fi</span><br></pre></td></tr></table></figure>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Method</th>
+</tr>
+</thead>
+</table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/21/CUDA%20Tutorial/" rel="prev" title="CUDA_Tutorial">
+                  <i class="fa fa-chevron-left"></i> CUDA_Tutorial
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jarvis</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
