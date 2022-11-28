@@ -187,9 +187,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-11-17 11:12:15 / 修改时间：17:19:10" itemprop="dateCreated datePublished" datetime="2022-11-17T11:12:15+08:00">2022-11-17</time>
+      <time title="创建时间：2022-11-17 11:12:15" itemprop="dateCreated datePublished" datetime="2022-11-17T11:12:15+08:00">2022-11-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-11-19 14:44:22" itemprop="dateModified" datetime="2022-11-19T14:44:22+08:00">2022-11-19</time>
     </span>
 
   
@@ -374,12 +380,79 @@
 <td>storage and quit</td>
 </tr>
 <tr>
-<td>ImageNet 数据集</td>
-<td>ImageNet 是一个计算机视觉系统识别项目，是目前世界上最大的图像识别数据库。此项目由斯坦福大学李飞飞等教授于 2009 年发起.ImageNet 中目前共有 14,197,122 幅图像，总共分为 21,841 个类别（synsets），通常我们所说的 ImageNet 数据集其实是指 ISLVRC2012 比赛用的子数据集，其中 train 有 1,281,167 张照片和标签，共 1000 类，大概每类 1300 张图片，val 有 50,000 副图像，每类 50 个数据，test 有 100,000 副图片，每类 100 个数据。</td>
+<td>linux netcat</td>
+<td>查看端口 22 是否在主机 192.168.56.10 上打开 –&gt; nc -zv 192.168.1.15 22</td>
 </tr>
 <tr>
-<td>Linux 命令 echo</td>
+<td>linux 解压缩zip文件</td>
+<td>unzip…</td>
+</tr>
+<tr>
+<td>linux下路径名中含空格如何处理</td>
+<td>1.使用转义字符“\” 2.将路径名加双引号”” 或 单引号‘’</td>
+</tr>
+<tr>
+<td>linux sudo: command not found</td>
+<td>apt-get install sudo</td>
+</tr>
+<tr>
+<td>linux 命令 echo</td>
 <td>1.打印输出 echo -e “hello\tworld” 2.覆盖echo Hello World &gt; log.txt3.追加 echo Hello World &gt;&gt; log.txt</td>
+</tr>
+<tr>
+<td>解决每次打开终端都需要source .bashrc问题</td>
+<td>登录Linux时，执行顺序可以总结为：&#x2F;etc&#x2F;profile→ (<del>&#x2F;.bash_profile | ~&#x2F;.bash_login | ~&#x2F;.profile)→</del>&#x2F;.bashrc →&#x2F;etc&#x2F;bashrc 故只需在&#x2F;etc&#x2F;profile 或 ~&#x2F;.bash_profile 文件中添加：</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># ~/.bash_profile</span><br><span class="line">if [ -f ~/.bashrc ]; then</span><br><span class="line">    . ~/.bashrc                </span><br><span class="line">fi </span><br><span class="line"></span><br><span class="line"># /etc/profile</span><br><span class="line"> if [ -f /etc/.bashrc ]; then </span><br><span class="line">     . /etc/.bashrc</span><br><span class="line"> fi</span><br></pre></td></tr></table></figure>
+
+<hr>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>args 是 arguments 的缩写</td>
+<td><em>args就是就是传递一个可变参数列表给函数实参，</em>args 必须放在 **kwargs 的前面</td>
+</tr>
+<tr>
+<td>kwargs 是 keyword arguments 的缩写</td>
+<td>**kwargs则是将一个可变的关键字参数的字典传给函数实参</td>
+</tr>
+<tr>
+<td>Python startswith()</td>
+<td>检查字符串是否是以指定子字符串开头</td>
+</tr>
+<tr>
+<td>Python os.path.join()</td>
+<td>用于路径拼接，可以传入多个路径</td>
+</tr>
+<tr>
+<td>Python tuple</td>
+<td>元组：有序且不可更改的集合，tup&#x3D;(1,2,3,4)</td>
+</tr>
+<tr>
+<td>Python list</td>
+<td>列表：有序，list&#x3D;[1,2,3,4]</td>
+</tr>
+<tr>
+<td>Python dictionary</td>
+<td>字典：无序，dic&#x3D;{‘a’:12,‘b’:34}</td>
+</tr>
+<tr>
+<td>Python set()</td>
+<td>创建一个无序不重复元素集</td>
+</tr>
+<tr>
+<td>Python lambda</td>
+<td>lambda 函数是一种小的匿名函数。lambda 函数可接受任意数量的参数，但只能有一个表达式。语法 lambda arguments : expression</td>
+</tr>
+<tr>
+<td>Python pdb</td>
+<td>pdb是ptyhon内置的一个调试库</td>
 </tr>
 <tr>
 <td>python print 格式符%</td>
@@ -398,11 +471,126 @@
 <td>print(“{1} {0} {1}”.format(“hello”, “world”) ) # 设置指定位置,输出为’world hello world’</td>
 </tr>
 <tr>
-<td>解决每次打开终端都需要source .bashrc问题</td>
-<td>登录Linux时，执行顺序可以总结为：&#x2F;etc&#x2F;profile→ (<del>&#x2F;.bash_profile | ~&#x2F;.bash_login | ~&#x2F;.profile)→</del>&#x2F;.bashrc →&#x2F;etc&#x2F;bashrc 故只需在&#x2F;etc&#x2F;profile 或 ~&#x2F;.bash_profile 文件中添加：</td>
+<td>Python3 assert</td>
+<td>语法格式：assert expression 等价于if not expression:    raise AssertionError</td>
+</tr>
+<tr>
+<td>Python logging库</td>
+<td>常用的记录日志库</td>
+</tr>
+<tr>
+<td>Python Try…Except</td>
+<td>Debug</td>
+</tr>
+<tr>
+<td>Python a is b</td>
+<td>a is b , 这是一个同一性运算符。用于比较两个对象的物理id。如果相同则返回True否则返回False.Python为了优化效率,内置了小整数对象池和简单字符串对象池。小整数对象池包括[-5, 256]。两变量如a&#x3D;2 b&#x3D;2,a is b –&gt;return TRUE</td>
+</tr>
+<tr>
+<td>Python a &#x3D;&#x3D; b</td>
+<td>a &#x3D;&#x3D; b , 这是一个比较运算符,用于比较两个对象的value(值)是否相同,相同则返回True 否则返回False</td>
+</tr>
+<tr>
+<td>python super().<strong>init</strong>()</td>
+<td>super().<strong>init</strong>() 就是调用父类的init方法， 同样可以使用super()去调用父类的其他方法。</td>
+</tr>
+<tr>
+<td>torch.arange(start,end)</td>
+<td>produces values in [start, end)</td>
+</tr>
+<tr>
+<td>Python sum(iterable,start)</td>
+<td>sum&#x3D;iterable的和+start的值</td>
+</tr>
+<tr>
+<td>Python “<strong>name</strong>“</td>
+<td>__name__是python的一个内置类属性，它存储模块的名称。python的模块既可以被调用，也可以独立运行。而被调用时__name__存储的是py文件名(模块名称)，独立运行时存储的是”<strong>main</strong>“。</td>
+</tr>
+<tr>
+<td>Python list(set(a))</td>
+<td>set(a)将列表a转换为集合，集合是一个包含不重复元素的无序序列，然后再使用list将集合转换为列表</td>
+</tr>
+<tr>
+<td>Python apply()</td>
+<td>apply(func,*args,**kwargs)</td>
+</tr>
+<tr>
+<td>Python *</td>
+<td>*用在tuple变量之前作为函数参数，可将tuple&#x2F;list 转化为多个参数传入函数</td>
+</tr>
+<tr>
+<td>Python **</td>
+<td>调用函数时，**用在dict变量之前作为函数参数，可将dict转化为多个关键字参数传入函数</td>
+</tr>
+<tr>
+<td>Python 单下划线开头</td>
+<td>半私有变量</td>
+</tr>
+<tr>
+<td>Python 双下划线开头</td>
+<td>私有变量</td>
+</tr>
+<tr>
+<td>Python 双下划线开头、双下划线结尾</td>
+<td>Python内置属性名或者魔法方法名。是Python自己实现的属性和方法，一般不允许自定义类似此种命名方式的属性或者方法。</td>
+</tr>
+<tr>
+<td>Python copy()</td>
+<td>不管多么复杂的数据结构，浅拷贝都只会copy一层。如列表是三层表示的，类似c中指针的指针</td>
+</tr>
+<tr>
+<td>Python deepcopy()</td>
+<td>将整个变量内存全部复制一遍，新变量与原变量没有任何关系。</td>
+</tr>
+<tr>
+<td>Python import…</td>
+<td>导入一个模块，使用：模块.函数</td>
+</tr>
+<tr>
+<td>Python from…import…</td>
+<td>导入了一个模块中的一个函数，使用：直接使用函数名使用就可以了</td>
+</tr>
+<tr>
+<td>Python @staticmethod</td>
+<td>静态方法。不传入代表实例对象的self参数，并且不强制要求传递任何参数，可以被类直接调用。静态方法是独立于类的一个单独函数，只是寄存在一个类名下。静态方法就是类对外部函数的封装，有助于优化代码结构和提高程序的可读性。</td>
+</tr>
+<tr>
+<td>Python @classmethod</td>
+<td>类方法。不传入self示例本身，而是传入cls，代表这个类自身，可以来调用类的属性，类的方法，实例化对象等。类方法是将类本身作为操作对象。当我们需要和类直接进行交互，而不需要和实例进行交互时，自然也就不需要传入实例本身</td>
+</tr>
+<tr>
+<td>Python @abstractmethod</td>
+<td>抽象方法。用于程序接口的控制。含有abstractmethod 方法的类不能实例化，继承了含abstractmethod方法的子类必须复写所有abstractmethod装饰的方法，未被装饰的不重写</td>
+</tr>
+<tr>
+<td>Python @property</td>
+<td>将一个方法伪装成属性。被修饰的特性方法，内部可以实现处理逻辑，但对外提供统一的调用方式（访问方式很友好）</td>
+</tr>
+<tr>
+<td>Python class</td>
+<td>类： 采用 Class 作为关键字进行定义的代码块，表示的是一种类别</td>
+</tr>
+<tr>
+<td>Python object</td>
+<td>对象： 实例化之后的类，对类中的形参进行了赋值，赋予其真正的含义或数值</td>
+</tr>
+<tr>
+<td>Python method</td>
+<td>方法： 使用 def 作为关键词，定义在类内的函数</td>
+</tr>
+<tr>
+<td>Python function</td>
+<td>函数： 使用 def 作为关键词，但是没有在类内进行定义，即 定义在类外</td>
+</tr>
+<tr>
+<td>Python attribute</td>
+<td>属性： 类内的称呼，其实就是类内的变量，同一个类内的不同方法内的变量都是这个类的属性，也就是这个类的变量</td>
+</tr>
+<tr>
+<td>Python None</td>
+<td>与C不同，在python中是没有NULL，但存在相近意义的None。None表示空值，它是一个特殊 Python 对象, None的类型是NoneType</td>
 </tr>
 </tbody></table>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># ~/.bash_profile</span><br><span class="line">if [ -f ~/.bashrc ]; then</span><br><span class="line">    . ~/.bashrc                </span><br><span class="line">fi </span><br><span class="line"></span><br><span class="line"># /etc/profile</span><br><span class="line"> if [ -f /etc/.bashrc ]; then </span><br><span class="line">     . /etc/.bashrc</span><br><span class="line"> fi</span><br></pre></td></tr></table></figure>
 <hr>
 <table>
 <thead>
@@ -411,7 +599,96 @@
 <th>Method</th>
 </tr>
 </thead>
-</table>
+<tbody><tr>
+<td>torch.nn.Parameter()</td>
+<td>torch.nn.Parameter是继承自torch.Tensor的子类，其主要作用是作为nn.Module中的可训练参数使用。它与torch.Tensor的区别就是nn.Parameter会自动被认为是module的可训练参数，即加入到parameter()这个迭代器中去；而module中非nn.Parameter()的普通tensor是不在parameter中的。</td>
+</tr>
+<tr>
+<td>注意到，nn.Parameter的对象的requires_grad属性的默认值是True，即是可被训练的，这与torth.Tensor对象的默认值相反。</td>
+<td></td>
+</tr>
+<tr>
+<td>Pytorch .item()</td>
+<td>.item()用于在只包含一个元素的tensor中提取值，注意是只包含一个元素，否则的话使用.tolist()</td>
+</tr>
+<tr>
+<td>Pytorch model.train()</td>
+<td>启用 Batch Normalization 和 Dropout。</td>
+</tr>
+<tr>
+<td>Pytorch model.eval()</td>
+<td>不启用 Batch Normalization 和 Dropout。eval模式不会影响各层的gradient计算行为，即gradient计算和存储与training模式一样，只是不进行反向传播（back probagation)。</td>
+</tr>
+<tr>
+<td>Pytorch torch.no_grad()</td>
+<td>with torch.no_grad()则主要是用于停止autograd模块的工作，以起到加速和节省显存的作用。它的作用是将该with语句包裹起来的部分停止梯度的更新，从而节省了GPU算力和显存，但是并不会影响dropout和BN层的行为。</td>
+</tr>
+<tr>
+<td>Pytorch torch.max(input,dim)</td>
+<td>dim：input每个元素参与比较的维度</td>
+</tr>
+<tr>
+<td>Pytorch torch.tensor()</td>
+<td>Constructs a tensor with no autograd history (also known as a “leaf tensor”, see Autograd mechanics) by copying data.</td>
+</tr>
+<tr>
+<td>Pytorch torch.Tensor()</td>
+<td>A torch.Tensor is a multi-dimensional matrix containing elements of a single data type.</td>
+</tr>
+<tr>
+<td>Pytorch torch.autograd.Variable()</td>
+<td>Autograd的核心类，浅封装（thin wrapper）了Tensor，用于整合实现反向传播。torch0.4后张量与自动微分变量整合，tensor直接当作自动微分变量使用，旦Variable仍可使用</td>
+</tr>
+<tr>
+<td>Pytorch 自定义autograd中的Function</td>
+<td>自定义pytorch中动态图的算子(operator)，也就是动态图的“边”，需要继承torch.autograd.Function类，并实现forward与backward方法。在使用自定义的算子时，需要使用apply方法。</td>
+</tr>
+<tr>
+<td>Pytorch torch.save(net,path)</td>
+<td>保存模型,模型&#x3D;网络结构+网络参数</td>
+</tr>
+<tr>
+<td>Pytorch torch.save(net.state_dict(),path)</td>
+<td>保存网络参数</td>
+</tr>
+</tbody></table>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>深度学习之embedding层</td>
+<td>通过矩阵乘法实现降维，信息不变，按照某种映射关系将原本矩阵的信息转换到了一个新的维度的矩阵里面，节省存储空间。也可以逆向升维</td>
+</tr>
+<tr>
+<td>ImageNet 数据集</td>
+<td>ImageNet 是一个计算机视觉系统识别项目，是目前世界上最大的图像识别数据库。此项目由斯坦福大学李飞飞等教授于 2009 年发起.ImageNet 中目前共有 14,197,122 幅图像，总共分为 21,841 个类别（synsets），通常我们所说的 ImageNet 数据集其实是指 ISLVRC2012 比赛用的子数据集，其中 train 有 1,281,167 张照片和标签，共 1000 类，大概每类 1300 张图片，val 有 50,000 副图像，每类 50 个数据，test 有 100,000 副图片，每类 100 个数据。</td>
+</tr>
+<tr>
+<td>海森矩阵</td>
+<td>Hessian Matrix 二阶导数矩阵</td>
+</tr>
+<tr>
+<td>Ubuntu中切换Python版本</td>
+<td>1.列出可用的 Python 替代版本：update-alternatives –list python 2.列出的 Python 版本中选择进行切换：update-alternatives –config python</td>
+</tr>
+<tr>
+<td>目标检测&#x2F;图像分割评价单张图片标准</td>
+<td>IOU(Intersection-Over-Union)交并比</td>
+</tr>
+<tr>
+<td>目标检测&#x2F;图像分割评价一套算法标准</td>
+<td>在整个数据集测试结果 准确率（Pixel Accuracy）：检测出来物体占待检测总体（包含检测出和未检测出）的比例；精确度（Pixel Precision）：检测出来正确的物体占检测出物体总体的比例</td>
+</tr>
+<tr>
+<td>LSTMs</td>
+<td>Long Short Term Memory networks</td>
+</tr>
+</tbody></table>
 
       
     </div>
@@ -1276,7 +1553,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-14 14:19:16" itemprop="dateModified" datetime="2022-11-14T14:19:16+08:00">2022-11-14</time>
+      <time title="修改时间：2022-11-28 09:09:31" itemprop="dateModified" datetime="2022-11-28T09:09:31+08:00">2022-11-28</time>
     </span>
 
   
@@ -1496,6 +1773,23 @@
 </ol>
 <h2 id="本周计划-9"><a href="#本周计划-9" class="headerlink" title="本周计划"></a>本周计划</h2><ol>
 <li>矩阵理论考试准备</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2022-11-14-2022-11-20）"><a href="#进度汇报-（2022-11-14-2022-11-20）" class="headerlink" title="进度汇报 （2022.11.14-2022.11.20）"></a>进度汇报 （2022.11.14-2022.11.20）</h2><ol>
+<li>处理考试相关</li>
+<li>整理之前解决问题的很多网页记录；学习docker</li>
+</ol>
+<h2 id="本周计划-10"><a href="#本周计划-10" class="headerlink" title="本周计划"></a>本周计划</h2><ol>
+<li>阅读浮点量化相关论文，改进FP8量化</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2022-11-14-2022-11-20）-1"><a href="#进度汇报-（2022-11-14-2022-11-20）-1" class="headerlink" title="进度汇报 （2022.11.14-2022.11.20）"></a>进度汇报 （2022.11.14-2022.11.20）</h2><ol>
+<li>FP8: 对于fixed FP8 formats即在sign:exponet:mantissa固定在1:4:3或1:5:2的情况下，如果像IEEE754 FP32一样固定尾数偏移，得不到论文中展示的接近或 优于IN8的表现，采用类似INT8的缩放策略亦未奏效。</li>
+<li>审稿</li>
+</ol>
+<h2 id="本周计划-11"><a href="#本周计划-11" class="headerlink" title="本周计划"></a>本周计划</h2><ol>
+<li>课程考试、作业处理</li>
+<li>阅读论文:On-Device Training Under 256KB Memory</li>
 </ol>
 
       
