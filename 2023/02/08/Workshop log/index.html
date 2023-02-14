@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"kyrie2to11.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="NTIRE Workshop and Challenges @ CVPR 2023 Efficient Super-Resolution Challenge(ESR) 经典baseline:  information multi-distillation block,IMDN (2019)  Residual feature distillation block,RFDN (2020) Resid">
+    <meta name="description" content="NTIRE Workshop and Challenges @ CVPR 2023 Efficient Super-Resolution Challenge(ESR)  经典baseline:  information multi-distillation block,IMDN (2019)  Residual feature distillation block,RFDN (2020) Resi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Workshop log">
 <meta property="og:url" content="https://kyrie2to11.github.io/2023/02/08/Workshop%20log/index.html">
 <meta property="og:site_name" content="Jarvis&#39;s Blog">
-<meta property="og:description" content="NTIRE Workshop and Challenges @ CVPR 2023 Efficient Super-Resolution Challenge(ESR) 经典baseline:  information multi-distillation block,IMDN (2019)  Residual feature distillation block,RFDN (2020) Resid">
+<meta property="og:description" content="NTIRE Workshop and Challenges @ CVPR 2023 Efficient Super-Resolution Challenge(ESR)  经典baseline:  information multi-distillation block,IMDN (2019)  Residual feature distillation block,RFDN (2020) Resi">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-02-08T08:30:22.000Z">
-<meta property="article:modified_time" content="2023-02-12T10:36:03.098Z">
+<meta property="article:modified_time" content="2023-02-14T16:12:14.770Z">
 <meta property="article:author" content="jarvis">
 <meta name="twitter:card" content="summary">
 
@@ -110,7 +110,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NTIRE-Workshop-and-Challenges-CVPR-2023"><span class="nav-number">1.</span> <span class="nav-text">NTIRE Workshop and Challenges @ CVPR 2023</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NTIRE-Workshop-and-Challenges-CVPR-2023"><span class="nav-number">1.</span> <span class="nav-text">NTIRE Workshop and Challenges @ CVPR 2023</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Video-Super-Resolution"><span class="nav-number">2.</span> <span class="nav-text">Video Super-Resolution</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -123,7 +123,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -199,7 +199,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-12 18:36:03" itemprop="dateModified" datetime="2023-02-12T18:36:03+08:00">2023-02-12</time>
+      <time title="修改时间：2023-02-15 00:12:14" itemprop="dateModified" datetime="2023-02-15T00:12:14+08:00">2023-02-15</time>
     </span>
 
   
@@ -213,7 +213,8 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="NTIRE-Workshop-and-Challenges-CVPR-2023"><a href="#NTIRE-Workshop-and-Challenges-CVPR-2023" class="headerlink" title="NTIRE Workshop and Challenges @ CVPR 2023"></a>NTIRE Workshop and Challenges @ CVPR 2023</h1><ol>
-<li>Efficient Super-Resolution Challenge(ESR)<ul>
+<li><p>Efficient Super-Resolution Challenge(ESR)</p>
+<ul>
 <li>经典baseline: <ul>
 <li>information multi-distillation block,IMDN (2019) </li>
 <li>Residual feature distillation block,RFDN (2020)</li>
@@ -221,6 +222,8 @@
 </ul>
 </li>
 <li>初期调试跑起来时，目录名称有一点变化就会在别处导致意想不到的错误:(</li>
+<li>很多队伍都用到了Quantization Aware Training (QAT)</li>
+<li>2022参赛上榜的网络结构和权重都有提供</li>
 <li>results</li>
 </ul>
 <hr>
@@ -329,7 +332,8 @@
 </tbody></table>
 <hr>
 </li>
-<li>Mobile AI workshop 2023<ul>
+<li><p>Mobile AI workshop 2023</p>
+<ul>
 <li>测试可以用自己手机，也可使用提供的远程设备(速度慢有延迟)</li>
 <li>2022 tracks</li>
 </ul>
@@ -412,6 +416,44 @@
 </tr>
 </tbody></table>
 <hr>
+<ol>
+<li>计划参加track:Image Super-Resolution 3月份开始</li>
+<li>Train 2021 anchor-based plain net (ABPN) 两次<ul>
+<li>200 epoch 时报错停掉一次</li>
+<li>600 epoch 完整跑完，但loss上下波动不收敛</li>
+</ul>
+</li>
+<li>andriod对原作提供的TF-lite模型进行了测试,测试流程掌握了</li>
+</ol>
+<h1 id="Video-Super-Resolution"><a href="#Video-Super-Resolution" class="headerlink" title="Video Super-Resolution"></a>Video Super-Resolution</h1><ul>
+<li>papers<ol>
+<li>Ntire 2019 challenge on video super-resolution: Methods and results</li>
+<li>Ntire 2020 challenge on image and video deblurring</li>
+<li>Pynet-v2 mobile: Efficient on-device photo processing with neural networks<br> - Image Signal Process(ISP): 手机成像流程 光-&gt;CMOS传感器-&gt;成像引擎ISP-&gt;AI(GPU)-&gt;图片；镜头和CMOS在将光学信号转化为由0、1、0、1组成的数字信号时可能存在细节上的遗漏和错误，而ISP单元的主要任务就是进行“纠错”、“校验”和“补偿”。<br> - pynet模型便于移动端部署的mobile版本目的是end-to-end learned ISP,时间很近:2022 26th International Conference on Pattern Recognition (ICPR). IEEE, 2022.<br> - CNN based</li>
+<li>Microisp: Processing 32mp photos on mobile devices with deep learning. In: European Conference on Computer Visio(2022)</li>
+<li>Power Efficient Video Super-Resolution on Mobile NPUs with Deep Learning, Mobile AI &amp; AIM 2022 challenge: Report<br>  - tutorial: <a target="_blank" rel="noopener" href="https://github.com/MediaTek-NeuroPilot/mai22-real-time-video-sr">https://github.com/MediaTek-NeuroPilot/mai22-real-time-video-sr</a>. baseline:MobileRNN<br>  - scoring: Final Score &#x3D; α · PSNR + β · (1 − power consumption) α &#x3D; 1.66 and β &#x3D; 50，注重PSNR和power consumption两个指标<br>  - Challenge Methods<ol>
+<li><ul>
+<li>Discussion:</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>The majority of models followed a simple single-frame restoration approach to improve the runtime and power efficiency. 大部分模型技术路线是降低单帧超分的运行时间和能量消耗，网络模型都比较浅</li>
+<li>GenMedia Group(一家韩国公司) 基于上年度单帧超分冠军方案ABPN小改进而来，排名第6但psnr:28.40最好,是唯二psnr超过28的方案之一，另一个是221B团队基于RNN的方法</li>
+<li>基于RNN的方案推理速度较慢且能耗高</li>
+<li>总结：2022年来看设备上的视频超分CNN是适合的，因为CNN取得了runtime energy_consumption restoration_quality 的平衡</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>ideas<ol>
+<li>尝试BasicVSR++的轻量化</li>
+<li>在ABPN的基础上加入BasicVSR++的主要idea进行改进</li>
+<li>尝试讲Pynet_v2应用于video super_resolution</li>
+<li>先train MRNN baseline</li>
+</ol>
+</li>
+</ul>
 </li>
 </ol>
 
@@ -432,6 +474,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2023/02/13/OnePlus-Recovery/" rel="next" title="OnePlus_Recovery">
+                  OnePlus_Recovery <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
