@@ -159,7 +159,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/13/OnePlus-Recovery/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/17/Workshop-log-backup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -177,7 +177,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/13/OnePlus-Recovery/" class="post-title-link" itemprop="url">OnePlus_Recovery</a>
+          <a href="/2023/02/17/Workshop-log-backup/" class="post-title-link" itemprop="url">Workshop_log_backup</a>
         </h2>
 
         <div class="post-meta-container">
@@ -189,115 +189,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2023-02-13 12:01:08 / 修改时间：12:58:36" itemprop="dateCreated datePublished" datetime="2023-02-13T12:01:08+08:00">2023-02-13</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Procedure:</p>
-<ol>
-<li>备份数据：相册 安装应用名单</li>
-<li>root 解锁</li>
-<li>ADB 刷入TWRP Recovery镜像</li>
-<li>刷入ROM（3种方法）<ol>
-<li>电脑的磁盘列表中找到手机，复制ROM至手机的内部存储，复制完成后在recovery主菜单中，点击Install，点击ROM包，滑动后进行刷入。</li>
-<li>用命令将ROM推送至手机（filename.zip为ROM名称，可拖动ROM文件至命令窗口自动填入完整文件地址，或输入文件名前几个字母后按Tab键来自动补全文件名）<ul>
-<li>检测设备是否连接: adb devices</li>
-<li>推送ROM: adb push ROM_name.zip &#x2F;sdcard&#x2F;</li>
-<li>推送完成后在recovery主菜单中点击Install，点击ROM包，滑动进行刷入。</li>
-</ul>
-</li>
-<li>在recovery主菜单中，点击“高级”，点击ADB sideload，滑动底部按钮，在PowerShell窗口用命令：.\adb sideload ROM_name.zip</li>
-</ol>
-</li>
-<li>刷入Magisk<ol>
-<li>目的:<ul>
-<li>未获得 Google「认证」的设备无法从 Play 应用商店下载安装 Netflix，Google Pay、Pokémon Go 等应用不能在已 root 的设备上正常运行，改动过系统文件的 ROM 无法通过 OEM 渠道进行正常的 OTA 更新升级……</li>
-<li>Magisk 的实现方式就像是一种魔法，当被挂载的 Magisk 分区被隐藏甚至被取消挂载时，原有系统分区的完整性丝毫未损，玩需要 root 验证的游戏、运行对设备认证状态有要求的应用甚至进行需要验证系统完整性的 OTA 更新都没有任何问题。</li>
-</ul>
-</li>
-<li>方法:<ol>
-<li>在刷入前，我们先安装 Magisk App 来检查设备的信息，来确定进一步的操作。我们先到官方项目地址：<a target="_blank" rel="noopener" href="https://github.com/topjohnwu/Magisk/releases">https://github.com/topjohnwu/Magisk/releases</a> 下载 apk 文件安装。<ul>
-<li>Tip:从 Magisk 22 开始，不再区分刷写用的 .zip 包与安装管理器用到的 .apk 应用安装包，二者合一且只有后缀的区别，默认提供 .apk 包，更改后缀为 .zip 后即可被刷写。</li>
-</ul>
-</li>
-<li>打开安装后的 Magisk App，像上面的最后一张截图一样，你能看到一项名为 Ramdisk 的值。请确保此项的值为「是」「True」，我们再进行下一步。</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/08/Workshop%20log/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jarvis">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarvis's Blog">
-      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Jarvis's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/08/Workshop%20log/" class="post-title-link" itemprop="url">Workshop log</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-02-08 16:30:22" itemprop="dateCreated datePublished" datetime="2023-02-08T16:30:22+08:00">2023-02-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-16 10:37:47" itemprop="dateModified" datetime="2023-02-16T10:37:47+08:00">2023-02-16</time>
+      <time title="创建时间：2023-02-17 10:29:03 / 修改时间：19:32:26" itemprop="dateCreated datePublished" datetime="2023-02-17T10:29:03+08:00">2023-02-17</time>
     </span>
 
   
@@ -527,15 +419,14 @@
 <li>papers<ol>
 <li>Ntire 2019 challenge on video super-resolution: Methods and results</li>
 <li>Ntire 2020 challenge on image and video deblurring</li>
-<li>Pynet-v2 mobile: Efficient on-device photo processing with neural networks<br> - Image Signal Process(ISP): 手机成像流程 光-&gt;CMOS传感器-&gt;成像引擎ISP-&gt;AI(GPU)-&gt;图片；镜头和CMOS在将光学信号转化为由0、1、0、1组成的数字信号时可能存在细节上的遗漏和错误，而ISP单元的主要任务就是进行“纠错”、“校验”和“补偿”。<br> - pynet模型便于移动端部署的mobile版本目的是end-to-end learned ISP,时间很近:2022 26th International Conference on Pattern Recognition (ICPR). IEEE, 2022.<br> - CNN based</li>
-<li>Microisp: Processing 32mp photos on mobile devices with deep learning. In: European Conference on Computer Visio(2022)</li>
-<li>Power Efficient Video Super-Resolution on Mobile NPUs with Deep Learning, Mobile AI &amp; AIM 2022 challenge: Report<br>  - tutorial: <a target="_blank" rel="noopener" href="https://github.com/MediaTek-NeuroPilot/mai22-real-time-video-sr">https://github.com/MediaTek-NeuroPilot/mai22-real-time-video-sr</a>. baseline:MobileRNN<br>  - scoring: Final Score &#x3D; α · PSNR + β · (1 − power consumption) α &#x3D; 1.66 and β &#x3D; 50，注重PSNR和power consumption两个指标<br>  - Challenge Methods<ol>
-<li><ul>
-<li>Discussion:</li>
+<li>Pynet-v2 mobile: Efficient on-device photo processing with neural networks <ul>
+<li>Image Signal Process(ISP): 手机成像流程 光-&gt;CMOS传感器-&gt;成像引擎ISP-&gt;AI(GPU)-&gt;图片；镜头和CMOS在将光学信号转化为由0、1、0、1组成的数字信号时可能存在细节上的遗漏和错误，而ISP单元的主要任务就是进行“纠错”、“校验”和“补偿”。</li>
+<li>pynet模型便于移动端部署的mobile版本目的是end-to-end learned ISP,时间很近:2022 26th International Conference on Pattern Recognition (ICPR). IEEE, 2022.</li>
+<li>CNN based</li>
 </ul>
 </li>
-</ol>
-<ul>
+<li>Microisp: Processing 32mp photos on mobile devices with deep learning. In: European Conference on Computer Visio(2022)</li>
+<li>Power Efficient Video Super-Resolution on Mobile NPUs with Deep Learning, Mobile AI &amp; AIM 2022 challenge: Report<br>  - tutorial: <a target="_blank" rel="noopener" href="https://github.com/MediaTek-NeuroPilot/mai22-real-time-video-sr">https://github.com/MediaTek-NeuroPilot/mai22-real-time-video-sr</a>. baseline:MobileRNN<br>  - scoring: Final Score &#x3D; α · PSNR + β · (1 − power consumption) α &#x3D; 1.66 and β &#x3D; 50，注重PSNR和power consumption两个指标<br>  - Discussion: <ul>
 <li>The majority of models followed a simple single-frame restoration approach to improve the runtime and power efficiency. 大部分模型技术路线是降低单帧超分的运行时间和能量消耗，网络模型都比较浅</li>
 <li>GenMedia Group(一家韩国公司) 基于上年度单帧超分冠军方案ABPN小改进而来，排名第6但psnr:28.40最好,是唯二psnr超过28的方案之一，另一个是221B团队基于RNN的方法</li>
 <li>基于RNN的方案推理速度较慢且能耗高</li>
@@ -544,10 +435,95 @@
 </li>
 </ol>
 </li>
-<li>ideas<ol>
+<li>2022 challenge methods (ranked)<ol>
+<li>MVideoSR<ul>
+<li>paper title: ELSR: Extreme Low-Power Super Resolution Network For Mobile Devices</li>
+<li>affiliation: Video Algorithm Group, Camera Department, Xiaomi Inc., China</li>
+<li>methods: <ol>
+<li><strong>core idea</strong>: mobile friendly network which consumes as little energy as possible, discard some complex operations such as optical flow, multi-frame feature alignment, and <strong>start from single frame baselines</strong>. </li>
+<li><strong>multi-branch distillation structure</strong> show significant increase in energy consumption while  a slight increase in PSNR compared with the plain convolutional network of similar parameters. abandon multi-branch network architectures, and focus on plain convolutional SR networks.</li>
+<li>though <strong>attention modules(ESA, CCA and PA)</strong> bring performance improvement, the extra energy consumption introduced is still unacceptable</li>
+</ol>
+</li>
+<li>architeture<ul>
+<li>discription: single frame input  which only have 6 layers, of which only 5 have learnable parameters, including 4 Conv layers and a PReLU activation layer. Pixel-Shuffle operation (also known as depth2space) is used at last to upscale the size of output without introducing more calculation. The intermediate feature channels are all set to 6.</li>
+<li><img src="C:\Users\Jarvis\Documents\My_Blog(hexo)\jarvis\source_posts\Workshop-log-backup\MVideoSR_architecture.png" alt="fig1"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ZX VIP <ul>
+<li>paper title: RCBSR: Re-parameterization Convolution Block for Super-Resolution</li>
+<li>affiliation: Audio &amp; Video Technology Platform Department, ZTE Corp., China</li>
+<li>methods: <ol>
+<li><strong>core idea</strong>: trade-off between SR quality and the energy consumption, <strong>ECBSR as baseline</strong>. In consideration of the low power consumption optimize the baseline from three aspects,<strong>network architecture, NAS and training strategy</strong>.</li>
+<li><strong>network architecture</strong>:<strong>re-parameterization</strong> technique in the deploy stage, <strong>replace the activate function PReLU with ReLU</strong>.the power consumption of tflite model with ReLU is less than PReLU. Meanwhile there is no apparent discrepancy in PSNR.Finally, in order to further reduce power consumption, the <strong>output of first CNN layer</strong> is added into the backbone output instead of original input because original input needs to be copied the number of channels. We use <strong>sub-pixel convolution</strong> to upsample image in the network.</li>
+<li><strong>NAS</strong>: The objective function of FGNAS is <strong>task-specific loss</strong> and <strong>regularizer penalty FLOPs</strong>. FGNAS -&gt; Kim, H., Hong, S., Han, B., Myeong, H., Lee, K.M.: Fine-grained neural architecture search. arXiv preprint arXiv:1911.07478 (2019)</li>
+<li><strong>training strategy</strong>:<strong>replace L1 loss function with Charbonnier loss function</strong> because it causes the problem that the restored image is too smooth and lack of sense of reality.</li>
+</ol>
+</li>
+<li>architeture<ul>
+<li><img src="/source_posts%5CWorkshop-log-backup%5CZX_VIP_architecture.png" alt="fig2"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Fighter<ul>
+<li>title: Fast Real-Time Video Super-Resolution</li>
+<li>affiliation: None, China</li>
+<li>methods:  shallow CNN model with <strong>depthwise separable convolutions</strong> and <strong>one residual connection</strong>. The number of convolution channels in the model was set to 8, the <strong>depth-to-space op</strong> was used at the end of the model to produce the final output.</li>
+<li>architeture<ul>
+<li><img src="/source_posts%5CWorkshop-log-backup%5CFighter_architecture.png" alt="fig3"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>XJTU-MIGU SUPER <ul>
+<li>title: Light and Fast On-Mobile VSR</li>
+<li>affiliation: School of Computer Science and Technology, Xi’an Jiaotong University, China MIGU Video Co. Ltd, China</li>
+<li>methods: small CNN-based model. 示意图如下，总共训练了2600 epochs :(</li>
+<li>architeture<ul>
+<li>![fig4](source_posts\Workshop-log-backup\XJTU-MIGU SUPER_architecture.png)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>BOE-IOT-AIBD <ul>
+<li>title: Lightweight Quantization CNN-Net for Mobile Video Super-Resolution</li>
+<li>affiliation: BOE Technology Group Co., Ltd., China</li>
+<li>methods: based on the <strong>CNN-Net architecture</strong>, its structure is illustrated in Fig 6. The authors applied <strong>model distillation</strong>, and used the <strong>RFDN CNN</strong> as a teacher model. </li>
+<li>architeture<ul>
+<li><img src="/source_posts%5CWorkshop-log-backup%5CBOE-IOT-AIBD_architecture.png" alt="fig5"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>GenMedia Group<ul>
+<li>title: SkipSkip Video Super-Resolution</li>
+<li>affiliation: GenGenAI, South Korea</li>
+<li>methods: inspired by the last year’s top solution from the MAI image super-resolution challenge.  <strong>added one extra skip connection to the mentioned anchor-based plain net (ABPN) model</strong>.</li>
+<li>architeture<ul>
+<li><img src="/source_posts%5CWorkshop-log-backup%5CGenMedia-Group_architecture.png" alt="fig6"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>NCUT VGroup<ul>
+<li>title: EESRNet: A Network for Energy Efficient Super Resolution</li>
+<li>affiliation: North China University of Technology, China Institute of Automation, Chinese Academy of Sciences, China</li>
+<li>methods: also based their solution on the <strong>ABPN model</strong>.   </li>
+<li>architeture<ul>
+<li><img src="/source_posts%5CWorkshop-log-backup%5CNCUT-VGroup_architecture.png" alt="fig7"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>ideas<ol start="8">
 <li>尝试BasicVSR++的轻量化</li>
 <li>在ABPN的基础上加入BasicVSR++的主要idea进行改进</li>
-<li>尝试讲Pynet_v2应用于video super_resolution</li>
+<li>尝试将Pynet_v2应用于video super_resolution</li>
 <li>先train MRNN baseline <ul>
 <li>环境 <ol>
 <li>Python 3.8.10</li>
@@ -556,22 +532,130 @@
 </ul>
 </li>
 <li>Cuda 11.2</li>
-<li>Cudnn v8.7.0</li>
-</ol>
-<ul>
+<li>Cudnn v8.7.0<ul>
 <li>官网：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cudnn">https://developer.nvidia.com/cudnn</a></li>
 <li>uname -m 查看cpu架构，cudnn有不同架构的版本 x86_64 PPC SBSA</li>
-<li>tar -xvf解压缩后用以下命令安装并赋予所有用户读取权限   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo cp path_to_cudnn/include/cudnn*    /usr/local/cuda/include</span><br><span class="line">sudo cp path_to_cudnn/lib64/libcudnn*    /usr/local/cuda/lib64</span><br><span class="line">sudo chmod a+r /usr/local/cuda/include/cudnn*   /usr/local/cuda/lib64/libcudnn*</span><br></pre></td></tr></table></figure></li>
-<li>Cudnn和Cuda 安装完需在&#x2F;etc&#x2F;profile配置环境变量PATH和LD_LIBRARY_PATH    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64</span><br><span class="line">export PATH=$PATH:/usr/local/cuda/bin</span><br><span class="line">export CUDA_HOME=$CUDA_HOME:/usr/local/cuda</span><br></pre></td></tr></table></figure></li>
-<li>可将文件夹 &#x2F;usr&#x2F;local&#x2F;cuda-11.2 与 &#x2F;usr&#x2F;local&#x2F;cuda 软连接起来   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/local/cuda-11.2 /usr/local/cuda</span><br></pre></td></tr></table></figure></li>
-<li>用下面的命令查看cudnn版本,新版本查看cuDNN版本的命令为   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2 #-A 选项用来指定匹配成功的行之后显示2行内容</span><br></pre></td></tr></table></figure></li>
+<li>tar -xvf解压缩后用以下命令安装并赋予所有用户读取权限 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo cp path_to_cudnn/include/cudnn*    /usr/local/cuda/include</span><br><span class="line">sudo cp path_to_cudnn/lib64/libcudnn*    /usr/local/cuda/lib64</span><br><span class="line">sudo chmod a+r /usr/local/cuda/include/cudnn*   /usr/local/cuda/lib64/libcudnn*</span><br></pre></td></tr></table></figure></li>
+<li>Cudnn和Cuda 安装完需在&#x2F;etc&#x2F;profile配置环境变量PATH和LD_LIBRARY_PATH  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64</span><br><span class="line">export PATH=$PATH:/usr/local/cuda/bin</span><br><span class="line">export CUDA_HOME=$CUDA_HOME:/usr/local/cuda</span><br></pre></td></tr></table></figure></li>
+<li>可将文件夹 &#x2F;usr&#x2F;local&#x2F;cuda-11.2 与 &#x2F;usr&#x2F;local&#x2F;cuda 软连接起来 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/local/cuda-11.2 /usr/local/cuda</span><br></pre></td></tr></table></figure></li>
+<li>用下面的命令查看cudnn版本,新版本查看cuDNN版本的命令为 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2 #-A 选项用来指定匹配成功的行之后显示2行内容</span><br></pre></td></tr></table></figure></li>
 </ul>
+</li>
+</ol>
+</li>
+<li>结果<ol start="5">
+<li>用默认config.yml训练太慢了大约需要1周时间，中途停掉了</li>
+<li>用改进后config.yml训练。8小时左右训练完成，但是loss还很大</li>
+<li>结合往年此赛道总结文章放弃训练提供的mobilernn baseline 思考其它基于cnn的模型</li>
+</ol>
 </li>
 </ul>
 </li>
 </ol>
 </li>
 </ul>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/13/OnePlus-Recovery/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/02/13/OnePlus-Recovery/" class="post-title-link" itemprop="url">OnePlus_Recovery</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-02-13 12:01:08 / 修改时间：12:58:36" itemprop="dateCreated datePublished" datetime="2023-02-13T12:01:08+08:00">2023-02-13</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Procedure:</p>
+<ol>
+<li>备份数据：相册 安装应用名单</li>
+<li>root 解锁</li>
+<li>ADB 刷入TWRP Recovery镜像</li>
+<li>刷入ROM（3种方法）<ol>
+<li>电脑的磁盘列表中找到手机，复制ROM至手机的内部存储，复制完成后在recovery主菜单中，点击Install，点击ROM包，滑动后进行刷入。</li>
+<li>用命令将ROM推送至手机（filename.zip为ROM名称，可拖动ROM文件至命令窗口自动填入完整文件地址，或输入文件名前几个字母后按Tab键来自动补全文件名）<ul>
+<li>检测设备是否连接: adb devices</li>
+<li>推送ROM: adb push ROM_name.zip &#x2F;sdcard&#x2F;</li>
+<li>推送完成后在recovery主菜单中点击Install，点击ROM包，滑动进行刷入。</li>
+</ul>
+</li>
+<li>在recovery主菜单中，点击“高级”，点击ADB sideload，滑动底部按钮，在PowerShell窗口用命令：.\adb sideload ROM_name.zip</li>
+</ol>
+</li>
+<li>刷入Magisk<ol>
+<li>目的:<ul>
+<li>未获得 Google「认证」的设备无法从 Play 应用商店下载安装 Netflix，Google Pay、Pokémon Go 等应用不能在已 root 的设备上正常运行，改动过系统文件的 ROM 无法通过 OEM 渠道进行正常的 OTA 更新升级……</li>
+<li>Magisk 的实现方式就像是一种魔法，当被挂载的 Magisk 分区被隐藏甚至被取消挂载时，原有系统分区的完整性丝毫未损，玩需要 root 验证的游戏、运行对设备认证状态有要求的应用甚至进行需要验证系统完整性的 OTA 更新都没有任何问题。</li>
+</ul>
+</li>
+<li>方法:<ol>
+<li>在刷入前，我们先安装 Magisk App 来检查设备的信息，来确定进一步的操作。我们先到官方项目地址：<a target="_blank" rel="noopener" href="https://github.com/topjohnwu/Magisk/releases">https://github.com/topjohnwu/Magisk/releases</a> 下载 apk 文件安装。<ul>
+<li>Tip:从 Magisk 22 开始，不再区分刷写用的 .zip 包与安装管理器用到的 .apk 应用安装包，二者合一且只有后缀的区别，默认提供 .apk 包，更改后缀为 .zip 后即可被刷写。</li>
+</ul>
+</li>
+<li>打开安装后的 Magisk App，像上面的最后一张截图一样，你能看到一项名为 Ramdisk 的值。请确保此项的值为「是」「True」，我们再进行下一步。</li>
+</ol>
+</li>
+</ol>
 </li>
 </ol>
 
