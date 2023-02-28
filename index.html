@@ -195,7 +195,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-28 10:19:14" itemprop="dateModified" datetime="2023-02-28T10:19:14+08:00">2023-02-28</time>
+      <time title="修改时间：2023-02-28 10:24:51" itemprop="dateModified" datetime="2023-02-28T10:24:51+08:00">2023-02-28</time>
     </span>
 
   
@@ -671,10 +671,10 @@
 <li>note: 这些函数的参数都是y_true和y_pred，分别表示真实值和预测值。</li>
 </ul>
 </li>
-<li>L1 Loss: L1&#x3D;1N∑Ni&#x3D;1|yi−yi^|</li>
-<li>L2 Loss (MSE): L2&#x3D;1N∑Ni&#x3D;1(yi−yi^)2</li>
-<li>Charbonnier Loss: LCharbonnier&#x3D;1N∑Ni&#x3D;1(yi−yi^)2+ϵ2</li>
-<li>M2 Loss: LM2&#x3D;1N∑Ni&#x3D;1(yi−yi^yi+ϵ)2，其中ϵ为一个较小的数，如 10−6，用于防止分母为零</li>
+<li>L1 Loss: L1 Loss: $L_1 &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \left| y_i - \hat{y_i} \right|$</li>
+<li>L2 Loss (MSE): $L_2 &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \left( y_i - \hat{y_i} \right)^2$</li>
+<li>L1 Charbonnier Loss: $L_{Charbonnier} &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \sqrt{ \left( y_i - \hat{y_i} \right)^2 + \epsilon^2 }$</li>
+<li>M2 Loss: $L_{M2} &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \left( \frac{y_i - \hat{y_i}}{y_i + \epsilon} \right)^2$，其中 $\epsilon$ 为一个较小的数，如 $10^{-6}$，用于防止分母为零。</li>
 </ul>
 </li>
 </ul>
