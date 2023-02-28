@@ -187,9 +187,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-02-17 10:29:03 / 修改时间：20:45:43" itemprop="dateCreated datePublished" datetime="2023-02-17T10:29:03+08:00">2023-02-17</time>
+      <time title="创建时间：2023-02-17 10:29:03" itemprop="dateCreated datePublished" datetime="2023-02-17T10:29:03+08:00">2023-02-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-02-28 10:19:14" itemprop="dateModified" datetime="2023-02-28T10:19:14+08:00">2023-02-28</time>
     </span>
 
   
@@ -202,9 +208,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="NTIRE-Workshop-and-Challenges-CVPR-2023"><a href="#NTIRE-Workshop-and-Challenges-CVPR-2023" class="headerlink" title="NTIRE Workshop and Challenges @ CVPR 2023"></a>NTIRE Workshop and Challenges @ CVPR 2023</h1><ol>
-<li><p>Efficient Super-Resolution Challenge(ESR)</p>
-<ul>
+          <h1 id="Workshop-and-Challenges-CVPR-2023"><a href="#Workshop-and-Challenges-CVPR-2023" class="headerlink" title="Workshop and Challenges @ CVPR 2023"></a>Workshop and Challenges @ CVPR 2023</h1><ol>
+<li>Efficient Super-Resolution Challenge(ESR)<ul>
 <li>经典baseline: <ul>
 <li>information multi-distillation block,IMDN (2019) </li>
 <li>Residual feature distillation block,RFDN (2020)</li>
@@ -322,8 +327,7 @@
 </tbody></table>
 <hr>
 </li>
-<li><p>Mobile AI workshop 2023</p>
-<ul>
+<li>Mobile AI workshop 2023<ul>
 <li>测试可以用自己手机，也可使用提供的远程设备(速度慢有延迟)</li>
 <li>2022 tracks</li>
 </ul>
@@ -407,7 +411,7 @@
 </tbody></table>
 <hr>
 <ol>
-<li>计划参加track:Image Super-Resolution 3月份开始</li>
+<li>计划参加track:Image Super-Resolution 3月份开始 -&gt; 调整为track:Video Super-Resolution </li>
 <li>Train 2021 anchor-based plain net (ABPN) 两次<ul>
 <li>200 epoch 时报错停掉一次</li>
 <li>600 epoch 完整跑完，但loss上下波动不收敛</li>
@@ -415,8 +419,11 @@
 </li>
 <li>andriod对原作提供的TF-lite模型进行了测试,测试流程掌握了</li>
 </ol>
-<h1 id="Video-Super-Resolution"><a href="#Video-Super-Resolution" class="headerlink" title="Video Super-Resolution"></a>Video Super-Resolution</h1><ul>
-<li>papers<ol>
+</li>
+</ol>
+<h2 id="MobileAI-worshop-Video-Super-Resolution"><a href="#MobileAI-worshop-Video-Super-Resolution" class="headerlink" title="MobileAI worshop: Video Super-Resolution"></a>MobileAI worshop: Video Super-Resolution</h2><ol>
+<li><p>papers</p>
+<ol>
 <li>Ntire 2019 challenge on video super-resolution: Methods and results</li>
 <li>Ntire 2020 challenge on image and video deblurring</li>
 <li>Pynet-v2 mobile: Efficient on-device photo processing with neural networks <ul>
@@ -426,7 +433,14 @@
 </ul>
 </li>
 <li>Microisp: Processing 32mp photos on mobile devices with deep learning. In: European Conference on Computer Visio(2022)</li>
-<li>Power Efficient Video Super-Resolution on Mobile NPUs with Deep Learning, Mobile AI &amp; AIM 2022 challenge: Report<ul>
+<li>Real-Time Video Super-Resolution on Smartphones with Deep Learning,Mobile AI 2021 Challenge: Report<ul>
+<li>Results and Discussion<ul>
+<li>Team Diggers 冠军方案基于Keras&#x2F;Tensorflow 电子科技大学 唯一一个使用循环连接（recurrent connections）来利用帧间依赖性获取更好重建结果，其他方案都是基于单帧超分的。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Power Efficient Video Super-Resolution on Mobile NPUs with Deep Learning, Mobile AI &amp; AIM 2022 challenge: Report <ul>
 <li>tutorial: <a target="_blank" rel="noopener" href="https://github.com/MediaTek-NeuroPilot/mai22-real-time-video-sr">https://github.com/MediaTek-NeuroPilot/mai22-real-time-video-sr</a>. baseline:MobileRNN</li>
 <li>scoring: Final Score &#x3D; α · PSNR + β · (1 - power consumption) α &#x3D; 1.66 and β &#x3D; 50，注重PSNR和power consumption两个指标 </li>
 <li>Discussion: <ul>
@@ -438,118 +452,180 @@
 </li>
 </ul>
 </li>
+<li>Sliding Window Recurrent Network for Efficient Video Super-Resolution<ul>
+<li>SWRN makes use of the information from neighboring frames to reconstruct the HR frame. 从相邻帧提取信息来重建高清帧,相比单帧超分的方法有丰富的细节。</li>
+<li>An bidirectional hidden state is used to recurrently collect temporal spatial relations over all frames.使用双向隐藏状态来循环收集所有帧的时间空间关系。</li>
+<li>Pioneer network: SRCNN</li>
+<li>Video super-resolution: the most important parts are frame alignment<ul>
+<li>VESPCN and TOFlow: optical flow to align frames</li>
+<li>TDAN and EDVR: deformable convolution. Especially, EDVR enjoys the merits of implicit alignment and its PCD module.</li>
+<li>Incorporates recurrent networks, use the hidden state to record the important temporal information.</li>
+</ul>
+</li>
+<li>在测试平台Runtime 10.1 ms、 0.80 W@30FPS,最后分数低问题就在这里，PSNR SSIM 比第一名MVideoSR（小米）都要好 -&gt; 寻找加速计算和减小耗能的方法</li>
+</ul>
+</li>
+<li>Lightweight Video Super-Resolution for Compressed Video -&gt; Compression-informed Lightweight VSR (CILVSR)<ul>
+<li>Recurrent Frame-based VSR Network (FRVSR, RBPN, RRN)</li>
+<li>Spatio-Temporal VSR Network (SOF-VSR, STVSR, TDAN, TOFlow, TDVSR-L)</li>
+<li>Generative Adversarial Network (GAN)-based SR Network</li>
+<li>Video Compression-informed VSR Network (FAST, COMISR, CDVSR, CIAF)</li>
+</ul>
+</li>
+<li>RCBSR: Re-parameterization Convolution Block for Super-Resolution<ul>
+<li>ECBSR baseline</li>
+<li>Multiple paths <strong>ECB re-parametrization</strong> </li>
+<li>FGNAS</li>
+</ul>
+</li>
+<li>Deformable 3D Convolution for Video Super-Resolution<ul>
+<li>deformable 3D convolution</li>
+</ul>
+</li>
+<li>Efficient Image Super-Resolution Using Vast-Receptive-Field Attention(VapSR有代码)<ul>
+<li>improving the attention mechanism<ul>
+<li>large kernel convolutions</li>
+<li>depth-wise separable convolutions</li>
+<li>pixel normalization -&gt; train steadily</li>
+</ul>
+</li>
+<li>相比bytedance的RLFN -&gt; 性能sota,参数更少</li>
+</ul>
+</li>
 </ol>
 </li>
-<li>2022 challenge methods (ranked)<ol>
-<li>MVideoSR<ul>
+<li><p>2022 challenge methods (ranked)</p>
+<ol>
+<li>MVideoSR(无代码)<ul>
 <li>paper title: ELSR: Extreme Low-Power Super Resolution Network For Mobile Devices</li>
 <li>affiliation: Video Algorithm Group, Camera Department, Xiaomi Inc., China</li>
 <li>methods: <ol>
 <li><strong>core idea</strong>: mobile friendly network which consumes as little energy as possible, discard some complex operations such as optical flow, multi-frame feature alignment, and <strong>start from single frame baselines</strong>. </li>
 <li><strong>multi-branch distillation structure</strong> show significant increase in energy consumption while  a slight increase in PSNR compared with the plain convolutional network of similar parameters. abandon multi-branch network architectures, and focus on plain convolutional SR networks.</li>
 <li>though <strong>attention modules(ESA, CCA and PA)</strong> bring performance improvement, the extra energy consumption introduced is still unacceptable</li>
-</ol>
-</li>
 <li>architeture<ul>
 <li>discription: single frame input  which only have 6 layers, of which only 5 have learnable parameters, including 4 Conv layers and a PReLU activation layer. Pixel-Shuffle operation (also known as depth2space) is used at last to upscale the size of output without introducing more calculation. The intermediate feature channels are all set to 6.</li>
 <li><img src="/./Workshop-log/MVideoSR_architecture.png" alt="fig_1"></li>
 <li><em>Note</em>:直接复制的相对路径时异常的，加载不出来需要修改为格式: .&#x2F;xxx&#x2F;xxx.png</li>
 </ul>
 </li>
+</ol>
+</li>
 </ul>
 </li>
-<li>ZX VIP <ul>
+<li>ZX VIP(无代码) <ul>
 <li>paper title: RCBSR: Re-parameterization Convolution Block for Super-Resolution</li>
 <li>affiliation: Audio &amp; Video Technology Platform Department, ZTE Corp., China</li>
 <li>methods: <ol>
 <li><strong>core idea</strong>: trade-off between SR quality and the energy consumption, <strong>ECBSR as baseline</strong>. In consideration of the low power consumption optimize the baseline from three aspects,<strong>network architecture, NAS and training strategy</strong>.</li>
 <li><strong>network architecture</strong>:<strong>re-parameterization</strong> technique in the deploy stage, <strong>replace the activate function PReLU with ReLU</strong>.the power consumption of tflite model with ReLU is less than PReLU. Meanwhile there is no apparent discrepancy in PSNR.Finally, in order to further reduce power consumption, the <strong>output of first CNN layer</strong> is added into the backbone output instead of original input because original input needs to be copied the number of channels. We use <strong>sub-pixel convolution</strong> to upsample image in the network.</li>
 <li><strong>NAS</strong>: The objective function of FGNAS is <strong>task-specific loss</strong> and <strong>regularizer penalty FLOPs</strong>. FGNAS -&gt; Kim, H., Hong, S., Han, B., Myeong, H., Lee, K.M.: Fine-grained neural architecture search. arXiv preprint arXiv:1911.07478 (2019)</li>
-<li><strong>training strategy</strong>:<strong>replace L1 loss function with Charbonnier loss function</strong> because it causes the problem that the restored image is too smooth and lack of sense of reality.</li>
-</ol>
-</li>
+<li><strong>training strategy</strong>:<strong>replace L1 loss function with Charbonnier loss function</strong> because it causes the problem that the restored image is too smooth and lack of sense of reality. </li>
 <li>architeture<ul>
 <li><img src="/./Workshop-log/ZX_VIP_architecture.png" alt="fig2"></li>
 </ul>
 </li>
+</ol>
+</li>
 </ul>
 </li>
-<li>Fighter<ul>
+<li>Fighter(无代码)<ul>
 <li>title: Fast Real-Time Video Super-Resolution</li>
 <li>affiliation: None, China</li>
-<li>methods:  shallow CNN model with <strong>depthwise separable convolutions</strong> and <strong>one residual connection</strong>. The number of convolution channels in the model was set to 8, the <strong>depth-to-space op</strong> was used at the end of the model to produce the final output.</li>
+<li>methods:  <ol>
+<li>shallow CNN model with <strong>depthwise separable convolutions</strong> and <strong>one residual connection</strong>. The number of convolution channels in the model was set to 8, the <strong>depth-to-space op</strong> was used at the end of the model to produce the final output.</li>
 <li>architeture<ul>
 <li><img src="/./Workshop-log/Fighter_architecture.png" alt="fig3"></li>
 </ul>
 </li>
+</ol>
+</li>
 </ul>
 </li>
-<li>XJTU-MIGU SUPER <ul>
+<li>XJTU-MIGU SUPER(无代码) <ul>
 <li>title: Light and Fast On-Mobile VSR</li>
 <li>affiliation: School of Computer Science and Technology, Xi’an Jiaotong University, China MIGU Video Co. Ltd, China</li>
-<li>methods: small CNN-based model. 示意图如下，总共训练了2600 epochs :(</li>
+<li>methods:<ol>
+<li>small CNN-based model. 示意图如下，总共训练了2600 epochs :(</li>
 <li>architeture<ul>
 <li><img src="/./Workshop-log/XJTU-MIGU_SUPER_architecture.png" alt="fig4"></li>
 </ul>
 </li>
+</ol>
+</li>
 </ul>
 </li>
-<li>BOE-IOT-AIBD <ul>
+<li>BOE-IOT-AIBD(无代码) <ul>
 <li>title: Lightweight Quantization CNN-Net for Mobile Video Super-Resolution</li>
 <li>affiliation: BOE Technology Group Co., Ltd., China</li>
-<li>methods: based on the <strong>CNN-Net architecture</strong>, its structure is illustrated in Fig 6. The authors applied <strong>model distillation</strong>, and used the <strong>RFDN CNN</strong> as a teacher model. </li>
+<li>methods: <ol>
+<li>based on the <strong>CNN-Net architecture</strong>, its structure is illustrated in Fig 6. The authors applied <strong>model distillation</strong>, and used the <strong>RFDN CNN</strong> as a teacher model. </li>
 <li>architeture<ul>
 <li><img src="/./Workshop-log/BOE-IOT-AIBD_architecture.png" alt="fig5"></li>
 </ul>
 </li>
+</ol>
+</li>
 </ul>
 </li>
-<li>GenMedia Group<ul>
+<li>GenMedia Group(无代码)<ul>
 <li>title: SkipSkip Video Super-Resolution</li>
 <li>affiliation: GenGenAI, South Korea</li>
-<li>methods: inspired by the last year’s top solution from the MAI image super-resolution challenge.  <strong>added one extra skip connection to the mentioned anchor-based plain net (ABPN) model</strong>.</li>
+<li>methods:<ol>
+<li>inspired by the last year’s top solution from the MAI image super-resolution challenge.  <strong>added one extra skip connection to the mentioned anchor-based plain net (ABPN) model</strong>.</li>
 <li>architeture<ul>
 <li><img src="/./Workshop-log/GenMedia-Group_architecture.png" alt="fig6"></li>
 </ul>
 </li>
+</ol>
+</li>
 </ul>
 </li>
-<li>NCUT VGroup<ul>
+<li>NCUT VGroup(无代码)<ul>
 <li>title: EESRNet: A Network for Energy Efficient Super Resolution</li>
 <li>affiliation: North China University of Technology, China Institute of Automation, Chinese Academy of Sciences, China</li>
-<li>methods: also based their solution on the <strong>ABPN model</strong>.   </li>
+<li>methods: <ol>
+<li>also based their solution on the <strong>ABPN model</strong>.   </li>
 <li>architeture<ul>
 <li><img src="/./Workshop-log/NCUT-VGroup_architecture.png" alt="fig7"></li>
 </ul>
+</li>
+</ol>
 </li>
 </ul>
 </li>
 </ol>
 </li>
-<li>ideas<ol>
+<li><p>ideas</p>
+<ol>
 <li>尝试BasicVSR++的轻量化</li>
 <li>在ABPN的基础上加入BasicVSR++的主要idea进行改进</li>
 <li>尝试将Pynet_v2应用于video super_resolution</li>
 <li>先train MRNN baseline <ul>
 <li>环境 <ol>
-<li><p>Python 3.8.10</p>
-</li>
-<li><p>Tensorflow 2.9.0</p>
-<ul>
+<li>Python &#x3D;&#x3D; 3.8.10</li>
+<li>Tensorflow-gpu &#x3D;&#x3D; 2.9.0<ul>
 <li>查看tensorflow cuda cudnn python 版本对照表： <a target="_blank" rel="noopener" href="https://www.tensorflow.org/install/source_windows">https://www.tensorflow.org/install/source_windows</a></li>
 </ul>
 </li>
-<li><p>Cuda 11.2</p>
-</li>
-<li><p>Cudnn v8.7.0</p>
-<ul>
-<li>官网：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cudnn">https://developer.nvidia.com/cudnn</a></li>
-<li>uname -m 查看cpu架构，cudnn有不同架构的版本 x86_64 PPC SBSA</li>
-<li>tar -xvf解压缩后用以下命令安装并赋予所有用户读取权限</li>
+<li>Cuda &#x3D;&#x3D; 11.2 <ul>
+<li>CUDA: CUDA是一个<strong>计算平台和编程模型</strong>，用于在GPU上加速应用程序。CUDA版本指的是CUDA软件的版本</li>
+<li>CUDA Toolkit: CUDA Toolkit是包含<strong>CUDA库</strong>和<strong>CUDA工具链</strong>的软件包，用于开发和编译CUDA应用程序。<ul>
+<li>CUDA库: CUDA 库包含了 CUDA 编程所需的核心库文件，例如 <strong>CUDA Runtime 库、CUDA Driver 库、cuBLAS 库、cuDNN 库</strong>等。这些库文件提供了 GPU 加速的基本功能和算法，是 CUDA 编程的基础。</li>
+<li>CUDA工具链：CUDA 工具链则包含了一系列辅助开发和调试 CUDA 程序的工具，例如 <strong>nvcc 编译器、CUDA-GDB 调试器、Visual Profiler 性能分析工具</strong>等。这些工具能够帮助开发者更方便地编写、调试和优化 CUDA 程序。</li>
 </ul>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo cp path_to_cudnn/include/cudnn*    /usr/local/cuda/include</span><br><span class="line">sudo cp path_to_cudnn/lib64/libcudnn*    /usr/local/cuda/lib64</span><br><span class="line">sudo chmod a+r /usr/local/cuda/include/cudnn*   /usr/local/cuda/lib64/libcudnn*</span><br></pre></td></tr></table></figure>
-
-<ul>
+</li>
+<li>note: 查看当前安装的显卡驱动最高支持的CUDA版本 nvidia-smi </li>
+<li>note: 查看CUDA工具链版本 nvcc –version</li>
+<li>CUDA Toolkit 与 Driver Version 对照：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html</a></li>
+<li></li>
+</ul>
+</li>
+<li>Cudnn &#x3D;&#x3D; v8.7.0<ul>
+<li>官网：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cudnn">https://developer.nvidia.com/cudnn</a></li>
+<li>cat &#x2F;etc&#x2F;os-release 查看linux版本</li>
+<li>uname -m 查看cpu架构，cudnn有不同架构的版本 x86_64 PPC SBSA</li>
+<li>tar -xvf解压缩后用以下命令安装并赋予所有用户读取权限 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo cp path_to_cudnn/include/cudnn*    /usr/local/cuda/include</span><br><span class="line">sudo cp path_to_cudnn/lib64/libcudnn*    /usr/local/cuda/lib64</span><br><span class="line">sudo chmod a+r /usr/local/cuda/include/cudnn*   /usr/local/cuda/lib64/libcudnn*</span><br></pre></td></tr></table></figure></li>
 <li>Cudnn和Cuda 安装完需在&#x2F;etc&#x2F;profile配置环境变量PATH和LD_LIBRARY_PATH  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64</span><br><span class="line">export PATH=$PATH:/usr/local/cuda/bin</span><br><span class="line">export CUDA_HOME=$CUDA_HOME:/usr/local/cuda</span><br></pre></td></tr></table></figure></li>
 <li>可将文件夹 &#x2F;usr&#x2F;local&#x2F;cuda-11.2 与 &#x2F;usr&#x2F;local&#x2F;cuda 软连接起来 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/local/cuda-11.2 /usr/local/cuda</span><br></pre></td></tr></table></figure></li>
 <li>用下面的命令查看cudnn版本,新版本查看cuDNN版本的命令为 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2  # -A 选项用来指定匹配成功的行之后显示2行内容</span><br></pre></td></tr></table></figure></li>
@@ -557,17 +633,53 @@
 </li>
 </ol>
 </li>
-<li>结果<ol>
+<li>结果<ol start="5">
 <li>用默认config.yml训练太慢了大约需要1周时间，中途停掉了</li>
-<li>用改进后config.yml训练。8小时左右训练完成，但是loss还很大</li>
+<li>用改进后config.yml训练。8小时左右训练完成，但是loss很大</li>
 <li>结合往年此赛道总结文章放弃训练提供的mobilernn baseline 思考其它基于cnn的模型</li>
 </ol>
 </li>
 </ul>
 </li>
+<li>可以从NTIRE 2022 efficient super-resolution challenge选取baseline运用剪枝蒸馏等改进到移动端<ul>
+<li>course project for NCSU’s Computer Science 791-025: Real-Time AI &amp; High-Performance Machine Learning. 三板斧<ol>
+<li>Pruning via NNI</li>
+<li>Quantization via NNI</li>
+<li>Hyper Parameter Optimization via NNI </li>
+<li>Color Optimization: RGB -&gt; YCbCr</li>
 </ol>
 </li>
+<li>选取2022 NTIRE ESR冠军方案RLFN(Byte Dance)作为baseline,先将其模型转换为 tensorflow 版本在 REDS 数据集上直接进行VSR的测试 -&gt; 中间软件依赖兼容性问题放弃RLFN torch-&gt;onnx-&gt;tensorflow路线</li>
+<li>直接用tensorflow 重构 RLFN -&gt; train成功但是精度不达标’psnr’: 25.574987, ‘ssim’: 0.69084775，需要调试改进</li>
+<li>现在的首要问题是确定自己的tensorflow 版本RLFN 与原作的 torch 版本RLFN 是否一致 -&gt; cease</li>
+<li>可以先将其他模型利用torch_to_tensorflow 转化为tensorflow版本模型，并可视化查看效果 -&gt; 可行而且看源代码不复杂，难点在torch onnx onnx-tf tensorflow-gpu 版本对照，静等比赛开始官方scripts</li>
+<li>现在当务之急不是版本对照问题需要尽快找到往年的baseline跑起来，改起来 -&gt; 跑此项目了解剪枝 量化 超参调整三板斧实际运用 ：<a target="_blank" rel="noopener" href="https://github.com/briancpark/video-super-resolution.git">https://github.com/briancpark/video-super-resolution.git</a> -&gt; 都是在调库 NNI </li>
+<li>Train baseline SWRN：<a target="_blank" rel="noopener" href="https://github.com/shermanlian/swrn">https://github.com/shermanlian/swrn</a><ul>
+<li>结构重参数化（structural re-parameterization）:用一个结构的一组参数转换为另一组参数，并用转换得到的参数来参数化（parameterize）另一个结构。只要参数的转换是等价的，这两个结构的替换就是等价的。 </li>
+<li>先测试提供的ckpt-98 -&gt; 测试结果’psnr’: 27.931335, ‘ssim’: 0.7803563</li>
+<li>缩减recon_trunk_forward &#x2F; recon_trunk_backward &#x2F; recon_trunk 的 block_num到2, train from scratch 看结果</li>
 </ul>
+</li>
+<li>按照去年赛道冠军方案MVedioSR的ELSR搭建pipeline<ul>
+<li>L1 loss(Mean Absolute Error, MAE) -&gt; 样本预测值与标签之间差的绝对值取平均, 对异常值不敏感,鲁棒性更强; 对于接近零的数, 梯度为常数, 没有逐渐变小的趋势, 容易出现震荡现象</li>
+<li>L2 loss(Mean Squared Error, MSE) -&gt; 样本预测值与标签之间平方差取平均, 对异常值敏感,鲁棒性不强; 对于接近零的数, 梯度随着误差的减小而逐渐减小, 避免了震荡现象。</li>
+<li>TensorFlow中的内置损失函数非常丰富，包括L1、L2、L1_Charbonnier和MSE等常见的损失函数。这些损失函数都在tf.keras.losses模块中实现。具体来说，可以使用以下函数调用这些损失函数：<ul>
+<li>L1损失函数：tf.keras.losses.mean_absolute_error(y_true, y_pred)</li>
+<li>L2损失函数：tf.keras.losses.mean_squared_error(y_true, y_pred)</li>
+<li>L1_Charbonnier损失函数：可以自定义实现，也可以使用以下库中的实现：TensorFlow Addons（需要单独安装）。</li>
+<li>M2损失函数：tf.keras.losses.mean_absolute_percentage_error(y_true, y_pred)</li>
+<li>note: 这些函数的参数都是y_true和y_pred，分别表示真实值和预测值。</li>
+</ul>
+</li>
+<li>L1 Loss: L1&#x3D;1N∑Ni&#x3D;1|yi−yi^|</li>
+<li>L2 Loss (MSE): L2&#x3D;1N∑Ni&#x3D;1(yi−yi^)2</li>
+<li>Charbonnier Loss: LCharbonnier&#x3D;1N∑Ni&#x3D;1(yi−yi^)2+ϵ2</li>
+<li>M2 Loss: LM2&#x3D;1N∑Ni&#x3D;1(yi−yi^yi+ϵ)2，其中ϵ为一个较小的数，如 10−6，用于防止分母为零</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
 </li>
 </ol>
 
@@ -734,7 +846,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-10 08:46:58" itemprop="dateModified" datetime="2023-02-10T08:46:58+08:00">2023-02-10</time>
+      <time title="修改时间：2023-02-23 19:21:30" itemprop="dateModified" datetime="2023-02-23T19:21:30+08:00">2023-02-23</time>
     </span>
 
   
@@ -747,7 +859,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Time-2023-2-7-2023-4-15"><a href="#Time-2023-2-7-2023-4-15" class="headerlink" title="Time:2023.2.7-2023.4.15"></a>Time:2023.2.7-2023.4.15</h1><h1 id="Paper-Reading"><a href="#Paper-Reading" class="headerlink" title="Paper_Reading:"></a>Paper_Reading:</h1><ol>
+          <h1 id="Time-2023-2-7-2023-4-15"><a href="#Time-2023-2-7-2023-4-15" class="headerlink" title="Time:2023.2.7-2023.4.15"></a>Time:2023.2.7-2023.4.15</h1><h1 id="Paper-Reading"><a href="#Paper-Reading" class="headerlink" title="Paper_Reading"></a>Paper_Reading</h1><ol>
 <li>PD-Quant: Post-Training Quantization based on Prediction Difference Metric（2022.12）</li>
 </ol>
 <ul>
@@ -759,7 +871,10 @@
 <li>Nonuniform-to-Uniform Quantization: Towards Accurate Quantization via Generalized Straight-Through Estimation</li>
 <li>Data-Free Network Compression via Parametric Non-uniform Mixed Precision Quantization（2022CVPR）</li>
 </ol>
-<h1 id="Code-Test"><a href="#Code-Test" class="headerlink" title="Code_Test:"></a>Code_Test:</h1>
+<h1 id="Code-Test"><a href="#Code-Test" class="headerlink" title="Code_Test"></a>Code_Test</h1><h1 id="idea"><a href="#idea" class="headerlink" title="idea"></a>idea</h1><ol>
+<li>发现以前文章的问题尝试改进和解决</li>
+</ol>
+
       
     </div>
 
@@ -914,7 +1029,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-01-12 20:38:28" itemprop="dateModified" datetime="2023-01-12T20:38:28+08:00">2023-01-12</time>
+      <time title="修改时间：2023-02-19 13:39:46" itemprop="dateModified" datetime="2023-02-19T13:39:46+08:00">2023-02-19</time>
     </span>
 
   
@@ -1462,6 +1577,31 @@
 <tr>
 <td>计算量FLOPs</td>
 <td>乘加次数-&gt;输出的每个pixel的得到需要多少次乘加</td>
+</tr>
+</tbody></table>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>APU（Accelerated Processing Unit，加速处理单元）</td>
+<td>最早由AMD提出并生产制作的具有概念性的理念产品。加速芯片对数据图像的处理能力。</td>
+</tr>
+<tr>
+<td>NPU（Neural-network Processing Unit，神经网络处理单元）</td>
+<td>可以自行处理某些数据，将接受到的多元化的数据分担给其他单元处理</td>
+</tr>
+<tr>
+<td>GPU（Graphics Processing Unit，图形处理单元）</td>
+<td>专门处理图像数据，也能为CPU分担部分工作。</td>
+</tr>
+<tr>
+<td>CPU（Central Processing Unit，中央处理单元）</td>
+<td>系统的运算能力，电子产品的核心。负责处理指令和一切逻辑性数据。</td>
 </tr>
 </tbody></table>
 
@@ -2292,7 +2432,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/05/%E6%AF%8F%E5%91%A8%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/05/Week-Report/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -2310,7 +2450,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/05/%E6%AF%8F%E5%91%A8%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5/" class="post-title-link" itemprop="url">每周进度汇报</a>
+          <a href="/2022/09/05/Week-Report/" class="post-title-link" itemprop="url">Week Report</a>
         </h2>
 
         <div class="post-meta-container">
@@ -2328,7 +2468,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-13 12:46:50" itemprop="dateModified" datetime="2023-02-13T12:46:50+08:00">2023-02-13</time>
+      <time title="修改时间：2023-02-27 10:46:04" itemprop="dateModified" datetime="2023-02-27T10:46:04+08:00">2023-02-27</time>
     </span>
 
   
@@ -2601,7 +2741,7 @@
 <h2 id="后期计划"><a href="#后期计划" class="headerlink" title="后期计划"></a>后期计划</h2><p>继续完善量化引入全局累积差异的代码，提升性能</p>
 <hr>
 <h2 id="进度汇报-（2023-2-8-2023-2-12）"><a href="#进度汇报-（2023-2-8-2023-2-12）" class="headerlink" title="进度汇报 （2023.2.8-2023.2.12）"></a>进度汇报 （2023.2.8-2023.2.12）</h2><ul>
-<li>workshop</li>
+<li>workshop (NTIRE 2023 Efficient Super-Resolution Challenge)</li>
 </ul>
 <ol>
 <li>Efficient Super-Resolution Challenge(ESR):train rfdn baseline,test 结果如下<table>
@@ -2667,6 +2807,71 @@
 </ol>
 <h2 id="后期计划-1"><a href="#后期计划-1" class="headerlink" title="后期计划"></a>后期计划</h2><ol>
 <li>rfdn基础上改进模型</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-2-13-2023-2-19）"><a href="#进度汇报-（2023-2-13-2023-2-19）" class="headerlink" title="进度汇报 （2023.2.13-2023.2.19）"></a>进度汇报 （2023.2.13-2023.2.19）</h2><ul>
+<li>workshop (MAI 2023 Video Super Resolution)<ol>
+<li>先train 2022官方仓库 MRRN baseline <ul>
+<li>环境配置 <ol>
+<li>Python 3.8.10</li>
+<li>Tensorflow 2.9.0<ul>
+<li>查看tensorflow cuda cudnn python 版本对照表： <a target="_blank" rel="noopener" href="https://www.tensorflow.org/install/source_windows">https://www.tensorflow.org/install/source_windows</a></li>
+</ul>
+</li>
+<li>Cuda 11.2</li>
+<li>Cudnn v8.7.0<ul>
+<li>官网：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cudnn">https://developer.nvidia.com/cudnn</a></li>
+<li>uname -m 查看cpu架构，cudnn有不同架构的版本 x86_64 PPC SBSA</li>
+<li>tar -xvf解压缩后用以下命令安装并赋予所有用户读取权限 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo cp path_to_cudnn/include/cudnn*    /usr/local/cuda/include</span><br><span class="line">sudo cp path_to_cudnn/lib64/libcudnn*    /usr/local/cuda/lib64</span><br><span class="line">sudo chmod a+r /usr/local/cuda/include/cudnn*   /usr/local/cuda/lib64/libcudnn*</span><br></pre></td></tr></table></figure></li>
+<li>Cudnn和Cuda 安装完需在&#x2F;etc&#x2F;profile配置环境变量PATH和LD_LIBRARY_PATH  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64</span><br><span class="line">export PATH=$PATH:/usr/local/cuda/bin</span><br><span class="line">export CUDA_HOME=$CUDA_HOME:/usr/local/cuda</span><br></pre></td></tr></table></figure></li>
+<li>可将文件夹 &#x2F;usr&#x2F;local&#x2F;cuda-11.2 与 &#x2F;usr&#x2F;local&#x2F;cuda 软连接起来 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/local/cuda-11.2 /usr/local/cuda</span><br></pre></td></tr></table></figure></li>
+<li>用下面的命令查看cudnn版本,新版本查看cuDNN版本的命令为 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2  # -A 选项用来指定匹配成功的行之后显示2行内容</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+</li>
+<li>结果<ol>
+<li>用默认config.yml训练太慢了大约需要1周时间，中途停掉了</li>
+<li>用改进后config.yml训练。8小时左右训练完成，但是loss很大</li>
+<li>结合往年此赛道总结文章放弃训练提供的mobilernn baseline 思考其它基于cnn的模型</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>从NTIRE 2022 efficient super-resolution challenge选取baseline运用剪枝蒸馏等改进到移动端<ul>
+<li>选取2022 NTIRE ESR冠军方案RLFN(Byte Dance)作为baseline,先将其模型转换为 tensorflow 版本在 REDS 数据集上直接进行VSR的测试 -&gt; 中间软件依赖兼容性问题放弃RLFN torch-&gt;onnx-&gt;tensorflow路线</li>
+<li>直接用tensorflow 重构 RLFN -&gt; train完精度不够’psnr’: 25.651411, ‘ssim’: 0.6954131，需要调试改进</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="本周计划-15"><a href="#本周计划-15" class="headerlink" title="本周计划"></a>本周计划</h2><ol>
+<li>workshop 改进<ul>
+<li>Pruning via NNI</li>
+<li>Quantization via NNI</li>
+<li>Hyper Parameter Optimization via NNI</li>
+</ul>
+</li>
+<li>基金研究基础改小错误</li>
+<li>考试复习</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-2-20-2023-2-26）"><a href="#进度汇报-（2023-2-20-2023-2-26）" class="headerlink" title="进度汇报 （2023.2.20-2023.2.26）"></a>进度汇报 （2023.2.20-2023.2.26）</h2><ul>
+<li>workshop (MAI 2023 Video Super Resolution)<ol>
+<li>RLFN精度提升 ‘psnr’: 25.57 -&gt; 25.91, ‘ssim’: 0.69 -&gt; 0.71; 重构的baseline结构可能存在问题，需要与原作保持一致，恢复精度 </li>
+<li>尝试基于RNN的方案 SWRN, ‘psnr’: 28.19, ‘ssim’: 0.8093;</li>
+<li>3D卷积用于视频超分调研，后期可以考虑3D卷积重参数化加速推理</li>
+</ol>
+</li>
+</ul>
+<h2 id="本周计划-16"><a href="#本周计划-16" class="headerlink" title="本周计划"></a>本周计划</h2><ol>
+<li>workshop <ul>
+<li>恢复baseline模型tensorflow版本的PSNR</li>
+<li>有余力 剪枝加速推理</li>
+</ul>
+</li>
+<li>考试复习</li>
 </ol>
 
       
