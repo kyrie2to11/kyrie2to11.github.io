@@ -195,7 +195,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-28 13:32:34" itemprop="dateModified" datetime="2023-02-28T13:32:34+08:00">2023-02-28</time>
+      <time title="修改时间：2023-03-04 16:16:22" itemprop="dateModified" datetime="2023-03-04T16:16:22+08:00">2023-03-04</time>
     </span>
 
   
@@ -482,7 +482,7 @@
 <li>deformable 3D convolution</li>
 </ul>
 </li>
-<li>Efficient Image Super-Resolution Using Vast-Receptive-Field Attention(VapSR有代码)<ul>
+<li>Efficient Image Super-Resolution Using Vast-Receptive-Field Attention(VapSR 有torch代码)<ul>
 <li>improving the attention mechanism<ul>
 <li>large kernel convolutions</li>
 <li>depth-wise separable convolutions</li>
@@ -490,6 +490,37 @@
 </ul>
 </li>
 <li>相比bytedance的RLFN -&gt; 性能sota,参数更少</li>
+</ul>
+</li>
+<li>LiDeR: Lightweight Dense Residual Network for Video Super-Resolution on Mobile Devices(无代码)<br> -  针对手机端，结构简单，REDS 320x180 X4 upscaling -&gt; psnr:27.51 ssim:0.769(有疑问这个结果到底是在手机上测出来的还是在手机上?)<br> -  <strong>REDS 320x180 X4 upscaling</strong> 执行速度快 139FPS -&gt; FSRCNN: 45FPS ESPCN: 52FPS<br> -  测试平台：<strong>Tensorflow-lite</strong> <strong>fp16</strong> <strong>TF-Lite GPU delegate</strong> <strong>Xiaomi Mi 11</strong> <strong>Qualcomm Snapdragon 888 SoC, Qualcomm Adreno 660 GPU, and 8 GB RAM</strong></li>
+<li>Fast Online Video Super-Resolution with Deformable Attention Pyramid<ul>
+<li>recurrent VSR architecture based on a deformable attention pyramid (DAP)</li>
+<li>对比RRN(mobile_rrn MAI VSR官方用例很慢) -&gt;不适合用到MAI VSR中<ul>
+<li><table>
+<thead>
+<tr>
+<th>Run[ms]</th>
+<th>fps[1&#x2F;s]</th>
+<th>FLOPs[G]</th>
+<th>MACs[G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>28</strong></td>
+<td>35.7</td>
+<td>387.5</td>
+<td>193.6</td>
+</tr>
+<tr>
+<td><strong>38</strong></td>
+<td>26.3</td>
+<td>330.0</td>
+<td>164.8</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ol>
@@ -600,7 +631,7 @@
 <ol>
 <li>尝试BasicVSR++的轻量化</li>
 <li>在ABPN的基础上加入BasicVSR++的主要idea进行改进</li>
-<li>尝试将Pynet_v2应用于video super_resolution</li>
+<li>尝试将Pynet_v2应用于video super_resolution -&gt; relative complicated and tailored for ISP, so halt  </li>
 <li>先train MRNN baseline <ul>
 <li>环境 <ol>
 <li>Python &#x3D;&#x3D; 3.8.10</li>
@@ -679,7 +710,91 @@
 </li>
 </ul>
 </li>
+<li>可以看看tflite加速的那些operations去更改模型</li>
+<li>尝试将torch VapSR 从单图像超分向视频超分迁移 <ul>
+<li>构建模型的tensorflow 代码遇到个小坑: tf.keras.Sequential([upconv1,pixel_shuffle,lrelu,upconv2,pixel_shuffle]) 如果用两个一样的pixel_shuffle模块，用tf.keras.Sequential实现的时候必须用两个不一样的名称，否则无论如何Sequential内都只有一个pixel_shuffle模块</li>
+<li>‘from .XXX import YYY’ 相对导入，Python 解释器会先从当前目录开始查找指定的模块或包,需要当前current.py文件在一个Python包内（创建一个空的 <strong>init</strong>.py 文件，即可将文件夹视为一个Python包）</li>
+</ul>
+</li>
 </ol>
+</li>
+<li><h2 id="results"><a href="#results" class="headerlink" title="results"></a>results</h2><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params [M]</th>
+<th>Runtime on oneplus7T [ms]</th>
+<th>FLOPs [G]</th>
+<th>Acts [M]</th>
+<th>Mem [M]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SWRN</td>
+<td>REDS</td>
+<td>27.931335</td>
+<td>0.7803562</td>
+<td>43,472</td>
+<td>25.6</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SWRN_2_conv_block</td>
+<td>REDS</td>
+<td>27.820051</td>
+<td>0.77666414</td>
+<td>36,512</td>
+<td>26.9</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ELSR_based(vsr 22 winner)</td>
+<td>REDS</td>
+<td>26.716854</td>
+<td>0.73988235</td>
+<td>3,468</td>
+<td>19.3</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>RLFN_based(esr 22 winner)</td>
+<td>REDS</td>
+<td>26.78721</td>
+<td>0.7389487</td>
+<td>306,992</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_based</td>
+<td>REDS</td>
+<td>28.103758</td>
+<td>0.7864979</td>
+<td>154,252</td>
+<td>5191.0</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<hr>
+<p>  <em>AI benchmark setting for Runtime test:</em>  </p>
+<ul>
+<li>Input Values range(min,max): 0,255  </li>
+<li>Inference Mode: FP16  </li>
+<li>Acceleration: TFLite GPU Delegate</li>
+</ul>
 </li>
 </ol>
 
@@ -846,7 +961,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-23 19:21:30" itemprop="dateModified" datetime="2023-02-23T19:21:30+08:00">2023-02-23</time>
+      <time title="修改时间：2023-02-28 17:02:34" itemprop="dateModified" datetime="2023-02-28T17:02:34+08:00">2023-02-28</time>
     </span>
 
   
@@ -873,6 +988,7 @@
 </ol>
 <h1 id="Code-Test"><a href="#Code-Test" class="headerlink" title="Code_Test"></a>Code_Test</h1><h1 id="idea"><a href="#idea" class="headerlink" title="idea"></a>idea</h1><ol>
 <li>发现以前文章的问题尝试改进和解决</li>
+<li>transformer PTQ -&gt; 暂时不考虑, 专心workshop提性能</li>
 </ol>
 
       
