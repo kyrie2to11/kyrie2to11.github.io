@@ -34,8 +34,9 @@
 <meta property="og:image" content="https://kyrie2to11.github.io/Workshop-log/BOE-IOT-AIBD_architecture.png">
 <meta property="og:image" content="https://kyrie2to11.github.io/Workshop-log/GenMedia-Group_architecture.png">
 <meta property="og:image" content="https://kyrie2to11.github.io/Workshop-log/NCUT-VGroup_architecture.png">
+<meta property="og:image" content="https://kyrie2to11.github.io/Workshop-log/BSconv.png">
 <meta property="article:published_time" content="2023-02-17T02:29:03.000Z">
-<meta property="article:modified_time" content="2023-03-04T08:16:22.037Z">
+<meta property="article:modified_time" content="2023-03-05T13:26:03.826Z">
 <meta property="article:author" content="jarvis">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://kyrie2to11.github.io/Workshop-log/MVideoSR_architecture.png">
@@ -207,7 +208,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-04 16:16:22" itemprop="dateModified" datetime="2023-03-04T16:16:22+08:00">2023-03-04</time>
+      <time title="修改时间：2023-03-05 21:26:03" itemprop="dateModified" datetime="2023-03-05T21:26:03+08:00">2023-03-05</time>
     </span>
 
   
@@ -434,8 +435,7 @@
 </li>
 </ol>
 <h2 id="MobileAI-worshop-Video-Super-Resolution"><a href="#MobileAI-worshop-Video-Super-Resolution" class="headerlink" title="MobileAI worshop: Video Super-Resolution"></a>MobileAI worshop: Video Super-Resolution</h2><ol>
-<li><p>papers</p>
-<ol>
+<li>papers<ol>
 <li>Ntire 2019 challenge on video super-resolution: Methods and results</li>
 <li>Ntire 2020 challenge on image and video deblurring</li>
 <li>Pynet-v2 mobile: Efficient on-device photo processing with neural networks <ul>
@@ -537,8 +537,7 @@
 </li>
 </ol>
 </li>
-<li><p>2022 challenge methods (ranked)</p>
-<ol>
+<li>2022 challenge methods (ranked)<ol>
 <li>MVideoSR(无代码)<ul>
 <li>paper title: ELSR: Extreme Low-Power Super Resolution Network For Mobile Devices</li>
 <li>affiliation: Video Algorithm Group, Camera Department, Xiaomi Inc., China</li>
@@ -639,8 +638,7 @@
 </li>
 </ol>
 </li>
-<li><p>ideas</p>
-<ol>
+<li>ideas<ol>
 <li>尝试BasicVSR++的轻量化</li>
 <li>在ABPN的基础上加入BasicVSR++的主要idea进行改进</li>
 <li>尝试将Pynet_v2应用于video super_resolution -&gt; relative complicated and tailored for ISP, so halt  </li>
@@ -726,18 +724,25 @@
 <li>尝试将torch VapSR 从单图像超分向视频超分迁移 <ul>
 <li>构建模型的tensorflow 代码遇到个小坑: tf.keras.Sequential([upconv1,pixel_shuffle,lrelu,upconv2,pixel_shuffle]) 如果用两个一样的pixel_shuffle模块，用tf.keras.Sequential实现的时候必须用两个不一样的名称，否则无论如何Sequential内都只有一个pixel_shuffle模块</li>
 <li>‘from .XXX import YYY’ 相对导入，Python 解释器会先从当前目录开始查找指定的模块或包,需要当前current.py文件在一个Python包内（创建一个空的 <strong>init</strong>.py 文件，即可将文件夹视为一个Python包）</li>
+<li>[B,H,W,48] - conv1X1升维 -&gt; [B,H,W,64], conv1X1为[64,48,1,1]大小的Tensor</li>
+<li>blueprint conv(M: input_channels N: out_channels); BSconvU: 先用M X 1权重向量对输入作通道聚合, 变为只有1个feature map,然后再用N个K X K的卷积输出N个feature map.<ul>
+<li><img src="/./Workshop-log/BSconv.png" alt="fig8"></li>
 </ul>
 </li>
+</ul>
+</li>
+<li>对VapSR_2 剪枝蒸馏量化</li>
 </ol>
 </li>
 <li><h2 id="results"><a href="#results" class="headerlink" title="results"></a>results</h2><table>
 <thead>
 <tr>
 <th>Model</th>
+<th>Description</th>
 <th>Dataset</th>
 <th>Val PSNR</th>
 <th>Val SSIM</th>
-<th>Params [M]</th>
+<th>Params</th>
 <th>Runtime on oneplus7T [ms]</th>
 <th>FLOPs [G]</th>
 <th>Acts [M]</th>
@@ -745,7 +750,8 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>SWRN</td>
+<td>SWRN_0</td>
+<td>Origin</td>
 <td>REDS</td>
 <td>27.931335</td>
 <td>0.7803562</td>
@@ -756,7 +762,8 @@
 <td></td>
 </tr>
 <tr>
-<td>SWRN_2_conv_block</td>
+<td>SWRN_1</td>
+<td>recon_trunk block num&#x3D;2</td>
 <td>REDS</td>
 <td>27.820051</td>
 <td>0.77666414</td>
@@ -767,7 +774,8 @@
 <td></td>
 </tr>
 <tr>
-<td>ELSR_based(vsr 22 winner)</td>
+<td>ELSR_0(vsr 22 winner)</td>
+<td>Origin</td>
 <td>REDS</td>
 <td>26.716854</td>
 <td>0.73988235</td>
@@ -778,7 +786,8 @@
 <td></td>
 </tr>
 <tr>
-<td>RLFN_based(esr 22 winner)</td>
+<td>RLFN_0(esr 22 winner)</td>
+<td>Origin</td>
 <td>REDS</td>
 <td>26.78721</td>
 <td>0.7389487</td>
@@ -789,7 +798,8 @@
 <td></td>
 </tr>
 <tr>
-<td>VapSR_based</td>
+<td>VapSR_0</td>
+<td>Origin</td>
 <td>REDS</td>
 <td>28.103758</td>
 <td>0.7864979</td>
@@ -799,10 +809,33 @@
 <td></td>
 <td></td>
 </tr>
+<tr>
+<td>VapSR_1</td>
+<td>Replace feature extraction conv and VAB’s 2 con1X1 with blueprint conv</td>
+<td>REDS</td>
+<td>28.02941</td>
+<td>0.7845887</td>
+<td>155,916</td>
+<td>5798.0</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_2</td>
+<td>Replace feature extraction conv with blueprint conv and  reduce Attention’s kernel size&#x3D;3X3</td>
+<td>REDS</td>
+<td>28.021387</td>
+<td>0.7831156</td>
+<td>131,276</td>
+<td>2694.0</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
 </tbody></table>
 <hr>
-<p>  <em>AI benchmark setting for Runtime test:</em>  </p>
-<ul>
+  <em>AI benchmark setting for Runtime test:</em>  <ul>
 <li>Input Values range(min,max): 0,255  </li>
 <li>Inference Mode: FP16  </li>
 <li>Acceleration: TFLite GPU Delegate</li>
