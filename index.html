@@ -195,7 +195,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-05 21:26:03" itemprop="dateModified" datetime="2023-03-05T21:26:03+08:00">2023-03-05</time>
+      <time title="修改时间：2023-04-03 08:54:33" itemprop="dateModified" datetime="2023-04-03T08:54:33+08:00">2023-04-03</time>
     </span>
 
   
@@ -422,7 +422,8 @@
 </li>
 </ol>
 <h2 id="MobileAI-worshop-Video-Super-Resolution"><a href="#MobileAI-worshop-Video-Super-Resolution" class="headerlink" title="MobileAI worshop: Video Super-Resolution"></a>MobileAI worshop: Video Super-Resolution</h2><ol>
-<li>papers<ol>
+<li><p>papers</p>
+<ol>
 <li>Ntire 2019 challenge on video super-resolution: Methods and results</li>
 <li>Ntire 2020 challenge on image and video deblurring</li>
 <li>Pynet-v2 mobile: Efficient on-device photo processing with neural networks <ul>
@@ -491,7 +492,12 @@
 <li>相比bytedance的RLFN -&gt; 性能sota,参数更少</li>
 </ul>
 </li>
-<li>LiDeR: Lightweight Dense Residual Network for Video Super-Resolution on Mobile Devices(无代码)<br> -  针对手机端，结构简单，REDS 320x180 X4 upscaling -&gt; psnr:27.51 ssim:0.769(有疑问这个结果到底是在手机上测出来的还是在手机上?)<br> -  <strong>REDS 320x180 X4 upscaling</strong> 执行速度快 139FPS -&gt; FSRCNN: 45FPS ESPCN: 52FPS<br> -  测试平台：<strong>Tensorflow-lite</strong> <strong>fp16</strong> <strong>TF-Lite GPU delegate</strong> <strong>Xiaomi Mi 11</strong> <strong>Qualcomm Snapdragon 888 SoC, Qualcomm Adreno 660 GPU, and 8 GB RAM</strong></li>
+<li>LiDeR: Lightweight Dense Residual Network for Video Super-Resolution on Mobile Devices(无代码)<ul>
+<li>针对手机端，结构简单，REDS 320x180 X4 upscaling -&gt; psnr:27.51 ssim:0.769(有疑问这个结果到底是在手机上测出来的还是在手机上?)</li>
+<li><strong>REDS 320x180 X4 upscaling</strong> 执行速度快 139FPS -&gt; FSRCNN: 45FPS ESPCN: 52FPS</li>
+<li>测试平台：<strong>Tensorflow-lite</strong> <strong>fp16</strong> <strong>TF-Lite GPU delegate</strong> <strong>Xiaomi Mi 11</strong> <strong>Qualcomm Snapdragon 888 SoC, Qualcomm Adreno 660 GPU, and 8 GB RAM</strong></li>
+</ul>
+</li>
 <li>Fast Online Video Super-Resolution with Deformable Attention Pyramid<ul>
 <li>recurrent VSR architecture based on a deformable attention pyramid (DAP)</li>
 <li>对比RRN(mobile_rrn MAI VSR官方用例很慢) -&gt;不适合用到MAI VSR中<ul>
@@ -524,7 +530,8 @@
 </li>
 </ol>
 </li>
-<li>2022 challenge methods (ranked)<ol>
+<li><p>2022 challenge methods (ranked)</p>
+<ol>
 <li>MVideoSR(无代码)<ul>
 <li>paper title: ELSR: Extreme Low-Power Super Resolution Network For Mobile Devices</li>
 <li>affiliation: Video Algorithm Group, Camera Department, Xiaomi Inc., China</li>
@@ -625,18 +632,23 @@
 </li>
 </ol>
 </li>
-<li>ideas<ol>
-<li>尝试BasicVSR++的轻量化</li>
-<li>在ABPN的基础上加入BasicVSR++的主要idea进行改进</li>
-<li>尝试将Pynet_v2应用于video super_resolution -&gt; relative complicated and tailored for ISP, so halt  </li>
-<li>先train MRNN baseline <ul>
+<li><p>ideas</p>
+<ol>
+<li><p>尝试BasicVSR++的轻量化</p>
+</li>
+<li><p>在ABPN的基础上加入BasicVSR++的主要idea进行改进</p>
+</li>
+<li><p>尝试将Pynet_v2应用于video super_resolution -&gt; relative complicated and tailored for ISP, so halt  </p>
+</li>
+<li><p>先train MRNN baseline </p>
+<ul>
 <li>环境 <ol>
-<li>Python &#x3D;&#x3D; 3.8.10</li>
-<li>Tensorflow-gpu &#x3D;&#x3D; 2.9.0<ul>
+<li>Python&#x3D;&#x3D;3.8.10</li>
+<li>Tensorflow-gpu&#x3D;&#x3D;2.9.0<ul>
 <li>查看tensorflow cuda cudnn python 版本对照表： <a target="_blank" rel="noopener" href="https://www.tensorflow.org/install/source_windows">https://www.tensorflow.org/install/source_windows</a></li>
 </ul>
 </li>
-<li>Cuda &#x3D;&#x3D; 11.2 <ul>
+<li>Cuda&#x3D;&#x3D;11.2 <ul>
 <li>CUDA: CUDA是一个<strong>计算平台和编程模型</strong>，用于在GPU上加速应用程序。CUDA版本指的是CUDA软件的版本</li>
 <li>CUDA Toolkit: CUDA Toolkit是包含<strong>CUDA库</strong>和<strong>CUDA工具链</strong>的软件包，用于开发和编译CUDA应用程序。<ul>
 <li>CUDA库: CUDA 库包含了 CUDA 编程所需的核心库文件，例如 <strong>CUDA Runtime 库、CUDA Driver 库、cuBLAS 库、cuDNN 库</strong>等。这些库文件提供了 GPU 加速的基本功能和算法，是 CUDA 编程的基础。</li>
@@ -649,7 +661,7 @@
 <li></li>
 </ul>
 </li>
-<li>Cudnn &#x3D;&#x3D; v8.7.0<ul>
+<li>Cudnn&#x3D;&#x3D;v8.7.0<ul>
 <li>官网：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cudnn">https://developer.nvidia.com/cudnn</a></li>
 <li>cat &#x2F;etc&#x2F;os-release 查看linux版本</li>
 <li>uname -m 查看cpu架构，cudnn有不同架构的版本 x86_64 PPC SBSA</li>
@@ -661,7 +673,7 @@
 </li>
 </ol>
 </li>
-<li>结果<ol start="5">
+<li>结果<ol>
 <li>用默认config.yml训练太慢了大约需要1周时间，中途停掉了</li>
 <li>用改进后config.yml训练。8小时左右训练完成，但是loss很大</li>
 <li>结合往年此赛道总结文章放弃训练提供的mobilernn baseline 思考其它基于cnn的模型</li>
@@ -669,7 +681,8 @@
 </li>
 </ul>
 </li>
-<li>可以从NTIRE 2022 efficient super-resolution challenge选取baseline运用剪枝蒸馏等改进到移动端<ul>
+<li><p>可以从NTIRE 2022 efficient super-resolution challenge选取baseline运用剪枝蒸馏等改进到移动端</p>
+<ul>
 <li>course project for NCSU’s Computer Science 791-025: Real-Time AI &amp; High-Performance Machine Learning. 三板斧<ol>
 <li>Pruning via NNI</li>
 <li>Quantization via NNI</li>
@@ -707,8 +720,10 @@
 </li>
 </ul>
 </li>
-<li>可以看看tflite加速的那些operations去更改模型</li>
-<li>尝试将torch VapSR 从单图像超分向视频超分迁移 <ul>
+<li><p>可以看看tflite加速的那些operations去更改模型</p>
+</li>
+<li><p>尝试将torch VapSR 从单图像超分向视频超分迁移 </p>
+<ul>
 <li>构建模型的tensorflow 代码遇到个小坑: tf.keras.Sequential([upconv1,pixel_shuffle,lrelu,upconv2,pixel_shuffle]) 如果用两个一样的pixel_shuffle模块，用tf.keras.Sequential实现的时候必须用两个不一样的名称，否则无论如何Sequential内都只有一个pixel_shuffle模块</li>
 <li>‘from .XXX import YYY’ 相对导入，Python 解释器会先从当前目录开始查找指定的模块或包,需要当前current.py文件在一个Python包内（创建一个空的 <strong>init</strong>.py 文件，即可将文件夹视为一个Python包）</li>
 <li>[B,H,W,48] - conv1X1升维 -&gt; [B,H,W,64], conv1X1为[64,48,1,1]大小的Tensor</li>
@@ -718,10 +733,199 @@
 </li>
 </ul>
 </li>
-<li>对VapSR_2 剪枝蒸馏量化</li>
+<li><p>对VapSR_2 剪枝量化</p>
+<ul>
+<li><p>列表推导式：list &#x3D; [expression for item in iterable]，其中 expression 是要添加到列表中的表达式，item 是可迭代对象中的每一项，iterable 是要迭代的对象。例如：metric_list &#x3D; [func for name, func in self.metric_functions.items()] </p>
+</li>
+<li><p>tfmot.sparsity.keras.prune_low_magnitude() 封装vapsr_3中的每一个tf.keras.layers.Conv2D进行剪枝</p>
+</li>
+<li><p>同一class下def的method默认第一个参数需要为self;一个method调用另一个method需要用 self.def()不能直接用 def()</p>
+</li>
+<li><p>keras建立网络的方法可以分为keras.models.Sequential() 和keras.models.Model()、继承类三种方式。注意：tensorflow2.* 以后的版本可以直接使用tf.keras.Sequential()和tf.keras.Model()两个类。不用再使用keras.models的API</p>
+<ul>
+<li>Keras提供两种API：Sequential API和Functional API。Sequential API是一种简单的线性堆叠模型，适用于许多简单的模型。但是，如果我们需要构建更加复杂的模型，比如有多个输入或输出的模型，那么就需要使用Functional API。</li>
+<li>Functional API通过tf.keras.Model()实现，它提供了更加灵活的方式来定义模型的结构和层之间的连接。使用Functional API，我们可以创建具有多个输入和输出的模型，可以共享层，可以定义任意的计算图结构等等。相比之下，Sequential API则不能支持这些更高级的模型定义方式。</li>
+<li>因此，使用Functional API来构建复杂的模型是更加灵活和强大的选择，而通过tf.keras.Model()实现这个API是为了提供一种方便和一致的方式来定义和构建深度学习模型。</li>
+</ul>
+</li>
+<li><p>&#x2F; 表示普通的除法运算，例如 5 &#x2F; 2 的结果为 2.5。它返回的是一个浮点数，即使两个操作数都是整数。  &#x2F;&#x2F;表示整除运算，例如5 &#x2F;&#x2F; 2 的结果为 2。 </p>
+</li>
+<li><p>&#x3D;和+直接赋值给变量是不好的，因为它们只是简单地创建一个新的变量，而不是对现有变量进行原位操作。assign()和assign_add()是TensorFlow中的<strong>原地操作</strong>，它们直接将结果分配给现有变量，而不是创建一个新的变量。</p>
+</li>
+<li><p>shell scripts(.sh)添加多行注释：<code>&lt;&lt; COMMENT ... COMMENT</code>, 在 Shell 中，&lt;&lt; 是 Here Document（文档嵌入）的语法，它可以用来将一段文本或代码块嵌入到 Shell 脚本中。</p>
+</li>
+<li><p>pruning 过程model type 变化</p>
+<ol>
+<li>initial: type(self.model) &#x3D;&#x3D; &lt;class ‘VapSR_3.vapsr_3’&gt; (i.e. Keras Subclass Model)<ul>
+<li>Keras Subclass Model是一种创建自定义模型的方式，相较于Sequential和Functional API而言，其提供更大的灵活性。使用Subclass Model，用户可以通过定义一个继承自tf.keras.Model的Python类来构建模型。使用Subclass Model的优点在于，它可以自由灵活地创建非线性、复杂的模型结构，也可以方便地重复利用模型代码。</li>
+</ul>
+</li>
+<li>apply tensorflow.keras.Model() method -&gt; type(functional_model) &#x3D;&#x3D; &lt;class ‘keras.engine.functional.Functional’&gt;</li>
+<li>add tfmot.sparsity.keras.prune_low_magnitude() wrapper -&gt; type(pruned_model) &#x3D;&#x3D; &lt;class ‘keras.engine.functional.Functional’&gt;; 如果直接调用tfmot.sparsity.keras.prune_low_magnitude(functional_model, **pruning_params)还是会报错：ValueError: Subclassed models are not supported currently. :(</li>
+<li>add tfmot.sparsity.keras.prune_low_magnitude() wrapper with another method -&gt; type(pruned_model_1) &#x3D;&#x3D; &lt;class ‘keras.engine.functional.Functional’&gt;</li>
+<li>pruning -&gt; type(pruned_model) &#x3D;&#x3D; &lt;class ‘keras.engine.functional.Functional’&gt;</li>
+<li>虽然type(pruned_model) &#x3D;&#x3D; &lt;class ‘keras.engine.functional.Functional’&gt;，但是传入stripped_pruned_model &#x3D; tfmot.sparsity.keras.strip_pruning(pruned_model)就会报错：ValueError: Expected <code>model</code> argument to be a functional <code>Model</code> instance, but got a subclassed model instead: &lt;keras.saving.saved_model.load.BSConvU object at 0x7f66f06fa520&gt;</li>
+<li>pruned_model.layers &#x3D;&#x3D; [&lt;keras.engine.input_layer.InputLayer object at 0x7f66f06fa580&gt;, &lt;keras.saving.saved_model.load.BSConvU object at 0x7f66f06fa520&gt;, &lt;keras.engine.sequential.Sequential object at 0x7f66f06fa4f0&gt;, &lt;keras.layers.convolutional.conv2d.Conv2D object at 0x7f66f0717c40&gt;, &lt;keras.layers.core.tf_op_layer.TFOpLambda object at 0x7f66f80a7fd0&gt;, &lt;keras.engine.sequential.Sequential object at 0x7f66f80a7cd0&gt;]</li>
 </ol>
 </li>
-<li><h2 id="results"><a href="#results" class="headerlink" title="results"></a>results</h2><table>
+<li><p>pruning 去除tfmot.sparsity.keras.prune_low_magnitude() wrapper的报错就没停过 -&gt; 直接构建Functional Model VapSR</p>
+</li>
+<li><p>详细解释 Layer Norm &#x2F; Batch Norm &#x2F; Instance Norm &#x2F; Pixel Norm</p>
+<ul>
+<li>Batch Norm：对每个特征通道（C）进行归一化，使用整个批次（N）中的样本的均值和方差。在每个 batch 的 channel 维度上计算均值和方差。</li>
+<li>Layer Norm：对每个样本（N）进行归一化，使用所有特征通道（C）和空间维度（H，W）的均值和方差。在每个 layer 的所有 feature maps 上计算均值和方差。</li>
+<li>Instance Norm：对每个样本（N）和每个特征通道（C）进行归一化，使用空间维度（H，W）的均值和方差。在每个 instance 的 channel 维度上计算均值和方差。</li>
+<li>Pixel Norm：对每个样本（N）和每个像素位置（H，W）进行归一化，使用所有特征通道（C）的均值和方差。 </li>
+<li><img src="/./Workshop-log/BN_LN_IN_PN.png" alt="Visualize different normalization methods"></li>
+<li>组会可以讨论下具体实现（作为最后一小部分）</li>
+<li>VapSR 原作者 pixel norm torch 实现  </li>
+<li><pre><code> class VAB(nn.Module):
+     def __init__(self, d_model,d_atten):
+         super().__init__()
+         self.proj_1 = nn.Conv2d(d_model, d_atten, 1)
+         self.activation = nn.GELU()
+         self.atten_branch = Attention(d_atten)
+         self.proj_2 = nn.Conv2d(d_atten, d_model, 1)
+         self.pixel_norm = nn.LayerNorm(d_model)
+         default_init_weights([self.pixel_norm], 0.1)
+     
+     def forward(self, x):
+         shorcut = x.clone()
+         x = self.proj_1(x)
+         x = self.activation(x)
+         x = self.atten_branch(x)
+         x = self.proj_2(x)
+         x = x + shorcut
+         x = x.permute(0, 2, 3, 1) #(B, H, W, C)
+         x = self.pixel_norm(x)
+         x = x.permute(0, 3, 1, 2).contiguous() #(B, C, H, W)
+
+         return x
+     参考：https://blog.csdn.net/weixin_39228381/article/details/107939602    
+</code></pre>
+</li>
+<li>x &#x3D; tf.constant([[1.,2.,4.,5.,7.,8.],[6.,7.,9.,10.,11.,12.],[2.,3.,5.,6.,8.,9.],[4.,5.,7.,8.,10.,11]])</li>
+<li>mean, variance &#x3D; tf.nn.moments(x, axes, shift&#x3D;None, keepdims&#x3D;False, name&#x3D;None) The mean and variance are calculated by <strong>aggregating the contents of x across axes</strong>.  例： tf.nn.moments(x,1)  x.shape &#x3D;&#x3D; [4,2,3] -&gt; mean.shape &#x3D;&#x3D; [4,1,3]</li>
+<li>后续还需要花时间搞清楚 tf LayerNormalization GroupNormalization 在axis&#x3D;list&#x2F;tuple多轴的情况下，到底计算了多少mean和variance，换言之如何用这两个built-in layer做到随心所欲的控制normalization的粒度,妥协方法我觉得是利用transpose,转换轴(相当于torch permute)间接实现相关功能。</li>
+</ul>
+</li>
+<li><p>*args 和 **kwargs 都是 Python 中用于传递可变数量参数的特殊语法。它们的主要区别在于：</p>
+<ul>
+<li>*args 用于传递可变数量的位置参数，以元组(tuple)的形式传递给函数；</li>
+<li>**kwargs 用于传递可变数量的关键字参数，以字典(dictionary)的形式传递给函数。</li>
+</ul>
+</li>
+<li><p>接下来需要尽快完成 pruning clustering quantization pipeline, 将runtime降到10ms左右</p>
+</li>
+<li><p>递归函数的return不是返回一个值然后程序结束，而是返回一个值到上一层的递归函数，直到return到最外层</p>
+</li>
+<li><p>add_pruning_wrapper():</p>
+<ul>
+<li>通过Sequential.add()重建模型,在原模型就是Sequential的时候可行,但是原模型call() method加不进去</li>
+<li>原地替换setattr(object, name, new_model)难点:<ol>
+<li>递归当前tf.keras.layers.Conv2D不知道所属模块object 和 name</li>
+<li>pruned_model &#x3D; copy.deepcopy(model)在复制的pruned_model上应用剪枝封装, subclassed tf.keras.Model() class -&gt; custom object 需要全部重写method: get_config() from_config()</li>
+</ol>
+</li>
+<li>model.__dict__ 与dir(model) 区别<ol start="3">
+<li>model.__dict__ 返回一个字典对象，其中键是模型实例的属性名称(可用model.__dict__.keys()访问)，值是对应的属性值(可用model.__dict__.values()访问)。而 dir(model) 返回一个列表对象，其中包含模型实例的所有属性名称。</li>
+<li>具体来说，model.__dict__ 只返回<strong>实例自身定义的属性，不包括其继承而来的属性</strong>。而 dir(model) 返回实例的所有属性名称，包括其自身定义的属性和继承而来的属性。</li>
+<li>model.__dict__ 返回的字典对象只包含可写的属性。而 dir(model) 返回的属性列表可能包含不可写的属性，例如只读属性或方法等。</li>
+</ol>
+</li>
+<li>pruned_model.layers[3] &#x3D;&#x3D; &lt;keras.layers.convolutional.conv2d.Conv2D object at 0x7ff557c57a60&gt; 这一层是 Keras 自带的 Conv2D 层，而不是通过继承 tf.keras.layers.Layer 类来自定义的。因此，它不会在 __dict__ 属性中出现。</li>
+</ul>
+</li>
+<li><p>strip_pruning_wrapper():</p>
+<ul>
+<li>tfmot.sparsity.keras.strip_pruning(): Only sequential and functional models are supported for now.  </li>
+<li>recursively strip pruning wrapper -&gt; success</li>
+</ul>
+</li>
+<li><p>lr_scheduler: ConsineDecayRestarts</p>
+</li>
+<li><p>pruning_train, clustering_train loss 与 pretraining train loss 相差很大, 50+ vs 10+ 有点问题</p>
+</li>
+<li><p>quantization</p>
+<ol>
+<li><p>tensorflow quantize:</p>
+<ul>
+<li>def quantize_scope(*args)</li>
+<li>def quantize_model(to_quantize, quantized_layer_name_prefix&#x3D;’quant_’)</li>
+<li>def quantize_annotate_model(to_annotate)</li>
+<li>def _add_quant_wrapper(layer)</li>
+<li>def quantize_annotate_layer(to_annotate, quantize_config&#x3D;None)</li>
+<li>def quantize_apply(model, scheme&#x3D;default_8bit_quantize_scheme.Default8BitQuantizeScheme(),           quantized_layer_name_prefix&#x3D;’quant_’)</li>
+<li>def _extract_original_model(model_to_unwrap)</li>
+<li>def _quantize(layer)</li>
+<li>def _unwrap_first_input_name(inbound_nodes)</li>
+<li>def _wrap_fixed_range(quantize_config, num_bits, init_min, init_max, narrow_range)</li>
+<li>def _is_serialized_node_data(nested)</li>
+<li>def _nested_to_flatten_node_data_list(nested)</li>
+<li>def fix_input_output_range(model, num_bits&#x3D;8, input_min&#x3D;0.0, input_max&#x3D;1.0, output_min&#x3D;0.0, output_max&#x3D;1.0, narrow_range&#x3D;False)</li>
+<li>def _is_functional_model(model)</li>
+<li>def remove_input_range(model)</li>
+</ul>
+</li>
+<li><p>*与**二者区别,及与C++ 中指针的区别:</p>
+<ul>
+<li>* 和 ** 都是Python中的特殊符号，用于参数传递和元组、字典的解包操作。它们与C++中的指针有些类似，但也有不同之处。</li>
+<li>* 用于元组的解包操作，可以将一个元组中的元素解包成一个一个的单独元素</li>
+<li>** 用于字典的解包操作，可以将一个字典中的键值对解包成一个一个的单独键和值</li>
+<li>在函数调用时，* 可以用于传递可变数量的位置参数，而 ** 可以用于传递可变数量的关键字参数，如: def foo(*args, **kwargs): …</li>
+<li>与C++中的指针类似，* 可以用于声明指针类型的变量，而 ** 则可以用于声明指向指针的指针类型的变量。但与C++不同的是，Python中的指针实际上是<strong>对象的引用</strong>，而不是内存地址，因此没有C++中的指针算术运算和指针类型转换等操作。<ul>
+<li>与 C++ 不同的是，Python 中的对象引用是一个高级抽象，它们隐藏了对象的实际内存地址，因此 Python 中的引用和指针不是同一概念。在 Python 中，我们不需要显式地管理内存，而是由 Python 解释器自动处理内存管理的细节。因此，Python 中的引用更像是一个符号，它与实际的内存地址之间存在一个间接的映射关系。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>self 与 cls:</p>
+<ul>
+<li>cls 是 Python 中类方法的第一个参数的常规名称。 它指的是类本身而不是类的实例。 它类似于在实例方法中使用 self。 </li>
+<li>在类方法中，cls 用于访问类级别的属性和方法，以及创建类的新实例。</li>
+</ul>
+</li>
+<li><p>修好bug,在手机上测好 runtime; 目标: PSNR -&gt; 28, SSIM -&gt; 0.8, runtime -&gt; 30ms</p>
+<ul>
+<li>从VapSR_3_2开始在手机上都跑不通runtime测试了</li>
+<li>通过tf.lite.TFLiteConverter.from_saved_model(‘path_to_model’)创建converter,转换为tflite模型后可以通过netron查看模型结构并分析可能的错误</li>
+<li>使用tf.lite.TFLiteConverter.from_keras_model()或者tf.lite.TFLiteConverter.from_saved_model()使用创建converter的话总会遭遇两个问题<ol>
+<li>model  input_size: [1,1,1,3] output_size[1,1,1,3] 异常</li>
+<li>Make sure you apply&#x2F;link the Flex delegate before inference.</li>
+<li>综上推荐配合model.save(‘path_to_model’)存为SavedModel格式，然后定义好concrete_func &#x3D; model.signatures[tf.saved_model.DEFAULT_SERVING_SIGNATURE_DEF_KEY ],使用tf.lite.TFLiteConverter.from_concrete_functions([concrete_func])规避掉这两个问题</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>通过QuantizeConfig和Quantizer配合实现layer activations weights的自定义量化策略</p>
+</li>
+<li><p>上下文管理器用于管理某个代码块的上下文环境</p>
+<ul>
+<li>Python 中常见的上下文管理器包括 with open() as f 中的 open() 函数和 with tf.Session() as sess 中的 tf.Session() 函数等。</li>
+<li>在 with 代码块结束后，Python 会自动调用上下文管理器的 __exit__ 方法，以确保资源的释放和清理等工作的完成。同时，上下文管理器可以在 __enter__ 方法中完成一些初始化工作。在 with 代码块内部，可以使用上下文管理器返回的对象，来操作上下文环境中的资源</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>tensorflow复现高通torch QuickSRNet 8-bit 量化</p>
+<ul>
+<li>android_aarch64代表的是基于64位ARM架构的Android设备，也被称为ARMv8-A架构.通常用于高端设备，如智能手机和平板电脑。</li>
+<li>android_arm代表的是基于32位ARM架构的Android设备。通常用于低端设备，如廉价智能手机、平板电脑和物联网设备</li>
+</ul>
+</li>
+<li><p>困扰了至少3周的bug： TFlite GPU Delegate init Batch size mismatch -&gt; solved</p>
+<ul>
+<li>根据<img src="https://github.com/tensorflow/tensorflow/issues/34525#issuecomment-564755977" alt="this link">提前规避了tflite gpu delegate不支持全连接层，即利用1*1全连接层替代</li>
+<li>从0到1一点点逐个测试可能出问题的模块，最终定位在pixel norm模块(由tf.reshape和tf.keras.layers.LayerNormalization构成)，换为LayerNormalization得到解决，PSNR甚至有一点点提升:)</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>results</p>
+<h3 id="milestone-0"><a href="#milestone-0" class="headerlink" title="milestone_0:"></a><strong>milestone_0:</strong></h3><hr>
+<table>
 <thead>
 <tr>
 <th>Model</th>
@@ -732,8 +936,6 @@
 <th>Params</th>
 <th>Runtime on oneplus7T [ms]</th>
 <th>FLOPs [G]</th>
-<th>Acts [M]</th>
-<th>Mem [M]</th>
 </tr>
 </thead>
 <tbody><tr>
@@ -745,8 +947,6 @@
 <td>43,472</td>
 <td>25.6</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>SWRN_1</td>
@@ -756,8 +956,6 @@
 <td>0.77666414</td>
 <td>36,512</td>
 <td>26.9</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
@@ -769,8 +967,6 @@
 <td>3,468</td>
 <td>19.3</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>RLFN_0(esr 22 winner)</td>
@@ -779,9 +975,7 @@
 <td>26.78721</td>
 <td>0.7389487</td>
 <td>306,992</td>
-<td></td>
-<td></td>
-<td></td>
+<td>-</td>
 <td></td>
 </tr>
 <tr>
@@ -793,8 +987,6 @@
 <td>154,252</td>
 <td>5191.0</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>VapSR_1</td>
@@ -804,8 +996,6 @@
 <td>0.7845887</td>
 <td>155,916</td>
 <td>5798.0</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
@@ -817,15 +1007,156 @@
 <td>131,276</td>
 <td>2694.0</td>
 <td></td>
+</tr>
+<tr>
+<td>VapSR_3</td>
+<td>Correct custom realization of pixel normalization</td>
+<td>REDS</td>
+<td>28.018507</td>
+<td>0.7836466</td>
+<td>131,276</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_3_1</td>
+<td>Reduce VAB blocks from 11 to 5</td>
+<td>REDS</td>
+<td>27.826998</td>
+<td>0.7771207</td>
+<td>73,484</td>
+<td>1222.0</td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_3_2</td>
+<td>Realize Pixel Normalization with tf.reshape() and tf.keras.layers.LayerNormalization(); Reduce VAB blocks from 5 to 4</td>
+<td>REDS</td>
+<td>27.550034</td>
+<td>0.7687168</td>
+<td>64,108</td>
+<td>error</td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_4</td>
+<td>apply pruning, weights clustering to conv kernels</td>
+<td>REDS</td>
+<td>27.833515</td>
+<td>0.7771123</td>
+<td>32,054(64,108)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_4_2_0</td>
+<td>Functional VapSR_4 with pixel norm realized by layer normalization, VAB activation: GELU</td>
+<td>REDS</td>
+<td>27.666351</td>
+<td>0.77187574</td>
+<td>64,108</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_4_2_1</td>
+<td>Functional VapSR_4 with pixel norm realized by layer normalization, VAB activation: RELU</td>
+<td>REDS</td>
+<td>27.539206</td>
+<td>0.7669671</td>
+<td>64,108</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_4_3</td>
+<td>Functional VapSR_4 with self customed pixel normalization get rid of layer normalization</td>
+<td>REDS</td>
+<td>27.651005</td>
+<td>0.7715401</td>
+<td>63,852</td>
 <td></td>
 <td></td>
 </tr>
 </tbody></table>
 <hr>
-  <em>AI benchmark setting for Runtime test:</em>  <ul>
+<p>  <em>AI benchmark setting for Runtime test:</em>  </p>
+<ul>
 <li>Input Values range(min,max): 0,255  </li>
 <li>Inference Mode: FP16  </li>
 <li>Acceleration: TFLite GPU Delegate</li>
+</ul>
+<hr>
+<h3 id="milestone-1"><a href="#milestone-1" class="headerlink" title="milestone_1:"></a><strong>milestone_1:</strong></h3><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+<th>FLOPs [G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VapSR_4_1</td>
+<td>Functional VapSR_4 with pixel norm realized by layer normalization, VAB activation: RELU, Attention using Partial conv</td>
+<td>REDS</td>
+<td>27.790268</td>
+<td>0.77721727</td>
+<td>59,468</td>
+<td>654.0(INT8_CPU)</td>
+<td>7.462</td>
+</tr>
+<tr>
+<td>SWAT_0</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;4)</td>
+<td>REDS</td>
+<td>27.842232</td>
+<td>0.77754354</td>
+<td>50,624</td>
+<td>271.0(FP16_CPU)</td>
+<td>5.803</td>
+</tr>
+<tr>
+<td>SWAT_1</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;2), replace fc with 1*1 conv</td>
+<td>REDS</td>
+<td>27.759375</td>
+<td>0.77492595</td>
+<td>33,984</td>
+<td>252.0(FP16_CPU)</td>
+<td>3.900</td>
+</tr>
+<tr>
+<td>SWAT_2</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;1), replace fc with 1*1 conv</td>
+<td>REDS</td>
+<td>27.760305</td>
+<td>0.77487457</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>SWAT_3</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;1), replace fc with 1*1 conv, replace pixel normalization with layer normalization</td>
+<td>REDS</td>
+<td>27.761642</td>
+<td>0.7748446</td>
+<td>25,664</td>
+<td>27.8(FP16_TFLite GPU Delegate)</td>
+<td>2.949</td>
+</tr>
+</tbody></table>
+<hr>
+<p>  <em>AI benchmark setting for Runtime test:</em>  </p>
+<ul>
+<li>Input Values range(min,max): 0,255  </li>
+<li>Inference Mode: INT8&#x2F;FP16  </li>
+<li>Acceleration: CPU&#x2F;TFLite GPU Delegate</li>
 </ul>
 </li>
 </ol>
@@ -993,7 +1324,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-28 17:02:34" itemprop="dateModified" datetime="2023-02-28T17:02:34+08:00">2023-02-28</time>
+      <time title="修改时间：2023-04-02 18:47:01" itemprop="dateModified" datetime="2023-04-02T18:47:01+08:00">2023-04-02</time>
     </span>
 
   
@@ -1018,9 +1349,119 @@
 <li>Nonuniform-to-Uniform Quantization: Towards Accurate Quantization via Generalized Straight-Through Estimation</li>
 <li>Data-Free Network Compression via Parametric Non-uniform Mixed Precision Quantization（2022CVPR）</li>
 </ol>
-<h1 id="Code-Test"><a href="#Code-Test" class="headerlink" title="Code_Test"></a>Code_Test</h1><h1 id="idea"><a href="#idea" class="headerlink" title="idea"></a>idea</h1><ol>
-<li>发现以前文章的问题尝试改进和解决</li>
+<h1 id="Code-Test"><a href="#Code-Test" class="headerlink" title="Code_Test"></a>Code_Test</h1><h1 id="Idea"><a href="#Idea" class="headerlink" title="Idea"></a>Idea</h1><ol>
+<li>发现以前文章的问题尝试改进和解决 -&gt; 单纯比较runtime必败</li>
 <li>transformer PTQ -&gt; 暂时不考虑, 专心workshop提性能</li>
+<li>从第一个work出paper的角度,可以考虑新的压缩方面的idea应用于MAI video super resolution<ul>
+<li>dataset -&gt; REDS</li>
+<li>mobile video super resolution related paper</li>
+<li>frontier -&gt; Optical Flow</li>
+</ul>
+</li>
+<li>尝试blind video super resolution -&gt; 放弃</li>
+<li><table>
+<thead>
+<tr>
+<th>Compared Solutions</th>
+<th>Model Size, KB</th>
+<th>PSNR</th>
+<th>SSIM</th>
+<th>Runtime, ms</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MVideoSR</td>
+<td>17</td>
+<td>27.34</td>
+<td>0.7799</td>
+<td>3.05</td>
+</tr>
+<tr>
+<td>ZX_VIP</td>
+<td>20</td>
+<td>27.52</td>
+<td>0.7872</td>
+<td>3.04</td>
+</tr>
+<tr>
+<td>Fighter</td>
+<td>11</td>
+<td>27.34</td>
+<td>0.7816</td>
+<td>3.41</td>
+</tr>
+<tr>
+<td>XJTU-MIGU SUPER</td>
+<td>50</td>
+<td>27.77</td>
+<td>0.7957</td>
+<td>3.25</td>
+</tr>
+<tr>
+<td>BOE-IOT-AIBD</td>
+<td>40</td>
+<td>27.71</td>
+<td>0.7820</td>
+<td>1.97</td>
+</tr>
+<tr>
+<td>GenMedia Group</td>
+<td>135</td>
+<td>28.40</td>
+<td>0.8105</td>
+<td>3.10</td>
+</tr>
+<tr>
+<td>NCUT VGroup</td>
+<td>35</td>
+<td>27.46</td>
+<td>0.7822</td>
+<td>1.39</td>
+</tr>
+<tr>
+<td>Mortar ICT</td>
+<td>75</td>
+<td>22.91</td>
+<td>0.7546</td>
+<td>1.76</td>
+</tr>
+<tr>
+<td>RedCat AutoX</td>
+<td>62</td>
+<td>27.71</td>
+<td>0.7945</td>
+<td>7.26</td>
+</tr>
+<tr>
+<td>221B</td>
+<td>186</td>
+<td>28.19</td>
+<td>0.8093</td>
+<td>10.1</td>
+</tr>
+</tbody></table>
+</li>
+<li>了解最新的基于数据集 REDS &#x2F; Viemo-90K &#x2F; Vid4 &#x2F; UDM10 &#x2F; SPMCS &#x2F; RealVSR的最新研究进展<table>
+<thead>
+<tr>
+<th>Paper</th>
+<th>Training Set</th>
+<th>Testing Set</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Achieving on-Mobile Real-Time Super-Resolution with Neural Architecture and Pruning Search</td>
+<td>DIV2K</td>
+<td>Set5, Set14, B100 and Urban100</td>
+</tr>
+<tr>
+<td>LiDeR: Lightweight Dense Residual Network for Video Super-Resolution on Mobile Devices</td>
+<td>REDS</td>
+<td>REDS</td>
+</tr>
+</tbody></table>
+</li>
+<li></li>
 </ol>
 
       
@@ -2616,7 +3057,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-27 10:46:04" itemprop="dateModified" datetime="2023-02-27T10:46:04+08:00">2023-02-27</time>
+      <time title="修改时间：2023-04-02 19:47:14" itemprop="dateModified" datetime="2023-04-02T19:47:14+08:00">2023-04-02</time>
     </span>
 
   
@@ -3020,6 +3461,244 @@
 </ul>
 </li>
 <li>考试复习</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-2-27-2023-3-5）"><a href="#进度汇报-（2023-2-27-2023-3-5）" class="headerlink" title="进度汇报 （2023.2.27-2023.3.5）"></a>进度汇报 （2023.2.27-2023.3.5）</h2><ol>
+<li>workshop (MAI 2023 Video Super Resolution)<ul>
+<li>目前PSNR、SSIM比较满意的是VapSR_2,但是推理时间太长,需要优化</li>
+</ul>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SWRN_0</td>
+<td>Origin</td>
+<td>REDS</td>
+<td>27.931335</td>
+<td>0.7803562</td>
+<td>43,472</td>
+<td>25.6</td>
+</tr>
+<tr>
+<td>SWRN_1</td>
+<td>recon_trunk block num&#x3D;2</td>
+<td>REDS</td>
+<td>27.820051</td>
+<td>0.77666414</td>
+<td>36,512</td>
+<td>26.9</td>
+</tr>
+<tr>
+<td>ELSR_0(vsr 22 winner)</td>
+<td>Origin</td>
+<td>REDS</td>
+<td>26.716854</td>
+<td>0.73988235</td>
+<td>3,468</td>
+<td>19.3</td>
+</tr>
+<tr>
+<td>VapSR_0</td>
+<td>Origin</td>
+<td>REDS</td>
+<td>28.103758</td>
+<td>0.7864979</td>
+<td>154,252</td>
+<td>5191.0</td>
+</tr>
+<tr>
+<td>VapSR_1</td>
+<td>Replace feature extraction conv and VAB’s 2 con1X1 with blueprint conv</td>
+<td>REDS</td>
+<td>28.02941</td>
+<td>0.7845887</td>
+<td>155,916</td>
+<td>5798.0</td>
+</tr>
+<tr>
+<td>VapSR_2</td>
+<td>Replace feature extraction conv with blueprint conv and  reduce Attention’s kernel size&#x3D;3X3</td>
+<td>REDS</td>
+<td>28.021387</td>
+<td>0.7831156</td>
+<td>131,276</td>
+<td>2694.0</td>
+</tr>
+</tbody></table>
+<hr>
+<p>  <em>AI benchmark setting for Runtime test:</em>  </p>
+<ul>
+<li>Input Values range(min,max): 0,255  </li>
+<li>Inference Mode: FP16  </li>
+<li>Acceleration: TFLite GPU Delegate</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划-17"><a href="#本周计划-17" class="headerlink" title="本周计划"></a>本周计划</h2><ol>
+<li>workshop <ul>
+<li>利用tensorflow model optimization toolkit(TFMOT)进行模型压缩,看效果</li>
+<li>寻找新idea</li>
+</ul>
+</li>
+<li>两门考试复习</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-3-6-2023-3-12）"><a href="#进度汇报-（2023-3-6-2023-3-12）" class="headerlink" title="进度汇报 （2023.3.6-2023.3.12）"></a>进度汇报 （2023.3.6-2023.3.12）</h2><ol>
+<li>workshop (MAI 2023 Video Super Resolution)<ul>
+<li>tensorflow model optimization toolkit(TFMOT) Pruning： tensorflow中对于子类化的模型(Subclassed Model)剪枝支持不好，代码有些问题，目前只对模型头部特征提取的蓝图卷积部分应用到了，对于中间参数量最大的部分没有应用成功，推理时间降低很少。</li>
+</ul>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VapSR_2</td>
+<td>Replace feature extraction conv with blueprint conv and  reduce Attention’s kernel size&#x3D;3X3</td>
+<td>REDS</td>
+<td>28.021387</td>
+<td>0.7831156</td>
+<td>131,276</td>
+<td>2694.0</td>
+</tr>
+<tr>
+<td>VapSR_3</td>
+<td>Pruning</td>
+<td>REDS</td>
+<td>28.021387</td>
+<td>0.7831156</td>
+<td>131,276</td>
+<td>2673.0</td>
+</tr>
+</tbody></table>
+<hr>
+</li>
+</ol>
+<h2 id="本周计划-18"><a href="#本周计划-18" class="headerlink" title="本周计划"></a>本周计划</h2><ol>
+<li>workshop<ul>
+<li>将模型重构为函数式模型(Functional Model)再进行剪枝</li>
+<li>模型量化部署</li>
+</ul>
+</li>
+<li>审稿</li>
+<li>组会准备</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-3-13-2023-3-19）"><a href="#进度汇报-（2023-3-13-2023-3-19）" class="headerlink" title="进度汇报 （2023.3.13-2023.3.19）"></a>进度汇报 （2023.3.13-2023.3.19）</h2><ol>
+<li>workshop (MAI 2023 Video Super Resolution)<ul>
+<li>tensorflow model optimization toolkit(TFMOT) Pruning, Weight Clustering：成功对模型的全部卷积层应用了50%的剪枝和总体10个权重聚类中心的聚类,参数量较之前只对特征提取部分应用剪枝下降很多</li>
+</ul>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VapSR_3</td>
+<td>Pruning feature extraction part</td>
+<td>REDS</td>
+<td>28.021387</td>
+<td>0.7831156</td>
+<td>131,276</td>
+<td>-</td>
+</tr>
+<tr>
+<td>VapSR_4</td>
+<td>apply pruning, weights clustering to conv kernels</td>
+<td>REDS</td>
+<td>27.3111</td>
+<td>0.7376</td>
+<td>32,054</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<hr>
+</li>
+</ol>
+<h2 id="本周计划-19"><a href="#本周计划-19" class="headerlink" title="本周计划"></a>本周计划</h2><ol>
+<li>workshop<ul>
+<li>模型8bit量化实现</li>
+<li>寻找降低runtime的新方法</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-3-20-2023-3-26）"><a href="#进度汇报-（2023-3-20-2023-3-26）" class="headerlink" title="进度汇报 （2023.3.20-2023.3.26）"></a>进度汇报 （2023.3.20-2023.3.26）</h2><ol>
+<li>workshop (MAI 2023 Video Super Resolution)<ul>
+<li>tensorflow model optimization toolkit(TFMOT) Pruning, Weight Clustering -&gt; INT8 Quantization Aware Training (QAT) -&gt; tflite <ul>
+<li>问题1： QAT掉点严重 {‘psnr’: 27.666351, ‘ssim’: 0.77187574} -&gt; {‘psnr’: 27.008348, ‘ssim’: 0.7406609}</li>
+<li>问题2： 转换为tflite模型过程没问题，手机上用AI Benchmark测试runtime一直报输入type&#x2F;shape mismatch, 定位不到bug在哪里,怀疑是软件不能自定义输入的dtype导致的<ul>
+<li>寻求AI Benchmark论坛的帮助</li>
+<li>考虑借鉴tensorflow在andriod上的超分案例，测试转换过来的tflite模型</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>work<ul>
+<li>参考CVPR2023”Run, Don’t Walk: Chasing Higher FLOPS for Faster Neural Networks”移植了partial convolution (PConv)模块</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划-20"><a href="#本周计划-20" class="headerlink" title="本周计划"></a>本周计划</h2><ol>
+<li>workshop<ul>
+<li>解决以上问题</li>
+</ul>
+</li>
+<li>work <ul>
+<li>提升在REDS数据集上的PSNR</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-3-27-2023-4-2）"><a href="#进度汇报-（2023-3-27-2023-4-2）" class="headerlink" title="进度汇报 （2023.3.27-2023.4.2）"></a>进度汇报 （2023.3.27-2023.4.2）</h2><ol>
+<li>workshop (MAI 2023 Video Super Resolution)<ul>
+<li>解决了在手机上对tflite模型推理只能使用CPU无法应用TFLite GPU Delegate 和 NNAPI加速的问题</li>
+</ul>
+</li>
+<li>work<ul>
+<li>移动端视频超分的模型基本确定，后续需要对剪枝&#x2F;权重聚类&#x2F;量化部分进行微调</li>
+<li>文献搜集，了解移动端视频超分的现状和最新进展</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划-21"><a href="#本周计划-21" class="headerlink" title="本周计划"></a>本周计划</h2><ol>
+<li>workshop<ul>
+<li>对训练好的模型的量化策略进行调整，看能否进一步降低推理时间</li>
+<li>尝试新的训练损失函数&#x2F;训练策略，看能否进一步提升PSNR SSIM</li>
+</ul>
+</li>
+<li>work <ul>
+<li>论文撰写</li>
+</ul>
+</li>
 </ol>
 
       
