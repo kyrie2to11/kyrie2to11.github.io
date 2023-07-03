@@ -120,7 +120,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -159,7 +159,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/04/10/Group-Week-Report/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/04/10/Group_Week_Report/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -177,7 +177,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/10/Group-Week-Report/" class="post-title-link" itemprop="url">Group-Week-Report</a>
+          <a href="/2023/04/10/Group_Week_Report/" class="post-title-link" itemprop="url">Group-Week-Report</a>
         </h2>
 
         <div class="post-meta-container">
@@ -284,7 +284,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/17/Workshop-Log/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/17/Workshop_Log_0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -302,7 +302,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/17/Workshop-Log/" class="post-title-link" itemprop="url">Workshop_log</a>
+          <a href="/2023/02/17/Workshop_Log_0/" class="post-title-link" itemprop="url">MAI 2023 Mobile VSR Workshop Log</a>
         </h2>
 
         <div class="post-meta-container">
@@ -320,7 +320,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-04-15 11:12:24" itemprop="dateModified" datetime="2023-04-15T11:12:24+08:00">2023-04-15</time>
+      <time title="修改时间：2023-07-03 16:36:45" itemprop="dateModified" datetime="2023-07-03T16:36:45+08:00">2023-07-03</time>
     </span>
 
   
@@ -666,7 +666,7 @@
 <li>though <strong>attention modules(ESA, CCA and PA)</strong> bring performance improvement, the extra energy consumption introduced is still unacceptable</li>
 <li>architeture<ul>
 <li>discription: single frame input  which only have 6 layers, of which only 5 have learnable parameters, including 4 Conv layers and a PReLU activation layer. Pixel-Shuffle operation (also known as depth2space) is used at last to upscale the size of output without introducing more calculation. The intermediate feature channels are all set to 6.</li>
-<li><img src="/./Workshop-log/MVideoSR_architecture.png" alt="fig_1"></li>
+<li><img src="/./Workshop_Log_0/MVideoSR_architecture.png" alt="fig_1"></li>
 <li><em>Note</em>:直接复制的相对路径时异常的，加载不出来需要修改为格式: .&#x2F;xxx&#x2F;xxx.png</li>
 </ul>
 </li>
@@ -683,7 +683,7 @@
 <li><strong>NAS</strong>: The objective function of FGNAS is <strong>task-specific loss</strong> and <strong>regularizer penalty FLOPs</strong>. FGNAS -&gt; Kim, H., Hong, S., Han, B., Myeong, H., Lee, K.M.: Fine-grained neural architecture search. arXiv preprint arXiv:1911.07478 (2019)</li>
 <li><strong>training strategy</strong>:<strong>replace L1 loss function with Charbonnier loss function</strong> because it causes the problem that the restored image is too smooth and lack of sense of reality. </li>
 <li>architeture<ul>
-<li><img src="/./Workshop-log/ZX_VIP_architecture.png" alt="fig2"></li>
+<li><img src="/./Workshop_Log_0/ZX_VIP_architecture.png" alt="fig2"></li>
 </ul>
 </li>
 </ol>
@@ -696,7 +696,7 @@
 <li>methods:  <ol>
 <li>shallow CNN model with <strong>depthwise separable convolutions</strong> and <strong>one residual connection</strong>. The number of convolution channels in the model was set to 8, the <strong>depth-to-space op</strong> was used at the end of the model to produce the final output.</li>
 <li>architeture<ul>
-<li><img src="/./Workshop-log/Fighter_architecture.png" alt="fig3"></li>
+<li><img src="/./Workshop_Log_0/Fighter_architecture.png" alt="fig3"></li>
 </ul>
 </li>
 </ol>
@@ -709,7 +709,7 @@
 <li>methods:<ol>
 <li>small CNN-based model. 示意图如下，总共训练了2600 epochs :(</li>
 <li>architeture<ul>
-<li><img src="/./Workshop-log/XJTU-MIGU_SUPER_architecture.png" alt="fig4"></li>
+<li><img src="/./Workshop_Log_0/XJTU-MIGU_SUPER_architecture.png" alt="fig4"></li>
 </ul>
 </li>
 </ol>
@@ -722,7 +722,7 @@
 <li>methods: <ol>
 <li>based on the <strong>CNN-Net architecture</strong>, its structure is illustrated in Fig 6. The authors applied <strong>model distillation</strong>, and used the <strong>RFDN CNN</strong> as a teacher model. </li>
 <li>architeture<ul>
-<li><img src="/./Workshop-log/BOE-IOT-AIBD_architecture.png" alt="fig5"></li>
+<li><img src="/./Workshop_Log_0/BOE-IOT-AIBD_architecture.png" alt="fig5"></li>
 </ul>
 </li>
 </ol>
@@ -735,7 +735,7 @@
 <li>methods:<ol>
 <li>inspired by the last year’s top solution from the MAI image super-resolution challenge.  <strong>added one extra skip connection to the mentioned anchor-based plain net (ABPN) model</strong>.</li>
 <li>architeture<ul>
-<li><img src="/./Workshop-log/GenMedia-Group_architecture.png" alt="fig6"></li>
+<li><img src="/./Workshop_Log_0/GenMedia-Group_architecture.png" alt="fig6"></li>
 </ul>
 </li>
 </ol>
@@ -748,7 +748,7 @@
 <li>methods: <ol>
 <li>also based their solution on the <strong>ABPN model</strong>.   </li>
 <li>architeture<ul>
-<li><img src="/./Workshop-log/NCUT-VGroup_architecture.png" alt="fig7"></li>
+<li><img src="/./Workshop_Log_0/NCUT-VGroup_architecture.png" alt="fig7"></li>
 </ul>
 </li>
 </ol>
@@ -853,7 +853,7 @@
 <li>‘from .XXX import YYY’ 相对导入，Python 解释器会先从当前目录开始查找指定的模块或包,需要当前current.py文件在一个Python包内（创建一个空的 <strong>init</strong>.py 文件，即可将文件夹视为一个Python包）</li>
 <li>[B,H,W,48] - conv1X1升维 -&gt; [B,H,W,64], conv1X1为[64,48,1,1]大小的Tensor</li>
 <li>blueprint conv(M: input_channels N: out_channels); BSconvU: 先用M X 1权重向量对输入作通道聚合, 变为只有1个feature map,然后再用N个K X K的卷积输出N个feature map.<ul>
-<li><img src="/./Workshop-log/BSconv.png" alt="fig8"></li>
+<li><img src="/./Workshop_Log_0/BSconv.png" alt="fig8"></li>
 </ul>
 </li>
 </ul>
@@ -901,7 +901,7 @@
 <li>Layer Norm：对每个样本（N）进行归一化，使用所有特征通道（C）和空间维度（H，W）的均值和方差。在每个 layer 的所有 feature maps 上计算均值和方差。</li>
 <li>Instance Norm：对每个样本（N）和每个特征通道（C）进行归一化，使用空间维度（H，W）的均值和方差。在每个 instance 的 channel 维度上计算均值和方差。</li>
 <li>Pixel Norm：对每个样本（N）和每个像素位置（H，W）进行归一化，使用所有特征通道（C）的均值和方差。 </li>
-<li><img src="/./Workshop-log/BN_LN_IN_PN.png" alt="Visualize different normalization methods"></li>
+<li><img src="/./Workshop_Log_0/BN_LN_IN_PN.png" alt="Visualize different normalization methods"></li>
 <li>组会可以讨论下具体实现（作为最后一小部分）</li>
 <li>VapSR 原作者 pixel norm torch 实现  </li>
 <li><pre><code> class VAB(nn.Module):
@@ -1379,7 +1379,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/13/OnePlus-Recovery/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/13/OnePlus_Recovery/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1397,7 +1397,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/13/OnePlus-Recovery/" class="post-title-link" itemprop="url">OnePlus_Recovery</a>
+          <a href="/2023/02/13/OnePlus_Recovery/" class="post-title-link" itemprop="url">OnePlus_Recovery</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1481,7 +1481,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/07/Work-Log/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/07/Work_Log_0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1499,7 +1499,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/07/Work-Log/" class="post-title-link" itemprop="url">Mobile Video Super-Resolution</a>
+          <a href="/2023/02/07/Work_Log_0/" class="post-title-link" itemprop="url">Mobile Video Super-Resolution</a>
         </h2>
 
         <div class="post-meta-container">
@@ -2970,7 +2970,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/12/06/Model%20Quantization%20Papers/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/12/06/Model_Quantization_Papers/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -2988,7 +2988,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/12/06/Model%20Quantization%20Papers/" class="post-title-link" itemprop="url">Model Quantization Papers</a>
+          <a href="/2022/12/06/Model_Quantization_Papers/" class="post-title-link" itemprop="url">Model Quantization Papers</a>
         </h2>
 
         <div class="post-meta-container">
@@ -3700,7 +3700,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/21/CUDA%20Tutorial/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/21/CUDA_Tutorial/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -3718,7 +3718,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/21/CUDA%20Tutorial/" class="post-title-link" itemprop="url">CUDA_Tutorial</a>
+          <a href="/2022/09/21/CUDA_Tutorial/" class="post-title-link" itemprop="url">CUDA_Tutorial</a>
         </h2>
 
         <div class="post-meta-container">
@@ -4286,7 +4286,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/07/Model%20Compression%20Overview/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/07/Model_Compression_Overview/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -4304,7 +4304,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/07/Model%20Compression%20Overview/" class="post-title-link" itemprop="url">Model_Compression_Overview</a>
+          <a href="/2022/09/07/Model_Compression_Overview/" class="post-title-link" itemprop="url">Model_Compression_Overview</a>
         </h2>
 
         <div class="post-meta-container">
@@ -4428,7 +4428,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/06/tensor-dimensions/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/06/Tensor_Dimensions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -4446,7 +4446,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/06/tensor-dimensions/" class="post-title-link" itemprop="url">tensor_dimensions</a>
+          <a href="/2022/09/06/Tensor_Dimensions/" class="post-title-link" itemprop="url">tensor_dimensions</a>
         </h2>
 
         <div class="post-meta-container">
@@ -4502,7 +4502,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/05/Week-Report/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/05/Week_Report/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -4520,7 +4520,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/05/Week-Report/" class="post-title-link" itemprop="url">Week Report</a>
+          <a href="/2022/09/05/Week_Report/" class="post-title-link" itemprop="url">Week Report</a>
         </h2>
 
         <div class="post-meta-container">
@@ -5545,7 +5545,7 @@
 
 
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
