@@ -195,7 +195,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-15 12:30:32" itemprop="dateModified" datetime="2023-08-15T12:30:32+08:00">2023-08-15</time>
+      <time title="修改时间：2023-08-28 14:29:19" itemprop="dateModified" datetime="2023-08-28T14:29:19+08:00">2023-08-28</time>
     </span>
 
   
@@ -1212,25 +1212,54 @@
 </ul>
 </li>
 <li>PRCV审稿</li>
-<li>FP8 Quantization<ul>
-<li>FP8 Quantization: The Power of the Exponent (Qualcomm_NeurIPS 2022)</li>
-<li>FP8 FORMATS FOR DEEP LEARNING (NVIDIA&#x2F;Arm&#x2F;Intel_ArXiv 2022.09)</li>
-<li>FP8 versus INT8 for efficient deep learning inference (Qualcomm_ArXiv 2022.09)</li>
-<li>Integer or Floating Point? New Outlooks for Low-Bit Quantization on Large Language Models ()</li>
+<li>FP8 Quantization 调研<ul>
+<li>FP8 Quantization: The Power of the Exponent (Qualcomm_NeurIPS 2022) <ol>
+<li>FP8更适应离群值多的场景</li>
+<li>PTQ时精度优于INT8，QAT时精度比INT8略差</li>
+</ol>
+</li>
+<li>FP8 FORMATS FOR DEEP LEARNING (NVIDIA&#x2F;Arm&#x2F;Intel_ArXiv 2022.09) -&gt; 训练推理统一数据格式FP8<ol>
+<li>FP8 可以加速训练和减少训练所需的资源，同时方便部署且可以保证训练出的精度</li>
+<li>INT8 量化模型通常需要进行校准或微调，训练与推理数据类型不一致不便于部署，且通常精度会下降</li>
+</ol>
+</li>
+<li>FP8 versus INT8 for efficient deep learning inference (Qualcomm_ArXiv 2023.06) -&gt; FP8 目前在性能和精度上不能取代INT8推理，目前INT4-INT8-INT16是边缘端推理的最优解<ol>
+<li>PTQ时在离群值显著的情况下，FP8相较INT8有精度优势; 通常这种情况可以通过W8A16混合精度以及QAT来解决</li>
+<li>FP8推理硬件开销大, FP8 MAC 单元效率比 INT8 低50%至180%</li>
+<li>为了更高效，已经有一些INT4量化的工具, 但到目前为止并没有FP4相关的工作</li>
+</ol>
+</li>
+<li>Integer or Floating Point? New Outlooks for Low-Bit Quantization on Large Language Models (MSRA_ArXiv 2023.05) -&gt; Layer wise混合精度LLM</li>
 </ul>
 </li>
 </ol>
 <h2 id="本周计划-30"><a href="#本周计划-30" class="headerlink" title="本周计划"></a>本周计划</h2><ol>
+<li>开题报告 -&gt; success</li>
+<li>FANI andriod app -&gt; false</li>
+<li>实习简历 -&gt; success</li>
+<li>天空之眼广域持续监视系统 PPT -&gt; success</li>
+<li>尝试魔改 Qualcomm_FP8 + SQuant -&gt; pending</li>
+<li>尝试集成Face Tracking 和 Pose Estimation实现相机角度跟随人体并进行姿态估计 -&gt; pending</li>
+<li>大湾区算法比赛： 视频插帧 + 单目深度估计 -&gt; pending</li>
+<li>ACwing 算法课 -&gt; pending</li>
+<li>CSAPP 课程+实验 -&gt; pending</li>
+<li>Dipoorlet MQBench 使用 -&gt; pending</li>
+</ol>
+<h1 id="进度汇报-（2023-8-14-2023-8-27）"><a href="#进度汇报-（2023-8-14-2023-8-27）" class="headerlink" title="进度汇报 （2023.8.14-2023.8.27）"></a>进度汇报 （2023.8.14-2023.8.27）</h1><ol>
+<li>机载广域持续监视方案调研,PPT制作</li>
 <li>开题报告</li>
-<li>FANI andriod app</li>
-<li>实习简历</li>
-<li>天空之眼广域持续监视系统 PPT</li>
-<li>尝试魔改 Qualcomm_FP8 + SQuant </li>
-<li>尝试集成Face Tracking 和 Pose Estimation实现相机角度跟随人体并进行姿态估计</li>
-<li>大湾区算法比赛： 视频插帧 ; 单目深度估计</li>
-<li>ACwing 算法课</li>
-<li>CSAPP 课程+实验</li>
-<li>Dipoorlet MQBench 使用</li>
+<li>jetson nano 项目：Face Tracking + Pose Estimation<ul>
+<li>原有基于nvidia官方trt_pose项目的姿态估计推理速度慢,现基于Shanghai AI Lab 2023最新的轻量姿态估计项目RTMPose进行部署</li>
+<li>调研了解商汤MMdeploy 和 MMPose项目，编译安装相关依赖并在jetson nano上搭建了部署环境</li>
+<li>完成了驱动舵机调整摄像头位置的C++代码，后续通过ctypes库实现在py文件中调用此部分调整摄像头姿态的C++代码</li>
+</ul>
+</li>
+</ol>
+<h1 id="本周计划-31"><a href="#本周计划-31" class="headerlink" title="本周计划"></a>本周计划</h1><ol>
+<li>完成jetson nano 项目：Face Tracking + Pose Estimation</li>
+<li>调研了解TensorRT&#x2F;TNN&#x2F;MNN&#x2F;NCNN等推理框架，重点尝试运用TensorRT加速RTMPose的推理 </li>
+<li>参加大湾区算法比赛： 视频插帧 + 单目深度估计</li>
+<li>实习简历投递</li>
 </ol>
 
       
