@@ -28,7 +28,7 @@
 <meta property="og:description" content="Issue Method    PytorchCV package Image Classification and Segmentation Models   Parameter-Argument Defining-Calling   Positional 传参时前面不带 “变量名&#x3D;”, 顺序不可变   Keyword 传参时前面加上 “变量名&#x3D;”, 顺序可变   Cl">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-11-17T03:12:15.000Z">
-<meta property="article:modified_time" content="2023-02-19T05:39:46.854Z">
+<meta property="article:modified_time" content="2023-10-13T02:26:40.224Z">
 <meta property="article:author" content="jarvis">
 <meta name="twitter:card" content="summary">
 
@@ -122,7 +122,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -198,7 +198,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-02-19 13:39:46" itemprop="dateModified" datetime="2023-02-19T13:39:46+08:00">2023-02-19</time>
+      <time title="修改时间：2023-10-13 10:26:40" itemprop="dateModified" datetime="2023-10-13T10:26:40+08:00">2023-10-13</time>
     </span>
 
   
@@ -275,27 +275,27 @@
 <td>hook 函数用以获取我们不方便获得的一些中间变量</td>
 </tr>
 <tr>
-<td>Magic Method <strong>call</strong>()</td>
+<td>Magic Method: __call__()</td>
 <td>将对象当方法使用</td>
 </tr>
 <tr>
-<td>Magic Method <strong>new</strong>()</td>
+<td>Magic Method: __new__()</td>
 <td>创建类实例的静态方法</td>
 </tr>
 <tr>
-<td>Magic Method <strong>repr</strong>()</td>
+<td>Magic Method: __repr__()</td>
 <td>直接输出某个实例化对象，默认情况下输出是“类名+object at+内存地址”，可重写获得想要的属性信息</td>
 </tr>
 <tr>
-<td>Magic Method <strong>del</strong>()</td>
+<td>Magic Method: __del__()</td>
 <td>销毁对象</td>
 </tr>
 <tr>
-<td>Magic Method <strong>dir</strong>()</td>
+<td>Magic Method: __dir__()</td>
 <td>列出对象的所有属性名、方法名</td>
 </tr>
 <tr>
-<td>Magic Method <strong>dict</strong>()</td>
+<td>Magic Method: __dict__()</td>
 <td>查看对象内部所有属性名和属性值组成的字典dict</td>
 </tr>
 <tr>
@@ -369,6 +369,10 @@
 <tr>
 <td>nvidia-smi</td>
 <td>不仅可以查看当前NVIDIA驱动的版本，还可以查询与此驱动相匹配的CUDA版本，虽是匹配，但是CUDA的版本可以略低于此时驱动匹配的CUDA版本，因此，我们可以安装版本高一点的驱动，来兼容不同版本的CUDA！</td>
+</tr>
+<tr>
+<td>NVIDIA-SMI has failed because it couldn’t communicate with the NVIDIA driver. Make sure that the latest NVIDIA driver is installed and running</td>
+<td>内核自动升级导致的新内核无法启动驱动, 最终重装显卡驱动, cuda, cudnn解决，参考如下链接：<a target="_blank" rel="noopener" href="https://qii404.me/2021/07/03/ubuntu-install-nvidia-driver.html">https://qii404.me/2021/07/03/ubuntu-install-nvidia-driver.html</a></td>
 </tr>
 <tr>
 <td>linux 命令 wq</td>

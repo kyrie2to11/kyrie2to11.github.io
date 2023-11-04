@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kyrie2to11.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Time:2023.10.09-2023.11.10Paper Reading VRT: A Video Restoration Transformer（arXiv 2022） feature: parallel computation + long-range dependency modelling + mutual attention for frame alignment   BasicV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Quantization of SR Methods Work Log">
+<meta property="og:url" content="https://kyrie2to11.github.io/2023/10/15/Work_Log_1/index.html">
+<meta property="og:site_name" content="Jarvis&#39;s Blog">
+<meta property="og:description" content="Time:2023.10.09-2023.11.10Paper Reading VRT: A Video Restoration Transformer（arXiv 2022） feature: parallel computation + long-range dependency modelling + mutual attention for frame alignment   BasicV">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-10-15T08:16:29.000Z">
+<meta property="article:modified_time" content="2023-11-03T08:50:41.880Z">
+<meta property="article:author" content="jarvis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kyrie2to11.github.io/2023/10/15/Work_Log_1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kyrie2to11.github.io/2023/10/15/Work_Log_1/","path":"2023/10/15/Work_Log_1/","title":"Quantization of SR Methods Work Log"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Quantization of SR Methods Work Log | Jarvis's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jarvis's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活，沉淀自己</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Time-2023-10-09-2023-11-10"><span class="nav-number">1.</span> <span class="nav-text">Time:2023.10.09-2023.11.10</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Paper-Reading"><span class="nav-number">2.</span> <span class="nav-text">Paper Reading</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Idea"><span class="nav-number">3.</span> <span class="nav-text">Idea</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Issue-Log"><span class="nav-number">4.</span> <span class="nav-text">Issue Log</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Metrics%EF%BC%88Full-Reference%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">Metrics（Full-Reference）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Milestone"><span class="nav-number">6.</span> <span class="nav-text">Milestone</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Benchmark"><span class="nav-number">7.</span> <span class="nav-text">Benchmark</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PaperWriting"><span class="nav-number">8.</span> <span class="nav-text">PaperWriting</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#No-1"><span class="nav-number">8.1.</span> <span class="nav-text">No.1</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PaperReference"><span class="nav-number">9.</span> <span class="nav-text">PaperReference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jarvis</p>
+  <div class="site-description" itemprop="description">记录学习和生活，留下时光的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/10/15/Work_Log_1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Quantization of SR Methods Work Log | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Quantization of SR Methods Work Log
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-15 16:16:29" itemprop="dateCreated datePublished" datetime="2023-10-15T16:16:29+08:00">2023-10-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-03 16:50:41" itemprop="dateModified" datetime="2023-11-03T16:50:41+08:00">2023-11-03</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Time-2023-10-09-2023-11-10"><a href="#Time-2023-10-09-2023-11-10" class="headerlink" title="Time:2023.10.09-2023.11.10"></a>Time:2023.10.09-2023.11.10</h1><h1 id="Paper-Reading"><a href="#Paper-Reading" class="headerlink" title="Paper Reading"></a>Paper Reading</h1><ol>
+<li>VRT: A Video Restoration Transformer（arXiv 2022）<ul>
+<li>feature: parallel computation + long-range dependency modelling + mutual attention for frame alignment</li>
+</ul>
+</li>
+<li>BasicVSR++: Improving Video Super-Resolution with Enhanced Propagation and Alignment (CVPR 2022)</li>
+</ol>
+<h1 id="Idea"><a href="#Idea" class="headerlink" title="Idea"></a>Idea</h1><ol>
+<li><code>BasicVSR++</code> + <code>Paddleslim</code> 量化看结果 -&gt; false</li>
+<li>openmmlab 的 <code>mmagic</code> project 内置的 <code>BasicVSR++</code> + <code>mmrazor</code> project 进行量化 -&gt; false</li>
+<li><code>BasicVSR++</code> + <code>Dipoorlet</code> PTQ </li>
+<li><code>BasicVSR++</code> + <code>MQBench</code> PTQ</li>
+<li><code>BasicVSR++</code> + <code>PPL Quantization Tool(PPQ)</code> PTQ</li>
+</ol>
+<h1 id="Issue-Log"><a href="#Issue-Log" class="headerlink" title="Issue Log"></a>Issue Log</h1><ol>
+<li>command: <code>whereis</code> vs <code>which</code> <ol>
+<li>用途：<code>whereis</code> 用于查找可执行文件、源代码文件和帮助文档等。<br>  输出：它返回指定命令的可执行文件路径、man页面（帮助文档）路径以及源代码路径（如果可用）。<br>  限制：通常，whereis 不搜索PATH环境变量中指定的所有目录，而是搜索标准的系统目录。因此，它可能无法找到用户自定义安装的命令。</li>
+<li>用途：<code>which</code>用于查找可执行命令的位置，通常用于查找命令是否在系统PATH中，并返回找到的第一个匹配的命令。<br>  输出：它会搜索PATH环境变量中指定的目录以查找命令。<br>  注意：which 仅返回第一个匹配的命令的路径，因此如果有多个同名命令，它只会返回一个。</li>
+</ol>
+</li>
+<li>environment Setup<ol>
+<li>NvidiaDriver&#x2F;CUDA&#x2F;CUDNN installation<ul>
+<li>note: 传统上，安装 NVIDIA Driver 和 CUDA Toolkit 的步骤是分开的，但实际上现在可以直接安装 CUDA Toolkit，系统将自动安装与其版本匹配的 NVIDIA Driver。</li>
+</ul>
+</li>
+<li>Pull docker image: torch 1.13.1<ul>
+<li>command: <code>docker pull cnstark/pytorch:1.13.1-py3.9.16-cuda11.7.1-ubuntu20.04</code></li>
+</ul>
+</li>
+<li>Dipoorlet dependency:<ul>
+<li>CUDA Toolkit  &#x3D;&#x3D; 11.8</li>
+<li>CUDNN &#x3D;&#x3D; 8.7.0</li>
+<li>onnxruntime-gpu &#x3D;&#x3D; 1.16.0</li>
+<li>python &#x3D;&#x3D; 3.8.10</li>
+<li>torch &#x3D;&#x3D; 2.0.0</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>command: <code>pip install -U package</code> 命令中的 <code>-U</code> 参数表示升级已安装的 Python package到最新版本。</li>
+<li>confusion: PTQ static vs dynamic<ol>
+<li>PTQ static<ul>
+<li>使用校准数据集离线计算缩放因子(Scale)和零点(Zero Point)</li>
+<li>所有激活(Activation)都使用相同的缩放因子和零点</li>
+</ul>
+</li>
+<li>PTQ dynamic<ul>
+<li>缩放因子(Scale)和零点(Zero Point)是在推理时计算的，并且特定用于每次的激活(Activation)</li>
+<li>因此它们更准确，但引入了额外的计算开销</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>confusion: BI degradation vs BD degradation<ol>
+<li>BI -&gt;	bicubic-down,降质过程仅包含双三次下采样</li>
+<li>BD -&gt; blur-down,通过高斯模糊下采样</li>
+</ol>
+</li>
+<li>confusion: argparse library<ol>
+<li>basic: <code>parser = argparse.ArgumetParser(description, epilog)</code> -&gt; 创建 ArgumentParser 对象，其中 description 是一个简要的程序描述，epilog 是一个在帮助信息的结尾显示的额外文本</li>
+<li>basic: <code>add_argument(name or flags, ...)</code> -&gt; 添加命令行参数(<code>xxx</code>: positional argument or <code>--xxx</code>: option that takes a value)。name or flags 参数可以是单个选项（例如 ‘-f’），也可以是多个选项（例如 ‘-f’, ‘–file’）。你可以使用许多其他关键字参数来配置参数的行为，如 type、default、help 等,示例如下<ul>
+<li>整数类型参数: <code>parser.add_argument(&#39;--count&#39;, type=int, help=&#39;An integer value&#39;)</code></li>
+<li>浮点类型参数: <code>parser.add_argument(&#39;--rate&#39;, type=float, help=&#39;A floating-point value&#39;)</code></li>
+<li>字符串类型参数: <code>parser.add_argument(&#39;--name&#39;, type=str, help=&#39;A string value&#39;)</code></li>
+<li>布尔类型参数: <code>parser.add_argument(&#39;--verbose&#39;, action=&#39;store_true&#39;, help=&#39;Enable verbose mode&#39;)</code></li>
+<li>文件路径参数: <code>parser.add_argument(&#39;--file&#39;, type=argparse.FileType(&#39;r&#39;), help=&#39;A file path&#39;)</code></li>
+<li>目录路径参数: <code>parser.add_argument(&#39;--directory&#39;, type=str, help=&#39;A directory path&#39;)</code></li>
+<li><strong>note:</strong> 很奇怪的点在于关键字参数<code>--xx_x</code>中使用<code>_</code>传入参数时会出现<code>error: unrecognized arguments: --xx_x</code>,故用<code>-</code>代替</li>
+</ul>
+</li>
+<li>basic: <code>parse_args()</code>: 解析命令行参数，并返回一个包含所有参数值的命名空间对象</li>
+<li>extension: <code>add_subparsers()</code> -&gt; 添加子命令解析器，允许你为你的程序创建子命令（类似于 git 命令的子命令，如 git clone、git commit 等）</li>
+<li>extension: <code>set_defaults()</code> -&gt; 为参数设置默认值</li>
+<li>extension: <code>add_argument_group()</code> -&gt; 将参数分组到一个组中，用于更好地组织帮助信息</li>
+<li>extension: <code>format_help()</code> -&gt; 生成帮助信息</li>
+<li>extension: <code>error(msg)</code> -&gt; 在参数解析过程中发生错误时触发错误消息</li>
+</ol>
+</li>
+<li>confusion: <code>&#123;:08d&#125;.png</code> 字符串格式化模板<ol>
+<li><code>&#123;&#125;</code>: 这是一个占位符，用于表示将要插入的值。在这个模板中，{} 用来表示一个整数</li>
+<li><code>:08</code>: 这是格式说明符，指定了如何格式化这个整数。其中：<ul>
+<li><code>0</code> 表示要用零来填充空白位置</li>
+<li><code>8</code> 表示总共要占用 8 个字符的宽度，包括填充的零和数字本身</li>
+<li><code>d</code> 表示要格式化的值是一个十进制整数</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>confusion: function <code>os.path.splitext()</code><ol>
+<li>input: 文件路径（或文件名）</li>
+<li>return: 一个包含两个部分的元组tuple i.e. (文件名, 文件扩展名)</li>
+</ol>
+</li>
+<li>confusion: print(model) 实现<ol>
+<li>print(model)  # 当你使用 print 函数来打印一个对象时，它会尝试调用该对象的 <code>__str__()</code> 或 <code>__repr__()</code> 方法来获取一个可打印的字符串表示<ul>
+<li><code>model.__repr__</code> 输出model的属性<code>__repr__</code>  i.e. 方法的名称  -&gt; <code>&lt;bound method Module.__repr__ of xxx&gt;</code></li>
+<li><code>model.__repr__()</code> 输出model的method<code>__repr__()</code> i.e. 方法的调用 的结果 -&gt; <code>xxx</code></li>
+<li><strong>note:</strong> 属性是对象的数据成员，而方法是对象上的函数成员，用于定义对象的行为。实际上，方法是对象上的可调用属性</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="Metrics（Full-Reference）"><a href="#Metrics（Full-Reference）" class="headerlink" title="Metrics（Full-Reference）"></a>Metrics（Full-Reference）</h1><ol>
+<li>Peak Signal to Noise Ratio (PSNR)</li>
+<li>Structural SIMilarity (SSIM)</li>
+</ol>
+<h1 id="Milestone"><a href="#Milestone" class="headerlink" title="Milestone"></a>Milestone</h1><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+<th>FLOPs [G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VapSR_4_1</td>
+<td>Functional VapSR_4 with pixel norm realized by layer normalization, VAB activation: RELU, Attention using Partial conv</td>
+<td>REDS</td>
+<td>27.790268</td>
+<td>0.77721727</td>
+<td>59,468</td>
+<td>654.0 (INT8_CPU)</td>
+<td>7.462</td>
+</tr>
+<tr>
+<td>SWAT_0</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;4)</td>
+<td>REDS</td>
+<td>27.842232</td>
+<td>0.77754354</td>
+<td>50,624</td>
+<td>271.0   (FP16_CPU)</td>
+<td>5.803</td>
+</tr>
+</tbody></table>
+<hr>
+<p><em>AI benchmark setting for Runtime test:</em>  </p>
+<ul>
+<li>Input Values range(min,max): 0,255  </li>
+<li>Inference Mode: INT8&#x2F;FP16  </li>
+<li>Acceleration: CPU&#x2F;TFLite GPU Delegate</li>
+</ul>
+<h1 id="Benchmark"><a href="#Benchmark" class="headerlink" title="Benchmark"></a>Benchmark</h1><table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Model</th>
+<th>Source</th>
+<th>Dataset</th>
+<th>Test PSNR</th>
+<th>Test SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Diggers</td>
+<td>Real-Time Video Super-Resolution based on Bidirectional RNNs(2021 SOTA)</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.98</td>
+<td>-</td>
+<td>39,640</td>
+<td>-</td>
+</tr>
+<tr>
+<td>2</td>
+<td>VSR_12</td>
+<td>Ours</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.981062</td>
+<td>0.7824855</td>
+<td>57,696</td>
+<td>62.8</td>
+</tr>
+</tbody></table>
+<h1 id="PaperWriting"><a href="#PaperWriting" class="headerlink" title="PaperWriting"></a>PaperWriting</h1><h2 id="No-1"><a href="#No-1" class="headerlink" title="No.1"></a>No.1</h2><ol>
+<li>BSConvU as shallow feature extraction</li>
+</ol>
+<h1 id="PaperReference"><a href="#PaperReference" class="headerlink" title="PaperReference"></a>PaperReference</h1><ol>
+<li>Rethinking Alignment in Video Super-Resolution Transformers(NIPS 2022) -&gt; VIT 视频超分(VSR)中帧&#x2F;特征对齐不是必要操作</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/13/Competition_0/" rel="prev" title="Single Image Depth Estimation">
+                  <i class="fa fa-chevron-left"></i> Single Image Depth Estimation
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/10/19/Interview/" rel="next" title="Interview">
+                  Interview <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jarvis</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
