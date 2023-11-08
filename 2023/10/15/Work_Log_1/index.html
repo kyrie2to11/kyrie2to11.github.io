@@ -28,7 +28,7 @@
 <meta property="og:description" content="Time:2023.10.09-2023.11.10Paper Reading VRT: A Video Restoration Transformer（arXiv 2022） feature: parallel computation + long-range dependency modelling + mutual attention for frame alignment   BasicV">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-15T08:16:29.000Z">
-<meta property="article:modified_time" content="2023-11-08T07:08:36.163Z">
+<meta property="article:modified_time" content="2023-11-08T12:15:29.547Z">
 <meta property="article:author" content="jarvis">
 <meta name="twitter:card" content="summary">
 
@@ -199,7 +199,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-08 15:08:36" itemprop="dateModified" datetime="2023-11-08T15:08:36+08:00">2023-11-08</time>
+      <time title="修改时间：2023-11-08 20:15:29" itemprop="dateModified" datetime="2023-11-08T20:15:29+08:00">2023-11-08</time>
     </span>
 
   
@@ -314,25 +314,37 @@
 </li>
 </ol>
 </li>
-<li>confusion: <code>glob.glob(os.path.join(img_dir, &#39;*&#39;))</code></li>
+<li>confusion: <code>glob.glob(os.path.join(img_dir, &#39;*&#39;))</code><ol>
 <li><code>import os</code> 后 <code>os.path.join(img_dir, &#39;*&#39;)</code> 返回值 <code>&#39;img_dir/*&#39;</code>类型为 <code>str</code> -&gt; <code>type(os.path.join(img_dir, &#39;*&#39;)) == &lt;class &#39;str&#39;&gt;</code></li>
 <li><code>import glob</code> 后 <code>glob.glob(os.path.join(img_dir, &#39;*&#39;))</code> 返回值为指定路径下的文件列表 -&gt; <code>type(glob.glob(os.path.join(img_dir, &#39;*&#39;))) == &lt;class &#39;list&#39;&gt;</code></li>
-<li>confusion: <code>img_dir_split = re.split(r&#39;[\\/]&#39;, img_dir)</code> 这行代码使用正则表达式来分割文件路径</li>
+</ol>
+</li>
+<li>confusion: <code>img_dir_split = re.split(r&#39;[\\/]&#39;, img_dir)</code> 这行代码使用正则表达式来分割文件路径<ol>
 <li>具体来讲首先<code>import re # re(regular expression) 是 python 中的正则表达式模块</code> , r’[\&#x2F;]’ 表示一个正则表达式的字符集, 它匹配一个正斜杠 &#x2F; 或反斜杠 \ 中的任何一个字符, ‘\‘ 用于转义字符。这在处理文件路径时很有用，因为不同的操作系统使用不同的路径分隔符，有些使用正斜杠 &#x2F;，而有些使用反斜杠 \。使用 [\&#x2F;] 可以在跨平台的情况下匹配路径中的分隔符，而不必担心操作系统差异</li>
 <li><code>img_dir_split = re.split(r&#39;[\\/]&#39;, img_dir)</code>  它会将指定的文件路径 img_dir 按照正斜杠 &#x2F; 或反斜杠 \ 进行分割，并将分割的部分存储在一个列表中。返回值为由文件路径名各部分(str)组成的list -&gt; 例如  img_dir_split &#x3D;&#x3D; [‘data’, ‘demo_000’]</li>
-<li>confusion: <code>img_dir_split[:-1]</code></li>
+</ol>
+</li>
+<li>confusion: <code>img_dir_split[:-1]</code><ol>
 <li>img_dir_split[:-1] 是 Python 中的列表切片（slicing）操作，它用于获取列表 img_dir_split 中的一部分元素</li>
 <li>具体来说，[:-1] 表示切片从列表的开头到倒数第二个元素（不包括倒数第一个元素）。这个操作会返回一个新的列表，包含了 img_dir_split 中从第一个元素到倒数第二个元素（不包括倒数第一个元素）的所有元素</li>
-<li>confusion: <code>lq_folder = reduce(os.path.join, img_dir_split[:-1])</code></li>
+</ol>
+</li>
+<li>confusion: <code>lq_folder = reduce(os.path.join, img_dir_split[:-1])</code><ol>
 <li><code>from functools import reduce</code> 导入包<code>reduce</code>，它用于将一个二元函数应用于可迭代的元素，从左到右依次累积结果</li>
 <li>上述代码的目的是将 img_dir_split 列表切片后的元素 i.e. <code>img_dir_split[:-1]</code>通过操作系统路径连接起来，然后返回连接后的结果。</li>
-<li>confusion: <code>assert isinstance(transforms, Sequence)</code></li>
+</ol>
+</li>
+<li>confusion: <code>assert isinstance(transforms, Sequence)</code><ol>
 <li><code>from collections.abc import Sequence </code> <code>Sequence</code>是在Python中的抽象基类，用于定义一组通用的接口和方法，而不是具体的实现。<code>Sequence</code>它表示序列类型，如列表、元组、字符串等。</li>
 <li><code>assert isinstance(transforms, Sequence)</code>这种检查可以用于确保transforms具有序列类型的行为，以便在代码中安全地使用类似列表或元组的操作。</li>
-<li>confusion: <code>@PIPELINES.register_module()</code></li>
+</ol>
+</li>
+<li>confusion: <code>@PIPELINES.register_module()</code><ol>
 <li><code>from ..registry import PIPELINES</code>: 从相对于当前模块的上一级目录中的 registry 模块中导入名为 PIPELINES 的对象</li>
 <li><code>@PIPELINES.register_module()</code>的作用是将被装饰的函数或类注册到名为 PIPELINES 的模块或类的注册表中。这通常在Python中用于实现插件或扩展性架构，以便在运行时动态添加和管理功能。</li>
-<li>confusion: <code>dict</code>类实例化后的对象<code>object</code>如何访问</li>
+</ol>
+</li>
+<li>confusion: <code>dict</code>类实例化后的对象<code>object</code>如何访问<ol>
 <li>在Python中，字典的键和值是通过方括号<code>[]</code>来访问的(如<code>data[&quot;meta&quot;]</code>, data为dict类的实例, <code>meta</code> 是其中一个key)，而不是通过点.来访问</li>
 <li>在Python中，可以使用点号 <code>. </code>来访问以下类型的成员或属性<ul>
 <li>类的成员(类变量和类方法): <code>MyClass.my_class_variable 或 MyClass.my_class_method()</code></li>
@@ -341,15 +353,21 @@
 <li>实例化后的内置类：<code>my_string.upper()</code>，其中 <code>upper()</code> 是字符串(str)对象的一个方法</li>
 </ul>
 </li>
-<li>confusion: python func <code>range()</code> 生成有序的整数序列</li>
+</ol>
+</li>
+<li>confusion: python func <code>range()</code> 生成有序的整数序列<ol>
 <li><code>range(stop)</code>: start（可选）：序列的起始值，默认为 0</li>
 <li><code>range(start, stop)</code>: stop（必需）：序列的结束值，但不包括该值。range() 会生成从 start 到 stop-1 的整数序列</li>
 <li><code>range(start, stop, step)</code>: step（可选）：可选参数，控制序列中的值之间的步长，默认为 1, e.g. <code>list(range(0, 21, 5)) == [0, 5, 10, 15, 20]</code></li>
-<li>confusion: python slicing operation</li>
+</ol>
+</li>
+<li>confusion: python slicing operation<ol>
 <li>假设data为一维list或str, <code>data[start:end]</code> 选取范围 start -&gt; end-1, step &#x3D;&#x3D; 1; 若start未指定，则默认为0; 若end未指定，则默认选取到最后一个元素(包含最后一个元素)</li>
 <li>假设data为多维NumPy array, <code>data[:, start:end:step]</code> 选取 dim&#x3D;&#x3D;0 所有元素, 选取 dim&#x3D;&#x3D;1 的 start -&gt; end-1, step&#x3D;&#x3D;step的元素</li>
 <li>假设data为一维list或str, <code>data[-5:]</code> 选取从倒数第5个元素直至末尾最后一个元素,最后一个元素index为-1</li>
-<li>command: <code>find . -name &quot;*.tar&quot; | while read NAME ; do mkdir -p &quot;$&#123;NAME%.tar&#125;&quot;; tar -xvf &quot;$&#123;NAME&#125;&quot; -C &quot;$&#123;NAME%.tar&#125;&quot;; rm -f &quot;$&#123;NAME&#125;&quot;; done</code> recursively unzip files</li>
+</ol>
+</li>
+<li>command: <code>find . -name &quot;*.tar&quot; | while read NAME ; do mkdir -p &quot;$&#123;NAME%.tar&#125;&quot;; tar -xvf &quot;$&#123;NAME&#125;&quot; -C &quot;$&#123;NAME%.tar&#125;&quot;; rm -f &quot;$&#123;NAME&#125;&quot;; done</code> recursively unzip files<ol>
 <li><code>find . -name &quot;*.tar&quot;</code>: 这部分使用 <code>find</code> 命令来在当前目录及其子目录中查找文件名匹配 <code>*.tar</code> 的文件</li>
 <li><code>|</code>: 这是管道符号，它将 <code>find</code> 命令的输出（即找到的所有 <code>.tar </code>文件的路径列表）传递给管道符号右侧的命令</li>
 <li><code>while read NAME</code>: 这部分创建一个 <code>while</code> 循环，它将逐行读取管道传入的文件路径，并将每行内容赋值给 <code>NAME</code> 变量</li>
@@ -358,8 +376,12 @@
 <li><code>tar -xvf &quot;$&#123;NAME&#125;&quot; -C &quot;$&#123;NAME%.tar&#125;&quot;</code>: 这是在循环中的第二个命令。它使用 <code>tar</code> 命令来解压缩 <code>NAME</code>变量中指定的 <code>.tar</code>文件，并将解压后的文件放入对应的目录 <code>$&#123;NAME%.tar&#125;</code>, note: 参数说明 <code>-C, --directory=DIR   change to directory DIR</code> 用于指定解压缩操作的目标目录</li>
 <li><code>rm -f &quot;$&#123;NAME&#125;&quot;</code>: 这是在循环中的第三个命令。它使用 <code>rm</code> 命令删除原始的 <code>.tar</code> 文件。<code>-f</code> 选项表示不会询问确认</li>
 <li><code>done</code>: 这标志着 <code>while</code> 循环的结束</li>
-<li>command: <code>python -c &quot;Python code to execute&quot;</code></li>
+</ol>
+</li>
+<li>command: <code>python -c &quot;Python code to execute&quot;</code><ol>
 <li><code>-c</code> 参数是 <code>Python</code> 解释器的一个命令行选项，它允许你在命令行中执行一段 <code>Python</code> 代码，而不必编写一个独立的 <code>Python</code> 脚本文件。</li>
+</ol>
+</li>
 </ol>
 <h1 id="Metrics（Full-Reference）"><a href="#Metrics（Full-Reference）" class="headerlink" title="Metrics（Full-Reference）"></a>Metrics（Full-Reference）</h1><ol>
 <li>Peak Signal to Noise Ratio (PSNR)</li>
