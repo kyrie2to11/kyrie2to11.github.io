@@ -28,7 +28,7 @@
 <meta property="og:description" content="Time:2023.10.09-2023.11.10Paper Reading VRT: A Video Restoration Transformer (arXiv 2022)-&gt; VRT feature: parallel computation + long-range dependency modelling + mutual attention for frame alignmen">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-15T08:16:29.000Z">
-<meta property="article:modified_time" content="2023-11-09T01:46:12.480Z">
+<meta property="article:modified_time" content="2023-11-10T07:00:32.971Z">
 <meta property="article:author" content="jarvis">
 <meta name="twitter:card" content="summary">
 
@@ -123,7 +123,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -199,7 +199,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-09 09:46:12" itemprop="dateModified" datetime="2023-11-09T09:46:12+08:00">2023-11-09</time>
+      <time title="修改时间：2023-11-10 15:00:32" itemprop="dateModified" datetime="2023-11-10T15:00:32+08:00">2023-11-10</time>
     </span>
 
   
@@ -234,11 +234,20 @@
 </li>
 </ol>
 <h1 id="Idea"><a href="#Idea" class="headerlink" title="Idea"></a>Idea</h1><ol>
-<li><code>BasicVSR++</code> + <code>Paddleslim</code> 量化看结果 -&gt; false</li>
-<li>openmmlab 的 <code>mmagic</code> project 内置的 <code>BasicVSR++</code> + <code>mmrazor</code> project 进行量化 -&gt; false</li>
-<li><code>BasicVSR++</code> + <code>Dipoorlet</code> PTQ -&gt; false: ValueError: cannot reshape array of size 3628800 into shape (0,0,3,180,320) dipoorlet可能不支持动态输入</li>
-<li><code>BasicVSR++</code> + <code>MQBench</code> PTQ -&gt; </li>
-<li><code>BasicVSR++</code> + <code>PPL Quantization Tool(PPQ)</code> PTQ -&gt;</li>
+<li><p><code>BasicVSR++</code> + <code>Paddleslim</code> 量化看结果 -&gt; false</p>
+</li>
+<li><p>openmmlab 的 <code>mmagic</code> project 内置的 <code>BasicVSR++</code> + <code>mmrazor</code> project 进行量化 -&gt; false</p>
+</li>
+<li><p><code>BasicVSR++</code> + <code>Dipoorlet</code> PTQ -&gt; false: ValueError: cannot reshape array of size 3628800 into shape (0,0,3,180,320) dipoorlet可能不支持动态输入</p>
+</li>
+<li><p><code>BasicVSR++</code> + <code>MQBench</code> PTQ -&gt; in progress</p>
+<ol>
+<li>使用<code>mmedit</code>构建的<code>BasicVSR++</code>在<code>symbolic traces</code>时会出现报错<code>TypeError: &#39;BasicVSR&#39; object is not subscriptable</code>, 故尝试直接通过模型的<code>archetecture</code>和<code>checkpoint</code>构建模型 -&gt; suspend (必要性不强，工作量不小~)</li>
+<li>torch fx <code>if</code> symbolic trace fause: <code>torch.fx.proxy.TraceError: symbolically traced variables cannot be used as inputs to control flow</code></li>
+</ol>
+</li>
+<li><p><code>BasicVSR++</code> + <code>PPL Quantization Tool(PPQ)</code> PTQ -&gt;</p>
+</li>
 </ol>
 <h1 id="Issue-Log"><a href="#Issue-Log" class="headerlink" title="Issue Log"></a>Issue Log</h1><ol>
 <li>command: <code>whereis</code> vs <code>which</code> <ol>
