@@ -1644,7 +1644,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-27 09:26:32" itemprop="dateModified" datetime="2023-11-27T09:26:32+08:00">2023-11-27</time>
+      <time title="修改时间：2023-12-25 00:01:20" itemprop="dateModified" datetime="2023-12-25T00:01:20+08:00">2023-12-25</time>
     </span>
 
   
@@ -2853,10 +2853,87 @@
 </ul>
 </li>
 <li>Sensetime Internship<ul>
-<li>LLM Quantization 环境搭建</li>
-<li>LLM Quantization 跑别人的repo</li>
+<li>LLM Quantization 环境搭建, 在llama 7B 上跑了一下GPTQ~</li>
+<li>了解 Intel neural-compressor QAT 量化</li>
+<li>了解 Pytorch FX QAT 量化</li>
+<li>了解 mmdeploy 量化</li>
+<li>推导验证 RepVGG QAT 多支路 conv 合并后图节点量化前浮点数范围 (Real Range) 能否无损得到 </li>
+<li>多模态模型 codino -&gt; onnx -&gt; onnx runtime(ort) register grid_sampler 注册未支持的算子(参考MMCV MMDeploy),然后在A6000上部署推理</li>
 </ul>
 </li>
+<li>Auto Drive<ul>
+<li>两个导向一种不惜计算代价，使用各种方法提高特定数据集&#x2F;特定环境下的指标 (刷榜)，一种是轻量化资源受限情况下优化指标</li>
+<li>轻量化路线具体需要针对不同的硬件平台(如 jetson orin)来进行相应的轻量化,如:<ul>
+<li>设计轻量的网络结构，设计相应的算子op</li>
+<li>考虑部署的inference latency,有一些比较有实际意义的探索空间,原因在于纸面的模型 FLOPs&#x2F;MACs 和实际 inference latency 之间有 gap</li>
+<li>实际车辆上运行的模型受限于算力，算力小用CNN，算力大用Transformer, 大公司在往大一统方向做 (如CVPR 2023 best paper: UniAD, 但目前还没有部署到实际的平台上去,目前带我的mentor在进行部署的工作：很难的一点是如何正确的把模型转换为onnx中间表示然后去进行量化，这一步还没完成)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="进度汇报-23-11-27-23-12-10"><a href="#进度汇报-23-11-27-23-12-10" class="headerlink" title="进度汇报(23.11.27-23.12.10)"></a>进度汇报(23.11.27-23.12.10)</h1><ol>
+<li>School Task<ul>
+<li>ICDM presentation PPT 制作&#x2F;参会</li>
+<li>VSR 视频超分专利修改</li>
+<li>Face Super-resolution&#x2F;Enhancement 调研</li>
+</ul>
+</li>
+<li>Sensetime Internship<ul>
+<li>LLM Quantization 环境搭建, 在 llama 7B 上跑了一下 GPTQ</li>
+<li>了解 Intel neural-compressor &#x2F; Pytorch FX &#x2F; mmdeploy PTQ 量化,大致如下 以 torch fx 为例 (后续会结合代码形成较详细的量化pipeline文档)<ol>
+<li>Prepare fx: fuse模型，也就是通常的优化，比如conv+bn啥的,利用fx对模型进行transform</li>
+<li>Insert observer: Input&#x2F;Output&#x2F;Weight 均插入observer</li>
+<li>Calibration: 输入数据进行校准，收集 weights 和 activation 的 max 和 min 等统计信息</li>
+<li>Convert fx: 在 observer 位置用相应的 quantize&#x2F;dequantize module代替,并合并到原始的layer中    <img src="./Week_Report/torch.fx_ptq.PNG" alt="torch fx ptq" width="800" height="200"></li>
+</ol>
+</li>
+<li>推导验证 RepVGG 重参数轻量化方法与 QAT 联合使用的 weight range 能否获得数学上的等价变换问题: 具体来说，多支路 conv 合并前运用 QAT 提升精度, 在多支路 conv 合并后根据 QAT 训练得到的多分支 conv weight 的浮点数范围 (Real Range) 能否等价得到合并后的 conv weight 的浮点数范围，此浮点数范围与量化&#x2F;反量化过程的 scale factor 和 zero point 基本等价可互推 -&gt; 结论无法无损等价</li>
+<li>感知模型 object detection: codino -&gt; onnx -&gt; onnx runtime(ort) 推理部署： register grid_sampler op 注册未支持的算子(参考MMCV MMDeploy),然后在 CPU 上实现模型推理, 后续搭建好模型前后处理的部分后会在GPU上进行推理效果验证</li>
+</ul>
+</li>
+</ol>
+<h1 id="后续计划"><a href="#后续计划" class="headerlink" title="后续计划"></a>后续计划</h1><ol>
+<li>了解并测试多个开源 LLM PTQ 方法，如 AWQ SmoothQuant ZeroQuantV2 等</li>
+<li>codino 模型前后处理部分搭建, 在 GPU 上进行 onnx runtime 推理部署</li>
+<li>调研了解能否用 onnx runtime 进行 QAT, 以减轻 QAT 与 部署的 op 输入&#x2F;输出&#x2F;权重参数 范围对齐的压力</li>
+</ol>
+<h1 id="进度汇报-23-11-11-23-12-24"><a href="#进度汇报-23-11-11-23-12-24" class="headerlink" title="进度汇报(23.11.11-23.12.24)"></a>进度汇报(23.11.11-23.12.24)</h1><ol>
+<li><p>School Task</p>
+<ul>
+<li>深度学习与深度神经网络原理课程报告汇总提交</li>
+</ul>
+</li>
+<li><p>Sensetime Internship</p>
+<ul>
+<li><p>obeject detection model deploy: 基于openmmlab开源框架mmcv mmdetection,花费较长时间处理代码相关细节，具体如下</p>
+<ol>
+<li>基于继承机制的模型config使用，模型 backbone 为 InternImage</li>
+<li>模型前后处理剥离，前处理主要是resize操作,后处理模型输出为shape为[n, 5]的np.ndarray如何正确转化为 bbox 与 class 并可视化出来</li>
+<li>torch 模型转 onnx 时未支持算子 grid_sampler 处理</li>
+<li>相关repository: <ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Sense-X/Co-DETR">https://github.com/Sense-X/Co-DETR</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/OpenGVLab/InternImage">https://github.com/OpenGVLab/InternImage</a></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>quantization frame work 调研，包括 Torch FX Quantization, Intel Neural Compressor, Tensor RT Quantization等,具体见PDF总结</p>
+</li>
+<li><p>调研并尝试基于 onnx 做 QAT(背景: torch 模型转为 onnx 时会出现模型结构名变化的问题，导致 QAT 得到的模型 权重以及量化参数 i.e. scale factor, zero point 无法与导出的 onnx 模型匹配)</p>
+</li>
+<li><p>详细了解 LLM metric Perpelexity (PPL), 以及关联的 torch cross entropy 的计算细节</p>
+</li>
+<li><p>opencloud 集群的使用, 了解 slurm 命令及参数等</p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="后续计划-1"><a href="#后续计划-1" class="headerlink" title="后续计划"></a>后续计划</h1><ol>
+<li>测试以下 LLM PTQ 方法：AWQ, SmoothQuant, Outlier Suppression+, LLM.int8()</li>
+<li>推进 onnx QAT</li>
+<li>video super-resolution：基于 torch fx 对 basicvsr++ 进行 post training dynamic quantization (activation 的 scale factor 在推理时确定而非预先根据统计量计算出来) -&gt; 搞明白 Torch FX OPs 插入 &#x2F; 融合 &#x2F; 操作 的位置与做法 </li>
+<li>论文写作 课程作业</li>
 </ol>
 
       
@@ -3421,7 +3498,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
