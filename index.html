@@ -177,7 +177,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/08/17/aliyun-github-blog-config/" class="post-title-link" itemprop="url">aliyun_github_blog_config</a>
+          <a href="/2024/08/17/aliyun-github-blog-config/" class="post-title-link" itemprop="url">Hexo Blog Updates to Aliyun and Github Page</a>
         </h2>
 
         <div class="post-meta-container">
@@ -189,7 +189,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2024-08-17 11:59:05 / 修改时间：17:40:57" itemprop="dateCreated datePublished" datetime="2024-08-17T11:59:05+08:00">2024-08-17</time>
+      <time title="创建时间：2024-08-17 11:59:05 / 修改时间：18:01:14" itemprop="dateCreated datePublished" datetime="2024-08-17T11:59:05+08:00">2024-08-17</time>
     </span>
 
   
@@ -236,7 +236,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># include snippets/snakeoil.conf;</span></span><br><span class="line"></span><br><span class="line">root /home/jarvis/blog;</span><br></pre></td></tr></table></figure>
 
 <p>此刻直接访问云服务器的公网 IP 会显示 nginx 欢迎界面</p>
-<h2 id="github-action-配置"><a href="#github-action-配置" class="headerlink" title="github action 配置"></a>github action 配置</h2><h3 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h3>
+<h2 id="本地-hexo-config-yml-文件配置"><a href="#本地-hexo-config-yml-文件配置" class="headerlink" title="本地 hexo _config.yml 文件配置"></a>本地 hexo _config.yml 文件配置</h2><h3 id="1-配置如下"><a href="#1-配置如下" class="headerlink" title="1. 配置如下"></a>1. 配置如下</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line">deploy:</span><br><span class="line">    <span class="built_in">type</span>: git</span><br><span class="line">    repo: </span><br><span class="line">      github: git@github.com:kyrie2to11/kyrie2to11.github.io.git </span><br><span class="line">      aliyun: jarvis@aliyun_server_ip:/home/jarvis/blog/blog.git</span><br><span class="line">    branch: master</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
 
@@ -818,7 +820,7 @@
 <li>本地host <code>ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com</code><ol>
 <li>-t rsa: 指定密钥类型为 RSA。</li>
 <li>-b 4096: 指定密钥的位数，4096 位是一种常见的安全选择。</li>
-<li>-C “<a href="mailto:&#x79;&#111;&#117;&#114;&#95;&#x65;&#x6d;&#x61;&#105;&#x6c;&#x40;&#x65;&#120;&#97;&#109;&#112;&#x6c;&#x65;&#x2e;&#99;&#111;&#109;">&#x79;&#111;&#117;&#114;&#95;&#x65;&#x6d;&#x61;&#105;&#x6c;&#x40;&#x65;&#120;&#97;&#109;&#112;&#x6c;&#x65;&#x2e;&#99;&#111;&#109;</a>“: 在生成的密钥中添加注释，通常使用你的电子邮件地址。</li>
+<li>-C “<a href="mailto:&#x79;&#111;&#117;&#x72;&#x5f;&#x65;&#109;&#x61;&#105;&#x6c;&#x40;&#101;&#120;&#x61;&#109;&#x70;&#x6c;&#101;&#x2e;&#x63;&#x6f;&#x6d;">&#x79;&#111;&#117;&#x72;&#x5f;&#x65;&#109;&#x61;&#105;&#x6c;&#x40;&#101;&#120;&#x61;&#109;&#x70;&#x6c;&#101;&#x2e;&#x63;&#x6f;&#x6d;</a>“: 在生成的密钥中添加注释，通常使用你的电子邮件地址。</li>
 </ol>
 </li>
 <li>将生成的ssh public key (id_rsa.pub) 复制到远程target 的 <code>~/.ssh/authorized_keys</code> (如果没有则自建此文件)中即可</li>
