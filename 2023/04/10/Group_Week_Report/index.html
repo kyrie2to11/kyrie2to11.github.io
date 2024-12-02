@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kyrie2to11.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="模型压缩与部署组工作进度 （2023.4.3-2023.4.9）高扬城 I-ViT模块复现：完成I-LayerNorm的复现； 基金申请审稿意见回复； 长江流域非法活动监测项目初版方案及可行性分析； 组会ppt编写；  李亚伟 workshop 在用L1 charbonnier损失进行预训练后，继续使用L2损失训练 -&gt; PSNR：27.76 -&gt; 27.81 上升  改进注意力模块：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Group Week Report">
+<meta property="og:url" content="https://kyrie2to11.github.io/2023/04/10/Group_Week_Report/index.html">
+<meta property="og:site_name" content="Jarvis&#39;s Blog">
+<meta property="og:description" content="模型压缩与部署组工作进度 （2023.4.3-2023.4.9）高扬城 I-ViT模块复现：完成I-LayerNorm的复现； 基金申请审稿意见回复； 长江流域非法活动监测项目初版方案及可行性分析； 组会ppt编写；  李亚伟 workshop 在用L1 charbonnier损失进行预训练后，继续使用L2损失训练 -&gt; PSNR：27.76 -&gt; 27.81 上升  改进注意力模块：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kyrie2to11.github.io/Week_Report/ZeroDCE_test_result.jpg">
+<meta property="og:image" content="https://kyrie2to11.github.io/Week_Report/Robot_Tutorial.png">
+<meta property="og:image" content="https://kyrie2to11.github.io/2023/04/10/Group_Week_Report/Week_Report/ZeroDCE++_test_result.png">
+<meta property="og:image" content="https://kyrie2to11.github.io/2023/04/10/Group_Week_Report/Week_Report/face_detection_screenshot.png">
+<meta property="og:image" content="https://kyrie2to11.github.io/2023/04/10/Group_Week_Report/Week_Report/pose_estimation_screenshot.png">
+<meta property="og:image" content="https://kyrie2to11.github.io/2023/04/10/Group_Week_Report/Week_Report/ResQ.png">
+<meta property="og:image" content="https://kyrie2to11.github.io/2023/04/10/Group_Week_Report/Week_Report/paddleslim_demo.png">
+<meta property="og:image" content="https://kyrie2to11.github.io/2023/04/10/Group_Week_Report/Week_Report/3090_qyolov5.png">
+<meta property="article:published_time" content="2023-04-10T02:47:22.000Z">
+<meta property="article:modified_time" content="2024-12-02T07:37:47.729Z">
+<meta property="article:author" content="jarvis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kyrie2to11.github.io/Week_Report/ZeroDCE_test_result.jpg">
+
+
+<link rel="canonical" href="https://kyrie2to11.github.io/2023/04/10/Group_Week_Report/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kyrie2to11.github.io/2023/04/10/Group_Week_Report/","path":"2023/04/10/Group_Week_Report/","title":"Group Week Report"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Group Week Report | Jarvis's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jarvis's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活，沉淀自己</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E9%83%A8%E7%BD%B2%E7%BB%84%E5%B7%A5%E4%BD%9C%E8%BF%9B%E5%BA%A6-%EF%BC%882023-4-3-2023-4-9%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">模型压缩与部署组工作进度 （2023.4.3-2023.4.9）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E6%89%AC%E5%9F%8E"><span class="nav-number">1.1.</span> <span class="nav-text">高扬城</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E6%9C%9F%E8%AE%A1%E5%88%92"><span class="nav-number">2.</span> <span class="nav-text">后期计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E6%89%AC%E5%9F%8E-1"><span class="nav-number">2.1.</span> <span class="nav-text">高扬城</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-1"><span class="nav-number">2.2.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E9%83%A8%E7%BD%B2%E7%BB%84%E5%B7%A5%E4%BD%9C%E8%BF%9B%E5%BA%A6-%EF%BC%882023-7-03-2023-7-16%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">模型压缩与部署组工作进度 （2023.7.03-2023.7.16）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-2"><span class="nav-number">3.1.</span> <span class="nav-text">李亚伟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7"><span class="nav-number">3.2.</span> <span class="nav-text">苗康</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E6%9C%9F%E8%AE%A1%E5%88%92-1"><span class="nav-number">4.</span> <span class="nav-text">后期计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-3"><span class="nav-number">4.1.</span> <span class="nav-text">李亚伟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-1"><span class="nav-number">4.2.</span> <span class="nav-text">苗康</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E9%83%A8%E7%BD%B2%E7%BB%84%E5%B7%A5%E4%BD%9C%E8%BF%9B%E5%BA%A6-%EF%BC%882023-8-07-2023-8-13%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">模型压缩与部署组工作进度 （2023.8.07-2023.8.13）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-2"><span class="nav-number">5.1.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-4"><span class="nav-number">5.2.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E6%9C%9F%E8%AE%A1%E5%88%92-2"><span class="nav-number">6.</span> <span class="nav-text">后期计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-3"><span class="nav-number">6.1.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-5"><span class="nav-number">6.2.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E9%83%A8%E7%BD%B2%E7%BB%84%E5%B7%A5%E4%BD%9C%E8%BF%9B%E5%BA%A6-%EF%BC%882023-8-14-2023-8-27%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">模型压缩与部署组工作进度 （2023.8.14-2023.8.27）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-4"><span class="nav-number">7.1.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-6"><span class="nav-number">7.2.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E6%9C%9F%E8%AE%A1%E5%88%92-3"><span class="nav-number">8.</span> <span class="nav-text">后期计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-5"><span class="nav-number">8.1.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-7"><span class="nav-number">8.2.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E9%83%A8%E7%BD%B2%E7%BB%84%E5%B7%A5%E4%BD%9C%E8%BF%9B%E5%BA%A6-%EF%BC%882023-9-25-2023-10-08%EF%BC%89"><span class="nav-number">9.</span> <span class="nav-text">模型压缩与部署组工作进度 （2023.9.25-2023.10.08）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-6"><span class="nav-number">9.1.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%8B%E6%98%8E%E7%94%B3"><span class="nav-number">9.2.</span> <span class="nav-text">王明申</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-8"><span class="nav-number">9.3.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E6%9C%9F%E8%AE%A1%E5%88%92-4"><span class="nav-number">10.</span> <span class="nav-text">后期计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-7"><span class="nav-number">10.1.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%8B%E6%98%8E%E7%94%B3-1"><span class="nav-number">10.2.</span> <span class="nav-text">王明申</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-9"><span class="nav-number">10.3.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E9%83%A8%E7%BD%B2%E7%BB%84%E5%B7%A5%E4%BD%9C%E8%BF%9B%E5%BA%A6-%EF%BC%882023-10-09-2023-10-15%EF%BC%89"><span class="nav-number">11.</span> <span class="nav-text">模型压缩与部署组工作进度 （2023.10.09-2023.10.15）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-8"><span class="nav-number">11.1.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%8B%E6%98%8E%E7%94%B3-2"><span class="nav-number">11.2.</span> <span class="nav-text">王明申</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-10"><span class="nav-number">11.3.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E6%9C%9F%E8%AE%A1%E5%88%92-5"><span class="nav-number">12.</span> <span class="nav-text">后期计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-9"><span class="nav-number">12.1.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%8B%E6%98%8E%E7%94%B3-3"><span class="nav-number">12.2.</span> <span class="nav-text">王明申</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-11"><span class="nav-number">12.3.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E9%83%A8%E7%BD%B2%E7%BB%84%E5%B7%A5%E4%BD%9C%E8%BF%9B%E5%BA%A6-%EF%BC%882023-10-16-2023-10-22%EF%BC%89"><span class="nav-number">13.</span> <span class="nav-text">模型压缩与部署组工作进度 （2023.10.16-2023.10.22）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-10"><span class="nav-number">13.1.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%8B%E6%98%8E%E7%94%B3-4"><span class="nav-number">13.2.</span> <span class="nav-text">王明申</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-12"><span class="nav-number">13.3.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E6%9C%9F%E8%AE%A1%E5%88%92-6"><span class="nav-number">14.</span> <span class="nav-text">后期计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-11"><span class="nav-number">14.1.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%8B%E6%98%8E%E7%94%B3-5"><span class="nav-number">14.2.</span> <span class="nav-text">王明申</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-13"><span class="nav-number">14.3.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E9%83%A8%E7%BD%B2%E7%BB%84%E5%B7%A5%E4%BD%9C%E8%BF%9B%E5%BA%A6-%EF%BC%882023-10-23-2023-10-29%EF%BC%89"><span class="nav-number">15.</span> <span class="nav-text">模型压缩与部署组工作进度 （2023.10.23-2023.10.29）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-12"><span class="nav-number">15.1.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%8B%E6%98%8E%E7%94%B3-6"><span class="nav-number">15.2.</span> <span class="nav-text">王明申</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-14"><span class="nav-number">15.3.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E6%9C%9F%E8%AE%A1%E5%88%92-7"><span class="nav-number">16.</span> <span class="nav-text">后期计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-13"><span class="nav-number">16.1.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%8B%E6%98%8E%E7%94%B3-7"><span class="nav-number">16.2.</span> <span class="nav-text">王明申</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-15"><span class="nav-number">16.3.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E9%83%A8%E7%BD%B2%E7%BB%84%E5%B7%A5%E4%BD%9C%E8%BF%9B%E5%BA%A6-%EF%BC%882023-10-30-2023-11-05%EF%BC%89"><span class="nav-number">17.</span> <span class="nav-text">模型压缩与部署组工作进度 （2023.10.30-2023.11.05）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-16"><span class="nav-number">17.1.</span> <span class="nav-text">李亚伟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-14"><span class="nav-number">17.2.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%8B%E6%98%8E%E7%94%B3-8"><span class="nav-number">17.3.</span> <span class="nav-text">王明申</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E6%9C%9F%E8%AE%A1%E5%88%92-8"><span class="nav-number">18.</span> <span class="nav-text">后期计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-15"><span class="nav-number">18.1.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%8B%E6%98%8E%E7%94%B3-9"><span class="nav-number">18.2.</span> <span class="nav-text">王明申</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-17"><span class="nav-number">18.3.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E4%B8%8E%E9%83%A8%E7%BD%B2%E7%BB%84%E5%B7%A5%E4%BD%9C%E8%BF%9B%E5%BA%A6-%EF%BC%882023-11-06-2023-11-12%EF%BC%89"><span class="nav-number">19.</span> <span class="nav-text">模型压缩与部署组工作进度 （2023.11.06-2023.11.12）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-16"><span class="nav-number">19.1.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%8B%E6%98%8E%E7%94%B3-10"><span class="nav-number">19.2.</span> <span class="nav-text">王明申</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-18"><span class="nav-number">19.3.</span> <span class="nav-text">李亚伟</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E6%9C%9F%E8%AE%A1%E5%88%92-9"><span class="nav-number">20.</span> <span class="nav-text">后期计划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%97%E5%BA%B7-17"><span class="nav-number">20.1.</span> <span class="nav-text">苗康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%8B%E6%98%8E%E7%94%B3-11"><span class="nav-number">20.2.</span> <span class="nav-text">王明申</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E4%BA%9A%E4%BC%9F-19"><span class="nav-number">20.3.</span> <span class="nav-text">李亚伟</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jarvis</p>
+  <div class="site-description" itemprop="description">记录学习和生活，留下时光的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/04/10/Group_Week_Report/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Group Week Report | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Group Week Report
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-10 10:47:22" itemprop="dateCreated datePublished" datetime="2023-04-10T10:47:22+08:00">2023-04-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-02 15:37:47" itemprop="dateModified" datetime="2024-12-02T15:37:47+08:00">2024-12-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="模型压缩与部署组工作进度-（2023-4-3-2023-4-9）"><a href="#模型压缩与部署组工作进度-（2023-4-3-2023-4-9）" class="headerlink" title="模型压缩与部署组工作进度 （2023.4.3-2023.4.9）"></a>模型压缩与部署组工作进度 （2023.4.3-2023.4.9）</h2><h3 id="高扬城"><a href="#高扬城" class="headerlink" title="高扬城"></a>高扬城</h3><ul>
+<li>I-ViT模块复现：完成I-LayerNorm的复现；</li>
+<li>基金申请审稿意见回复；</li>
+<li>长江流域非法活动监测项目初版方案及可行性分析；</li>
+<li>组会ppt编写；</li>
+</ul>
+<h3 id="李亚伟"><a href="#李亚伟" class="headerlink" title="李亚伟"></a>李亚伟</h3><ul>
+<li>workshop<ul>
+<li><p>在用L1 charbonnier损失进行预训练后，继续使用L2损失训练 -&gt; PSNR：27.76 -&gt; 27.81 上升</p>
+</li>
+<li><p>改进注意力模块：1.增大感受野 2.部分卷积用分组卷积替代 -&gt; Params: 25,664 -&gt; 24,160 下降 FLOPs: 2.949 -&gt; 2.776 下降，但是runtime反而上涨了 27.8 -&gt; 30.0，tflite对分组卷积算子的支持不好</p>
+</li>
+<li><p>目前最好结果</p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+<th>FLOPs [G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SWAT_5</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;1), replace fc with 1*1 conv, replace pixel normalization with layer normalization, enlarge train step numbers to 250,000</td>
+<td>REDS</td>
+<td>27.811176</td>
+<td>0.7763541</td>
+<td>25,664</td>
+<td>27.6 (FP16_TFLite GPU Delegate)</td>
+<td>2.949</td>
+</tr>
+</tbody></table>
+<hr>
+</li>
+</ul>
+</li>
+<li>work<ul>
+<li>搜集在REDS数据集上完全相同实验设置的paper，汇总相关指标情况</li>
+<li>剪枝&#x2F;权重聚类的代码之前在基于单帧的单输入单输出模型上跑通，现模型多输入多输出，进行调整后现已跑通</li>
+</ul>
+</li>
+</ul>
+<h2 id="后期计划"><a href="#后期计划" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="高扬城-1"><a href="#高扬城-1" class="headerlink" title="高扬城"></a>高扬城</h3><ul>
+<li>完成I-ViT模型复现；</li>
+<li>完成组会ppt编写；</li>
+<li>尝试在Jetson nano或raspberry pi上使用TVM进行模型部署；</li>
+</ul>
+<h3 id="李亚伟-1"><a href="#李亚伟-1" class="headerlink" title="李亚伟"></a>李亚伟</h3><ul>
+<li>work<ul>
+<li>完成当前多输入多输出模型的INT8&#x2F;FP16的量化部分</li>
+</ul>
+</li>
+</ul>
+<h2 id="模型压缩与部署组工作进度-（2023-7-03-2023-7-16）"><a href="#模型压缩与部署组工作进度-（2023-7-03-2023-7-16）" class="headerlink" title="模型压缩与部署组工作进度 （2023.7.03-2023.7.16）"></a>模型压缩与部署组工作进度 （2023.7.03-2023.7.16）</h2><h3 id="李亚伟-2"><a href="#李亚伟-2" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>video super-resolution on mobile device<ul>
+<li>FANI 代码整理，上传github</li>
+</ul>
+</li>
+<li>NeurIPS 审稿</li>
+<li>补充PPT: 模型压缩部署部分</li>
+<li>Jetson Nano 部署 ZeroDCE,远远达不到实时性要求,处理单张512×512图片暗光增强耗时 &gt; 2 min。具体结果如下：<ul>
+<li><img src="/Week_Report/ZeroDCE_test_result.jpg" alt="Elapsed Time(ms)/photo"></li>
+</ul>
+</li>
+</ol>
+<h3 id="苗康"><a href="#苗康" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>调研了李亚伟推荐的几篇量化文献:ZeroQ,HAWQ-V3，调试了 micronet 项目上几个量化操作的 demo:QAT&#x2F;PTQ -&gt; QAFT</li>
+<li>请假回家，处理家里一些杂事</li>
+</ol>
+<h2 id="后期计划-1"><a href="#后期计划-1" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="李亚伟-3"><a href="#李亚伟-3" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>调研了解最新压缩量化进展，寻找下个工作方向</li>
+<li>8-bit 浮点数量化项目(FP8 quantization)高通已开源，测试了解下有无follow的空间</li>
+<li>trt_pose 姿态估计项目摄像头随动功能实现</li>
+<li>Bingda机器人小车文档学习<ul>
+<li><img src="/Week_Report/Robot_Tutorial.png" alt="Robot Tutorial"></li>
+</ul>
+</li>
+</ol>
+<h3 id="苗康-1"><a href="#苗康-1" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>和模型压缩组内成员讨论下一步的选题方向</li>
+<li>熟悉模型压缩方向的最新进展</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-8-07-2023-8-13）"><a href="#模型压缩与部署组工作进度-（2023-8-07-2023-8-13）" class="headerlink" title="模型压缩与部署组工作进度 （2023.8.07-2023.8.13）"></a>模型压缩与部署组工作进度 （2023.8.07-2023.8.13）</h2><h3 id="苗康-2"><a href="#苗康-2" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>撰写 icdm审稿意见</li>
+<li>参与韦炎炎师兄项目书撰写，即围绕“复杂环境下对监控画面进行增强和实时分析”主题，调研了两个比较细分的小方向，一篇综述是Areview ofcomputer visionbased structuralhealth monitoring at localand globallevels，利用计算机视觉对建筑进行健康检测;另一篇综述是 Anomaly Detection in RoadTrafic Using Visual Surveillance:ASurvey，调查了基于计算机视觉和视觉监控的技术来理解交通违规或其他类型的道路异常的相关技术</li>
+<li>撰写开题报告，以轻量化超分为主题</li>
+</ol>
+<h3 id="李亚伟-4"><a href="#李亚伟-4" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>PRCV审稿</li>
+<li>FP8 Quantization 调研<ul>
+<li>FP8 Quantization: The Power of the Exponent (Qualcomm_NeurIPS 2022)<ol>
+<li>FP8更适应离群值多的场景</li>
+<li>PTQ时精度优于INT8，QAT时精度比INT8略差</li>
+</ol>
+</li>
+<li>FP8 FORMATS FOR DEEP LEARNING (NVIDIA&#x2F;Arm&#x2F;Intel_ArXiv 2022.09) -&gt; 训练推理统一数据格式FP8<ol>
+<li>FP8 可以加速训练和减少训练所需的资源，同时方便部署且可以保证训练出的精度</li>
+<li>INT8 量化模型通常需要进行校准或微调，训练与推理数据类型不一致不便于部署，且通常精度会下降</li>
+</ol>
+</li>
+<li>FP8 versus INT8 for efficient deep learning inference (Qualcomm_ArXiv 2023.06) -&gt; FP8 目前在性能和精度上不能取代INT8推理，目前INT4-INT8-INT16是边缘端推理的最优解<ol>
+<li>PTQ时在离群值显著的情况下，FP8相较INT8有精度优势; 通常这种情况可以通过W8A16混合精度以及QAT来解决</li>
+<li>FP8推理硬件开销大, FP8 MAC 单元效率比 INT8 低50%至180%</li>
+<li>为了更高效，已经有一些INT4量化的工具, 但到目前为止并没有FP4相关的工作</li>
+</ol>
+</li>
+<li>Integer or Floating Point? New Outlooks for Low-Bit Quantization on Large Language Models (MSRA_ArXiv 2023.05) -&gt; Layer wise混合精度LLM</li>
+</ul>
+</li>
+<li>Jetson Nano 部署暗光增强 ZeroDCE++,处理单张512×512图片耗时约10ms,但有波动(最高4931.46 ms&#x2F;张),基本满足实时性要求<ul>
+<li><img src="Week_Report/ZeroDCE++_test_result.png" alt="Elapsed Time(ms)/photo" width="500" height="300"></li>
+</ul>
+</li>
+<li>Jetson Nano 部署 Face Tracking,结合之前的Pose Estimation 达不到实时30 frame&#x2F;s的要求<ul>
+<li><img src="Week_Report/face_detection_screenshot.png" alt="Elapsed Time(ms)/photo" width="700" height="300"></li>
+<li><img src="Week_Report/pose_estimation_screenshot.png" alt="Elapsed Time(ms)/photo" width="700" height="300"></li>
+</ul>
+</li>
+</ol>
+<h2 id="后期计划-2"><a href="#后期计划-2" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-3"><a href="#苗康-3" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>确定项目书的模板论文，补充项目书</li>
+<li>寻找新工作的方向</li>
+</ol>
+<h3 id="李亚伟-5"><a href="#李亚伟-5" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>撰写开题报告</li>
+<li>尝试集成Face Tracking 和 Pose Estimation实现相机角度跟随人体并进行姿态估计</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-8-14-2023-8-27）"><a href="#模型压缩与部署组工作进度-（2023-8-14-2023-8-27）" class="headerlink" title="模型压缩与部署组工作进度 （2023.8.14-2023.8.27）"></a>模型压缩与部署组工作进度 （2023.8.14-2023.8.27）</h2><h3 id="苗康-4"><a href="#苗康-4" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>完成了项目申请书的撰写工作，在师兄的指导下修改了项目书的背景，相关工作，技术路线等内容</li>
+<li>开题报告</li>
+<li>调研并学习了商汤的MOBench 量化工具，针对不同工作的训练pipeline存在差异导致复现结果不同，其提供了统一的理论算法和量化策略。打算作为接下来一段时间的研究方向</li>
+</ol>
+<h3 id="李亚伟-6"><a href="#李亚伟-6" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>机载广域持续监视方案调研,PPT制作</li>
+<li>开题报告</li>
+<li>jetson nano 项目：Face Tracking + Pose Estimation<ul>
+<li>原有基于nvidia官方trt_pose项目的姿态估计推理速度慢,现基于Shanghai AI Lab 2023最新的轻量姿态估计项目RTMPose进行部署</li>
+<li>调研了解商汤MMdeploy 和 MMPose项目，编译安装相关依赖并在jetson nano上搭建了部署环境</li>
+<li>完成了驱动舵机调整摄像头位置的C++代码，后续通过ctypes库实现在py文件中调用此部分调整摄像头姿态的C++代码</li>
+</ul>
+</li>
+</ol>
+<h2 id="后期计划-3"><a href="#后期计划-3" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-5"><a href="#苗康-5" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>深入了解运用MQBenche</li>
+</ol>
+<h3 id="李亚伟-7"><a href="#李亚伟-7" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>完成jetson nano 项目：Face Tracking + Pose Estimation</li>
+<li>调研了解TensorRT&#x2F;TNN&#x2F;MNN&#x2F;NCNN等推理框架，重点尝试运用TensorRT加速RTMPose的推理</li>
+<li>参加大湾区算法比赛： 视频插帧 + 单目深度估计</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-9-25-2023-10-08）"><a href="#模型压缩与部署组工作进度-（2023-9-25-2023-10-08）" class="headerlink" title="模型压缩与部署组工作进度 （2023.9.25-2023.10.08）"></a>模型压缩与部署组工作进度 （2023.9.25-2023.10.08）</h2><h3 id="苗康-6"><a href="#苗康-6" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>参加视频插帧赛道的比赛，结果不太行。</li>
+<li>和师兄交流，修改icdm论文里的语法、格式问题。</li>
+<li>找到一篇23CVPR的论文“CABM: Content-Aware Bit Mapping for Single Image Super-Resolution Network with Large Input”，其动机与我icdm大致相同，区别在于这篇论文为每个patch选择量化比特，我的论文为每个patch选择block数。而且这篇论文很大程度上借鉴了21CVPR “ARM: Any-Time Super-Resolution Method”依然能中，说明这个方向仍然可以继续探索。</li>
+</ol>
+<h3 id="王明申"><a href="#王明申" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li><p>审硕士论文抽检</p>
+</li>
+<li><p>和师兄一起参加大湾区比赛，熟悉比赛流程，学习不同任务的模型调参工作等。</p>
+</li>
+<li><p>EfficientDM: Efficient Quantization-Aware Fine-Tuning of Low-Bit Diffusion Models（arXiv 23.10.05）PTQ的时间 QAT的精度</p>
+<ul>
+<li>动机：现有PTQ量化在DM中W4A4量化时无法产生较好效果，QLoRA缺点：无法将LoRA权重与量化模型权重相融合。</li>
+<li>提出量化感知低秩适配器QALoRA，将LoRA权重与FP模型权重合并共同量化至目标位宽，权重量化：channel-wise，激活量化：layer-wise。</li>
+<li>Activation量化：将LSQ量化方法运用在每一步去噪步骤中，单独优化激活量化尺度。</li>
+</ul>
+</li>
+</ol>
+<h3 id="李亚伟-8"><a href="#李亚伟-8" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>大湾区单目深度估计比赛：<ul>
+<li>数据的理解存在偏差，涉及共计6个不同数据集的ground truth, label的标签意义未能理解清(如单位mm还是m, skymask, validmask等等)</li>
+<li>选择部分结构清晰(仅包含imgs, gts)的数据集送入目前的SOTA模型 ZoeDepth 对其 metric bins module 进行微调，结果训练后的精度比原作只在 NYU Depth V2 数据集上进行微调的效果还差</li>
+<li>目前的提交的结果：A榜 42&#x2F;60, B榜决定最终排名尚未出结果</li>
+</ul>
+</li>
+<li>ICDM camera ready 版本修改&#x2F;国奖申请答辩</li>
+</ol>
+<h2 id="后期计划-4"><a href="#后期计划-4" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-7"><a href="#苗康-7" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>研究CABM的量化部分，然后迁移到我借鉴的baseline论文“Adaptive patch<br>   exiting for scalable single image super-resolution”里看看效果。</li>
+</ol>
+<h3 id="王明申-1"><a href="#王明申-1" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>从ECCV 2022 CADyQ和CVPR2023 CABM 两篇论文中，寻找优化量化SISR任务的角度。</li>
+<li>从其他方向寻找量化工作角度，如大模型Diffusion Model。</li>
+</ol>
+<h3 id="李亚伟-9"><a href="#李亚伟-9" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>参照SISR量化思路(ECCV 2022 CADyQ, WACV 2022 DAQ)，搭建基于目前SOTA模型 (BasicVSR++&#x2F;VRT&#x2F;RVRT) 的量化baseline</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-10-09-2023-10-15）"><a href="#模型压缩与部署组工作进度-（2023-10-09-2023-10-15）" class="headerlink" title="模型压缩与部署组工作进度 （2023.10.09-2023.10.15）"></a>模型压缩与部署组工作进度 （2023.10.09-2023.10.15）</h2><h3 id="苗康-8"><a href="#苗康-8" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>注册提交icdm终稿</li>
+<li>研究几篇超分量化相关工作ARM、CABM、CADYQ代码，ARM代码有一处存在疑问，作者暂未回复</li>
+<li>确定工作思路，即基于patch确定对应的网络block数，再根据block数确定量化位数，不过原理方面解释性不强</li>
+</ol>
+<h3 id="王明申-2"><a href="#王明申-2" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>复现SR量化任务APE、CADyQ、CABM模型中baseline效果</li>
+<li>寻找SR量化trick</li>
+<li>EQ-Net：Elastic Quantization Neural Networks（ICCV 2023）<br>OFA 动机：不同硬件支持的量化形式多样，现有解决方案局限性需要迭代训练优化<ul>
+<li>对于权重量化提出从偏度和峰度信息正则化</li>
+<li>提出GPG类似知识蒸馏结构组渐进式指导，CQAP MLP结构选择粒度和对称性，最后用遗传算法加快搜索</li>
+</ul>
+</li>
+</ol>
+<h3 id="李亚伟-10"><a href="#李亚伟-10" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>Video Super-Resolution Quantization<ul>
+<li>基于目前在Vid4、Vimeo90k、REDS数据集上SOTA模型 BasicVSR++ 进行channel-wise distribution-aware 量化pipeline的搭建（目前尚没有视频超分量化超分方向的baseline，代码难度较大）</li>
+<li>尝试引入在其它视频感知任务（Human Pose Estimation，Semantic Segmentation，Video Object Segmentation）有效上的方法，参考 ICCV2023 ResQ 将网络中相邻帧的激活之间的残差用于量化，更小的方差有利于缩小量化误差<ul>
+<li><img src="Week_Report/ResQ.png" alt="ResQ Motivation" width="500" height="300"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ICDM注册提交</li>
+</ol>
+<h2 id="后期计划-5"><a href="#后期计划-5" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-9"><a href="#苗康-9" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>根据上述工作思路，继续搭建模型架构，同时查找相关论文，思索更好的原理解释</li>
+</ol>
+<h3 id="王明申-3"><a href="#王明申-3" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>继续寻找SR量化trick</li>
+<li>深度阅读现有SR量化工作代码</li>
+</ol>
+<h3 id="李亚伟-11"><a href="#李亚伟-11" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>结合 ResQ 完成 BasicVSR++ 量化pipeline的搭建</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-10-16-2023-10-22）"><a href="#模型压缩与部署组工作进度-（2023-10-16-2023-10-22）" class="headerlink" title="模型压缩与部署组工作进度 （2023.10.16-2023.10.22）"></a>模型压缩与部署组工作进度 （2023.10.16-2023.10.22）</h2><h3 id="苗康-10"><a href="#苗康-10" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>继续上周计划，基于patch做超分量化任务，调试代码，修改模型结构</li>
+<li>修改专利</li>
+<li>调研了几篇剪枝超分方面的文章，Aligned Structured Sparsity Learning for Efficient Image Super-Resolution (nips2021),  Learning efficient image super-resolution networks through structural regular pruning (ICLR2022), 结论是由于超分网络存在不少跳连和残差，剪枝在超分领域应用的泛化性不是很好</li>
+</ol>
+<h3 id="王明申-4"><a href="#王明申-4" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>SCIS审稿</li>
+<li>通过pdb方式阅读SR量化代码</li>
+</ol>
+<h3 id="李亚伟-12"><a href="#李亚伟-12" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>Video Super-Resolution Quantization<ul>
+<li>参考 GPTQ 完成了 BasicVSR++ (未涉及ViT)量化的基础部分</li>
+<li>阅读论文,了解其它几个SOTA模型(ViTs)是否有需要单独改进的模块：<ul>
+<li>CVPR2022: TTVSR</li>
+<li>NIPS2022: PSRT, RVRT</li>
+<li>CVPR2023: IART</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>SelecQ latex 排版调整,期刊注册提交</li>
+<li>学校HPC实例到期, 实验室浪潮集群上 Docker 镜像搭建</li>
+<li>专利修改</li>
+</ol>
+<h2 id="后期计划-6"><a href="#后期计划-6" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-11"><a href="#苗康-11" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>继续搭建模型结构</li>
+</ol>
+<h3 id="王明申-5"><a href="#王明申-5" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>阅读ICCV2023中Workshop关于Low-Bit Quantized Neural Networks的汇报</li>
+<li>阅读Transformer或LLM有关量化的文章</li>
+</ol>
+<h3 id="李亚伟-13"><a href="#李亚伟-13" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>结合 ResQ 改进视频超分ViTs量化模块</li>
+<li>深度神经网络课程PPT制作</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-10-23-2023-10-29）"><a href="#模型压缩与部署组工作进度-（2023-10-23-2023-10-29）" class="headerlink" title="模型压缩与部署组工作进度 （2023.10.23-2023.10.29）"></a>模型压缩与部署组工作进度 （2023.10.23-2023.10.29）</h2><h3 id="苗康-12"><a href="#苗康-12" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>初步搭建出基于patch的超分量化框架，效果很差，判定是代码问题，又因为存在创新型的问题，暂时放一放</li>
+<li>与组内协作，参与视频超分工作，研究BasicVsr++视频超分模型。</li>
+</ol>
+<h3 id="王明申-6"><a href="#王明申-6" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li><p>阅读论文</p>
+<ul>
+<li>VSR：BasicVSR（CVPR 2021）、BasicVSR++（CVPR2022）</li>
+<li>Quantization：<ul>
+<li>EfficientViT（ICCV 2023 MIT Transformer轻量化 对分类、分割、复原三个领域中general的模型轻量化且效果极好）</li>
+<li>Solving Oscillation Problem in Post-Training Quantization Through a Theoretical Perspective（CVPR 2023 从量化误差导致震荡角度出发，优化量化结果）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>跑通BasicVSR++代码</p>
+</li>
+<li><p>通过TensorRT量化框架对Yolov7模型实现自动插入量化节点量化，mAP掉了0.03%</p>
+</li>
+</ol>
+<h3 id="李亚伟-14"><a href="#李亚伟-14" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>Video Super-Resolution Quantization<ul>
+<li>试用百度 paddleslim 分别用静态动态量化（PTQ）对 BasicVSR++ 进行量化</li>
+</ul>
+</li>
+<li>深度神经网络课程PPT制作</li>
+</ol>
+<h2 id="后期计划-7"><a href="#后期计划-7" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-13"><a href="#苗康-13" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>参与视频超分工作</li>
+</ol>
+<h3 id="王明申-7"><a href="#王明申-7" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>阅读量化文章</li>
+<li>学习网络模型量化，并完成VSR任务量化</li>
+</ol>
+<h3 id="李亚伟-15"><a href="#李亚伟-15" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>配合完成 paddleslim 量化 BasicVSR++</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-10-30-2023-11-05）"><a href="#模型压缩与部署组工作进度-（2023-10-30-2023-11-05）" class="headerlink" title="模型压缩与部署组工作进度 （2023.10.30-2023.11.05）"></a>模型压缩与部署组工作进度 （2023.10.30-2023.11.05）</h2><h3 id="李亚伟-16"><a href="#李亚伟-16" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>Video Super-Resolution Quantization<ul>
+<li>BasicVSR++ PTQ： 量化过程有bug正在解决<ol>
+<li>BasicVSR++ torch模型转onnx模型并检查</li>
+<li>激活校准，产出量化参数: scale zero_point</li>
+<li>权重调整，提升量化精度</li>
+<li>量化误差分析，定位量化问题</li>
+</ol>
+</li>
+<li><strong>note:</strong> 目前 BasicVSR++ 的 PTQ 基于开源工具 Dipoorlet 进行，优点代码简洁明了易修改，相较百度框架 paddleslim 便于快捷验证idea; VSR 量化方法成熟后可进一步迁移至 paddleslim</li>
+</ul>
+</li>
+<li>读文献找idea提升PTQ精度</li>
+</ol>
+<h3 id="苗康-14"><a href="#苗康-14" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li><p>一篇 Neural Network 审稿工作</p>
+</li>
+<li><p>参考 paddleslim 官方文档示例完成yolov5 PTQ:</p>
+<ul>
+<li>将pytorch的pt文件转化为onnx格式</li>
+<li>将onnx文件输入paddleslim执行脚本输出模型及权重文件</li>
+<li>迁移部署到tensorRT平台部分暂不清楚</li>
+<li>结果： <img src="Week_Report/paddleslim_demo.png" alt="Paddleslim demo" width="800" height="200"></li>
+</ul>
+</li>
+</ol>
+<h3 id="王明申-8"><a href="#王明申-8" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>阅读论文<ul>
+<li>VSR：ESPCN(CVPR 2017)</li>
+<li>Quantization：<br>1. Efficient LLM Inference on CPUs (arxiv 2311.00502, Intel 精度几乎无损)<br>2. DAQ: Channel-Wise Distribution-Aware Quantization for Deep Image Super-Resolution Networks (WACV 2022 ISRQ; 在Ablation Study中分析了 Gaussian, Uniform, Laplacian, Gamma分布对channel-wise量化的影响)</li>
+</ul>
+</li>
+<li>ICASSP 2024审稿</li>
+<li>完成对YOLOv7网络模型的手动量化节点插入，并通过敏感层分析，逐层网络分析及打印量化对精度影响最大的Top10层。</li>
+</ol>
+<h2 id="后期计划-8"><a href="#后期计划-8" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-15"><a href="#苗康-15" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>paddleslim yolov5 PTQ 过程迁移到 BasicVSR++ 上</li>
+<li>尝试将 ResQ 思路用 paddleslim 实现</li>
+</ol>
+<h3 id="王明申-9"><a href="#王明申-9" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>阅读量化文章，寻找新的视频超分量化idea</li>
+<li>学习网络模型量化</li>
+</ol>
+<h3 id="李亚伟-17"><a href="#李亚伟-17" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>解决 dipoorlet 量化 BasicVSR++ 遇到的bug</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-11-06-2023-11-12）"><a href="#模型压缩与部署组工作进度-（2023-11-06-2023-11-12）" class="headerlink" title="模型压缩与部署组工作进度 （2023.11.06-2023.11.12）"></a>模型压缩与部署组工作进度 （2023.11.06-2023.11.12）</h2><h3 id="苗康-16"><a href="#苗康-16" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>深度神经网络原理课程ppt制作。</li>
+<li>利用paddleslim其中的AutoCompression接口对yolov5进行自动压缩（包括量化和蒸馏两部分），代码中numpy库的api有冲突，在调试。</li>
+<li>利用3090比较了各类框架在yolov5上的部署测试。<img src="Week_Report/3090_qyolov5.png" alt="qyolov5" width="800" height="200"></li>
+</ol>
+<h3 id="王明申-10"><a href="#王明申-10" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>阅读论文<ul>
+<li>VSR：DRDVSR(CVPR 2018)</li>
+<li>Quantization：Overcoming Distribution Mismatch in Quantizing Image Super-Resolution Networks(解决正则化损失与复原损失冲突问题)</li>
+</ul>
+</li>
+<li>Neurocomputing审稿</li>
+<li>完成YOLOv7网络PTQ、QAT量化学习，从手动加入QDQ节点，到逐层分析量化的敏感度，对于敏感度高的层进行处理，对输入Concat节点前的多个输出节点做统一scale处理，最后通过训练迭代优化量化损失，导出量化模型的ONNX模型。</li>
+<li>分析VSR量化任务的难点，早期VSR任务模型具有更简单的网路结构，近几年的VSR任务模型结构中可能含有不利于通用量化的网络模块，这样就需要手动去加入适配的QDQ节点，难度大且无法做公平的对比实验。</li>
+</ol>
+<h3 id="李亚伟-18"><a href="#李亚伟-18" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li><p>Video Super-Resolution Quantization</p>
+<ul>
+<li>BasicVSR++ 采用 <code>Dipoorlet</code> PTQ： 量化过程有不支持动态输入的问题, 即不支持视频随机长度(time_step)的问题, github提了issue 暂未有回复</li>
+<li>BasicVSR++ 采用 <code>MQBench</code> PTQ: BasicVSR++ 模型 forward 过程存在动态控制流, 即控制流的判断条件含有运算变量(Input&#x2F;Activation)参与, 而<code>MQBench</code>调用 <code>torch.fx</code> 的 <code>symbolic_trace</code> 完成 forward 过程计算图捕捉, 其本身的限制不支持动态控制流。正尝试：<ol>
+<li>把模型的动态控制流用静态的代替</li>
+<li>torch 2.0 新发布的 <code>torch.compile</code> 也即 (TorchDynamo), 了解后尝试来解决模型 forward 中广泛存在的动态控制流</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>RustDesk 中继服务搭建, 降低远程桌面的延迟</p>
+</li>
+</ol>
+<h2 id="后期计划-9"><a href="#后期计划-9" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-17"><a href="#苗康-17" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>解决自动压缩的bug, 采用paddleslim对yolov5 PTQ, 分析其量化分析工具及精度重构工具。</li>
+</ol>
+<h3 id="王明申-11"><a href="#王明申-11" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>从较早的VSR任务模型开始着手, 类比用TensorRT框架对YOLOv7的量化尝试对VSR模型进行量化。</li>
+<li>学习对于不同结构的量化op方法。</li>
+</ol>
+<h3 id="李亚伟-19"><a href="#李亚伟-19" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>推进 VSR 模型的常规量化(Naive PTQ)的工作</li>
+<li>实习相关工作</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/02/17/Workshop_Log_0/" rel="prev" title="MAI 2023 Mobile VSR Workshop Log">
+                  <i class="fa fa-chevron-left"></i> MAI 2023 Mobile VSR Workshop Log
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/07/07/Work_Log_2/" rel="next" title="Video Super-Resolution Quantization Work Log">
+                  Video Super-Resolution Quantization Work Log <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jarvis</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

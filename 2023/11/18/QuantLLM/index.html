@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kyrie2to11.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Quantization of LLMLLM Quantization SurveyAwesome LLM Quantization RepositoryLLM Quantization PapersQuantization-Aware Training(QAT) LLM-QAT (from META) Motivation: Lacking training data Training LLMs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QuantLLM">
+<meta property="og:url" content="https://kyrie2to11.github.io/2023/11/18/QuantLLM/index.html">
+<meta property="og:site_name" content="Jarvis&#39;s Blog">
+<meta property="og:description" content="Quantization of LLMLLM Quantization SurveyAwesome LLM Quantization RepositoryLLM Quantization PapersQuantization-Aware Training(QAT) LLM-QAT (from META) Motivation: Lacking training data Training LLMs">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-18T07:25:11.000Z">
+<meta property="article:modified_time" content="2024-12-02T07:21:10.500Z">
+<meta property="article:author" content="jarvis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kyrie2to11.github.io/2023/11/18/QuantLLM/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kyrie2to11.github.io/2023/11/18/QuantLLM/","path":"2023/11/18/QuantLLM/","title":"QuantLLM"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>QuantLLM | Jarvis's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jarvis's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活，沉淀自己</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quantization-of-LLM"><span class="nav-number">1.</span> <span class="nav-text">Quantization of LLM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM-Quantization-Survey"><span class="nav-number">1.1.</span> <span class="nav-text">LLM Quantization Survey</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Awesome-LLM-Quantization-Repository"><span class="nav-number">1.2.</span> <span class="nav-text">Awesome LLM Quantization Repository</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM-Quantization-Papers"><span class="nav-number">1.3.</span> <span class="nav-text">LLM Quantization Papers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Quantization-Aware-Training-QAT"><span class="nav-number">1.3.1.</span> <span class="nav-text">Quantization-Aware Training(QAT)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Post-Training-Quantization-PTQ"><span class="nav-number">1.3.2.</span> <span class="nav-text">Post-Training Quantization(PTQ)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Weight-Quantization"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">Weight Quantization</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Weight-and-Activation-Quantization"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">Weight and Activation Quantization</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jarvis</p>
+  <div class="site-description" itemprop="description">记录学习和生活，留下时光的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/11/18/QuantLLM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="QuantLLM | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          QuantLLM
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-18 15:25:11" itemprop="dateCreated datePublished" datetime="2023-11-18T15:25:11+08:00">2023-11-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-02 15:21:10" itemprop="dateModified" datetime="2024-12-02T15:21:10+08:00">2024-12-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="Quantization-of-LLM"><a href="#Quantization-of-LLM" class="headerlink" title="Quantization of LLM"></a>Quantization of LLM</h2><h3 id="LLM-Quantization-Survey"><a href="#LLM-Quantization-Survey" class="headerlink" title="LLM Quantization Survey"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2308.07633">LLM Quantization Survey</a></h3><h3 id="Awesome-LLM-Quantization-Repository"><a href="#Awesome-LLM-Quantization-Repository" class="headerlink" title="Awesome LLM Quantization Repository"></a><a target="_blank" rel="noopener" href="https://github.com/HuangOwen/Awesome-LLM-Compression#quantization">Awesome LLM Quantization Repository</a></h3><h3 id="LLM-Quantization-Papers"><a href="#LLM-Quantization-Papers" class="headerlink" title="LLM Quantization Papers"></a>LLM Quantization Papers</h3><h4 id="Quantization-Aware-Training-QAT"><a href="#Quantization-Aware-Training-QAT" class="headerlink" title="Quantization-Aware Training(QAT)"></a>Quantization-Aware Training(QAT)</h4><ol>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.17888">LLM-QAT (from META)</a><ul>
+<li>Motivation:<ol>
+<li>Lacking training data</li>
+<li>Training LLMs involves instruction tuning, reinforcement learning and etc, which are difficult to replicate during QAT</li>
+</ol>
+</li>
+<li>Method:  <ol>
+<li>Data-free quantization-aware training (QAT) which produces QAT data using next token data generation <code>-&gt;</code> Select appropriate fine-tuning dataset    <style>.qoxwrzqkbunj{}</style></li>
+<li>Per-channel weight quantization and per-token activation quantization (symmetric MinMax quantization), per-token quantization for KV cache <code>-&gt;</code> Identify suitable quantizer    <style>.vtdysxjjxvwe{}</style></li>
+<li>Cross-entropy based loss <code>-&gt;</code> Knowledge distillation from full precision model    <style>.rmfrpsyzygce{}</style></li>
+</ol>
+</li>
+<li>Result:<ol>
+<li>Empirical recommendations:<ul>
+<li>8-bit quantization should be preferred over smaller full precision models, and PTQ methods are sufficient for this case</li>
+<li>4-bit models quantized using LLM-QAT should be preferred over 8-bit models of similar size <code>-&gt;</code> 4-bit LLM-QAT models towards the best efficiency-accuracy tradeoff</li>
+</ul>
+</li>
+<li>Partial results:    <style>.gjnqkwnyubmp{}</style></li>
+</ol>
+</li>
+<li>Limitation:<ol>
+<li>4-bit quantization does not have hardware support out-of-the-box <code>-&gt;</code> no hardware implementation</li>
+<li>Method works well for 4-bit weights, 4-bit KV cache and 8-bit activations <code>-&gt;</code> Insufficient for 4-bit activation quantization</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.14152">PEQA (from NAVER)</a><ul>
+<li>Motivation:<ol>
+<li>Bridging the gap between parameter-efficient fine-tuning(PEFT e.g. LoRA, Prefix Tuning) and Quantization <code>-&gt;</code> combine PEFT with quantized LLMs</li>
+</ol>
+</li>
+<li>Method:<ol>
+<li>Overall pipeline    <style>.gfwmdclhaqks{}</style></li>
+<li>Solely updating quantization scales while freezing the integer quantization values of pre-trained weights  <style>.driqeraxbhaf{}</style></li>
+</ol>
+</li>
+<li>Result:<ol>
+<li>Memory footprint, inference latency performance  <style>.vsatlelcxpoe{}</style>  
+  <style>.uqoqelqwimxw{}</style></li>
+<li>Common-sense reasoning and in-context learning performance    <style>.sessfnsjemyk{}</style></li>
+<li>Massive Multitask Language Understanding (MMLU) benchmark performance    <style>.cpcsckwhqeuj{}</style></li>
+</ol>
+</li>
+<li>Limitation:<ol>
+<li>low-bit weight-only quantization in a linear asymmetric per-channel context <code>-&gt;</code> Lacking weight-activation quantization part</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.14314">QLoRA (from University of Washington’s UW NLP group)</a><ul>
+<li>Motivation:<ol>
+<li>Reduce memory footprint of parameter-efficient fine-tuning(PEFT) stage</li>
+</ol>
+</li>
+<li>Method:<ol>
+<li>Overall pipeline    <style>.tjgaijpuonqb{}</style></li>
+<li>QLoRA    <style>.iyrcylivdnst{}</style>
+<ul>
+<li>4-bit NormalFloat Quantization <code>-&gt;</code> better quantization data type for normally distributed data compared with 4-bit Integers and 4-bit Floats (See the paper for details)</li>
+<li>Double Quantization <code>-&gt;</code> combined with NF4 to reduce the memory footprint of quantization constants i.e. weights (See the paper for details)</li>
+</ul>
+</li>
+<li>Paged Optimizers <code>-&gt;</code> manage memory spikes i.e. manage the memory swap between CPU and GPU</li>
+</ol>
+</li>
+<li>Result:<ol>
+<li>MMLU test accuracy    <style>.ciweypclhpnu{}</style></li>
+<li>Memory footprint <code>-&gt;</code> enables the finetuning of 33B parameter models on a single consumer GPU and 65B parameter models on a single professional GPU, even 7B parameter models on mobile phones(e.g. iPhone 12 Plus)  <style>.fkgpnpglnbdb{}</style></li>
+</ol>
+</li>
+<li>Limitation:<ol>
+<li>Can’t establish that QLoRA can match full 16-bit finetuning performance at 33B and 65B scales…</li>
+<li>Did not evaluate different bit-precisions e.g.3-bit base models, or different adapter methods</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="Post-Training-Quantization-PTQ"><a href="#Post-Training-Quantization-PTQ" class="headerlink" title="Post-Training Quantization(PTQ)"></a>Post-Training Quantization(PTQ)</h4><h5 id="Weight-Quantization"><a href="#Weight-Quantization" class="headerlink" title="Weight Quantization"></a>Weight Quantization</h5><ol>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2206.09557">LUT-GEMM</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2208.07339">LLM.int8()</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2210.17323">GPTQ</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2306.00978">AWQ</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2306.02272">OWQ</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2306.03078">SpQR</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2306.07629">SqueezeLLM</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2307.13304">QuIP</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2309.05516">SignRound</a></li>
+</ol>
+<h5 id="Weight-and-Activation-Quantization"><a href="#Weight-and-Activation-Quantization" class="headerlink" title="Weight and Activation Quantization"></a>Weight and Activation Quantization</h5><ol>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2206.01861">ZeroQuant</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2211.10438">SmoothQuant</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2304.01089">RPTQ</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2304.07493">OliVe</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2303.08302">ZeroQuant-V2</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2304.09145">OutlierSuppression+</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.12356">MoFQ</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2307.09782">ZeroQuant-FP</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2308.15987">FPTQ</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2309.01885">QuantEase</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2309.02784">NormTweaking</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2308.13137">OmniQuant</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/10/19/ZMO_interview/" rel="prev" title="Interview">
+                  <i class="fa fa-chevron-left"></i> Interview
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/08/17/aliyun-github-blog-config/" rel="next" title="Hexo Blog Updates to Aliyun and Github Page">
+                  Hexo Blog Updates to Aliyun and Github Page <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jarvis</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

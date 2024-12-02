@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kyrie2to11.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="内容 CPU体系架构概述 并行程序设计概述 CUDA开发环境搭建和工具配置 GPU体系架构概述 GPU编程模型 CUDA编程（1） CUDA编程（2） CUDA编程（3） CUDA程序分析和调试工具 CUDA程序基本优化 CUDA程序深入优化 最新NVIDA GPU 和 CUDA特性  1.CPU体系概述 桌面级应用以访存 分支操作 数据搬来搬去为主，数值计算占比很低  取指 译码 执行 访存，流">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CUDA Tutorial">
+<meta property="og:url" content="https://kyrie2to11.github.io/2022/09/21/CUDA_Tutorial/index.html">
+<meta property="og:site_name" content="Jarvis&#39;s Blog">
+<meta property="og:description" content="内容 CPU体系架构概述 并行程序设计概述 CUDA开发环境搭建和工具配置 GPU体系架构概述 GPU编程模型 CUDA编程（1） CUDA编程（2） CUDA编程（3） CUDA程序分析和调试工具 CUDA程序基本优化 CUDA程序深入优化 最新NVIDA GPU 和 CUDA特性  1.CPU体系概述 桌面级应用以访存 分支操作 数据搬来搬去为主，数值计算占比很低  取指 译码 执行 访存，流">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-09-21T08:38:13.000Z">
+<meta property="article:modified_time" content="2024-12-02T07:16:50.566Z">
+<meta property="article:author" content="jarvis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kyrie2to11.github.io/2022/09/21/CUDA_Tutorial/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kyrie2to11.github.io/2022/09/21/CUDA_Tutorial/","path":"2022/09/21/CUDA_Tutorial/","title":"CUDA Tutorial"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CUDA Tutorial | Jarvis's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jarvis's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活，沉淀自己</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-number">1.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-CPU%E4%BD%93%E7%B3%BB%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">1.CPU体系概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%A6%82%E8%BF%B0"><span class="nav-number">3.</span> <span class="nav-text">2.并行程序设计概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-CUDA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">4.</span> <span class="nav-text">3.CUDA开发环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-GPU%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84%E6%A6%82%E8%BF%B0"><span class="nav-number">5.</span> <span class="nav-text">4.GPU体系架构概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-GPU%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.</span> <span class="nav-text">5.GPU编程模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-CUDA%E7%BC%96%E7%A8%8B-1"><span class="nav-number">7.</span> <span class="nav-text">6.CUDA编程(1)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-CUDA%E7%BC%96%E7%A8%8B-2"><span class="nav-number">8.</span> <span class="nav-text">7.CUDA编程(2)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-CUDA%E7%BC%96%E7%A8%8B-3"><span class="nav-number">9.</span> <span class="nav-text">8.CUDA编程(3)</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jarvis</p>
+  <div class="site-description" itemprop="description">记录学习和生活，留下时光的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/21/CUDA_Tutorial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CUDA Tutorial | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CUDA Tutorial
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-09-21 16:38:13" itemprop="dateCreated datePublished" datetime="2022-09-21T16:38:13+08:00">2022-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-02 15:16:50" itemprop="dateModified" datetime="2024-12-02T15:16:50+08:00">2024-12-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><ol>
+<li>CPU体系架构概述</li>
+<li>并行程序设计概述</li>
+<li>CUDA开发环境搭建和工具配置</li>
+<li>GPU体系架构概述</li>
+<li>GPU编程模型</li>
+<li>CUDA编程（1）</li>
+<li>CUDA编程（2）</li>
+<li>CUDA编程（3）</li>
+<li>CUDA程序分析和调试工具</li>
+<li>CUDA程序基本优化</li>
+<li>CUDA程序深入优化</li>
+<li>最新NVIDA GPU 和 CUDA特性</li>
+</ol>
+<h2 id="1-CPU体系概述"><a href="#1-CPU体系概述" class="headerlink" title="1.CPU体系概述"></a>1.CPU体系概述</h2><ol>
+<li><p>桌面级应用以访存 分支操作 数据搬来搬去为主，数值计算占比很低</p>
+</li>
+<li><p>取指 译码 执行 访存，流水线 pipeline 指令级并行 减小时钟周期但是增加了延迟和芯片面积。带来的问题：</p>
+<ul>
+<li>具有依赖关系的指令 执行顺序</li>
+<li>分支怎么处理</li>
+<li>流水线长度<br> 旁路 Bypassing<br> 停滞 Stalls<br> 分支 Branches<br> 分支预测 Branches Prediction</li>
+<li>+现代预测器准确度&gt;90%</li>
+<li>-面积增加 延迟增加<br> 分支断定 Predication GPU中使用了分支断定</li>
+</ul>
+</li>
+<li><p>提升IPC(instructions per cycle) 超标量(Superscalar)</p>
+<ul>
+<li>寄存器重命名(RegisterRenaming)</li>
+<li>乱序执行(Out-of-Order Execution) 重排指令获得最大吞吐率</li>
+<li>+IPC接近理想状态</li>
+<li>-面积增加 功耗增加</li>
+</ul>
+</li>
+<li><p>CPU内部的并行性</p>
+<ul>
+<li>指令级并行 Instruction-level Parallelism (ILP)<ul>
+<li>超标量Superscalar</li>
+<li>乱序执行Out-of-Order</li>
+</ul>
+</li>
+<li>数据级并行 Data-level Parallelism (DLP)<ul>
+<li>矢量计算Vectors</li>
+</ul>
+</li>
+<li>线程级并行 Thread-level Parallelism (TLP)<ul>
+<li>同步多线程 Simultaneous Mulitithreading (SMT)</li>
+<li>多核 Multicore</li>
+<li>锁、一致性和同一性 Locks,Coherence and Consisitency<ul>
+<li>问题：多线程读写同一块数据  解决办法：加锁</li>
+<li>问题：谁的数据是正确的？ Coherence 解决办法：缓存一致性协议</li>
+<li>问题：什么样的数据是正确的？ Consistency 解决办法：存储器同一性模型</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>能量墙&#x2F;存储墙</p>
+</li>
+</ol>
+<ul>
+<li>结论</li>
+</ul>
+<ol>
+<li>CPU为串行程序优化<ul>
+<li>Piplines, Branch Prediction, Superscalar, Out-of-Order(OoO)</li>
+<li>Reduce execution time with high clock speeds and high utilization</li>
+</ul>
+</li>
+<li>缓慢的内存带宽(存储器带宽)将会是大问题</li>
+<li>并行处理是方向</li>
+</ol>
+<h2 id="2-并行程序设计概述"><a href="#2-并行程序设计概述" class="headerlink" title="2.并行程序设计概述"></a>2.并行程序设计概述</h2><ul>
+<li>概念和名词<ul>
+<li>Flynn 矩阵<ul>
+<li>SISD: Single Instruction, Single Data</li>
+<li>SIMD: Single Instruction, Multiple Data</li>
+<li>MISD: Multiple Instruction, Single Data</li>
+<li>MIMD: Multiple Instruction, Multiple Data</li>
+</ul>
+</li>
+<li>Task (任务)</li>
+<li>Parallel Task (并行任务)</li>
+<li>Serial Execution (串行执行)</li>
+<li>Parallel Execution (并行执行)</li>
+<li>Shared Memory (共享存储)</li>
+<li>Distributed Memory (分布式存储)</li>
+<li>Communications (通信)</li>
+<li>Synchronization (同步)</li>
+<li>Granularity (粒度)</li>
+<li>Observed Speedup (加速比)</li>
+<li>Parallel Overhead (并行开销)</li>
+<li>Scalability (可扩展性)</li>
+</ul>
+</li>
+<li>并行编程模型<ul>
+<li>共享存储模型 Shared Memory Model</li>
+<li>线程模型 Threads Model</li>
+<li>消息传递模型 Message Passing Model</li>
+<li>数据并行模型 Data Parallel Model</li>
+</ul>
+</li>
+<li>设计并行处理程序和系统<ul>
+<li>自动和手动并行</li>
+<li>理解问题和程序</li>
+<li>分块分割 数据分块，任务分割</li>
+<li>通信 可扩展性重要影响因素</li>
+<li>同步</li>
+<li>数据依赖</li>
+<li>负载均衡</li>
+<li>粒度</li>
+<li>I&#x2F;O</li>
+<li>成本</li>
+<li>性能分析和优化</li>
+</ul>
+</li>
+<li>Amdahl’s Law<ul>
+<li>程序可能的加速比取决于可以被并行化的部分,并行化的可扩展性有极限 取决于可并行部分的比例</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-CUDA开发环境搭建"><a href="#3-CUDA开发环境搭建" class="headerlink" title="3.CUDA开发环境搭建"></a>3.CUDA开发环境搭建</h2><ul>
+<li>windows cuda zone</li>
+<li>linux</li>
+</ul>
+<h2 id="4-GPU体系架构概述"><a href="#4-GPU体系架构概述" class="headerlink" title="4.GPU体系架构概述"></a>4.GPU体系架构概述</h2><ul>
+<li>为什么需要GPU(Graphic Processing Unit)<ul>
+<li>GPU 是异构 众核 处理器，针对吞吐优化<ul>
+<li>高效的GPU任务具备的条件<ul>
+<li>具有成千上万的独立工作<ul>
+<li>尽量利用大量的ALU单元</li>
+<li>大量的片元切换掩藏延迟</li>
+</ul>
+</li>
+<li>可以共享指令流<ul>
+<li>适用于SIMD处理</li>
+</ul>
+</li>
+<li>最好是计算密集的任务<ul>
+<li>通信和计算开销比例合适</li>
+<li>不要受制于访存带宽</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>三种方法提升GPU的处理速度<ul>
+<li>1.Use many “slimmed down cores” to run in parallel</li>
+<li>2.Pack cores full of ALUs(by sharing instruction stream across groups of fragments)<ul>
+<li>Option 1: Explicit SIMD vector instructions</li>
+<li>Option 2: Implicit sharing managed by hardware</li>
+</ul>
+</li>
+<li>3.Avoid latency stalls by interleaving execution of many groups of fragments</li>
+</ul>
+</li>
+<li>实际GPU设计举例<ul>
+<li>NVIDIA GTX 480：Fermi</li>
+<li>NVIDIA GTX 680: Kepler</li>
+</ul>
+</li>
+<li>GPU的存储器设计</li>
+</ul>
+<h2 id="5-GPU编程模型"><a href="#5-GPU编程模型" class="headerlink" title="5.GPU编程模型"></a>5.GPU编程模型</h2><ul>
+<li><p>内容</p>
+<ul>
+<li>CPU和GPU互动模式</li>
+<li>GPU线程组织模型（不停强化）</li>
+<li>GPU存储模型</li>
+<li>基本的编程问题</li>
+</ul>
+</li>
+<li><p>CPU-GPU交互</p>
+<ul>
+<li>各自的物理内存空间</li>
+<li>通过PCIE总线互连（8GB&#x2F;s~16GB&#x2F;s）</li>
+<li>交互开销较大</li>
+</ul>
+</li>
+<li><p>线程组织架构说明</p>
+<ul>
+<li>一个kernel具有大量线程</li>
+<li>线程被划分成线程块’Blocks’<ul>
+<li>一个block内部的线程可以共享’Shared Memory’</li>
+<li>可以同步 ‘_syhcthreads()’</li>
+</ul>
+</li>
+<li>kernel启动一个’grid’,包含若干线程块<ul>
+<li>用户设定</li>
+</ul>
+</li>
+<li>线程和线程块具有唯一标识</li>
+</ul>
+</li>
+<li><p>编程模型</p>
+<ul>
+<li>常规意义的GPU用于处理图形图像</li>
+<li>操作用于像素，每个像素的操作都类似</li>
+<li>可以应用SIMD(single instruction multiple data)</li>
+<li>Single Instruction Multiple Thread(SIMT)<ul>
+<li>GPU版本的SIMD</li>
+<li>大量线程模型获得高度并行</li>
+<li>线程切换获得延迟掩藏</li>
+<li>多个线程执行相同指令流</li>
+<li>GPU上大量线程承载和调度</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>CUDA编程模式： Extended C</p>
+<ul>
+<li>Declspecs (Dclaration Specifier) 声明规范<ul>
+<li>global, device, shared, local, constant</li>
+</ul>
+</li>
+<li>关键词<ul>
+<li>threadIdx, blockIdx</li>
+</ul>
+</li>
+<li>Intrinsics<ul>
+<li>__syncthreads</li>
+</ul>
+</li>
+<li>运行期API<ul>
+<li>Memory, symbol, execution, management</li>
+</ul>
+</li>
+<li>函数调用</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-CUDA编程-1"><a href="#6-CUDA编程-1" class="headerlink" title="6.CUDA编程(1)"></a>6.CUDA编程(1)</h2><ul>
+<li><p>GPU架构概览</p>
+<ul>
+<li>GPU特别适用于<ul>
+<li>密集计算，高度可并行计算</li>
+<li>图形学</li>
+</ul>
+</li>
+<li>晶体管主要用于：<ul>
+<li>执行计算</li>
+<li>而不是缓存数据，控制指令流</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>GPU计算的历史</p>
+<ul>
+<li>2001&#x2F;2002 研究人员把GPU当作数据并行协处理器<ul>
+<li>GPGPU这个新领域从此诞生</li>
+</ul>
+</li>
+<li>2007 NVIDIA发布CUDA<ul>
+<li>CUDA 全称Compute Uniform Device Architecture 统一计算设备架构</li>
+<li>GPGPU 发展成GPU Computing</li>
+</ul>
+</li>
+<li>2008 Khronos 发布 OpenCL 规范</li>
+</ul>
+</li>
+<li><p>CUDA的一些信息</p>
+<ul>
+<li>层次化线程集合 A hierarchy of thread groups</li>
+<li>共享存储 Shared memories</li>
+<li>同步 Barrier synchronization</li>
+</ul>
+</li>
+<li><p>CUDA术语</p>
+<ul>
+<li>Host - 即主机端 通常指CPU<ul>
+<li>采用ANSI标准C语言编程</li>
+</ul>
+</li>
+<li>Device - 即设备端 通常指GPU(数据可并行)<ul>
+<li>采用ANSI标准C的扩展语言编程</li>
+</ul>
+</li>
+<li>Host和Device 拥有各自的存储器</li>
+<li>CUDA编程<ul>
+<li>包括主机端和设备端两部分代码</li>
+</ul>
+</li>
+<li>Kernel - 数据并行处理函数，类似于OpenCL的shader</li>
+<li>通过调用kernel函数在设备端创建轻量级线程<ul>
+<li>线程由硬件负责创建并调度</li>
+</ul>
+</li>
+<li>CUDA核函数(kernels)<ul>
+<li>在N个不同的CUDA线程上并行执行</li>
+</ul>
+</li>
+<li>线程层次 Thread Hierarchies<ul>
+<li>Grid - 一维或多维线程块(block)<ul>
+<li>一维或二维</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Block - 一组线程<ul>
+<li>一维，二维或三维<ul>
+<li>例如索引数组，矩阵，体</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>一个Grid内每个Block的线程数是一样的</li>
+<li>block内部的每个线程可以<ul>
+<li>同步 synchronize</li>
+<li>访问共享存储器 shared memory</li>
+</ul>
+</li>
+<li>线程块之间彼此独立执行<ul>
+<li>任意顺序：并行或串行</li>
+<li>被任意数量的处理器以任意顺序调度</li>
+<li>处理器的数量具有可扩展性</li>
+</ul>
+</li>
+<li>Host 可以从device往返传输数据<ul>
+<li>global memory全局存储器<ul>
+<li>cudaMalloc() 在设备端分配global memory</li>
+<li>cudaFree() 释放存储空间</li>
+<li>cudaMemcpy() 内存传输<ul>
+<li>Host to host</li>
+<li>Host to device cudaMemcpyHostToDevice</li>
+<li>Device to host cudaMemcpyDeviceToHost</li>
+<li>Device to device</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Constant memory常量存储器</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="7-CUDA编程-2"><a href="#7-CUDA编程-2" class="headerlink" title="7.CUDA编程(2)"></a>7.CUDA编程(2)</h2><ul>
+<li>目录<ul>
+<li><p>内置类型和函数 Built-ins and functions</p>
+<ul>
+<li>函数的声明<ul>
+<li><strong>global</strong> void KernelFunc(),返回值必须是void. Executed on the:device Only callable from the:host</li>
+<li><strong>device</strong> float DeviceFunc(),曾经默认内联，现在有些变化. Executed on the:device Only callable from the:device</li>
+<li><strong>host</strong> float HostFunc() Executed on the:host Only callable from the:host</li>
+</ul>
+</li>
+<li>Global和device函数<ul>
+<li>尽量少用递归（不鼓励）</li>
+<li>不要用静态变量</li>
+<li>少用malloc（现在允许但不鼓励）</li>
+<li>小心通过指针实现的函数调用</li>
+</ul>
+</li>
+<li>向量数据类型<ul>
+<li>type name<ul>
+<li>char[1-4], uchar[1-4]</li>
+<li>short[1-4], ushort[1-4]</li>
+<li>int[1-4], uint[1-4]</li>
+<li>long[1-4], ulong[1-4]</li>
+<li>longlong[1-4], ulonglong[1-4]</li>
+<li>float[1-4]</li>
+<li>double1, double2</li>
+</ul>
+</li>
+<li>同时适用于host 和 device 代码<ul>
+<li>通过函数make_&lt;type name&gt;构造</li>
+<li>通过.x, .y, .z, .w 访问</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数学函数<ul>
+<li>Intrinsic function 内建函数<ul>
+<li>仅面向 Device设备端</li>
+<li>更快但精度降低</li>
+<li>以__为前缀，例如：__exp, __log,__pow,…</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>线程同步 Synchronizing threads</p>
+<ul>
+<li>块内线程可以同步<ul>
+<li>调用__syncthreads 创建一个barrier栅栏</li>
+<li>每个线程在调用点等待块内所有线程执行到这个地方，然后所有线程继续执行后续指令</li>
+</ul>
+</li>
+<li>要求线程执行时间尽量接近 -&gt; 防止块内大部分 线程等待时间超长，降低效率</li>
+<li>为什么只在一个块内同步 -&gt; 全局同步开销大</li>
+<li>__syncthreads()会导致暂停 死锁</li>
+</ul>
+</li>
+<li><p>线程调度 Scheduling threads</p>
+<ul>
+<li>术语 Streaming Processor(SP) Streaming Multi-Processor(SM)</li>
+<li>G80架构<ul>
+<li>16个SMs</li>
+<li>每个含8个SPs,总共128个SPs</li>
+<li>每个SM驻扎多达768个线程</li>
+<li>总共同时执行12,288个线程</li>
+</ul>
+</li>
+<li>GT200架构<ul>
+<li>30个SMs</li>
+<li>每个含8个SPs,总共含240个SPs</li>
+<li>每个SM驻扎多达8个block,或1024个线程</li>
+<li>同时执行，多达240个block，或30,720个线程</li>
+</ul>
+</li>
+<li>Warp -块内的一组线程<ul>
+<li>G80&#x2F;GT200 -32个线程</li>
+<li>运行于同一个SM</li>
+<li>线程调度的基本单位</li>
+<li>threadIdx值连续</li>
+<li>一个实现细节 -理论上从硬件上保证每个warp内的线程执行到相同位置</li>
+</ul>
+</li>
+<li>SM implements zero-overhead warp scheduling<ul>
+<li>At any time,only one of the warps is executed by SM</li>
+<li>Warps whose next instruction has its operands ready for consumption are eligible for execution</li>
+<li>All threads in a warp execute the same instruction when selected</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>存储模型 Memory model</p>
+<ul>
+<li><p>Device code can:</p>
+</li>
+<li><p>R&#x2F;W per-thread register</p>
+</li>
+<li><p>R&#x2F;W per-thread local memory</p>
+</li>
+<li><p>R&#x2F;W per-block shared memory</p>
+</li>
+<li><p>R&#x2F;W per-grid global memory</p>
+</li>
+<li><p>Read Only per-grid constant memory</p>
+</li>
+<li><p>Host code can</p>
+</li>
+<li><p>R&#x2F;W per-grid global and constant memory</p>
+</li>
+<li><p>寄存器Registers</p>
+<ul>
+<li>每个线程专用</li>
+<li>快速，片上，可读写</li>
+</ul>
+</li>
+<li><p>局部存储器Local Memory</p>
+<ul>
+<li>存储于global memory 作用域是每个线程</li>
+<li>用于存储自动变量数组 通过常量索引访问</li>
+</ul>
+</li>
+<li><p>共享存储器Shared Memory</p>
+<ul>
+<li>每个块</li>
+<li>快速，片上，可读写</li>
+<li>全速随机访问</li>
+</ul>
+</li>
+<li><p>全局存储器Global Memory</p>
+<ul>
+<li>长延时（100个周期）</li>
+<li>片外，可读写</li>
+<li>随机访问影响性能</li>
+<li>Host主机端可读写</li>
+</ul>
+</li>
+<li><p>常量存储器Constant Memory</p>
+<ul>
+<li>短延时，高带宽，当所有线程访问同一位置时只读</li>
+<li>存储区global memory 但是有缓存</li>
+<li>Host主机端可读写</li>
+</ul>
+</li>
+<li><table>
+<thead>
+<tr>
+<th align="left">变量声明</th>
+<th align="left">存储器</th>
+<th align="left">作用域</th>
+<th align="left">生命期</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">必须是单独的自动变量而不能是数组</td>
+<td align="left">register</td>
+<td align="left">thread</td>
+<td align="left">kernel</td>
+</tr>
+<tr>
+<td align="left">自动变量数组</td>
+<td align="left">local</td>
+<td align="left">thread</td>
+<td align="left">kernel</td>
+</tr>
+<tr>
+<td align="left">__shared__int sharedVar;</td>
+<td align="left">shared</td>
+<td align="left">block</td>
+<td align="left">kernel</td>
+</tr>
+<tr>
+<td align="left">__device__int globalVar;</td>
+<td align="left">global</td>
+<td align="left">grid</td>
+<td align="left">application</td>
+</tr>
+<tr>
+<td align="left">__constant__int constantVar;</td>
+<td align="left">constant</td>
+<td align="left">grid</td>
+<td align="left">application</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>重访 Matrix multiply</p>
+</li>
+<li><p>原子函数 Atomic functions</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="8-CUDA编程-3"><a href="#8-CUDA编程-3" class="headerlink" title="8.CUDA编程(3)"></a>8.CUDA编程(3)</h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/07/Model_Compression_Overview/" rel="prev" title="Model Compression Overview">
+                  <i class="fa fa-chevron-left"></i> Model Compression Overview
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/11/17/Kill_Issues_Log/" rel="next" title="Logs of killing issues">
+                  Logs of killing issues <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jarvis</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

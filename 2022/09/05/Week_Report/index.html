@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kyrie2to11.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="进度汇报（2022.8.31-2022.9.4） 读zeroq量化代码并在实验室集群上调试，跑通了对resnet18的压缩 读赵随意师兄的BaselineIR的部分代码，并放在集群上进行了训练，解决了数据集路径错误、训练中途闪退问题。  本周计划（2022.8.31-2022.9.4） 阅读最新Quantization综述以及部分zero-shot quantization最新论文，整理思路。 解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Week Report">
+<meta property="og:url" content="https://kyrie2to11.github.io/2022/09/05/Week_Report/index.html">
+<meta property="og:site_name" content="Jarvis&#39;s Blog">
+<meta property="og:description" content="进度汇报（2022.8.31-2022.9.4） 读zeroq量化代码并在实验室集群上调试，跑通了对resnet18的压缩 读赵随意师兄的BaselineIR的部分代码，并放在集群上进行了训练，解决了数据集路径错误、训练中途闪退问题。  本周计划（2022.8.31-2022.9.4） 阅读最新Quantization综述以及部分zero-shot quantization最新论文，整理思路。 解">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kyrie2to11.github.io/2022/09/05/Week_Report/ZeroDCE_test_result.jpg">
+<meta property="og:image" content="https://kyrie2to11.github.io/2022/09/05/Week_Report/ZeroDCE++_test_result.png">
+<meta property="og:image" content="https://kyrie2to11.github.io/2022/09/05/Week_Report/face_detection_screenshot.png">
+<meta property="og:image" content="https://kyrie2to11.github.io/2022/09/05/Week_Report/pose_estimation_screenshot.png">
+<meta property="og:image" content="https://kyrie2to11.github.io/2022/09/05/Week_Report/ResQ.png">
+<meta property="og:image" content="https://kyrie2to11.github.io/2022/09/05/Week_Report/torch.fx_ptq.PNG">
+<meta property="og:image" content="https://kyrie2to11.github.io/2022/09/05/Week_Report/cogvlm.png">
+<meta property="article:published_time" content="2022-09-05T05:29:19.000Z">
+<meta property="article:modified_time" content="2024-12-02T07:24:25.852Z">
+<meta property="article:author" content="jarvis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kyrie2to11.github.io/2022/09/05/Week_Report/ZeroDCE_test_result.jpg">
+
+
+<link rel="canonical" href="https://kyrie2to11.github.io/2022/09/05/Week_Report/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kyrie2to11.github.io/2022/09/05/Week_Report/","path":"2022/09/05/Week_Report/","title":"Week Report"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Week Report | Jarvis's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jarvis's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活，沉淀自己</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5%EF%BC%882022-8-31-2022-9-4%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">进度汇报（2022.8.31-2022.9.4）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882022-8-31-2022-9-4%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">本周计划（2022.8.31-2022.9.4）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5%EF%BC%882022-9-5-2022-9-11%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">进度汇报（2022.9.5-2022.9.11）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882022-9-5-2022-9-11%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">本周计划（2022.9.5-2022.9.11）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5%EF%BC%882022-9-12-2022-9-18%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">进度汇报（2022.9.12-2022.9.18）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882022-9-12-2022-9-18%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">本周计划（2022.9.12-2022.9.18）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5%EF%BC%882022-9-19-2022-9-25%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">进度汇报（2022.9.19-2022.9.25）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882022-9-19-2022-9-25%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">本周计划（2022.9.19-2022.9.25）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882022-9-26-2022-10-9%EF%BC%89"><span class="nav-number">9.</span> <span class="nav-text">进度汇报 （2022.9.26-2022.10.9）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882022-9-26-2022-10-9%EF%BC%89"><span class="nav-number">10.</span> <span class="nav-text">本周计划（2022.9.26-2022.10.9）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882022-10-10-2022-10-16%EF%BC%89"><span class="nav-number">11.</span> <span class="nav-text">进度汇报 （2022.10.10-2022.10.16）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882022-10-10-2022-10-16%EF%BC%89"><span class="nav-number">12.</span> <span class="nav-text">本周计划（2022.10.10-2022.10.16）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882022-10-17-2022-10-23%EF%BC%89"><span class="nav-number">13.</span> <span class="nav-text">进度汇报 （2022.10.17-2022.10.23）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882022-10-17-2022-10-23%EF%BC%89"><span class="nav-number">14.</span> <span class="nav-text">本周计划（2022.10.17-2022.10.23）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882022-10-24-2022-10-30%EF%BC%89"><span class="nav-number">15.</span> <span class="nav-text">进度汇报 （2022.10.24-2022.10.30）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882022-10-24-2022-10-30%EF%BC%89"><span class="nav-number">16.</span> <span class="nav-text">本周计划（2022.10.24-2022.10.30）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882022-10-31-2022-11-06%EF%BC%89"><span class="nav-number">17.</span> <span class="nav-text">进度汇报 （2022.10.31-2022.11.06）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882022-10-31-2022-11-06%EF%BC%89"><span class="nav-number">18.</span> <span class="nav-text">本周计划（2022.10.31-2022.11.06）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882022-11-07-2022-11-13%EF%BC%89"><span class="nav-number">19.</span> <span class="nav-text">进度汇报 （2022.11.07-2022.11.13）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882022-11-07-2022-11-13%EF%BC%89"><span class="nav-number">20.</span> <span class="nav-text">本周计划（2022.11.07-2022.11.13）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882022-11-14-2022-11-20%EF%BC%89"><span class="nav-number">21.</span> <span class="nav-text">进度汇报 （2022.11.14-2022.11.20）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882022-11-14-2022-11-20%EF%BC%89"><span class="nav-number">22.</span> <span class="nav-text">本周计划（2022.11.14-2022.11.20）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882022-11-21-2022-11-27%EF%BC%89"><span class="nav-number">23.</span> <span class="nav-text">进度汇报 （2022.11.21-2022.11.27）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882022-11-21-2022-11-27%EF%BC%89"><span class="nav-number">24.</span> <span class="nav-text">本周计划（2022.11.21-2022.11.27）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882022-12-05-2022-12-11%EF%BC%89"><span class="nav-number">25.</span> <span class="nav-text">进度汇报 （2022.12.05-2022.12.11）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882022-12-05-2022-12-11%EF%BC%89"><span class="nav-number">26.</span> <span class="nav-text">本周计划（2022.12.05-2022.12.11）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882022-12-12-2022-12-18%EF%BC%89"><span class="nav-number">27.</span> <span class="nav-text">进度汇报 （2022.12.12-2022.12.18）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882022-12-12-2022-12-18%EF%BC%89"><span class="nav-number">28.</span> <span class="nav-text">本周计划（2022.12.12-2022.12.18）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882022-12-19-2022-12-26%EF%BC%89"><span class="nav-number">29.</span> <span class="nav-text">进度汇报 （2022.12.19-2022.12.26）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882022-12-19-2022-12-26%EF%BC%89"><span class="nav-number">30.</span> <span class="nav-text">本周计划（2022.12.19-2022.12.26）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882022-12-27-2023-1-1%EF%BC%89"><span class="nav-number">31.</span> <span class="nav-text">进度汇报 （2022.12.27-2023.1.1）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E6%9C%9F%E8%AE%A1%E5%88%92%EF%BC%882022-12-27-2023-1-1%EF%BC%89"><span class="nav-number">32.</span> <span class="nav-text">后期计划（2022.12.27-2023.1.1）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-2-8-2023-2-12%EF%BC%89"><span class="nav-number">33.</span> <span class="nav-text">进度汇报 （2023.2.8-2023.2.12）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E6%9C%9F%E8%AE%A1%E5%88%92%EF%BC%882023-2-8-2023-2-12%EF%BC%89"><span class="nav-number">34.</span> <span class="nav-text">后期计划（2023.2.8-2023.2.12）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-2-13-2023-2-19%EF%BC%89"><span class="nav-number">35.</span> <span class="nav-text">进度汇报 （2023.2.13-2023.2.19）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92"><span class="nav-number">36.</span> <span class="nav-text">本周计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-2-20-2023-2-26%EF%BC%89"><span class="nav-number">37.</span> <span class="nav-text">进度汇报 （2023.2.20-2023.2.26）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-2-20-2023-2-26%EF%BC%89"><span class="nav-number">38.</span> <span class="nav-text">本周计划（2023.2.20-2023.2.26）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-2-27-2023-3-5%EF%BC%89"><span class="nav-number">39.</span> <span class="nav-text">进度汇报 （2023.2.27-2023.3.5）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-2-27-2023-3-5%EF%BC%89"><span class="nav-number">40.</span> <span class="nav-text">本周计划（2023.2.27-2023.3.5）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-3-6-2023-3-12%EF%BC%89"><span class="nav-number">41.</span> <span class="nav-text">进度汇报 （2023.3.6-2023.3.12）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-3-6-2023-3-12%EF%BC%89"><span class="nav-number">42.</span> <span class="nav-text">本周计划（2023.3.6-2023.3.12）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-3-13-2023-3-19%EF%BC%89"><span class="nav-number">43.</span> <span class="nav-text">进度汇报 （2023.3.13-2023.3.19）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-3-13-2023-3-19%EF%BC%89"><span class="nav-number">44.</span> <span class="nav-text">本周计划（2023.3.13-2023.3.19）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-3-20-2023-3-26%EF%BC%89"><span class="nav-number">45.</span> <span class="nav-text">进度汇报 （2023.3.20-2023.3.26）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-3-20-2023-3-26%EF%BC%89"><span class="nav-number">46.</span> <span class="nav-text">本周计划（2023.3.20-2023.3.26）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-3-27-2023-4-2%EF%BC%89"><span class="nav-number">47.</span> <span class="nav-text">进度汇报 （2023.3.27-2023.4.2）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-3-27-2023-4-2%EF%BC%89"><span class="nav-number">48.</span> <span class="nav-text">本周计划（2023.3.27-2023.4.2）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-4-3-2023-4-9%EF%BC%89"><span class="nav-number">49.</span> <span class="nav-text">进度汇报 （2023.4.3-2023.4.9）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-4-3-2023-4-9%EF%BC%89"><span class="nav-number">50.</span> <span class="nav-text">本周计划（2023.4.3-2023.4.9）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-4-17-2023-4-23%EF%BC%89"><span class="nav-number">51.</span> <span class="nav-text">进度汇报 （2023.4.17-2023.4.23）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-4-17-2023-4-23%EF%BC%89"><span class="nav-number">52.</span> <span class="nav-text">本周计划（2023.4.17-2023.4.23）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-5-8-2023-5-14%EF%BC%89"><span class="nav-number">53.</span> <span class="nav-text">进度汇报 （2023.5.8-2023.5.14）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-5-8-2023-5-14%EF%BC%89"><span class="nav-number">54.</span> <span class="nav-text">本周计划（2023.5.8-2023.5.14）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-5-15-2023-5-21%EF%BC%89"><span class="nav-number">55.</span> <span class="nav-text">进度汇报 （2023.5.15-2023.5.21）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-5-15-2023-5-21%EF%BC%89"><span class="nav-number">56.</span> <span class="nav-text">本周计划（2023.5.15-2023.5.21）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-5-22-2023-5-28%EF%BC%89"><span class="nav-number">57.</span> <span class="nav-text">进度汇报 （2023.5.22-2023.5.28）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-5-22-2023-5-28%EF%BC%89"><span class="nav-number">58.</span> <span class="nav-text">本周计划（2023.5.22-2023.5.28）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-5-29-2023-6-04%EF%BC%89"><span class="nav-number">59.</span> <span class="nav-text">进度汇报 （2023.5.29-2023.6.04）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-5-29-2023-6-04%EF%BC%89"><span class="nav-number">60.</span> <span class="nav-text">本周计划（2023.5.29-2023.6.04）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-6-05-2023-6-11%EF%BC%89"><span class="nav-number">61.</span> <span class="nav-text">进度汇报 （2023.6.05-2023.6.11）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-6-05-2023-6-11%EF%BC%89"><span class="nav-number">62.</span> <span class="nav-text">本周计划（2023.6.05-2023.6.11）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-6-12-2023-7-01%EF%BC%89"><span class="nav-number">63.</span> <span class="nav-text">进度汇报 （2023.6.12-2023.7.01）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-7-03-2023-7-16%EF%BC%89"><span class="nav-number">64.</span> <span class="nav-text">进度汇报 （2023.7.03-2023.7.16）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-7-03-2023-7-16%EF%BC%89"><span class="nav-number">65.</span> <span class="nav-text">本周计划（2023.7.03-2023.7.16）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-7-17-2023-7-23%EF%BC%89"><span class="nav-number">66.</span> <span class="nav-text">进度汇报 （2023.7.17-2023.7.23）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8A%E5%90%8E%E8%AE%A1%E5%88%92%EF%BC%882023-7-17-2023-7-23%EF%BC%89"><span class="nav-number">67.</span> <span class="nav-text">今后计划（2023.7.17-2023.7.23）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-8-07-2023-8-13%EF%BC%89"><span class="nav-number">68.</span> <span class="nav-text">进度汇报 （2023.8.07-2023.8.13）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-8-07-2023-8-13%EF%BC%89"><span class="nav-number">69.</span> <span class="nav-text">本周计划（2023.8.07-2023.8.13）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-8-14-2023-8-27%EF%BC%89"><span class="nav-number">70.</span> <span class="nav-text">进度汇报 （2023.8.14-2023.8.27）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-8-14-2023-8-27%EF%BC%89"><span class="nav-number">71.</span> <span class="nav-text">本周计划（2023.8.14-2023.8.27）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5%EF%BC%882023-8-28-2023-9-10%EF%BC%89"><span class="nav-number">72.</span> <span class="nav-text">进度汇报（2023.8.28-2023.9.10）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-8-28-2023-9-10%EF%BC%89"><span class="nav-number">73.</span> <span class="nav-text">本周计划（2023.8.28-2023.9.10）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5%EF%BC%882023-9-11-2023-9-17%EF%BC%89"><span class="nav-number">74.</span> <span class="nav-text">进度汇报（2023.9.11-2023.9.17）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-9-11-2023-9-17%EF%BC%89"><span class="nav-number">75.</span> <span class="nav-text">本周计划（2023.9.11-2023.9.17）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5%EF%BC%882023-9-18-2023-10-08%EF%BC%89"><span class="nav-number">76.</span> <span class="nav-text">进度汇报（2023.9.18-2023.10.08）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-9-18-2023-10-08%EF%BC%89"><span class="nav-number">77.</span> <span class="nav-text">本周计划（2023.9.18-2023.10.08）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5%EF%BC%882023-10-09-2023-10-15%EF%BC%89"><span class="nav-number">78.</span> <span class="nav-text">进度汇报（2023.10.09-2023.10.15）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-10-09-2023-10-15%EF%BC%89"><span class="nav-number">79.</span> <span class="nav-text">本周计划（2023.10.09-2023.10.15）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5%EF%BC%882023-10-16-2023-10-22%EF%BC%89"><span class="nav-number">80.</span> <span class="nav-text">进度汇报（2023.10.16-2023.10.22）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-10-16-2023-10-22%EF%BC%89"><span class="nav-number">81.</span> <span class="nav-text">本周计划（2023.10.16-2023.10.22）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5%EF%BC%882023-10-23-2023-10-29%EF%BC%89"><span class="nav-number">82.</span> <span class="nav-text">进度汇报（2023.10.23-2023.10.29）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-10-23-2023-10-29%EF%BC%89"><span class="nav-number">83.</span> <span class="nav-text">本周计划（2023.10.23-2023.10.29）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-%EF%BC%882023-10-30-2023-11-05%EF%BC%89"><span class="nav-number">84.</span> <span class="nav-text">进度汇报 （2023.10.30-2023.11.05）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92%EF%BC%882023-10-30-2023-11-05%EF%BC%89"><span class="nav-number">85.</span> <span class="nav-text">本周计划（2023.10.30-2023.11.05）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-23-11-06-23-11-12"><span class="nav-number">86.</span> <span class="nav-text">进度汇报 (23.11.06-23.11.12)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92-23-11-06-23-11-12"><span class="nav-number">87.</span> <span class="nav-text">本周计划 (23.11.06-23.11.12)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-23-11-13-23-11-19"><span class="nav-number">88.</span> <span class="nav-text">进度汇报 (23.11.13-23.11.19)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92-23-11-13-23-11-19"><span class="nav-number">89.</span> <span class="nav-text">本周计划 (23.11.13-23.11.19)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-23-11-20-23-11-26"><span class="nav-number">90.</span> <span class="nav-text">进度汇报 (23.11.20-23.11.26)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E8%AE%A1%E5%88%92-23-11-20-23-11-26"><span class="nav-number">91.</span> <span class="nav-text">本周计划 (23.11.20-23.11.26)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-23-11-27-23-12-10"><span class="nav-number">92.</span> <span class="nav-text">进度汇报 (23.11.27-23.12.10)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%BB%AD%E8%AE%A1%E5%88%92-23-11-27-23-12-10"><span class="nav-number">93.</span> <span class="nav-text">后续计划 (23.11.27-23.12.10)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-23-11-11-23-12-24"><span class="nav-number">94.</span> <span class="nav-text">进度汇报 (23.11.11-23.12.24)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%BB%AD%E8%AE%A1%E5%88%92-23-11-11-23-12-24"><span class="nav-number">95.</span> <span class="nav-text">后续计划 (23.11.11-23.12.24)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-23-12-25-24-01-07"><span class="nav-number">96.</span> <span class="nav-text">进度汇报 (23.12.25-24.01.07)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%BB%AD%E8%AE%A1%E5%88%92-23-12-25-24-01-07"><span class="nav-number">97.</span> <span class="nav-text">后续计划 (23.12.25-24.01.07)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%B1%87%E6%8A%A5-24-01-07-24-01-21"><span class="nav-number">98.</span> <span class="nav-text">进度汇报 (24.01.07-24.01.21)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%BB%AD%E8%AE%A1%E5%88%92-24-01-07-24-01-21"><span class="nav-number">99.</span> <span class="nav-text">后续计划 (24.01.07-24.01.21)</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jarvis</p>
+  <div class="site-description" itemprop="description">记录学习和生活，留下时光的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/05/Week_Report/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Week Report | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Week Report
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-09-05 13:29:19" itemprop="dateCreated datePublished" datetime="2022-09-05T13:29:19+08:00">2022-09-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-02 15:24:25" itemprop="dateModified" datetime="2024-12-02T15:24:25+08:00">2024-12-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="进度汇报（2022-8-31-2022-9-4）"><a href="#进度汇报（2022-8-31-2022-9-4）" class="headerlink" title="进度汇报（2022.8.31-2022.9.4）"></a>进度汇报（2022.8.31-2022.9.4）</h2><ol>
+<li>读zeroq量化代码并在实验室集群上调试，跑通了对resnet18的压缩</li>
+<li>读赵随意师兄的BaselineIR的部分代码，并放在集群上进行了训练，<br>解决了数据集路径错误、训练中途闪退问题。</li>
+</ol>
+<h2 id="本周计划（2022-8-31-2022-9-4）"><a href="#本周计划（2022-8-31-2022-9-4）" class="headerlink" title="本周计划（2022.8.31-2022.9.4）"></a>本周计划（2022.8.31-2022.9.4）</h2><ol>
+<li>阅读最新Quantization综述以及部分zero-shot quantization最新论文，整理思路。</li>
+<li>解决zeroq量化代码中看不懂的部分</li>
+</ol>
+<hr>
+<h2 id="进度汇报（2022-9-5-2022-9-11）"><a href="#进度汇报（2022-9-5-2022-9-11）" class="headerlink" title="进度汇报（2022.9.5-2022.9.11）"></a>进度汇报（2022.9.5-2022.9.11）</h2><ol>
+<li>对照论文理解了zeroq代码，并对distill data部分的total_loss进行修改,实验证明在分类任务上原total_loss的部分成分对量化后的精度影响极小，top-1 accuracy 波动在0.01%左右。</li>
+<li>阅读投稿JMLC一篇文章的手稿和相关论文，对疑问点进行评论。</li>
+<li>阅读2021模型量化最新综述。</li>
+</ol>
+<h2 id="本周计划（2022-9-5-2022-9-11）"><a href="#本周计划（2022-9-5-2022-9-11）" class="headerlink" title="本周计划（2022.9.5-2022.9.11）"></a>本周计划（2022.9.5-2022.9.11）</h2><ol>
+<li>floating point quantization: 阅读论文FP8 Quantization: The Power of the Exponent(2022.8)及相关论文，尝试代码实现。</li>
+<li>fixed point quantization: 阅读论文Post training 4-bit quantization of convolutional networks for rapid-deployment(2019)</li>
+</ol>
+<hr>
+<h2 id="进度汇报（2022-9-12-2022-9-18）"><a href="#进度汇报（2022-9-12-2022-9-18）" class="headerlink" title="进度汇报（2022.9.12-2022.9.18）"></a>进度汇报（2022.9.12-2022.9.18）</h2><ol>
+<li>阅读论文FP8 Quantization: The Power of the Exponent(2022.8)，尝试代码实现</li>
+<li>阅读QPyTorch: A Low-Precision Arithmetic Simulation Framework(2019.10),并阅读了框架部分源码</li>
+<li>中翻英 teaching statement</li>
+</ol>
+<h2 id="本周计划（2022-9-12-2022-9-18）"><a href="#本周计划（2022-9-12-2022-9-18）" class="headerlink" title="本周计划（2022.9.12-2022.9.18）"></a>本周计划（2022.9.12-2022.9.18）</h2><ol>
+<li>floating point quantization: 继续FP8 coding相关部分学习</li>
+<li>fixed point quantization: 阅读论文Post training 4-bit quantization of convolutional networks for rapid-deployment(2019)</li>
+</ol>
+<hr>
+<h2 id="进度汇报（2022-9-19-2022-9-25）"><a href="#进度汇报（2022-9-19-2022-9-25）" class="headerlink" title="进度汇报（2022.9.19-2022.9.25）"></a>进度汇报（2022.9.19-2022.9.25）</h2><ol>
+<li>floating point quantization: FP8 coding -&gt; 进度缓慢,暂时放下</li>
+<li>fixed point quantization:<ul>
+<li>阅读论文Post training 4-bit quantization of convolutional networks for rapid-deployment(2019)，理解ACIQ</li>
+<li>阅读论文SQUANT(2022)</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划（2022-9-19-2022-9-25）"><a href="#本周计划（2022-9-19-2022-9-25）" class="headerlink" title="本周计划（2022.9.19-2022.9.25）"></a>本周计划（2022.9.19-2022.9.25）</h2><ol>
+<li>SQUANT 源码理解</li>
+<li>审稿</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2022-9-26-2022-10-9）"><a href="#进度汇报-（2022-9-26-2022-10-9）" class="headerlink" title="进度汇报 （2022.9.26-2022.10.9）"></a>进度汇报 （2022.9.26-2022.10.9）</h2><ol>
+<li>SQUANT 源码理解</li>
+<li>审稿</li>
+</ol>
+<h2 id="本周计划（2022-9-26-2022-10-9）"><a href="#本周计划（2022-9-26-2022-10-9）" class="headerlink" title="本周计划（2022.9.26-2022.10.9）"></a>本周计划（2022.9.26-2022.10.9）</h2><ol>
+<li>重温zeroq,和21年最新综述</li>
+<li>重构SQuant代码,作为以后工作的baseline</li>
+<li>审稿</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2022-10-10-2022-10-16）"><a href="#进度汇报-（2022-10-10-2022-10-16）" class="headerlink" title="进度汇报 （2022.10.10-2022.10.16）"></a>进度汇报 （2022.10.10-2022.10.16）</h2><ol>
+<li>理清了SQuant代码中是如何控制tensor shape的转变来进行kernel-wise channel-wise不同粒度的量化,对代码中的杂乱、无效部分做了重构</li>
+<li>审稿:EC0065699_O_基于改进YOLOX的公路路面裂缝检测网络</li>
+</ol>
+<h2 id="本周计划（2022-10-10-2022-10-16）"><a href="#本周计划（2022-10-10-2022-10-16）" class="headerlink" title="本周计划（2022.10.10-2022.10.16）"></a>本周计划（2022.10.10-2022.10.16）</h2><ol>
+<li>重温zeroq和21年最新综述</li>
+<li>QAT量化感知训练入门，在MNIST数据集上跑通一个demo</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2022-10-17-2022-10-23）"><a href="#进度汇报-（2022-10-17-2022-10-23）" class="headerlink" title="进度汇报 （2022.10.17-2022.10.23）"></a>进度汇报 （2022.10.17-2022.10.23）</h2><ol>
+<li>回顾ZeroQ和21年最新综述,组会准备</li>
+<li>特殊环境去雨项目:填写开题表格,做PPT</li>
+<li>QAT量化感知训练入门,在MNIST数据集上的demo尚未跑通</li>
+</ol>
+<h2 id="本周计划（2022-10-17-2022-10-23）"><a href="#本周计划（2022-10-17-2022-10-23）" class="headerlink" title="本周计划（2022.10.17-2022.10.23）"></a>本周计划（2022.10.17-2022.10.23）</h2><ol>
+<li>实验:将ZeroQ蒸馏出的数据用在SQuant中间层激励的剪切范围确定上,看效果</li>
+<li>跑通MNIST数据集上的QAT量化demo</li>
+<li>完成学科前沿作业;准备数理统计考试</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2022-10-24-2022-10-30）"><a href="#进度汇报-（2022-10-24-2022-10-30）" class="headerlink" title="进度汇报 （2022.10.24-2022.10.30）"></a>进度汇报 （2022.10.24-2022.10.30）</h2><ol>
+<li><p>实验:将ZeroQ蒸馏出的数据用在SQuant中间层激励的剪切范围确定上,效果如下：</p>
+<table>
+<thead>
+<tr>
+<th align="left">Experiment</th>
+<th align="left">Model</th>
+<th align="left">Dataset</th>
+<th align="left">W-bit</th>
+<th align="left">A-bit</th>
+<th align="left">Top-1 Accuracy</th>
+<th align="left">Top-5 Accuracy</th>
+<th align="left">Activation Clip Range Setting</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Gaussian_data(μ&#x3D;0,σ&#x3D;1)</td>
+<td align="left">Resnet18</td>
+<td align="left">ImageNet</td>
+<td align="left">8bit</td>
+<td align="left">8bit</td>
+<td align="left">73.012%</td>
+<td align="left">91.036%</td>
+<td align="left">sigma &#x3D; 25</td>
+</tr>
+<tr>
+<td align="left">Gaussian_data(μ&#x3D;0,σ&#x3D;1)</td>
+<td align="left">Resnet18</td>
+<td align="left">ImageNet</td>
+<td align="left">8bit</td>
+<td align="left">8bit</td>
+<td align="left">73.066%</td>
+<td align="left">90.990%</td>
+<td align="left">sigma &#x3D; 30(较sigma&#x3D;25增大了clip range)</td>
+</tr>
+<tr>
+<td align="left">ZeroQ_Refined_Data</td>
+<td align="left">Resnet18</td>
+<td align="left">ImageNet</td>
+<td align="left">8bit</td>
+<td align="left">8bit</td>
+<td align="left">72.854%</td>
+<td align="left">91.008%</td>
+<td align="left">sigma &#x3D; 25</td>
+</tr>
+<tr>
+<td align="left">ZeroQ_Refined_Data</td>
+<td align="left">Resnet18</td>
+<td align="left">ImageNet</td>
+<td align="left">8bit</td>
+<td align="left">8bit</td>
+<td align="left">67.308%</td>
+<td align="left">87.524%</td>
+<td align="left">sigma &#x3D; 0(clip range:[0, max])</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>在MNIST数据集上跑通了的量化感知训练(QAT)的demo</p>
+</li>
+<li><p>阅读论文 Data-Free Quantization Through Weight Equalization and Bias Correction (2019)</p>
+</li>
+</ol>
+<h2 id="本周计划（2022-10-24-2022-10-30）"><a href="#本周计划（2022-10-24-2022-10-30）" class="headerlink" title="本周计划（2022.10.24-2022.10.30）"></a>本周计划（2022.10.24-2022.10.30）</h2><ol>
+<li>fix上周实验出现的中间层activation异常偏大的bug</li>
+<li>实验评估：在原模型上统计clip range与叠加量化clip error和round error之后统计clip range, 二者对量化结果精度的影响</li>
+<li>处理作业，准备考试</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2022-10-31-2022-11-06）"><a href="#进度汇报-（2022-10-31-2022-11-06）" class="headerlink" title="进度汇报 （2022.10.31-2022.11.06）"></a>进度汇报 （2022.10.31-2022.11.06）</h2><ol>
+<li><p>实验:在原模型上统计clip range与叠加量化clip error和round error之后统计clip range,精度对比：</p>
+<table>
+<thead>
+<tr>
+<th align="left">Experiment</th>
+<th align="left">Model</th>
+<th align="left">Dataset</th>
+<th align="left">W-bit</th>
+<th align="left">A-bit</th>
+<th align="left">Top-1 Accuracy</th>
+<th align="left">Top-5 Accuracy</th>
+<th align="left">Activation Clip Range Setting</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Gaussian_data(μ&#x3D;0,σ&#x3D;1)+叠加量化error统计clip range</td>
+<td align="left">Resnet18</td>
+<td align="left">ImageNet</td>
+<td align="left">8bit</td>
+<td align="left">8bit</td>
+<td align="left">73.012%</td>
+<td align="left">91.036%</td>
+<td align="left">sigma &#x3D; 25</td>
+</tr>
+<tr>
+<td align="left">Gaussian_data(μ&#x3D;0,σ&#x3D;1)+原模型统计clip range</td>
+<td align="left">Resnet18</td>
+<td align="left">ImageNet</td>
+<td align="left">8bit</td>
+<td align="left">8bit</td>
+<td align="left">72.394%</td>
+<td align="left">90.656%</td>
+<td align="left">sigma &#x3D; 25</td>
+</tr>
+<tr>
+<td align="left">ZeroQ_refined_data+叠加量化error统计clip range</td>
+<td align="left">Resnet18</td>
+<td align="left">ImageNet</td>
+<td align="left">8bit</td>
+<td align="left">8bit</td>
+<td align="left">72.854%</td>
+<td align="left">91.008%</td>
+<td align="left">sigma &#x3D; 25</td>
+</tr>
+<tr>
+<td align="left">ZeroQ_refined_data+原模型统计clip range</td>
+<td align="left">Resnet18</td>
+<td align="left">ImageNet</td>
+<td align="left">8bit</td>
+<td align="left">8bit</td>
+<td align="left">72.836%</td>
+<td align="left">90.948%</td>
+<td align="left">sigma &#x3D; 25</td>
+</tr>
+</tbody></table>
+<p>结论：在原模型上统计clip range相较于叠加了量化error再统计clip range,最终的精度出现轻微下降，符合猜测</p>
+</li>
+<li><p>解决了上周实验出现的中间层activation异常偏大的bug</p>
+</li>
+<li><p>初步改出了fp32模拟量化到fp8的代码,在resnet18上实验效果不理想</p>
+</li>
+</ol>
+<h2 id="本周计划（2022-10-31-2022-11-06）"><a href="#本周计划（2022-10-31-2022-11-06）" class="headerlink" title="本周计划（2022.10.31-2022.11.06）"></a>本周计划（2022.10.31-2022.11.06）</h2><ol>
+<li>结合相关论文,改进fp8模拟量化</li>
+<li>组会准备;考试准备</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2022-11-07-2022-11-13）"><a href="#进度汇报-（2022-11-07-2022-11-13）" class="headerlink" title="进度汇报 （2022.11.07-2022.11.13）"></a>进度汇报 （2022.11.07-2022.11.13）</h2><ol>
+<li>组会准备;处理交代的改稿工作</li>
+<li>数理统计考试准备</li>
+</ol>
+<h2 id="本周计划（2022-11-07-2022-11-13）"><a href="#本周计划（2022-11-07-2022-11-13）" class="headerlink" title="本周计划（2022.11.07-2022.11.13）"></a>本周计划（2022.11.07-2022.11.13）</h2><ol>
+<li>矩阵理论考试准备</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2022-11-14-2022-11-20）"><a href="#进度汇报-（2022-11-14-2022-11-20）" class="headerlink" title="进度汇报 （2022.11.14-2022.11.20）"></a>进度汇报 （2022.11.14-2022.11.20）</h2><ol>
+<li>处理考试相关</li>
+<li>整理之前解决问题的很多网页记录；学习docker</li>
+</ol>
+<h2 id="本周计划（2022-11-14-2022-11-20）"><a href="#本周计划（2022-11-14-2022-11-20）" class="headerlink" title="本周计划（2022.11.14-2022.11.20）"></a>本周计划（2022.11.14-2022.11.20）</h2><ol>
+<li>阅读浮点量化相关论文，改进FP8量化</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2022-11-21-2022-11-27）"><a href="#进度汇报-（2022-11-21-2022-11-27）" class="headerlink" title="进度汇报 （2022.11.21-2022.11.27）"></a>进度汇报 （2022.11.21-2022.11.27）</h2><ol>
+<li>FP8: 对于fixed FP8 formats即在sign:exponet:mantissa固定在1:4:3或1:5:2的情况下，如果像IEEE754 FP32一样固定尾数偏移，得不到论文中展示的接近或 优于IN8的表现，采用类似INT8的缩放策略亦未奏效。</li>
+<li>审稿</li>
+</ol>
+<h2 id="本周计划（2022-11-21-2022-11-27）"><a href="#本周计划（2022-11-21-2022-11-27）" class="headerlink" title="本周计划（2022.11.21-2022.11.27）"></a>本周计划（2022.11.21-2022.11.27）</h2><ol>
+<li>课程考试、作业处理</li>
+<li>阅读论文:On-Device Training Under 256KB Memory</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2022-12-05-2022-12-11）"><a href="#进度汇报-（2022-12-05-2022-12-11）" class="headerlink" title="进度汇报 （2022.12.05-2022.12.11）"></a>进度汇报 （2022.12.05-2022.12.11）</h2><ol>
+<li>调研了解模型剪枝和稀疏化</li>
+<li>尝试在手机上部署NCNN mobilenetssd(demo)</li>
+</ol>
+<h2 id="本周计划（2022-12-05-2022-12-11）"><a href="#本周计划（2022-12-05-2022-12-11）" class="headerlink" title="本周计划（2022.12.05-2022.12.11）"></a>本周计划（2022.12.05-2022.12.11）</h2><ol>
+<li>审稿</li>
+<li>准备计算机体系结构考试</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2022-12-12-2022-12-18）"><a href="#进度汇报-（2022-12-12-2022-12-18）" class="headerlink" title="进度汇报 （2022.12.12-2022.12.18）"></a>进度汇报 （2022.12.12-2022.12.18）</h2><ol>
+<li>ICASSP 审稿</li>
+<li>了解NCNN,在手机上部署demo: mobilenetssd yolov7</li>
+</ol>
+<h2 id="本周计划（2022-12-12-2022-12-18）"><a href="#本周计划（2022-12-12-2022-12-18）" class="headerlink" title="本周计划（2022.12.12-2022.12.18）"></a>本周计划（2022.12.12-2022.12.18）</h2><ol>
+<li>读论文：PD-Quant(2022.12)</li>
+<li>调研了解Mixed Precision Quantization相关工作</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2022-12-19-2022-12-26）"><a href="#进度汇报-（2022-12-19-2022-12-26）" class="headerlink" title="进度汇报 （2022.12.19-2022.12.26）"></a>进度汇报 （2022.12.19-2022.12.26）</h2><ol>
+<li>读论文：PD-Quant(2022.12)</li>
+<li>调研了解Mixed Precision Quantization相关工作</li>
+</ol>
+<h2 id="本周计划（2022-12-19-2022-12-26）"><a href="#本周计划（2022-12-19-2022-12-26）" class="headerlink" title="本周计划（2022.12.19-2022.12.26）"></a>本周计划（2022.12.19-2022.12.26）</h2><ol>
+<li>将PD-Quant引入的量化损失Metric与之前工作结合,尝试复现</li>
+<li>继续调研Mixed Precision Quantization相关</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2022-12-27-2023-1-1）"><a href="#进度汇报-（2022-12-27-2023-1-1）" class="headerlink" title="进度汇报 （2022.12.27-2023.1.1）"></a>进度汇报 （2022.12.27-2023.1.1）</h2><ol>
+<li>在量化参数scaling factor和offset选取上借鉴PD-Quant引入当前层activation量化在最终预测结果引起的差异。不仅考虑当前层activation量化前后差异，还引入当前层的activation量化在后面若干层累积后引起的差异。</li>
+<li>改稿</li>
+</ol>
+<h2 id="后期计划（2022-12-27-2023-1-1）"><a href="#后期计划（2022-12-27-2023-1-1）" class="headerlink" title="后期计划（2022.12.27-2023.1.1）"></a>后期计划（2022.12.27-2023.1.1）</h2><p>继续完善量化引入全局累积差异的代码，提升性能</p>
+<hr>
+<h2 id="进度汇报-（2023-2-8-2023-2-12）"><a href="#进度汇报-（2023-2-8-2023-2-12）" class="headerlink" title="进度汇报 （2023.2.8-2023.2.12）"></a>进度汇报 （2023.2.8-2023.2.12）</h2><ul>
+<li>workshop (NTIRE 2023 Efficient Super-Resolution Challenge)</li>
+</ul>
+<ol>
+<li><p>Efficient Super-Resolution Challenge(ESR):train rfdn baseline,test 结果如下</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val Time [ms]</th>
+<th>Params [M]</th>
+<th>FLOPs [G]</th>
+<th>Acts [M]</th>
+<th>Mem [M]</th>
+<th>Conv</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>trained_rfdn_best</td>
+<td>DIV2K_val(801-900)</td>
+<td>28.73</td>
+<td>37.62</td>
+<td>0.433</td>
+<td>27.10</td>
+<td>112.03</td>
+<td>788.13</td>
+<td>64</td>
+</tr>
+<tr>
+<td>RFDN_baseline_1</td>
+<td>DIV2K_val(801-900)</td>
+<td>29.04</td>
+<td>41.38</td>
+<td>0.433</td>
+<td>27.10</td>
+<td>112.03</td>
+<td>788.13</td>
+<td>64</td>
+</tr>
+<tr>
+<td>RFDN_baseline_2</td>
+<td>DIV2K_val(801-900)</td>
+<td>29.04</td>
+<td>43.86</td>
+<td>0.433</td>
+<td>27.10</td>
+<td>112.03</td>
+<td>788.13</td>
+<td>64</td>
+</tr>
+<tr>
+<td>RFDN_baseline_3</td>
+<td>DIV2K_val(801-900)</td>
+<td>29.04</td>
+<td>37.59</td>
+<td>0.433</td>
+<td>27.10</td>
+<td>112.03</td>
+<td>788.13</td>
+<td>64</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<h2 id="后期计划（2023-2-8-2023-2-12）"><a href="#后期计划（2023-2-8-2023-2-12）" class="headerlink" title="后期计划（2023.2.8-2023.2.12）"></a>后期计划（2023.2.8-2023.2.12）</h2><ol>
+<li>rfdn基础上改进模型</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-2-13-2023-2-19）"><a href="#进度汇报-（2023-2-13-2023-2-19）" class="headerlink" title="进度汇报 （2023.2.13-2023.2.19）"></a>进度汇报 （2023.2.13-2023.2.19）</h2><ul>
+<li>workshop (MAI 2023 Video Super Resolution)<ol>
+<li>先train 2022官方仓库 MRRN baseline<ul>
+<li><p>环境配置</p>
+<ol>
+<li><p>Python 3.8.10</p>
+</li>
+<li><p>Tensorflow 2.9.0</p>
+<ul>
+<li>查看tensorflow cuda cudnn python 版本对照表： <a target="_blank" rel="noopener" href="https://www.tensorflow.org/install/source_windows">https://www.tensorflow.org/install/source_windows</a></li>
+</ul>
+</li>
+<li><p>Cuda 11.2</p>
+</li>
+<li><p>Cudnn v8.7.0</p>
+<ul>
+<li>官网：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cudnn">https://developer.nvidia.com/cudnn</a></li>
+<li>uname -m 查看cpu架构，cudnn有不同架构的版本 x86_64 PPC SBSA</li>
+<li>tar -xvf解压缩后用以下命令安装并赋予所有用户读取权限</li>
+</ul>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">cp</span> path_to_cudnn/include/cudnn*    /usr/local/cuda/include</span><br><span class="line">sudo <span class="built_in">cp</span> path_to_cudnn/lib64/libcudnn*    /usr/local/cuda/lib64</span><br><span class="line">sudo <span class="built_in">chmod</span> a+r /usr/local/cuda/include/cudnn*   /usr/local/cuda/lib64/libcudnn*</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Cudnn和Cuda 安装完需在&#x2F;etc&#x2F;profile配置环境变量PATH和LD_LIBRARY_PATH</li>
+</ul>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=<span class="variable">$LD_LIBRARY_PATH</span>:/usr/local/cuda/lib64</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/local/cuda/bin</span><br><span class="line"><span class="built_in">export</span> CUDA_HOME=<span class="variable">$CUDA_HOME</span>:/usr/local/cuda</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可将文件夹 &#x2F;usr&#x2F;local&#x2F;cuda-11.2 与 &#x2F;usr&#x2F;local&#x2F;cuda 软连接起来</li>
+</ul>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s /usr/local/cuda-11.2 /usr/local/cuda</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>用下面的命令查看cudnn版本,新版本查看cuDNN版本的命令为</li>
+</ul>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2  <span class="comment"># -A 选项用来指定匹配成功的行之后显示2行内容</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>结果</p>
+<ol>
+<li>用默认config.yml训练太慢了大约需要1周时间，中途停掉了</li>
+<li>用改进后config.yml训练。8小时左右训练完成，但是loss很大</li>
+<li>结合往年此赛道总结文章放弃训练提供的mobilernn baseline 思考其它基于cnn的模型</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>从NTIRE 2022 efficient super-resolution challenge选取baseline运用剪枝蒸馏等改进到移动端<ul>
+<li>选取2022 NTIRE ESR冠军方案RLFN(Byte Dance)作为baseline,先将其模型转换为 tensorflow 版本在 REDS 数据集上直接进行VSR的测试 -&gt; 中间软件依赖兼容性问题放弃RLFN torch-&gt;onnx-&gt;tensorflow路线</li>
+<li>直接用tensorflow 重构 RLFN -&gt; train完精度不够’psnr’: 25.651411, ‘ssim’: 0.6954131，需要调试改进</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="本周计划"><a href="#本周计划" class="headerlink" title="本周计划"></a>本周计划</h2><ol>
+<li>workshop 改进<ul>
+<li>Pruning via NNI</li>
+<li>Quantization via NNI</li>
+<li>Hyper Parameter Optimization via NNI</li>
+</ul>
+</li>
+<li>基金研究基础改小错误</li>
+<li>考试复习</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-2-20-2023-2-26）"><a href="#进度汇报-（2023-2-20-2023-2-26）" class="headerlink" title="进度汇报 （2023.2.20-2023.2.26）"></a>进度汇报 （2023.2.20-2023.2.26）</h2><ul>
+<li>workshop (MAI 2023 Video Super Resolution)<ol>
+<li>RLFN精度提升 ‘psnr’: 25.57 -&gt; 25.91, ‘ssim’: 0.69 -&gt; 0.71; 重构的baseline结构可能存在问题，需要与原作保持一致，恢复精度</li>
+<li>尝试基于RNN的方案 SWRN, ‘psnr’: 28.19, ‘ssim’: 0.8093;</li>
+<li>3D卷积用于视频超分调研，后期可以考虑3D卷积重参数化加速推理</li>
+</ol>
+</li>
+</ul>
+<h2 id="本周计划（2023-2-20-2023-2-26）"><a href="#本周计划（2023-2-20-2023-2-26）" class="headerlink" title="本周计划（2023.2.20-2023.2.26）"></a>本周计划（2023.2.20-2023.2.26）</h2><ol>
+<li>workshop<ul>
+<li>恢复baseline模型tensorflow版本的PSNR</li>
+<li>有余力 剪枝加速推理</li>
+</ul>
+</li>
+<li>考试复习</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-2-27-2023-3-5）"><a href="#进度汇报-（2023-2-27-2023-3-5）" class="headerlink" title="进度汇报 （2023.2.27-2023.3.5）"></a>进度汇报 （2023.2.27-2023.3.5）</h2><ol>
+<li>workshop (MAI 2023 Video Super Resolution)<ul>
+<li>目前PSNR、SSIM比较满意的是VapSR_2,但是推理时间太长,需要优化</li>
+</ul>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SWRN_0</td>
+<td>Origin</td>
+<td>REDS</td>
+<td>27.931335</td>
+<td>0.7803562</td>
+<td>43,472</td>
+<td>25.6</td>
+</tr>
+<tr>
+<td>SWRN_1</td>
+<td>recon_trunk block num&#x3D;2</td>
+<td>REDS</td>
+<td>27.820051</td>
+<td>0.77666414</td>
+<td>36,512</td>
+<td>26.9</td>
+</tr>
+<tr>
+<td>ELSR_0(vsr 22 winner)</td>
+<td>Origin</td>
+<td>REDS</td>
+<td>26.716854</td>
+<td>0.73988235</td>
+<td>3,468</td>
+<td>19.3</td>
+</tr>
+<tr>
+<td>VapSR_0</td>
+<td>Origin</td>
+<td>REDS</td>
+<td>28.103758</td>
+<td>0.7864979</td>
+<td>154,252</td>
+<td>5191.0</td>
+</tr>
+<tr>
+<td>VapSR_1</td>
+<td>Replace feature extraction conv and VAB’s 2 con1X1 with blueprint conv</td>
+<td>REDS</td>
+<td>28.02941</td>
+<td>0.7845887</td>
+<td>155,916</td>
+<td>5798.0</td>
+</tr>
+<tr>
+<td>VapSR_2</td>
+<td>Replace feature extraction conv with blueprint conv and  reduce Attention’s kernel size&#x3D;3X3</td>
+<td>REDS</td>
+<td>28.021387</td>
+<td>0.7831156</td>
+<td>131,276</td>
+<td>2694.0</td>
+</tr>
+</tbody></table>
+<hr>
+<p>  <em>AI benchmark setting for Runtime test:</em>  </p>
+<ul>
+<li>Input Values range(min,max): 0,255  </li>
+<li>Inference Mode: FP16  </li>
+<li>Acceleration: TFLite GPU Delegate</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划（2023-2-27-2023-3-5）"><a href="#本周计划（2023-2-27-2023-3-5）" class="headerlink" title="本周计划（2023.2.27-2023.3.5）"></a>本周计划（2023.2.27-2023.3.5）</h2><ol>
+<li>workshop<ul>
+<li>利用tensorflow model optimization toolkit(TFMOT)进行模型压缩,看效果</li>
+<li>寻找新idea</li>
+</ul>
+</li>
+<li>两门考试复习</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-3-6-2023-3-12）"><a href="#进度汇报-（2023-3-6-2023-3-12）" class="headerlink" title="进度汇报 （2023.3.6-2023.3.12）"></a>进度汇报 （2023.3.6-2023.3.12）</h2><ol>
+<li>workshop (MAI 2023 Video Super Resolution)<ul>
+<li>tensorflow model optimization toolkit(TFMOT) Pruning： tensorflow中对于子类化的模型(Subclassed Model)剪枝支持不好，代码有些问题，目前只对模型头部特征提取的蓝图卷积部分应用到了，对于中间参数量最大的部分没有应用成功，推理时间降低很少。</li>
+</ul>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VapSR_2</td>
+<td>Replace feature extraction conv with blueprint conv and  reduce Attention’s kernel size&#x3D;3X3</td>
+<td>REDS</td>
+<td>28.021387</td>
+<td>0.7831156</td>
+<td>131,276</td>
+<td>2694.0</td>
+</tr>
+<tr>
+<td>VapSR_3</td>
+<td>Pruning</td>
+<td>REDS</td>
+<td>28.021387</td>
+<td>0.7831156</td>
+<td>131,276</td>
+<td>2673.0</td>
+</tr>
+</tbody></table>
+<hr>
+</li>
+</ol>
+<h2 id="本周计划（2023-3-6-2023-3-12）"><a href="#本周计划（2023-3-6-2023-3-12）" class="headerlink" title="本周计划（2023.3.6-2023.3.12）"></a>本周计划（2023.3.6-2023.3.12）</h2><ol>
+<li>workshop<ul>
+<li>将模型重构为函数式模型(Functional Model)再进行剪枝</li>
+<li>模型量化部署</li>
+</ul>
+</li>
+<li>审稿</li>
+<li>组会准备</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-3-13-2023-3-19）"><a href="#进度汇报-（2023-3-13-2023-3-19）" class="headerlink" title="进度汇报 （2023.3.13-2023.3.19）"></a>进度汇报 （2023.3.13-2023.3.19）</h2><ol>
+<li>workshop (MAI 2023 Video Super Resolution)<ul>
+<li>tensorflow model optimization toolkit(TFMOT) Pruning, Weight Clustering：成功对模型的全部卷积层应用了50%的剪枝和总体10个权重聚类中心的聚类,参数量较之前只对特征提取部分应用剪枝下降很多</li>
+</ul>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VapSR_3</td>
+<td>Pruning feature extraction part</td>
+<td>REDS</td>
+<td>28.021387</td>
+<td>0.7831156</td>
+<td>131,276</td>
+<td>-</td>
+</tr>
+<tr>
+<td>VapSR_4</td>
+<td>apply pruning, weights clustering to conv kernels</td>
+<td>REDS</td>
+<td>27.3111</td>
+<td>0.7376</td>
+<td>32,054</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<hr>
+</li>
+</ol>
+<h2 id="本周计划（2023-3-13-2023-3-19）"><a href="#本周计划（2023-3-13-2023-3-19）" class="headerlink" title="本周计划（2023.3.13-2023.3.19）"></a>本周计划（2023.3.13-2023.3.19）</h2><ol>
+<li>workshop<ul>
+<li>模型8bit量化实现</li>
+<li>寻找降低runtime的新方法</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-3-20-2023-3-26）"><a href="#进度汇报-（2023-3-20-2023-3-26）" class="headerlink" title="进度汇报 （2023.3.20-2023.3.26）"></a>进度汇报 （2023.3.20-2023.3.26）</h2><ol>
+<li>workshop (MAI 2023 Video Super Resolution)<ul>
+<li>tensorflow model optimization toolkit(TFMOT) Pruning, Weight Clustering -&gt; INT8 Quantization Aware Training (QAT) -&gt; tflite<ul>
+<li>问题1： QAT掉点严重 {‘psnr’: 27.666351, ‘ssim’: 0.77187574} -&gt; {‘psnr’: 27.008348, ‘ssim’: 0.7406609}</li>
+<li>问题2： 转换为tflite模型过程没问题，手机上用AI Benchmark测试runtime一直报输入type&#x2F;shape mismatch, 定位不到bug在哪里,怀疑是软件不能自定义输入的dtype导致的<ul>
+<li>寻求AI Benchmark论坛的帮助</li>
+<li>考虑借鉴tensorflow在andriod上的超分案例，测试转换过来的tflite模型</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>work<ul>
+<li>参考CVPR2023”Run, Don’t Walk: Chasing Higher FLOPS for Faster Neural Networks”移植了partial convolution (PConv)模块</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划（2023-3-20-2023-3-26）"><a href="#本周计划（2023-3-20-2023-3-26）" class="headerlink" title="本周计划（2023.3.20-2023.3.26）"></a>本周计划（2023.3.20-2023.3.26）</h2><ol>
+<li>workshop<ul>
+<li>解决以上问题</li>
+</ul>
+</li>
+<li>work<ul>
+<li>提升在REDS数据集上的PSNR</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-3-27-2023-4-2）"><a href="#进度汇报-（2023-3-27-2023-4-2）" class="headerlink" title="进度汇报 （2023.3.27-2023.4.2）"></a>进度汇报 （2023.3.27-2023.4.2）</h2><ol>
+<li>workshop (MAI 2023 Video Super Resolution)<ul>
+<li>解决了在手机上对tflite模型推理只能使用CPU无法应用TFLite GPU Delegate 和 NNAPI加速的问题</li>
+<li>最新结果</li>
+</ul>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+<th>FLOPs [G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SWAT_3</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;1), replace fc with 1*1 conv, replace pixel normalization with layer normalization</td>
+<td>REDS</td>
+<td>27.761642</td>
+<td>0.7748446</td>
+<td>25,664</td>
+<td>27.8 (FP16_TFLite GPU Delegate)</td>
+<td>2.949</td>
+</tr>
+</tbody></table>
+<hr>
+</li>
+<li>work<ul>
+<li>移动端视频超分的模型基本确定，并同步进行了部分对比实验，后续需要对剪枝&#x2F;权重聚类&#x2F;量化部分进行微调</li>
+<li>文献搜集，了解移动端视频超分的现状和最新进展</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划（2023-3-27-2023-4-2）"><a href="#本周计划（2023-3-27-2023-4-2）" class="headerlink" title="本周计划（2023.3.27-2023.4.2）"></a>本周计划（2023.3.27-2023.4.2）</h2><ol>
+<li>workshop<ul>
+<li>对训练好的模型的量化策略进行调整，看能否进一步降低推理时间</li>
+<li>尝试新的训练损失函数&#x2F;训练策略，看能否进一步提升PSNR SSIM</li>
+</ul>
+</li>
+<li>work<ul>
+<li>整理思路，论文撰写</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-4-3-2023-4-9）"><a href="#进度汇报-（2023-4-3-2023-4-9）" class="headerlink" title="进度汇报 （2023.4.3-2023.4.9）"></a>进度汇报 （2023.4.3-2023.4.9）</h2><ol>
+<li>workshop (MAI 2023 Video Super Resolution)<ul>
+<li>在用L1 charbonnier损失进行预训练后，继续使用L2损失训练 -&gt; PSNR：27.76 -&gt; 27.81 上升</li>
+<li>改进注意力模块：1.增大感受野 2.部分卷积用分组卷积替代 -&gt; Params: 25,664 -&gt; 24,160 下降 FLOPs: 2.949 -&gt; 2.776 下降，但是runtime反而上涨了 27.8 -&gt; 30.0 tflite对分组卷积的支持不好</li>
+<li>目前最好结果</li>
+</ul>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+<th>FLOPs [G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SWAT_5</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;1), replace fc with 1*1 conv, replace pixel normalization with layer normalization, enlarge train step numbers to 250,000</td>
+<td>REDS</td>
+<td>27.811176</td>
+<td>0.7763541</td>
+<td>25,664</td>
+<td>27.6 (FP16_TFLite GPU Delegate)</td>
+<td>2.949</td>
+</tr>
+</tbody></table>
+<hr>
+</li>
+<li>work<ul>
+<li>搜集在REDS数据集上完全相同实验设置的paper</li>
+<li>剪枝&#x2F;权重聚类的代码之前在基于单帧的单输入单输出模型上跑通，现模型多输入多输出，进行调整后现已跑通</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划（2023-4-3-2023-4-9）"><a href="#本周计划（2023-4-3-2023-4-9）" class="headerlink" title="本周计划（2023.4.3-2023.4.9）"></a>本周计划（2023.4.3-2023.4.9）</h2><ol>
+<li>work<ul>
+<li>汇总完全相同实验设置的paper的结果</li>
+<li>完成模型量化部分</li>
+<li>撰写论文</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-4-17-2023-4-23）"><a href="#进度汇报-（2023-4-17-2023-4-23）" class="headerlink" title="进度汇报 （2023.4.17-2023.4.23）"></a>进度汇报 （2023.4.17-2023.4.23）</h2><ol>
+<li>video super-resolution work<ul>
+<li>Channel&#x2F;Spatial&#x2F;Pixel Attention RNN调研</li>
+<li>Dynamic pruning&#x2F;Sparsity调研<ol>
+<li>Dynamic Channel Pruning: Feature Boosting and Suppression (ICLR 2019)  <ul>
+<li>method: subsample feature map to scalar -&gt; channel saliency predictor (fully connect) -&gt; multiple winners take all channel select (Top-k select)</li>
+<li>summary:  MAC saving, Memory Usage saving but cann’t contribute to inference latency saving. Fail to achieve real-world acceleration because their hardware-incompatible channel sparsity results in <strong>repeatedly indexing and copying selected filters to a new contiguous memory for multiplication</strong>.</li>
+</ul>
+</li>
+<li>Dynamic Slimmable Network (CVPR 2021)<ul>
+<li>method: In-place distillation with In-place Ensemble Bootstrapping (IEB) scheme to train Dynamic Supernet  -&gt; sandwich gate sparsification (SGS) to train Dynamic Slimming Gate</li>
+<li>summary: dynamic slice-able conv achieved by <strong>double-headed dynamic gate</strong> which can achieve <strong>practical acceleration</strong> for filters remain contiguous and static during dynamic weight selection.</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>Information multi-distillation Block (IMDB) 超分实现，推理延迟降低到20ms</li>
+</ul>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+<th>FLOPs [G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SORT_0</td>
+<td>Sliding Window, IMDB</td>
+<td>REDS</td>
+<td>27.738451</td>
+<td>0.77409536</td>
+<td>17,356</td>
+<td>20.6 (FP16_TFLite GPU Delegate)</td>
+<td>2.084</td>
+</tr>
+</tbody></table>
+<hr>
+</li>
+</ol>
+<h2 id="本周计划（2023-4-17-2023-4-23）"><a href="#本周计划（2023-4-17-2023-4-23）" class="headerlink" title="本周计划（2023.4.17-2023.4.23）"></a>本周计划（2023.4.17-2023.4.23）</h2><ol>
+<li>video super-resolution work<ul>
+<li>Dynamic routing 尝试改造现有模型(一周时间出效果，PSNR⬆ -&gt; 28.00, Runtime⬇ -&gt; 20ms)</li>
+</ul>
+</li>
+<li>审稿</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-5-8-2023-5-14）"><a href="#进度汇报-（2023-5-8-2023-5-14）" class="headerlink" title="进度汇报 （2023.5.8-2023.5.14）"></a>进度汇报 （2023.5.8-2023.5.14）</h2><ol>
+<li>video super-resolution work<ul>
+<li>video frame selection 调研</li>
+<li>SWAT SORT hyperparameter fine tuning</li>
+<li>Dynamic routing was deprecated</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划（2023-5-8-2023-5-14）"><a href="#本周计划（2023-5-8-2023-5-14）" class="headerlink" title="本周计划（2023.5.8-2023.5.14）"></a>本周计划（2023.5.8-2023.5.14）</h2><ol>
+<li>video super-resolution work<ul>
+<li>写论文，调模型</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-5-15-2023-5-21）"><a href="#进度汇报-（2023-5-15-2023-5-21）" class="headerlink" title="进度汇报 （2023.5.15-2023.5.21）"></a>进度汇报 （2023.5.15-2023.5.21）</h2><ol>
+<li>video super-resolution work<ul>
+<li>论文introduction撰写了一部分</li>
+<li>模型加入Non Activation Block 和 前一帧HR预测做对齐辅助(former predicted HR frame acting as auxiliary aligned frame)</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划（2023-5-15-2023-5-21）"><a href="#本周计划（2023-5-15-2023-5-21）" class="headerlink" title="本周计划（2023.5.15-2023.5.21）"></a>本周计划（2023.5.15-2023.5.21）</h2><ol>
+<li>video super-resolution work<ul>
+<li>模型改进：Information Multi Distillation Block(IMDB) modify -&gt; high psnr contribution channels aggregation + partial conv</li>
+<li>模型改进：light weight feature alignment 轻量级特征对齐</li>
+<li>论文撰写：Introduction + Related Work</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-5-22-2023-5-28）"><a href="#进度汇报-（2023-5-22-2023-5-28）" class="headerlink" title="进度汇报 （2023.5.22-2023.5.28）"></a>进度汇报 （2023.5.22-2023.5.28）</h2><ol>
+<li><p>video super-resolution work</p>
+<ul>
+<li><p>论文撰写</p>
+</li>
+<li><p>模型微调：</p>
+<ol>
+<li>Activation Free Block 利用乘法产生代替激活函数产生非线性 -&gt; PSNR ↓, SSIM ↓</li>
+<li>利用注意力机制对与主网络超分输出做残差连接的bilinear上采样进行对齐操作, 对齐的目标是前一帧HR预测帧(former predicted HR frame acting as auxiliary align frame) -&gt; PSNR ↑, SSIM ↑</li>
+</ol>
+</li>
+<li><p>Benchmark</p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Model</th>
+<th>Source</th>
+<th>Dataset</th>
+<th>Test PSNR</th>
+<th>Test SSIM</th>
+<th>Params</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Diggers</td>
+<td>Real-Time Video Super-Resolution based on Bidirectional RNNs(2021 SOTA)</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.98</td>
+<td>-</td>
+<td>39,640</td>
+</tr>
+<tr>
+<td>2</td>
+<td>VSR_12</td>
+<td>Ours</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.981062</td>
+<td>0.7824855</td>
+<td>57,696</td>
+</tr>
+<tr>
+<td>3</td>
+<td>SORT_2</td>
+<td>Ours</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.93981</td>
+<td>0.7808094</td>
+<td>45,264</td>
+</tr>
+<tr>
+<td>4</td>
+<td>SWRN</td>
+<td>Sliding Window Recurrent Network for Efficient Video Super-Resolution (2022 SOTA)</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.92</td>
+<td>0.77</td>
+<td>43,472</td>
+</tr>
+<tr>
+<td>5</td>
+<td>MVSR_0</td>
+<td>Ours</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.915539</td>
+<td>0.7799377</td>
+<td>35,777</td>
+</tr>
+<tr>
+<td>6</td>
+<td>SWAT_3_5</td>
+<td>Ours</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.840628</td>
+<td>0.7774375</td>
+<td>37,312</td>
+</tr>
+<tr>
+<td>7</td>
+<td>EESRNet</td>
+<td>EESRNet: A Network for Energy Efficient Super-Resolution(2022)</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.84</td>
+<td>-</td>
+<td>62,550</td>
+</tr>
+<tr>
+<td>8</td>
+<td>LiDeR</td>
+<td>LiDeR: Lightweight Dense Residual Network for Video Super-Resolution on Mobile Devices (2022)</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.51</td>
+<td>0.76</td>
+<td>-</td>
+</tr>
+<tr>
+<td>9</td>
+<td>EVSRNet</td>
+<td>EVSRNet：Efficient Video Super-Resolution with Neural Architecture Search(2021)</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.42</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>10</td>
+<td>RCBSR</td>
+<td>RCBSR: Re-parameterization Convolution Block for Super-Resolution(2022)</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.28</td>
+<td>0.775</td>
+<td>-</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>pose&#x2F;gesture recognition deploy</p>
+<ul>
+<li>了解trt_pose类似项目的部署</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划（2023-5-22-2023-5-28）"><a href="#本周计划（2023-5-22-2023-5-28）" class="headerlink" title="本周计划（2023.5.22-2023.5.28）"></a>本周计划（2023.5.22-2023.5.28）</h2><ol>
+<li>video super-resolution work<ul>
+<li>论文撰写</li>
+<li>模型微调：参考An Implicit Alignment for Video Super-Resolution(arxiv 2023.04), 尝试对帧对齐模块的注意力机制加入位置编码</li>
+</ul>
+</li>
+<li>pose&#x2F;gesture recognition deploy<ul>
+<li>调研摄像头视角跟随目标的相关项目,尝试部署</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-5-29-2023-6-04）"><a href="#进度汇报-（2023-5-29-2023-6-04）" class="headerlink" title="进度汇报 （2023.5.29-2023.6.04）"></a>进度汇报 （2023.5.29-2023.6.04）</h2><ol>
+<li>video super-resolution work<ul>
+<li>论文撰写</li>
+<li>模型微调：<ol>
+<li>light-weight attention based frame alignment(基于attention的轻量帧对齐): PSNR ↑ 0.003, SSIM ↑ 0.006,  Runtime ↑ 9 ms</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>pose&#x2F;gesture recognition deploy<ul>
+<li>调研摄像头视角跟随目标的相关项目</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划（2023-5-29-2023-6-04）"><a href="#本周计划（2023-5-29-2023-6-04）" class="headerlink" title="本周计划（2023.5.29-2023.6.04）"></a>本周计划（2023.5.29-2023.6.04）</h2><ol>
+<li>video super-resolution work<ul>
+<li>论文撰写</li>
+</ul>
+</li>
+<li>pose&#x2F;gesture recognition deploy<ul>
+<li>尝试部署视角跟随目标</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-6-05-2023-6-11）"><a href="#进度汇报-（2023-6-05-2023-6-11）" class="headerlink" title="进度汇报 （2023.6.05-2023.6.11）"></a>进度汇报 （2023.6.05-2023.6.11）</h2><ol>
+<li>video super-resolution work<ul>
+<li>论文撰写</li>
+<li>消融实验</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划（2023-6-05-2023-6-11）"><a href="#本周计划（2023-6-05-2023-6-11）" class="headerlink" title="本周计划（2023.6.05-2023.6.11）"></a>本周计划（2023.6.05-2023.6.11）</h2><ol>
+<li>video super-resolution work<ul>
+<li>论文撰写</li>
+<li>消融实验</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-6-12-2023-7-01）"><a href="#进度汇报-（2023-6-12-2023-7-01）" class="headerlink" title="进度汇报 （2023.6.12-2023.7.01）"></a>进度汇报 （2023.6.12-2023.7.01）</h2><ol>
+<li>video super-resolution work<ul>
+<li>论文撰写、修改、提交</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-7-03-2023-7-16）"><a href="#进度汇报-（2023-7-03-2023-7-16）" class="headerlink" title="进度汇报 （2023.7.03-2023.7.16）"></a>进度汇报 （2023.7.03-2023.7.16）</h2><ol>
+<li>video super-resolution on mobile<ul>
+<li>项目代码整理，上传github</li>
+</ul>
+</li>
+<li>Jetson Nano 部署 ZeroDCE,远远达不到实时性要求,处理单张512×512图片暗光增强耗时 &gt; 2 min。具体结果如下：<img src="/2022/09/05/Week_Report/ZeroDCE_test_result.jpg" class="" title="Elapsed Time(ms)&#x2F;photo"></li>
+<li>NeurIPS 审稿</li>
+<li>补充PPT: 模型压缩部署部分</li>
+</ol>
+<h2 id="本周计划（2023-7-03-2023-7-16）"><a href="#本周计划（2023-7-03-2023-7-16）" class="headerlink" title="本周计划（2023.7.03-2023.7.16）"></a>本周计划（2023.7.03-2023.7.16）</h2><ol>
+<li>调研了解最新量化进展，寻找下个工作方向</li>
+<li>8-bit 浮点数量化项目(FP8 quantization)高通已开源，测试了解下有无follow的空间</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-7-17-2023-7-23）"><a href="#进度汇报-（2023-7-17-2023-7-23）" class="headerlink" title="进度汇报 （2023.7.17-2023.7.23）"></a>进度汇报 （2023.7.17-2023.7.23）</h2><ol>
+<li>Jetson Nano 部署暗光增强 ZeroDCE++,处理单张512×512图片耗时约10ms,但有波动(最高4931.46 ms&#x2F;张),基本满足实时性要求。<ul>
+<li><img src="/2022/09/05/Week_Report/ZeroDCE++_test_result.png" class="" title="Elapsed Time(ms)&#x2F;photo"></li>
+</ul>
+</li>
+</ol>
+<h2 id="今后计划（2023-7-17-2023-7-23）"><a href="#今后计划（2023-7-17-2023-7-23）" class="headerlink" title="今后计划（2023.7.17-2023.7.23）"></a>今后计划（2023.7.17-2023.7.23）</h2><ol>
+<li>休假(威海 潍坊 邯郸)</li>
+<li>ChinaMM云南行(昆明 丽江 大理)</li>
+</ol>
+<hr>
+<h2 id="进度汇报-（2023-8-07-2023-8-13）"><a href="#进度汇报-（2023-8-07-2023-8-13）" class="headerlink" title="进度汇报 （2023.8.07-2023.8.13）"></a>进度汇报 （2023.8.07-2023.8.13）</h2><ol>
+<li>Jetson Nano 部署 Face Tracking,结合之前的Pose Estimation 达不到实时30 frame&#x2F;s的要求<ul>
+<li><img src="/2022/09/05/Week_Report/face_detection_screenshot.png" class="" title="Elapsed Time(ms)&#x2F;photo"></li>
+<li><img src="/2022/09/05/Week_Report/pose_estimation_screenshot.png" class="" title="Elapsed Time(ms)&#x2F;photo"></li>
+</ul>
+</li>
+<li>PRCV审稿</li>
+<li>FP8 Quantization 调研<ul>
+<li>FP8 Quantization: The Power of the Exponent (Qualcomm_NeurIPS 2022)<ol>
+<li>FP8更适应离群值多的场景</li>
+<li>PTQ时精度优于INT8，QAT时精度比INT8略差</li>
+</ol>
+</li>
+<li>FP8 FORMATS FOR DEEP LEARNING (NVIDIA&#x2F;Arm&#x2F;Intel_ArXiv 2022.09) -&gt; 训练推理统一数据格式FP8<ol>
+<li>FP8 可以加速训练和减少训练所需的资源，同时方便部署且可以保证训练出的精度</li>
+<li>INT8 量化模型通常需要进行校准或微调，训练与推理数据类型不一致不便于部署，且通常精度会下降</li>
+</ol>
+</li>
+<li>FP8 versus INT8 for efficient deep learning inference (Qualcomm_ArXiv 2023.06) -&gt; FP8 目前在性能和精度上不能取代INT8推理，目前INT4-INT8-INT16是边缘端推理的最优解<ol>
+<li>PTQ时在离群值显著的情况下，FP8相较INT8有精度优势; 通常这种情况可以通过W8A16混合精度以及QAT来解决</li>
+<li>FP8推理硬件开销大, FP8 MAC 单元效率比 INT8 低50%至180%</li>
+<li>为了更高效，已经有一些INT4量化的工具, 但到目前为止并没有FP4相关的工作</li>
+</ol>
+</li>
+<li>Integer or Floating Point? New Outlooks for Low-Bit Quantization on Large Language Models (MSRA_ArXiv 2023.05) -&gt; Layer wise混合精度LLM</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划（2023-8-07-2023-8-13）"><a href="#本周计划（2023-8-07-2023-8-13）" class="headerlink" title="本周计划（2023.8.07-2023.8.13）"></a>本周计划（2023.8.07-2023.8.13）</h2><ol>
+<li>开题报告 -&gt; success</li>
+<li>FANI andriod app -&gt; false</li>
+<li>实习简历 -&gt; success</li>
+<li>天空之眼广域持续监视系统 PPT -&gt; success</li>
+<li>尝试魔改 Qualcomm_FP8 + SQuant -&gt; pending</li>
+<li>尝试集成Face Tracking 和 Pose Estimation实现相机角度跟随人体并进行姿态估计 -&gt; pending</li>
+<li>大湾区算法比赛： 视频插帧 + 单目深度估计 -&gt; pending</li>
+<li>ACwing 算法课 -&gt; pending</li>
+<li>CSAPP 课程+实验 -&gt; pending</li>
+<li>Dipoorlet MQBench 使用 -&gt; pending</li>
+</ol>
+<h2 id="进度汇报-（2023-8-14-2023-8-27）"><a href="#进度汇报-（2023-8-14-2023-8-27）" class="headerlink" title="进度汇报 （2023.8.14-2023.8.27）"></a>进度汇报 （2023.8.14-2023.8.27）</h2><ol>
+<li>机载广域持续监视方案调研,PPT制作</li>
+<li>开题报告</li>
+<li>jetson nano 项目：Face Tracking + Pose Estimation<ul>
+<li>原有基于nvidia官方trt_pose项目的姿态估计推理速度慢,现基于Shanghai AI Lab 2023最新的轻量姿态估计项目RTMPose进行部署</li>
+<li>调研了解商汤MMdeploy 和 MMPose项目，编译安装相关依赖并在jetson nano上搭建了部署环境</li>
+<li>完成了驱动舵机调整摄像头位置的C++代码，后续通过ctypes库实现在py文件中调用此部分调整摄像头姿态的C++代码</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划（2023-8-14-2023-8-27）"><a href="#本周计划（2023-8-14-2023-8-27）" class="headerlink" title="本周计划（2023.8.14-2023.8.27）"></a>本周计划（2023.8.14-2023.8.27）</h2><ol>
+<li>完成jetson nano 项目：Face Tracking + Pose Estimation</li>
+<li>调研了解TensorRT&#x2F;TNN&#x2F;MNN&#x2F;NCNN等推理框架，重点尝试运用TensorRT加速RTMPose的推理</li>
+<li>参加大湾区算法比赛： 视频插帧 + 单目深度估计</li>
+<li>实习简历投递</li>
+</ol>
+<h2 id="进度汇报（2023-8-28-2023-9-10）"><a href="#进度汇报（2023-8-28-2023-9-10）" class="headerlink" title="进度汇报（2023.8.28-2023.9.10）"></a>进度汇报（2023.8.28-2023.9.10）</h2><ol>
+<li>完成jetson nano 项目：Face Tracking + Pose Estimation -&gt; 70%</li>
+<li>调研了解TensorRT&#x2F;TNN&#x2F;MNN&#x2F;NCNN等推理框架，重点尝试运用TensorRT加速RTMPose的推理 -&gt; 0%</li>
+<li>参加大湾区算法比赛： 视频插帧 + 单目深度估计 -&gt; 0%</li>
+</ol>
+<h2 id="本周计划（2023-8-28-2023-9-10）"><a href="#本周计划（2023-8-28-2023-9-10）" class="headerlink" title="本周计划（2023.8.28-2023.9.10）"></a>本周计划（2023.8.28-2023.9.10）</h2><ol>
+<li>实习简历投递(30-40份)</li>
+<li>调研ChatGPT的各种应用</li>
+<li>参加大湾区算法比赛： 视频插帧 + 单目深度估计，baseline搭建</li>
+<li>撰写FANI专利,整理已有专利状态</li>
+</ol>
+<h2 id="进度汇报（2023-9-11-2023-9-17）"><a href="#进度汇报（2023-9-11-2023-9-17）" class="headerlink" title="进度汇报（2023.9.11-2023.9.17）"></a>进度汇报（2023.9.11-2023.9.17）</h2><ol>
+<li>ICDM投稿FANI专利撰写</li>
+<li>组内已有专利状态整理</li>
+<li>大湾区算法比赛： 视频插帧 -&gt; 0%, 单目深度估计 -&gt; 10%</li>
+</ol>
+<h2 id="本周计划（2023-9-11-2023-9-17）"><a href="#本周计划（2023-9-11-2023-9-17）" class="headerlink" title="本周计划（2023.9.11-2023.9.17）"></a>本周计划（2023.9.11-2023.9.17）</h2><ol>
+<li>实习简历投递(30-40份)</li>
+<li>调研ChatGPT的各种应用</li>
+<li>大湾区算法比赛： 视频插帧 -&gt; 50% (baseline搭建); 单目深度估计 -&gt; 50% (baseline搭建)</li>
+</ol>
+<h2 id="进度汇报（2023-9-18-2023-10-08）"><a href="#进度汇报（2023-9-18-2023-10-08）" class="headerlink" title="进度汇报（2023.9.18-2023.10.08）"></a>进度汇报（2023.9.18-2023.10.08）</h2><ol>
+<li>大湾区单目深度估计比赛：<ul>
+<li>数据的理解存在偏差，涉及共计6个不同数据集的ground truth, label的标签意义未能理解清(如单位mm还是m, skymask, validmask等等)</li>
+<li>选择部分结构清晰(仅包含imgs, gts)的数据集送入目前的SOTA模型 ZoeDepth 对其 metric bins module 进行微调，结果训练后的精度比原作只在 NYU Depth V2 数据集上进行微调的效果还差</li>
+<li>目前的提交的结果：A榜 42&#x2F;60, B榜决定最终排名尚未出结果</li>
+</ul>
+</li>
+<li>视频超分量化</li>
+<li>国奖申请答辩&#x2F;助教申请&#x2F;调研准备组会PPT</li>
+<li>实习申请（累计投递40+）</li>
+</ol>
+<h2 id="本周计划（2023-9-18-2023-10-08）"><a href="#本周计划（2023-9-18-2023-10-08）" class="headerlink" title="本周计划（2023.9.18-2023.10.08）"></a>本周计划（2023.9.18-2023.10.08）</h2><ol>
+<li>实习投递+笔试面试</li>
+<li>推进SOTA视频超分模型量化 -&gt; 目标可部署在 OnePlus 7T 上</li>
+</ol>
+<h2 id="进度汇报（2023-10-09-2023-10-15）"><a href="#进度汇报（2023-10-09-2023-10-15）" class="headerlink" title="进度汇报（2023.10.09-2023.10.15）"></a>进度汇报（2023.10.09-2023.10.15）</h2><ol>
+<li>Video Super-Resolution Quantization<ul>
+<li>基于目前在Vid4、Vimeo90k、REDS数据集上SOTA模型 BasicVSR++ 进行channel-wise distribution-aware 量化pipeline的搭建（目前尚没有视频超分量化超分方向的baseline，代码难度较大）</li>
+<li>尝试引入在其它视频感知任务（Human Pose Estimation，Semantic Segmentation，Video Object Segmentation）有效上的方法，参考 ICCV2023 ResQ 将网络中相邻帧的激活之间的残差用于量化，更小的方差有利于缩小量化误差<ul>
+<li>附图：<style>.qhxebkgdfdqf{}</style><img src="/2022/09/05/Week_Report/ResQ.png" class="qhxebkgdfdqf" alt="ResQ Motivation"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ICDM注册提交</li>
+</ol>
+<h2 id="本周计划（2023-10-09-2023-10-15）"><a href="#本周计划（2023-10-09-2023-10-15）" class="headerlink" title="本周计划（2023.10.09-2023.10.15）"></a>本周计划（2023.10.09-2023.10.15）</h2><ol>
+<li>BasicVSR++&#x2F;VRT&#x2F;RVRT + ResQ&#x2F;CADyQ&#x2F;DAQ -&gt; VSR quantization pipeline construction</li>
+</ol>
+<h2 id="进度汇报（2023-10-16-2023-10-22）"><a href="#进度汇报（2023-10-16-2023-10-22）" class="headerlink" title="进度汇报（2023.10.16-2023.10.22）"></a>进度汇报（2023.10.16-2023.10.22）</h2><ol>
+<li>Video Super-Resolution Quantization<ul>
+<li>参考 GPTQ 完成了 BasicVSR++ (未涉及ViT)量化的基础部分</li>
+<li>阅读论文,了解其它几个SOTA模型(ViTs)是否有需要单独改进的模块：<ul>
+<li>CVPR2022: TTVSR</li>
+<li>NIPS2022: PSRT, RVRT</li>
+<li>CVPR2023: IART</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>SelecQ latex 排版调整,期刊注册提交</li>
+<li>学校HPC实例到期, 实验室浪潮集群上 Docker 镜像搭建</li>
+</ol>
+<h2 id="本周计划（2023-10-16-2023-10-22）"><a href="#本周计划（2023-10-16-2023-10-22）" class="headerlink" title="本周计划（2023.10.16-2023.10.22）"></a>本周计划（2023.10.16-2023.10.22）</h2><ol>
+<li>结合 ResQ 采用 PaddlePaddleSlim 改进视频超分 BasicVSR++ 量化模块</li>
+<li>深度神经网络课程PPT制作</li>
+<li>专利修改</li>
+<li>一番摆事实讲道理: 老师同意 sensetime 实习3个月, 开心到爆炸 :)</li>
+</ol>
+<h2 id="进度汇报（2023-10-23-2023-10-29）"><a href="#进度汇报（2023-10-23-2023-10-29）" class="headerlink" title="进度汇报（2023.10.23-2023.10.29）"></a>进度汇报（2023.10.23-2023.10.29）</h2><ol>
+<li>Video Super-Resolution Quantization<ul>
+<li>试用百度 paddleslim 分别用静态动态量化（PTQ）对 BasicVSR++ 进行量化</li>
+</ul>
+</li>
+<li>深度神经网络课程PPT制作</li>
+<li>拔智齿~ -&gt; 耽误了一些 VSR Quantization 工作的进度</li>
+</ol>
+<h2 id="本周计划（2023-10-23-2023-10-29）"><a href="#本周计划（2023-10-23-2023-10-29）" class="headerlink" title="本周计划（2023.10.23-2023.10.29）"></a>本周计划（2023.10.23-2023.10.29）</h2><ol>
+<li>play with paddleslim and basicvsr++</li>
+</ol>
+<h2 id="进度汇报-（2023-10-30-2023-11-05）"><a href="#进度汇报-（2023-10-30-2023-11-05）" class="headerlink" title="进度汇报 （2023.10.30-2023.11.05）"></a>进度汇报 （2023.10.30-2023.11.05）</h2><ol>
+<li>Video Super-Resolution Quantization<ul>
+<li>BasicVSR++ PTQ： 量化过程有bug正在解决<ol>
+<li>BasicVSR++ torch模型转onnx模型并检查</li>
+<li>激活校准，产出量化参数: scale zero_point</li>
+<li>权重调整，提升量化精度</li>
+<li>量化误差分析，定位量化问题</li>
+</ol>
+</li>
+<li><strong>note:</strong> 目前 BasicVSR++ 的 PTQ 基于开源工具 Dipoorlet 进行，优点代码简洁明了易修改，相较百度框架 paddleslim 便于快捷验证idea; VSR 量化方法成熟后可进一步迁移至 paddleslim</li>
+</ul>
+</li>
+<li>读文献找idea提升PTQ精度</li>
+</ol>
+<h2 id="本周计划（2023-10-30-2023-11-05）"><a href="#本周计划（2023-10-30-2023-11-05）" class="headerlink" title="本周计划（2023.10.30-2023.11.05）"></a>本周计划（2023.10.30-2023.11.05）</h2><ol>
+<li>解决 dipoorlet 量化 BasicVSR++ 遇到的bug</li>
+</ol>
+<h2 id="进度汇报-23-11-06-23-11-12"><a href="#进度汇报-23-11-06-23-11-12" class="headerlink" title="进度汇报 (23.11.06-23.11.12)"></a>进度汇报 (23.11.06-23.11.12)</h2><ol>
+<li><p>Video Super-Resolution Quantization</p>
+<ul>
+<li>BasicVSR++ 采用 <code>Dipoorlet</code> PTQ： 量化过程有不支持动态输入的问题, 即不支持视频随机长度(time_step)的问题, github提了issue 暂未有回复</li>
+<li>BasicVSR++ 采用 <code>MQBench</code> PTQ: BasicVSR++ 模型 forward 过程存在动态控制流, 即控制流的判断条件含有运算变量(Input&#x2F;Activation)参与, 而<code>MQBench</code>调用 <code>torch.fx</code> 的 <code>symbolic_trace</code> 完成 forward 过程计算图捕捉, 其本身的限制不支持动态控制流。正尝试：<ol>
+<li>把模型的动态控制流用静态的代替</li>
+<li>torch 2.0 新发布的 <code>torch.compile</code> 也即 (TorchDynamo), 了解后尝试来解决模型 forward 中广泛存在的动态控制流</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>RustDesk 中继服务搭建, 降低远程桌面的延迟</p>
+</li>
+</ol>
+<h2 id="本周计划-23-11-06-23-11-12"><a href="#本周计划-23-11-06-23-11-12" class="headerlink" title="本周计划 (23.11.06-23.11.12)"></a>本周计划 (23.11.06-23.11.12)</h2><ol>
+<li>推进 VSR 模型的常规量化(Naive PTQ)的工作</li>
+<li>实习相关工作</li>
+</ol>
+<h2 id="进度汇报-23-11-13-23-11-19"><a href="#进度汇报-23-11-13-23-11-19" class="headerlink" title="进度汇报 (23.11.13-23.11.19)"></a>进度汇报 (23.11.13-23.11.19)</h2><ol>
+<li>Video Super-Resolution Quantization<ul>
+<li>BasicVSR++ 采用 <code>Dipoorlet</code> PTQ： 量化过程有不支持动态输入的问题, 即不支持视频随机长度(time_step)的问题, github官方答复暂不支持</li>
+</ul>
+</li>
+<li>Sensetime Internship<ul>
+<li>与mentor沟通了解了实际业务量化部署过程中大体流程以及其重难点(torch模型 -&gt; onnx计算图中间表示 -&gt; 目标平台SDK),尚未接触实际项目</li>
+<li>调研了解LLM Quantization, 之后会逐步扩展形成对 LLM -&gt; Transformer -&gt; CNN整个链条的量化部署的覆盖</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划-23-11-13-23-11-19"><a href="#本周计划-23-11-13-23-11-19" class="headerlink" title="本周计划 (23.11.13-23.11.19)"></a>本周计划 (23.11.13-23.11.19)</h2><ol>
+<li>完成 LLM Quantization 的初步调研(会将文档共享给大家), 和mentor探讨下一步该从哪种方法开始上手复现</li>
+<li>准备 ICDM presentation -&gt; false</li>
+</ol>
+<h2 id="进度汇报-23-11-20-23-11-26"><a href="#进度汇报-23-11-20-23-11-26" class="headerlink" title="进度汇报 (23.11.20-23.11.26)"></a>进度汇报 (23.11.20-23.11.26)</h2><ol>
+<li>Sensetime Internship<ul>
+<li>LLM Quantization 累计调研10篇典型文章，包含QAT, weight only quantization, weight and activation quantization。给mentor做了初步的讨论汇报</li>
+</ul>
+</li>
+</ol>
+<h2 id="本周计划-23-11-20-23-11-26"><a href="#本周计划-23-11-20-23-11-26" class="headerlink" title="本周计划 (23.11.20-23.11.26)"></a>本周计划 (23.11.20-23.11.26)</h2><ol>
+<li>Video Super-Resolution Quantization<ul>
+<li>准备 ICDM presentation</li>
+</ul>
+</li>
+<li>Sensetime Internship<ul>
+<li>LLM Quantization 环境搭建, 在llama 7B 上跑了一下GPTQ~</li>
+<li>了解 Intel neural-compressor QAT 量化</li>
+<li>了解 Pytorch FX QAT 量化</li>
+<li>了解 mmdeploy 量化</li>
+<li>推导验证 RepVGG QAT 多支路 conv 合并后图节点量化前浮点数范围 (Real Range) 能否无损得到</li>
+<li>多模态模型 codino -&gt; onnx -&gt; onnx runtime(ort) register grid_sampler 注册未支持的算子(参考MMCV MMDeploy),然后在A6000上部署推理</li>
+</ul>
+</li>
+<li>Auto Drive<ul>
+<li>两个导向一种不惜计算代价，使用各种方法提高特定数据集&#x2F;特定环境下的指标 (刷榜)，一种是轻量化资源受限情况下优化指标</li>
+<li>轻量化路线具体需要针对不同的硬件平台(如 jetson orin)来进行相应的轻量化,如:<ul>
+<li>设计轻量的网络结构，设计相应的算子op</li>
+<li>考虑部署的inference latency,有一些比较有实际意义的探索空间,原因在于纸面的模型 FLOPs&#x2F;MACs 和实际 inference latency 之间有 gap</li>
+<li>实际车辆上运行的模型受限于算力，算力小用CNN，算力大用Transformer, 大公司在往大一统方向做 (如CVPR 2023 best paper: UniAD, 但目前还没有部署到实际的平台上去,目前带我的mentor在进行部署的工作：很难的一点是如何正确的把模型转换为onnx中间表示然后去进行量化，这一步还没完成)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="进度汇报-23-11-27-23-12-10"><a href="#进度汇报-23-11-27-23-12-10" class="headerlink" title="进度汇报 (23.11.27-23.12.10)"></a>进度汇报 (23.11.27-23.12.10)</h2><ol>
+<li>School Task<ul>
+<li>ICDM presentation PPT 制作&#x2F;参会</li>
+<li>VSR 视频超分专利修改</li>
+<li>Face Super-resolution&#x2F;Enhancement 调研</li>
+</ul>
+</li>
+<li>Sensetime Internship<ul>
+<li>LLM Quantization 环境搭建, 在 llama 7B 上跑了一下 GPTQ</li>
+<li>了解 Intel neural-compressor &#x2F; Pytorch FX &#x2F; mmdeploy PTQ 量化,大致如下 以 torch fx 为例 (后续会结合代码形成较详细的量化pipeline文档)<ol>
+<li>Prepare fx: fuse模型，也就是通常的优化，比如conv+bn啥的,利用fx对模型进行transform</li>
+<li>Insert observer: Input&#x2F;Output&#x2F;Weight 均插入observer</li>
+<li>Calibration: 输入数据进行校准，收集 weights 和 activation 的 max 和 min 等统计信息</li>
+<li>Convert fx: 在 observer 位置用相应的 quantize&#x2F;dequantize module代替,并合并到原始的layer中<br>附图：<style>.hmlijnsibqip{}</style><img src="/2022/09/05/Week_Report/torch.fx_ptq.PNG" class="hmlijnsibqip" alt="torch fx ptq"></li>
+</ol>
+</li>
+<li>推导验证 RepVGG 重参数轻量化方法与 QAT 联合使用的 weight range 能否获得数学上的等价变换问题: 具体来说，多支路 conv 合并前运用 QAT 提升精度, 在多支路 conv 合并后根据 QAT 训练得到的多分支 conv weight 的浮点数范围 (Real Range) 能否等价得到合并后的 conv weight 的浮点数范围，此浮点数范围与量化&#x2F;反量化过程的 scale factor 和 zero point 基本等价可互推 -&gt; 结论无法无损等价</li>
+<li>感知模型 object detection: codino -&gt; onnx -&gt; onnx runtime(ort) 推理部署： register grid_sampler op 注册未支持的算子(参考MMCV MMDeploy),然后在 CPU 上实现模型推理, 后续搭建好模型前后处理的部分后会在GPU上进行推理效果验证</li>
+</ul>
+</li>
+</ol>
+<h2 id="后续计划-23-11-27-23-12-10"><a href="#后续计划-23-11-27-23-12-10" class="headerlink" title="后续计划 (23.11.27-23.12.10)"></a>后续计划 (23.11.27-23.12.10)</h2><ol>
+<li>了解并测试多个开源 LLM PTQ 方法，如 AWQ SmoothQuant ZeroQuantV2 等</li>
+<li>codino 模型前后处理部分搭建, 在 GPU 上进行 onnx runtime 推理部署</li>
+<li>调研了解能否用 onnx runtime 进行 QAT, 以减轻 QAT 与 部署的 op 输入&#x2F;输出&#x2F;权重参数 范围对齐的压力</li>
+</ol>
+<h2 id="进度汇报-23-11-11-23-12-24"><a href="#进度汇报-23-11-11-23-12-24" class="headerlink" title="进度汇报 (23.11.11-23.12.24)"></a>进度汇报 (23.11.11-23.12.24)</h2><ol>
+<li><p>School Task</p>
+<ul>
+<li>深度学习与深度神经网络原理课程报告汇总提交</li>
+</ul>
+</li>
+<li><p>Sensetime Internship</p>
+<ul>
+<li><p>obeject detection model deploy: 基于openmmlab开源框架mmcv mmdetection,花费较长时间处理代码相关细节，具体如下</p>
+<ol>
+<li>基于继承机制的模型config使用，模型 backbone 为 InternImage</li>
+<li>模型前后处理剥离，前处理主要是resize操作,后处理模型输出为shape为[n, 5]的np.ndarray如何正确转化为 bbox 与 class 并可视化出来</li>
+<li>torch 模型转 onnx 时未支持算子 grid_sampler 处理</li>
+<li>相关repository:<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Sense-X/Co-DETR">https://github.com/Sense-X/Co-DETR</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/OpenGVLab/InternImage">https://github.com/OpenGVLab/InternImage</a></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>quantization frame work 调研，包括 Torch FX Quantization, Intel Neural Compressor, Tensor RT Quantization等,具体见PDF总结</p>
+</li>
+<li><p>调研并尝试基于 onnx 做 QAT(背景: torch 模型转为 onnx 时会出现模型结构名变化的问题，导致 QAT 得到的模型 权重以及量化参数 i.e. scale factor, zero point 无法与导出的 onnx 模型匹配)</p>
+</li>
+<li><p>详细了解 LLM metric Perpelexity (PPL), 以及关联的 torch cross entropy 的计算细节</p>
+</li>
+<li><p>opencloud 集群的使用, 了解 slurm 命令及参数等</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="后续计划-23-11-11-23-12-24"><a href="#后续计划-23-11-11-23-12-24" class="headerlink" title="后续计划 (23.11.11-23.12.24)"></a>后续计划 (23.11.11-23.12.24)</h2><ol>
+<li>测试以下 LLM PTQ 方法：AWQ, SmoothQuant, Outlier Suppression+, LLM.int8()</li>
+<li>推进 onnx QAT</li>
+<li>video super-resolution：基于 torch fx 对 basicvsr++ 进行 post training dynamic quantization (activation 的 scale factor 在推理时确定而非预先根据统计量计算出来) -&gt; 搞明白 Torch FX OPs 插入 &#x2F; 融合 &#x2F; 操作 的位置与做法</li>
+<li>论文写作 课程作业</li>
+</ol>
+<h2 id="进度汇报-23-12-25-24-01-07"><a href="#进度汇报-23-12-25-24-01-07" class="headerlink" title="进度汇报 (23.12.25-24.01.07)"></a>进度汇报 (23.12.25-24.01.07)</h2><ol>
+<li><p>School Task</p>
+<ul>
+<li>论文写作 课程作业</li>
+<li>参加了上海人工智能实验室组织的书生·浦语大模型实战营，目前已完成前两节,部署了一下类似chatgpt的问答demo,简单笔记如下~<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/675925793">InterLM L-1: 书生·浦语大模型全链路开源开放体系</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/676498904">InterLM L-2: 轻松玩转书生·浦语大模型趣味 Demo</a></li>
+</ul>
+</li>
+<li>阅读多模态论文：CogVLM(<a target="_blank" rel="noopener" href="https://github.com/THUDM/CogVLM">https://github.com/THUDM/CogVLM</a>)<ul>
+<li>附图：<style>.lwxwdsomxsaq{}</style><img src="/2022/09/05/Week_Report/cogvlm.png" class="lwxwdsomxsaq" alt="cogvlm"></li>
+<li>整体思路：先将 image 输入通过 MLP 映射到与 text embedding 相同的空间中(上图左侧)，然后在预训练好的LLM上嫁接用与深度对齐两个模态的 Attention 和 MLP 部分，只训练这部分即可（上图右侧）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Sensetime Internship</p>
+<ul>
+<li>onnx QAT 项目停止：详细测试之后发现，torch.onnx.export() 模型导出后 onnx 模型结构名称与原 torch 模型的名称不匹配问题已在新版本解决。原版本为 torch1.8.0 现版本 torch1.13 及 torch2.x 都已不存在该问题</li>
+<li>搞清了 Torch FX OPs 插入 &#x2F; 融合 &#x2F; 更改 的位置与做法, 整个基于 torch fx graph 去做量化的流程已走通</li>
+<li>尝试做集成主流 LLM 量化算法(包括 AWQ, SmoothQuant, GPTQ等)的库，并可扩展新的量化算法，对比学习了 Intel Neural-Compressor &#x2F; LMDeploy &#x2F; OpenPPL PPQ 等，目前还需要与 mentor 进一步探讨确定如何推进</li>
+<li>其它学习的部分：量化 &#x2F; MLLM 多模态大模型 具体见 PPT</li>
+</ul>
+</li>
+</ol>
+<h2 id="后续计划-23-12-25-24-01-07"><a href="#后续计划-23-12-25-24-01-07" class="headerlink" title="后续计划 (23.12.25-24.01.07)"></a>后续计划 (23.12.25-24.01.07)</h2><ol>
+<li>跟进 video super-resolution 量化推进</li>
+<li>LLM &#x2F; MLLM 量化算法部署测试与集成推进</li>
+<li>完成 书生·浦语大模型实战营内容</li>
+</ol>
+<h2 id="进度汇报-24-01-07-24-01-21"><a href="#进度汇报-24-01-07-24-01-21" class="headerlink" title="进度汇报 (24.01.07-24.01.21)"></a>进度汇报 (24.01.07-24.01.21)</h2><ol>
+<li>书生·浦语大模型实战营内容完成(包括基于 InternLM 和 LangChain 搭建知识库, XTuner 大模型单卡低成本微调, LMDeploy 大模型量化部署等)</li>
+<li>VSR模型量化，先基于 mmdetection 的检测模型进行流程的验证，卡在捕获计算图这一步，解决掉这一步才可以游刃有余的进行量化过程中插入 op 的操作。遇到以下两类细节上的问题，正在解决<ul>
+<li>forward 过程存在输入动态控制流，torch.fx 不支持 trace 捕获此类计算图</li>
+<li>forward 存在对 inputs 调用len() method 而捕获过程会把 inputs 转换为抽象的 proxy 作为输入，proxy object 不支持调用 len() method</li>
+</ul>
+</li>
+<li>LLM &#x2F; MLLM 量化，已经走通了常见模型 llama2-7b 的量化算法 AWQ SmoothQuant</li>
+</ol>
+<h2 id="后续计划-24-01-07-24-01-21"><a href="#后续计划-24-01-07-24-01-21" class="headerlink" title="后续计划 (24.01.07-24.01.21)"></a>后续计划 (24.01.07-24.01.21)</h2><ol>
+<li>走通捕获计算图这一步</li>
+<li>阅读 VSR 近期论文，了解最新进展</li>
+<li>其它交代的事项</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/30/Daily_Thoughts/" rel="prev" title="Daily Thoughts">
+                  <i class="fa fa-chevron-left"></i> Daily Thoughts
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/06/Tensor_Dimensions/" rel="next" title="Tensor Dimensions">
+                  Tensor Dimensions <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jarvis</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
