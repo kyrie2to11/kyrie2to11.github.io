@@ -120,7 +120,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -150,6 +150,157 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2024/12/03/SQL-Pool-Project/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/12/03/SQL-Pool-Project/" class="post-title-link" itemprop="url">SQL Pool Project</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-12-03 14:49:09" itemprop="dateCreated datePublished" datetime="2024-12-03T14:49:09+08:00">2024-12-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-05 15:12:00" itemprop="dateModified" datetime="2024-12-05T15:12:00+08:00">2024-12-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="SQL-Pool-Project-背景"><a href="#SQL-Pool-Project-背景" class="headerlink" title="SQL Pool Project 背景"></a>SQL Pool Project 背景</h2><ul>
+<li>为了提高 MySQL 数据库的访存瓶颈，在大量 SQL connection 并发的情况下，重复的<strong>TCP三次握手 -&gt; MySQL Server 连接认证 -&gt; MySQL Server 关闭连接回收资源 -&gt; TCP 四次挥手</strong>消耗大量时间，增加连接池可以减少此部分耗时</li>
+</ul>
+<h2 id="技术点"><a href="#技术点" class="headerlink" title="技术点"></a>技术点</h2><ol>
+<li>MySQL 数据库编程</li>
+<li>单例模式</li>
+<li>queue 队列容器</li>
+<li>c++11 多线程编程、线程互斥、线程同步通信和 unique_lock<ol>
+<li>进程与线程的区别和举例<ul>
+<li>资源占用<ol>
+<li>进程是资源分配的基本单位。每个进程有独立的地址空间、代码段、数据段、堆和栈。如打开一个文本编辑器和浏览器，这是两个不同的进程，资源独立</li>
+<li>线程是进程内的执行单元，共享所属进程的资源。如一个文本编辑器进程中，可能有一个线程负责接收用户键盘输入，另一个线程负责后台保存文档。这些线程共享文本编辑器进程的代码段、数据段等。</li>
+</ol>
+</li>
+<li>调度开销<ol>
+<li>进程切换开销大，线程切换开销较小</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>进程通信方式<ul>
+<li>管道(Pipe): 半双工通信（同一时刻单向信息流动），用于具有亲缘关系的进程通信</li>
+<li>消息队列(Message Queue): 相较管道克服了管道只能在具有亲缘关系的进程间通信的限制</li>
+<li>共享内存(Shared Memory)</li>
+<li>信号量(Semaphore): 相较线程通信条件变量区别在于有状态，实际上是一个计数器，可正可负，用于标识共享资源的数目或阻塞的进程数目</li>
+</ul>
+</li>
+<li>线程通信方式<ul>
+<li>互斥锁(Mutex)</li>
+<li>条件变量(Condition_Variable): 无状态</li>
+</ul>
+</li>
+<li>条件变量搭配 uniqe_lock 而不能搭配 lock_guard 原因：<ul>
+<li>Condition_Variable cv.wait(mtx) 在等待信号量通知时会先把锁释放掉，unique_lock 允许灵活的释放和获取锁。而 lock_guard 是 RAII 类型的模板类，lock_guard 对象在创建时获取互斥量的锁，析构时自动释放锁，不提供手动解锁接口</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>基于 CAS 的原子整形: (Compare and Switch) CAS</li>
+<li>智能指针 shared_ptr</li>
+<li>lambda 表达式</li>
+<li>生产者-消费者线程模型</li>
+</ol>
+<h2 id="功能点"><a href="#功能点" class="headerlink" title="功能点"></a>功能点</h2><ol>
+<li>connection_pool: 单例模式</li>
+<li>get_connection: 从 connection_pool 获取连接，需要处理获取连接超时的情况</li>
+<li>空闲连接维护在一个线程安全的 connection_queue 中</li>
+<li>如果 connection_queue 为空，需要动态创建 connection,上限 maxSize</li>
+<li>connection_queue 中空闲时长超过 maxIdleTime 的需要被释放掉，只保留初始 initSize 个 connection 即可</li>
+</ol>
+<h2 id="压力测试"><a href="#压力测试" class="headerlink" title="压力测试"></a>压力测试</h2><hr>
+<table>
+<thead>
+<tr>
+<th>数据量</th>
+<th>不用 SQL Pool</th>
+<th>使用 SQL Pool</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1000</td>
+<td>单线程：50768ms</td>
+<td>单线程：10407.6ms 四线程：1980.9ms</td>
+</tr>
+<tr>
+<td>5000</td>
+<td>单线程：244466ms</td>
+<td>单线程：21791.8ms 四线程：7504.81ms</td>
+</tr>
+<tr>
+<td>10000</td>
+<td>单线程：493808ms</td>
+<td>单线程：37665.3ms 四线程：14478.5ms</td>
+</tr>
+</tbody></table>
+<hr>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -330,9 +481,9 @@
 </ol>
 </li>
 <li>Method:  <ol>
-<li>Data-free quantization-aware training (QAT) which produces QAT data using next token data generation <code>-&gt;</code> Select appropriate fine-tuning dataset    <style>.qoxwrzqkbunj{}</style></li>
-<li>Per-channel weight quantization and per-token activation quantization (symmetric MinMax quantization), per-token quantization for KV cache <code>-&gt;</code> Identify suitable quantizer    <style>.vtdysxjjxvwe{}</style></li>
-<li>Cross-entropy based loss <code>-&gt;</code> Knowledge distillation from full precision model    <style>.rmfrpsyzygce{}</style></li>
+<li>Data-free quantization-aware training (QAT) which produces QAT data using next token data generation <code>-&gt;</code> Select appropriate fine-tuning dataset    <style>.lthlohhpzyww{}</style></li>
+<li>Per-channel weight quantization and per-token activation quantization (symmetric MinMax quantization), per-token quantization for KV cache <code>-&gt;</code> Identify suitable quantizer    <style>.dyspuhhtwzvs{}</style></li>
+<li>Cross-entropy based loss <code>-&gt;</code> Knowledge distillation from full precision model    <style>.lhvvnbtjtpsn{}</style></li>
 </ol>
 </li>
 <li>Result:<ol>
@@ -341,7 +492,7 @@
 <li>4-bit models quantized using LLM-QAT should be preferred over 8-bit models of similar size <code>-&gt;</code> 4-bit LLM-QAT models towards the best efficiency-accuracy tradeoff</li>
 </ul>
 </li>
-<li>Partial results:    <style>.gjnqkwnyubmp{}</style></li>
+<li>Partial results:    <style>.bgsrrmjdfbft{}</style></li>
 </ol>
 </li>
 <li>Limitation:<ol>
@@ -357,15 +508,15 @@
 </ol>
 </li>
 <li>Method:<ol>
-<li>Overall pipeline    <style>.gfwmdclhaqks{}</style></li>
-<li>Solely updating quantization scales while freezing the integer quantization values of pre-trained weights  <style>.driqeraxbhaf{}</style></li>
+<li>Overall pipeline    <style>.bgxrnzllnrjp{}</style></li>
+<li>Solely updating quantization scales while freezing the integer quantization values of pre-trained weights  <style>.irxgjzngiomf{}</style></li>
 </ol>
 </li>
 <li>Result:<ol>
-<li>Memory footprint, inference latency performance  <style>.vsatlelcxpoe{}</style>  
-  <style>.uqoqelqwimxw{}</style></li>
-<li>Common-sense reasoning and in-context learning performance    <style>.sessfnsjemyk{}</style></li>
-<li>Massive Multitask Language Understanding (MMLU) benchmark performance    <style>.cpcsckwhqeuj{}</style></li>
+<li>Memory footprint, inference latency performance  <style>.wgrmqcncjshi{}</style>  
+  <style>.lntgoogwviww{}</style></li>
+<li>Common-sense reasoning and in-context learning performance    <style>.vdkmgljutwbw{}</style></li>
+<li>Massive Multitask Language Understanding (MMLU) benchmark performance    <style>.mfohtqbgfbzl{}</style></li>
 </ol>
 </li>
 <li>Limitation:<ol>
@@ -380,8 +531,8 @@
 </ol>
 </li>
 <li>Method:<ol>
-<li>Overall pipeline    <style>.tjgaijpuonqb{}</style></li>
-<li>QLoRA    <style>.iyrcylivdnst{}</style>
+<li>Overall pipeline    <style>.xeycqymdmqog{}</style></li>
+<li>QLoRA    <style>.gofrsdifcmej{}</style>
 <ul>
 <li>4-bit NormalFloat Quantization <code>-&gt;</code> better quantization data type for normally distributed data compared with 4-bit Integers and 4-bit Floats (See the paper for details)</li>
 <li>Double Quantization <code>-&gt;</code> combined with NF4 to reduce the memory footprint of quantization constants i.e. weights (See the paper for details)</li>
@@ -391,8 +542,8 @@
 </ol>
 </li>
 <li>Result:<ol>
-<li>MMLU test accuracy    <style>.ciweypclhpnu{}</style></li>
-<li>Memory footprint <code>-&gt;</code> enables the finetuning of 33B parameter models on a single consumer GPU and 65B parameter models on a single professional GPU, even 7B parameter models on mobile phones(e.g. iPhone 12 Plus)  <style>.fkgpnpglnbdb{}</style></li>
+<li>MMLU test accuracy    <style>.rdgzyhyoeooe{}</style></li>
+<li>Memory footprint <code>-&gt;</code> enables the finetuning of 33B parameter models on a single consumer GPU and 65B parameter models on a single professional GPU, even 7B parameter models on mobile phones(e.g. iPhone 12 Plus)  <style>.sjzqpcfenobr{}</style></li>
 </ol>
 </li>
 <li>Limitation:<ol>
@@ -870,7 +1021,7 @@
 <li>本地host <code>ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com</code><ol>
 <li>-t rsa: 指定密钥类型为 RSA。</li>
 <li>-b 4096: 指定密钥的位数，4096 位是一种常见的安全选择。</li>
-<li>-C “<a href="mailto:&#121;&#x6f;&#117;&#x72;&#x5f;&#x65;&#x6d;&#97;&#x69;&#x6c;&#x40;&#x65;&#120;&#97;&#x6d;&#112;&#108;&#101;&#46;&#99;&#x6f;&#109;">&#121;&#x6f;&#117;&#x72;&#x5f;&#x65;&#x6d;&#97;&#x69;&#x6c;&#x40;&#x65;&#120;&#97;&#x6d;&#112;&#108;&#101;&#46;&#99;&#x6f;&#109;</a>“: 在生成的密钥中添加注释，通常使用你的电子邮件地址。</li>
+<li>-C “<a href="mailto:&#121;&#x6f;&#x75;&#114;&#95;&#101;&#x6d;&#97;&#x69;&#108;&#64;&#x65;&#120;&#x61;&#109;&#112;&#108;&#101;&#46;&#99;&#x6f;&#109;">&#121;&#x6f;&#x75;&#114;&#95;&#101;&#x6d;&#97;&#x69;&#108;&#64;&#x65;&#120;&#x61;&#109;&#112;&#108;&#101;&#46;&#99;&#x6f;&#109;</a>“: 在生成的密钥中添加注释，通常使用你的电子邮件地址。</li>
 </ol>
 </li>
 <li>将生成的ssh public key (id_rsa.pub) 复制到远程target 的 <code>~/.ssh/authorized_keys</code> (如果没有则自建此文件)中即可</li>
@@ -3156,113 +3307,6 @@
 <li>Acceleration: CPU&#x2F;TFLite GPU Delegate</li>
 </ul>
 <hr>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/13/OnePlus_Recovery/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jarvis">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarvis's Blog">
-      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Jarvis's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/13/OnePlus_Recovery/" class="post-title-link" itemprop="url">OnePlus Recovery</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-02-13 12:01:08" itemprop="dateCreated datePublished" datetime="2023-02-13T12:01:08+08:00">2023-02-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-12-02 12:28:18" itemprop="dateModified" datetime="2024-12-02T12:28:18+08:00">2024-12-02</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Procedure"><a href="#Procedure" class="headerlink" title="Procedure"></a>Procedure</h2><ol>
-<li>备份数据：相册 安装应用名单</li>
-<li>root 解锁</li>
-<li>ADB 刷入TWRP Recovery镜像</li>
-<li>刷入ROM（3种方法）<ol>
-<li>电脑的磁盘列表中找到手机，复制ROM至手机的内部存储，复制完成后在recovery主菜单中，点击Install，点击ROM包，滑动后进行刷入。</li>
-<li>用命令将ROM推送至手机（filename.zip为ROM名称，可拖动ROM文件至命令窗口自动填入完整文件地址，或输入文件名前几个字母后按Tab键来自动补全文件名）<ul>
-<li>检测设备是否连接: adb devices</li>
-<li>推送ROM: adb push ROM_name.zip &#x2F;sdcard&#x2F;</li>
-<li>推送完成后在recovery主菜单中点击Install，点击ROM包，滑动进行刷入。</li>
-</ul>
-</li>
-<li>在recovery主菜单中，点击“高级”，点击ADB sideload，滑动底部按钮，在PowerShell窗口用命令：.\adb sideload ROM_name.zip</li>
-</ol>
-</li>
-<li>刷入Magisk<ol>
-<li>目的:<ul>
-<li>未获得 Google「认证」的设备无法从 Play 应用商店下载安装 Netflix，Google Pay、Pokémon Go 等应用不能在已 root 的设备上正常运行，改动过系统文件的 ROM 无法通过 OEM 渠道进行正常的 OTA 更新升级……</li>
-<li>Magisk 的实现方式就像是一种魔法，当被挂载的 Magisk 分区被隐藏甚至被取消挂载时，原有系统分区的完整性丝毫未损，玩需要 root 验证的游戏、运行对设备认证状态有要求的应用甚至进行需要验证系统完整性的 OTA 更新都没有任何问题。</li>
-</ul>
-</li>
-<li>方法:<ol>
-<li>在刷入前，我们先安装 Magisk App 来检查设备的信息，来确定进一步的操作。我们先到官方项目地址：<a target="_blank" rel="noopener" href="https://github.com/topjohnwu/Magisk/releases">https://github.com/topjohnwu/Magisk/releases</a> 下载 apk 文件安装。<ul>
-<li>Tip:从 Magisk 22 开始，不再区分刷写用的 .zip 包与安装管理器用到的 .apk 应用安装包，二者合一且只有后缀的区别，默认提供 .apk 包，更改后缀为 .zip 后即可被刷写。</li>
-</ul>
-</li>
-<li>打开安装后的 Magisk App，像上面的最后一张截图一样，你能看到一项名为 Ramdisk 的值。请确保此项的值为「是」「True」，我们再进行下一步</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
 
       
     </div>

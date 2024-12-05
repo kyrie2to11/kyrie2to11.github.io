@@ -131,7 +131,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1341,7 +1341,7 @@
 <li>Video Super-Resolution Quantization<ul>
 <li>基于目前在Vid4、Vimeo90k、REDS数据集上SOTA模型 BasicVSR++ 进行channel-wise distribution-aware 量化pipeline的搭建（目前尚没有视频超分量化超分方向的baseline，代码难度较大）</li>
 <li>尝试引入在其它视频感知任务（Human Pose Estimation，Semantic Segmentation，Video Object Segmentation）有效上的方法，参考 ICCV2023 ResQ 将网络中相邻帧的激活之间的残差用于量化，更小的方差有利于缩小量化误差<ul>
-<li>附图：<style>.qhxebkgdfdqf{}</style><img src="/2022/09/05/Week_Report/ResQ.png" class="qhxebkgdfdqf" alt="ResQ Motivation"></li>
+<li>附图：<style>.tonxiwbrsmrd{}</style><img src="/2022/09/05/Week_Report/ResQ.png" class="tonxiwbrsmrd" alt="ResQ Motivation"></li>
 </ul>
 </li>
 </ul>
@@ -1476,7 +1476,7 @@
 <li>Prepare fx: fuse模型，也就是通常的优化，比如conv+bn啥的,利用fx对模型进行transform</li>
 <li>Insert observer: Input&#x2F;Output&#x2F;Weight 均插入observer</li>
 <li>Calibration: 输入数据进行校准，收集 weights 和 activation 的 max 和 min 等统计信息</li>
-<li>Convert fx: 在 observer 位置用相应的 quantize&#x2F;dequantize module代替,并合并到原始的layer中<br>附图：<style>.hmlijnsibqip{}</style><img src="/2022/09/05/Week_Report/torch.fx_ptq.PNG" class="hmlijnsibqip" alt="torch fx ptq"></li>
+<li>Convert fx: 在 observer 位置用相应的 quantize&#x2F;dequantize module代替,并合并到原始的layer中<br>附图：<style>.vbgndvnqjhmb{}</style><img src="/2022/09/05/Week_Report/torch.fx_ptq.PNG" class="vbgndvnqjhmb" alt="torch fx ptq"></li>
 </ol>
 </li>
 <li>推导验证 RepVGG 重参数轻量化方法与 QAT 联合使用的 weight range 能否获得数学上的等价变换问题: 具体来说，多支路 conv 合并前运用 QAT 提升精度, 在多支路 conv 合并后根据 QAT 训练得到的多分支 conv weight 的浮点数范围 (Real Range) 能否等价得到合并后的 conv weight 的浮点数范围，此浮点数范围与量化&#x2F;反量化过程的 scale factor 和 zero point 基本等价可互推 -&gt; 结论无法无损等价</li>
@@ -1536,7 +1536,7 @@
 </ul>
 </li>
 <li>阅读多模态论文：CogVLM(<a target="_blank" rel="noopener" href="https://github.com/THUDM/CogVLM">https://github.com/THUDM/CogVLM</a>)<ul>
-<li>附图：<style>.lwxwdsomxsaq{}</style><img src="/2022/09/05/Week_Report/cogvlm.png" class="lwxwdsomxsaq" alt="cogvlm"></li>
+<li>附图：<style>.fuiwjwiejpvj{}</style><img src="/2022/09/05/Week_Report/cogvlm.png" class="fuiwjwiejpvj" alt="cogvlm"></li>
 <li>整体思路：先将 image 输入通过 MLP 映射到与 text embedding 相同的空间中(上图左侧)，然后在预训练好的LLM上嫁接用与深度对齐两个模态的 Attention 和 MLP 部分，只训练这部分即可（上图右侧）</li>
 </ul>
 </li>

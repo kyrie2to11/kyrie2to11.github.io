@@ -120,7 +120,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -150,6 +150,113 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/13/OnePlus_Recovery/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/02/13/OnePlus_Recovery/" class="post-title-link" itemprop="url">OnePlus Recovery</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-02-13 12:01:08" itemprop="dateCreated datePublished" datetime="2023-02-13T12:01:08+08:00">2023-02-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-02 12:28:18" itemprop="dateModified" datetime="2024-12-02T12:28:18+08:00">2024-12-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Procedure"><a href="#Procedure" class="headerlink" title="Procedure"></a>Procedure</h2><ol>
+<li>备份数据：相册 安装应用名单</li>
+<li>root 解锁</li>
+<li>ADB 刷入TWRP Recovery镜像</li>
+<li>刷入ROM（3种方法）<ol>
+<li>电脑的磁盘列表中找到手机，复制ROM至手机的内部存储，复制完成后在recovery主菜单中，点击Install，点击ROM包，滑动后进行刷入。</li>
+<li>用命令将ROM推送至手机（filename.zip为ROM名称，可拖动ROM文件至命令窗口自动填入完整文件地址，或输入文件名前几个字母后按Tab键来自动补全文件名）<ul>
+<li>检测设备是否连接: adb devices</li>
+<li>推送ROM: adb push ROM_name.zip &#x2F;sdcard&#x2F;</li>
+<li>推送完成后在recovery主菜单中点击Install，点击ROM包，滑动进行刷入。</li>
+</ul>
+</li>
+<li>在recovery主菜单中，点击“高级”，点击ADB sideload，滑动底部按钮，在PowerShell窗口用命令：.\adb sideload ROM_name.zip</li>
+</ol>
+</li>
+<li>刷入Magisk<ol>
+<li>目的:<ul>
+<li>未获得 Google「认证」的设备无法从 Play 应用商店下载安装 Netflix，Google Pay、Pokémon Go 等应用不能在已 root 的设备上正常运行，改动过系统文件的 ROM 无法通过 OEM 渠道进行正常的 OTA 更新升级……</li>
+<li>Magisk 的实现方式就像是一种魔法，当被挂载的 Magisk 分区被隐藏甚至被取消挂载时，原有系统分区的完整性丝毫未损，玩需要 root 验证的游戏、运行对设备认证状态有要求的应用甚至进行需要验证系统完整性的 OTA 更新都没有任何问题。</li>
+</ul>
+</li>
+<li>方法:<ol>
+<li>在刷入前，我们先安装 Magisk App 来检查设备的信息，来确定进一步的操作。我们先到官方项目地址：<a target="_blank" rel="noopener" href="https://github.com/topjohnwu/Magisk/releases">https://github.com/topjohnwu/Magisk/releases</a> 下载 apk 文件安装。<ul>
+<li>Tip:从 Magisk 22 开始，不再区分刷写用的 .zip 包与安装管理器用到的 .apk 应用安装包，二者合一且只有后缀的区别，默认提供 .apk 包，更改后缀为 .zip 后即可被刷写。</li>
+</ul>
+</li>
+<li>打开安装后的 Magisk App，像上面的最后一张截图一样，你能看到一项名为 Ramdisk 的值。请确保此项的值为「是」「True」，我们再进行下一步</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -4412,7 +4519,7 @@
 <li>Video Super-Resolution Quantization<ul>
 <li>基于目前在Vid4、Vimeo90k、REDS数据集上SOTA模型 BasicVSR++ 进行channel-wise distribution-aware 量化pipeline的搭建（目前尚没有视频超分量化超分方向的baseline，代码难度较大）</li>
 <li>尝试引入在其它视频感知任务（Human Pose Estimation，Semantic Segmentation，Video Object Segmentation）有效上的方法，参考 ICCV2023 ResQ 将网络中相邻帧的激活之间的残差用于量化，更小的方差有利于缩小量化误差<ul>
-<li>附图：<style>.qhxebkgdfdqf{}</style><img src="/2022/09/05/Week_Report/ResQ.png" class="qhxebkgdfdqf" alt="ResQ Motivation"></li>
+<li>附图：<style>.tonxiwbrsmrd{}</style><img src="/2022/09/05/Week_Report/ResQ.png" class="tonxiwbrsmrd" alt="ResQ Motivation"></li>
 </ul>
 </li>
 </ul>
@@ -4547,7 +4654,7 @@
 <li>Prepare fx: fuse模型，也就是通常的优化，比如conv+bn啥的,利用fx对模型进行transform</li>
 <li>Insert observer: Input&#x2F;Output&#x2F;Weight 均插入observer</li>
 <li>Calibration: 输入数据进行校准，收集 weights 和 activation 的 max 和 min 等统计信息</li>
-<li>Convert fx: 在 observer 位置用相应的 quantize&#x2F;dequantize module代替,并合并到原始的layer中<br>附图：<style>.hmlijnsibqip{}</style><img src="/2022/09/05/Week_Report/torch.fx_ptq.PNG" class="hmlijnsibqip" alt="torch fx ptq"></li>
+<li>Convert fx: 在 observer 位置用相应的 quantize&#x2F;dequantize module代替,并合并到原始的layer中<br>附图：<style>.vbgndvnqjhmb{}</style><img src="/2022/09/05/Week_Report/torch.fx_ptq.PNG" class="vbgndvnqjhmb" alt="torch fx ptq"></li>
 </ol>
 </li>
 <li>推导验证 RepVGG 重参数轻量化方法与 QAT 联合使用的 weight range 能否获得数学上的等价变换问题: 具体来说，多支路 conv 合并前运用 QAT 提升精度, 在多支路 conv 合并后根据 QAT 训练得到的多分支 conv weight 的浮点数范围 (Real Range) 能否等价得到合并后的 conv weight 的浮点数范围，此浮点数范围与量化&#x2F;反量化过程的 scale factor 和 zero point 基本等价可互推 -&gt; 结论无法无损等价</li>
@@ -4607,7 +4714,7 @@
 </ul>
 </li>
 <li>阅读多模态论文：CogVLM(<a target="_blank" rel="noopener" href="https://github.com/THUDM/CogVLM">https://github.com/THUDM/CogVLM</a>)<ul>
-<li>附图：<style>.lwxwdsomxsaq{}</style><img src="/2022/09/05/Week_Report/cogvlm.png" class="lwxwdsomxsaq" alt="cogvlm"></li>
+<li>附图：<style>.fuiwjwiejpvj{}</style><img src="/2022/09/05/Week_Report/cogvlm.png" class="fuiwjwiejpvj" alt="cogvlm"></li>
 <li>整体思路：先将 image 输入通过 MLP 映射到与 text embedding 相同的空间中(上图左侧)，然后在预训练好的LLM上嫁接用与深度对齐两个模态的 Attention 和 MLP 部分，只训练这部分即可（上图右侧）</li>
 </ul>
 </li>
@@ -4911,94 +5018,6 @@
 <li>如何把本地和github上的代码加载到集群</li>
 </ol>
 <h2 id="Deprecate"><a href="#Deprecate" class="headerlink" title="Deprecate"></a>Deprecate</h2>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/08/25/Hello_World/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jarvis">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarvis's Blog">
-      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Jarvis's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/08/25/Hello_World/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-08-25 11:07:19" itemprop="dateCreated datePublished" datetime="2022-08-25T11:07:19+08:00">2022-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-12-02 12:38:04" itemprop="dateModified" datetime="2024-12-02T12:38:04+08:00">2024-12-02</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
       
     </div>
 
