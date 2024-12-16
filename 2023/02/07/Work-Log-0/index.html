@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kyrie2to11.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Time:2023.2.7-2023.4.15Paper Reading PD-Quant: Post-Training Quantization based on Prediction Difference Metric（2022.12）  分析优化量化参数S Z用的各个Local Metrics (MSE  or cosine distance  of the activation befor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mobile Video Super-Resolution Work Log">
+<meta property="og:url" content="https://kyrie2to11.github.io/2023/02/07/Work-Log-0/index.html">
+<meta property="og:site_name" content="Jarvis&#39;s Blog">
+<meta property="og:description" content="Time:2023.2.7-2023.4.15Paper Reading PD-Quant: Post-Training Quantization based on Prediction Difference Metric（2022.12）  分析优化量化参数S Z用的各个Local Metrics (MSE  or cosine distance  of the activation befor">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-07T06:31:56.000Z">
+<meta property="article:modified_time" content="2024-12-02T07:23:39.721Z">
+<meta property="article:author" content="jarvis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kyrie2to11.github.io/2023/02/07/Work-Log-0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kyrie2to11.github.io/2023/02/07/Work-Log-0/","path":"2023/02/07/Work-Log-0/","title":"Mobile Video Super-Resolution Work Log"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Mobile Video Super-Resolution Work Log | Jarvis's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jarvis's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活，沉淀自己</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Time-2023-2-7-2023-4-15"><span class="nav-number">1.</span> <span class="nav-text">Time:2023.2.7-2023.4.15</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paper-Reading"><span class="nav-number">2.</span> <span class="nav-text">Paper Reading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Idea"><span class="nav-number">3.</span> <span class="nav-text">Idea</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Metrics"><span class="nav-number">4.</span> <span class="nav-text">Metrics</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Full-Reference"><span class="nav-number">4.1.</span> <span class="nav-text">Full-Reference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#No-Reference"><span class="nav-number">4.2.</span> <span class="nav-text">No-Reference</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Results"><span class="nav-number">5.</span> <span class="nav-text">Results</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Milestone-0"><span class="nav-number">5.1.</span> <span class="nav-text">Milestone_0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Milestone-1"><span class="nav-number">5.2.</span> <span class="nav-text">Milestone_1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Milestone-2"><span class="nav-number">5.3.</span> <span class="nav-text">Milestone_2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Milestone-3"><span class="nav-number">5.4.</span> <span class="nav-text">Milestone_3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Benchmark-0"><span class="nav-number">6.</span> <span class="nav-text">Benchmark_0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Benchmark-1"><span class="nav-number">7.</span> <span class="nav-text">Benchmark_1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PaperWriting"><span class="nav-number">8.</span> <span class="nav-text">PaperWriting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#No-1"><span class="nav-number">8.1.</span> <span class="nav-text">No.1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#No-2"><span class="nav-number">8.2.</span> <span class="nav-text">No.2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#No-3"><span class="nav-number">8.3.</span> <span class="nav-text">No.3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PaperReference"><span class="nav-number">9.</span> <span class="nav-text">PaperReference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jarvis</p>
+  <div class="site-description" itemprop="description">记录学习和生活，留下时光的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/07/Work-Log-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Mobile Video Super-Resolution Work Log | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mobile Video Super-Resolution Work Log
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-02-07 14:31:56" itemprop="dateCreated datePublished" datetime="2023-02-07T14:31:56+08:00">2023-02-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-02 15:23:39" itemprop="dateModified" datetime="2024-12-02T15:23:39+08:00">2024-12-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="Time-2023-2-7-2023-4-15"><a href="#Time-2023-2-7-2023-4-15" class="headerlink" title="Time:2023.2.7-2023.4.15"></a>Time:2023.2.7-2023.4.15</h2><h2 id="Paper-Reading"><a href="#Paper-Reading" class="headerlink" title="Paper Reading"></a>Paper Reading</h2><ol>
+<li><p>PD-Quant: Post-Training Quantization based on Prediction Difference Metric（2022.12）</p>
+<ul>
+<li>分析优化量化参数S Z用的各个Local Metrics (MSE  or cosine distance  of the activation before and after quantization in layers)</li>
+<li>PD Loss： 引入Prediction Difference决定Activation Scaling Factors</li>
+<li>Distribution Correction (DC):  intermediate adjust the activation distribution on the calibration dataset</li>
+</ul>
+</li>
+<li><p>Nonuniform-to-Uniform Quantization: Towards Accurate Quantization via Generalized Straight-Through Estimation</p>
+</li>
+<li><p>Data-Free Network Compression via Parametric Non-uniform Mixed Precision Quantization（2022CVPR）</p>
+</li>
+<li><p>Computer Vision – ECCV 2022 Workshops</p>
+<ul>
+<li>Learning Multiple Probabilistic Degradation Generators for Unsupervised Real World Image Super Resolution (无监督图像超分)</li>
+<li>Evaluating Image Super-Resolution Performance on Mobile Devices: An Online Benchmark (SR模型直接部署基准测试)</li>
+<li>Efficient Image Super-Resolution Using Vast-Receptive-Field Attention (大感受野Attention图像超分)</li>
+<li>DSR: Towards Drone Image Super-Resolution (无人机图像超分)</li>
+<li>Image Super-Resolution with Deep Variational Autoencoders (变分自动编码器用于SISR)</li>
+<li>Light Field Angular Super-Resolution via Dense Correspondence Field Reconstruction (光场角超分辨率)</li>
+<li>CIDBNet: A Consecutively-Interactive Dual-Branch Network for JPEG Compressed Image Super-Resolution (JPEG压缩图像超分)</li>
+<li>XCAT - Lightweight Quantized Single Image Super-Resolution Using Heterogeneous Group Convolutions and Cross Concatenation (单图像超分)</li>
+<li>RCBSR: Re-parameterization Convolution Block for Super-Resolution (结构重参数视频超分)</li>
+<li>Multi-patch Learning: Looking More Pixels in the Training Phase (多patch训练策略SISR)</li>
+<li>Fast Nearest Convolution for Real-Time Efficient Image Super-Resolution (Nearest Convolution替代copy原图像用于depth_to_space操作)</li>
+<li>Real-Time Channel Mixing Net for Mobile Image Super-Resolution (单图像超分：channel mixing using 1*1 conv)</li>
+<li>Sliding Window Recurrent Network for Efficient Video Super-Resolution (视频超分)</li>
+<li>EESRNet: A Network for Energy Efficient Super-Resolution (视频超分)</li>
+<li>HST: Hierarchical Swin Transformer for Compressed Image Super-Resolution (压缩图像超分)</li>
+<li>Swin2SR: SwinV2 Transformer for Compressed Image Super-Resolution and Restoration (压缩图像超分)</li>
+</ul>
+</li>
+<li><p>Video Super-Resolution With Convolutional Neural Networks(2016)</p>
+<ul>
+<li>将当前帧与相邻帧简单concate，提升超分质量</li>
+</ul>
+</li>
+<li><p>Frame-Recurrent Video Super-Resolution(2017)</p>
+<ul>
+<li>利用前帧预测的HR结果补偿当前帧超分</li>
+</ul>
+</li>
+<li><p>Enhanced Deep Residual Networks for Single Image Super-Resolution(2017)</p>
+<ul>
+<li>ResBlock: 相较之前的工作减少ReLU等激活的使用</li>
+<li>Upsample: conv+shuffle</li>
+</ul>
+</li>
+<li><p>TDAN: Temporally-Deformable Alignment Network for Video Super-Resolution(CVPR2020)</p>
+<ul>
+<li>时序可变形卷积对齐网络用于缓解超分的伪影现象</li>
+</ul>
+</li>
+<li><p>Efficient Reference-based Video Super-Resolution (ERVSR): Single Reference Image Is All You Need(WACV2023)</p>
+<ul>
+<li>单个参考帧来超分整个低分辨率视频序列，不使用每个时间步的LR帧作为参考，而只用中心时间步的一帧作为参考</li>
+<li>基于注意力机制做相似性估计和对齐操作</li>
+<li>动机：加速推理，减少内存消耗</li>
+</ul>
+</li>
+<li><p>BasicVSR: The Search for Essential Components in Video Super-Resolution and Beyond(CVPR2021)</p>
+</li>
+<li><p>BasicVSR++: Improving Video Super-Resolution with Enhanced Propagation and Alignment(CVPR2022)</p>
+</li>
+<li><p>Multi-scale attention network for image super-resolution(ECCV2018)</p>
+<ul>
+<li>Multi-scale cross block(MSCB) 3个并行但不同dilation的卷积提取特征并融合</li>
+<li>Multi-path wide-activated attention block(MWAB) 3个并行支路: 卷积 + spatial attention + channel attention concate</li>
+<li>缺点: 常规的channel attention采取的global average pooling 不一定能实现正确考虑通道间相关性的目的</li>
+</ul>
+</li>
+<li><p>Deep Video Super-Resolution using Hybrid Imaging System(2023)</p>
+<ul>
+<li>任务: 利用一段LR高帧率视频(main video)和一段HR低帧率视频(auxiliary video)重建HR高帧率视频</li>
+<li>模型3部分：<ol>
+<li>主视频超分产生基础的高清帧</li>
+<li>辅助视频细节特征提取并进行对齐</li>
+<li>混合视频信息聚集融合</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>STDAN: Deformable Attention Network for Space-Time Video Super-Resolution(2023)</p>
+<ul>
+<li>变形注意力网络 deformable attention network</li>
+<li>长短距离特征插值 long short-term feature interpolation (LSTFI)</li>
+<li>时空变形特征聚集 spatial–temporal deformable feature aggregation (STDFA)</li>
+</ul>
+</li>
+<li><p>ShuffleMixer: An Efficient ConvNet for Image Super-Resolution(NTIRE2022)</p>
+<ul>
+<li>large convolution and channel split-shuffle operation 大卷积核搭配通道分割-混合操作</li>
+<li>add the Fused-MBConv after every two shuffle mixer layers 两层shuffle-mixer层之后接Fused-MBConv层克服局部特征提取不完善的问题</li>
+</ul>
+</li>
+<li><p>An Implicit Alignment for Video Super-Resolution (ArXiv 2023)</p>
+<ul>
+<li>static upsample evolution: 静态插值上采样如 bilinear、nearest插值的动态化演进</li>
+<li>implicit attention based alignment integrate with local window key&amp;value position encoding and query(motion estimation&#x2F;flow) position encoding: 基于注意力隐式对齐并结合局部窗口键值位置编码和运动补偿位置编码</li>
+</ul>
+</li>
+<li><p>Rethinking Alignment in Video Super-Resolution Transformers (NIPS 2022)</p>
+<ul>
+<li>矩阵点乘：tf.multiply(A,B) &#x3D; A * B</li>
+<li>矩阵叉乘：tf.matmul(A,B) &#x3D; A @ B</li>
+</ul>
+</li>
+</ol>
+<h2 id="Idea"><a href="#Idea" class="headerlink" title="Idea"></a>Idea</h2><ol>
+<li><p>发现以前文章的问题尝试改进和解决 -&gt; 单纯比较runtime必败</p>
+</li>
+<li><p>transformer PTQ -&gt; 暂时不考虑, 专心workshop提性能</p>
+</li>
+<li><p>从第一个work出paper的角度,可以考虑新的压缩方面的idea应用于MAI video super resolution</p>
+<ul>
+<li>dataset -&gt; train: REDS, test: REDS4(Clips 000, 011, 015, 020 of REDS training set)</li>
+<li>mobile video super resolution related paper</li>
+<li>frontier -&gt; Optical Flow</li>
+</ul>
+</li>
+<li><p>尝试blind video super resolution -&gt; 放弃</p>
+</li>
+<li><table>
+<thead>
+<tr>
+<th>Compared Solutions</th>
+<th>Model Size, KB</th>
+<th>PSNR</th>
+<th>SSIM</th>
+<th>Runtime, ms</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MVideoSR</td>
+<td>17</td>
+<td>27.34</td>
+<td>0.7799</td>
+<td>3.05</td>
+</tr>
+<tr>
+<td>ZX_VIP</td>
+<td>20</td>
+<td>27.52</td>
+<td>0.7872</td>
+<td>3.04</td>
+</tr>
+<tr>
+<td>Fighter</td>
+<td>11</td>
+<td>27.34</td>
+<td>0.7816</td>
+<td>3.41</td>
+</tr>
+<tr>
+<td>XJTU-MIGU SUPER</td>
+<td>50</td>
+<td>27.77</td>
+<td>0.7957</td>
+<td>3.25</td>
+</tr>
+<tr>
+<td>BOE-IOT-AIBD</td>
+<td>40</td>
+<td>27.71</td>
+<td>0.7820</td>
+<td>1.97</td>
+</tr>
+<tr>
+<td>GenMedia Group</td>
+<td>135</td>
+<td>28.40</td>
+<td>0.8105</td>
+<td>3.10</td>
+</tr>
+<tr>
+<td>NCUT VGroup</td>
+<td>35</td>
+<td>27.46</td>
+<td>0.7822</td>
+<td>1.39</td>
+</tr>
+<tr>
+<td>Mortar ICT</td>
+<td>75</td>
+<td>22.91</td>
+<td>0.7546</td>
+<td>1.76</td>
+</tr>
+<tr>
+<td>RedCat AutoX</td>
+<td>62</td>
+<td>27.71</td>
+<td>0.7945</td>
+<td>7.26</td>
+</tr>
+<tr>
+<td>221B</td>
+<td>186</td>
+<td>28.19</td>
+<td>0.8093</td>
+<td>10.1</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>了解最新的基于数据集 REDS &#x2F; Viemo-90K &#x2F; Vid4 &#x2F; UDM10 &#x2F; SPMCS &#x2F; RealVSR的最新研究进展</p>
+<table>
+<thead>
+<tr>
+<th>Paper</th>
+<th>Source</th>
+<th>Training Set</th>
+<th>Testing Set</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Achieving on-Mobile Real-Time Super-Resolution with Neural Architecture and Pruning Search</td>
+<td>ICCV 2021</td>
+<td>DIV2K</td>
+<td>Set5, Set14, B100 and Urban100</td>
+</tr>
+<tr>
+<td>LiDeR: Lightweight Dense Residual Network for Video Super-Resolution on Mobile Devices</td>
+<td>2022 IEEE 14th Image, Video, and Multidimensional Signal Processing Workshop (IVMSP)</td>
+<td>REDS</td>
+<td>REDS</td>
+</tr>
+<tr>
+<td>Cross-Resolution Flow Propagation for Foveated Video Super-Resolution</td>
+<td>Winter Conference on Applications of Computer Vision. 2023</td>
+<td>REDS</td>
+<td>REDS</td>
+</tr>
+<tr>
+<td>Online Video Super-Resolution with Convolutional Kernel Bypass Graft</td>
+<td>arxiv 2022.8</td>
+<td>REDS</td>
+<td>REDS</td>
+</tr>
+<tr>
+<td>Real-Time Super-Resolution for Real-World Images on Mobile Devices</td>
+<td>2022 IEEE 5th International Conference on Multimedia Information Processing and Retrieval (MIPR)</td>
+<td>DIV2K</td>
+<td>DIV2K, Set5, Set14, BSD100, Manga109, and Urban100</td>
+</tr>
+<tr>
+<td>Towards High-Quality and Efficient Video Super-Resolution via Spatial-Temporal Data Overfitting</td>
+<td>CVPR 2023</td>
+<td>VSD4K</td>
+<td>VSD4K</td>
+</tr>
+<tr>
+<td>Rethinking Alignment in Video Super-Resolution Transformers</td>
+<td>NeurIPS 2022</td>
+<td>REDS</td>
+<td>REDS</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>SWAT的PSNR最好要刷到28以上, 完成 pruning, weight clustering, INT8&#x2F;FP16 quantization</p>
+</li>
+<li><p>测试fintune之后的tensorflow模型和tflite模型 -&gt;</p>
+</li>
+<li><p>对比的方法要在同一设置下 -&gt; 设置对比排行榜</p>
+</li>
+<li><p>实验：SWRN整体框架不变替换Partial Standard Conv加持的VAB -&gt; PSNR：27.76 无明显提高</p>
+</li>
+<li><p>查资料理解：attention机制怎样实现，怎样起作用，是否需要级联叠加</p>
+</li>
+<li><p>应用MobileOne结构重参数</p>
+</li>
+</ol>
+<h2 id="Metrics"><a href="#Metrics" class="headerlink" title="Metrics"></a>Metrics</h2><h3 id="Full-Reference"><a href="#Full-Reference" class="headerlink" title="Full-Reference"></a>Full-Reference</h3><ol>
+<li>Peak Signal to Noise Ratio (PSNR)</li>
+<li>Structural SIMilarity (SSIM)</li>
+<li>Gradient Magnitude Similarity Deviation (GMSD)</li>
+</ol>
+<h3 id="No-Reference"><a href="#No-Reference" class="headerlink" title="No-Reference"></a>No-Reference</h3><ol>
+<li>Naturalness Image Quality Evaluator (NIQE)</li>
+<li>Blind&#x2F;Referenceless Image Spatial QUality Evaluator (BRISQUE)</li>
+<li>Distortion Identification-based Image Verity and INtegrity Evalutation (DIIVINE)</li>
+<li>BLind Image Integrity Notator using DCT-Statistics (BLIINDS)</li>
+</ol>
+<h2 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h2><h3 id="Milestone-0"><a href="#Milestone-0" class="headerlink" title="Milestone_0"></a>Milestone_0</h3><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+<th>FLOPs [G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VapSR_4_1</td>
+<td>Functional VapSR_4 with pixel norm realized by layer normalization, VAB activation: RELU, Attention using Partial conv</td>
+<td>REDS</td>
+<td>27.790268</td>
+<td>0.77721727</td>
+<td>59,468</td>
+<td>654.0 (INT8_CPU)</td>
+<td>7.462</td>
+</tr>
+<tr>
+<td>SWAT_0</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;4)</td>
+<td>REDS</td>
+<td>27.842232</td>
+<td>0.77754354</td>
+<td>50,624</td>
+<td>271.0   (FP16_CPU)</td>
+<td>5.803</td>
+</tr>
+<tr>
+<td>SWAT_1</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;2), replace fc with 1*1 conv</td>
+<td>REDS</td>
+<td>27.759375</td>
+<td>0.77492595</td>
+<td>33,984</td>
+<td>252.0 (FP16_CPU)</td>
+<td>3.900</td>
+</tr>
+<tr>
+<td>SWAT_2</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;1), replace fc with 1*1 conv</td>
+<td>REDS</td>
+<td>27.760305</td>
+<td>0.77487457</td>
+<td>25,664</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>SWAT_3</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;1), replace fc with 1*1 conv, replace pixel normalization with layer normalization</td>
+<td>REDS</td>
+<td>27.761642</td>
+<td>0.7748446</td>
+<td>25,664</td>
+<td>27.8 (FP16_TFLite GPU Delegate)</td>
+<td>2.949</td>
+</tr>
+<tr>
+<td>SWAT_3_1</td>
+<td>Sliding Window, VAB Attention(large reception field&#x3D;17), Partial Conv(point_wise: standard conv, depth_wise: group conv), Channel Shuffle(mix_ratio&#x3D;1), replace fc with 1*1 conv, replace pixel normalization with layer normalization</td>
+<td>REDS</td>
+<td>27.761642</td>
+<td>0.7748446</td>
+<td>25,664</td>
+<td>27.8 (FP16_TFLite GPU Delegate)</td>
+<td>2.949</td>
+</tr>
+<tr>
+<td>SWAT_3_2</td>
+<td>Sliding Window, VAB Attention(large receptive field&#x3D;17), Partial Conv(point_wise: standard conv, depth_wise: group conv), Channel Shuffle(mix_ratio&#x3D;2), replace fc with 1*1 conv, replace pixel normalization with layer normalization</td>
+<td>REDS</td>
+<td>27.74189</td>
+<td>0.7742521</td>
+<td>26,016</td>
+<td>32.4 (FP16_TFLite GPU Delegate)</td>
+<td>2.996</td>
+</tr>
+<tr>
+<td>SWAT_4</td>
+<td>Sliding Window, VAB Attention, Replace partial conv with standard convlution, Remove Channel Shuffle, replace pixel normalization with layer normalization</td>
+<td>REDS</td>
+<td>27.785185</td>
+<td>0.77523285</td>
+<td>53,696</td>
+<td>38.5 (FP16_TFLite GPU Delegate)</td>
+<td>6.202</td>
+</tr>
+<tr>
+<td>SWAT_5</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;1), replace fc with 1*1 conv, replace pixel normalization with layer normalization, enlarge train step numbers to 250,000</td>
+<td>REDS</td>
+<td>27.811176</td>
+<td>0.7763541</td>
+<td>25,664</td>
+<td>27.6 (FP16_TFLite GPU Delegate)</td>
+<td>2.949</td>
+</tr>
+<tr>
+<td>SWAT_6</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Modified Channel Shuffle (mix_ratio:1), Remove convs of hidden forward&#x2F;backward</td>
+<td>REDS</td>
+<td>27.738842</td>
+<td>0.7743317</td>
+<td>21,056</td>
+<td>- (FP16_TFLite GPU Delegate)</td>
+<td>2.417</td>
+</tr>
+<tr>
+<td>SWAT_7</td>
+<td>Sliding Window, 3 branchs VAB Attention, Partial Conv, Remove Channel Shuffle, Replace pixel normalization with layer normalization</td>
+<td>REDS</td>
+<td>27.645552</td>
+<td>0.77121794</td>
+<td>18,144</td>
+<td>- (FP16_TFLite GPU Delegate)</td>
+<td>2.090</td>
+</tr>
+<tr>
+<td>SWAT_8</td>
+<td>Sliding Window, VAB Attention modified 2</td>
+<td>REDS</td>
+<td>27.782675</td>
+<td>0.77573705</td>
+<td>45,424</td>
+<td>- (FP16_TFLite GPU Delegate)</td>
+<td>5.200</td>
+</tr>
+<tr>
+<td>SWAT_9</td>
+<td>Sliding Window, Non Activation Block</td>
+<td>REDS</td>
+<td>27.636255</td>
+<td>0.7709387</td>
+<td>23,648</td>
+<td>288.0 (FP16_TFLite GPU Delegate)</td>
+<td>2.113</td>
+</tr>
+</tbody></table>
+<hr>
+<p><em>AI benchmark setting for Runtime test:</em>  </p>
+<ul>
+<li>Input Values range(min,max): 0,255  </li>
+<li>Inference Mode: INT8&#x2F;FP16  </li>
+<li>Acceleration: CPU&#x2F;TFLite GPU Delegate</li>
+</ul>
+<h3 id="Milestone-1"><a href="#Milestone-1" class="headerlink" title="Milestone_1"></a>Milestone_1</h3><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+<th>FLOPs [G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SWAT_3_3</td>
+<td>Sliding Window, VAB Attention(large reception field&#x3D;13 with channel shuffle[Dense(unints)]), Partial Conv(standard conv), Replace pixel normalization with layer normalization</td>
+<td>REDS</td>
+<td>27.761633</td>
+<td>0.7752705</td>
+<td>27,472</td>
+<td>30.3 (FP16_TFLite GPU Delegate)</td>
+<td>3.165</td>
+</tr>
+<tr>
+<td>SWAT_3_4</td>
+<td>Sliding Window, VAB Attention(large reception field&#x3D;13 without channel shuffle[Dense(unints)], stack 2 blocks), Partial Conv(standard conv), Replace pixel normalization with layer normalization</td>
+<td>REDS</td>
+<td>27.80347</td>
+<td>0.77701694</td>
+<td>32,832</td>
+<td>40.9 (FP16_TFLite GPU Delegate)</td>
+<td>3.798</td>
+</tr>
+<tr>
+<td>SWAT_3_5</td>
+<td>Sliding Window, VAB Attention(large reception field&#x3D;17 without channel shuffle[Dense(unints)], stack 2 blocks, pointwise conv for channel fusion without PConv), Partial Conv(standard conv), Replace pixel normalization with layer normalization</td>
+<td>REDS</td>
+<td>27.840628</td>
+<td>0.7774375</td>
+<td>37,312</td>
+<td>39.4 (FP16_TFLite GPU Delegate)</td>
+<td>4.302</td>
+</tr>
+<tr>
+<td>SWAT_3_6</td>
+<td>Sliding Window, VAB Attention(large reception field&#x3D;17 without channel shuffle[Dense(unints)], stack 2 blocks, pointwise conv for channel fusion without PConv), Partial Conv(standard conv), Replace pixel normalization with layer normalization, Shallow feature extraction using standard conv</td>
+<td>REDS</td>
+<td>27.8165</td>
+<td>0.7774126</td>
+<td>42,624</td>
+<td>40.7 (FP16_TFLite GPU Delegate)</td>
+<td>4.916</td>
+</tr>
+<tr>
+<td>SWAT_3_7</td>
+<td>Sliding Window, VAB Attention(large reception field&#x3D;17 without channel shuffle[Dense(unints)], stack 2 blocks, pointwise conv for channel fusion without PConv), Partial Conv(standard conv), Replace pixel normalization with layer normalization, Remove concat and unpack of hidden state</td>
+<td>REDS</td>
+<td>27.182861</td>
+<td>0.7562948</td>
+<td>29,136</td>
+<td>29.0 (FP16_TFLite GPU Delegate)</td>
+<td>3.357</td>
+</tr>
+<tr>
+<td>SWAT_3_8</td>
+<td>Sliding Window, VAB Attention(large reception field&#x3D;17 without channel shuffle[Dense(unints)], stack 2 blocks, pointwise conv for channel fusion without PConv), Partial Conv(standard conv), Replace pixel normalization with layer normalization, Remove concat and unpack of hidden state, Increase channels of fusion attention</td>
+<td>REDS</td>
+<td>27.564552</td>
+<td>0.7688081</td>
+<td>56,032</td>
+<td>39.1 (FP16_TFLite GPU Delegate)</td>
+<td>6.456</td>
+</tr>
+<tr>
+<td>SWAT_3_9</td>
+<td>Sliding Window, VAB Attention and IMDB hybrid</td>
+<td>REDS</td>
+<td>27.95189</td>
+<td>0.7806478</td>
+<td>53,312</td>
+<td>42.8 (FP16_TFLite GPU Delegate)</td>
+<td>6.367</td>
+</tr>
+<tr>
+<td>SWAT_3_10</td>
+<td>Sliding Window, Finetuned VAB Attention</td>
+<td>REDS</td>
+<td>27.846352</td>
+<td>0.77762717</td>
+<td>53,512</td>
+<td>49.0 (FP16_TFLite GPU Delegate)</td>
+<td>6.170</td>
+</tr>
+<tr>
+<td>ABPN_0</td>
+<td>Origin</td>
+<td>REDS</td>
+<td>27.92307</td>
+<td>0.779504</td>
+<td>62,048</td>
+<td>38.1&#x2F;35.7 (INT8&#x2F;FP16_TFLite GPU Delegate)</td>
+<td>7.137</td>
+</tr>
+<tr>
+<td>ABPN_1</td>
+<td>GenMedia Group Modified(L1 Charbonnier loss; crop_size:64)</td>
+<td>REDS</td>
+<td>27.858198</td>
+<td>0.7780704</td>
+<td>58,304</td>
+<td>37.1&#x2F;33.0 (INT8&#x2F;FP16_TFLite GPU Delegate)</td>
+<td>6.699</td>
+</tr>
+<tr>
+<td>ABPN_2</td>
+<td>GenMedia Group Modified(MAE loss; crop_size:96)</td>
+<td>REDS</td>
+<td>27.875465</td>
+<td>0.7783027</td>
+<td>58,304</td>
+<td>37.1&#x2F;33.0 (INT8&#x2F;FP16_TFLite GPU Delegate)</td>
+<td>6.699</td>
+</tr>
+<tr>
+<td>AFAVSR_0</td>
+<td>Multiple frames aggregation attention (num_feat&#x3D;48, d_atten&#x3D;64, num_blocks&#x3D;2)</td>
+<td>REDS</td>
+<td>27.837406</td>
+<td>0.77741796</td>
+<td>68,368</td>
+<td>44.5 (FP16_TFLite GPU Delegate)</td>
+<td>7.872</td>
+</tr>
+<tr>
+<td>AFAVSR_1</td>
+<td>Multiple frames aggregation attention (num_feat&#x3D;16, d_atten&#x3D;32, num_blocks&#x3D;8)</td>
+<td>REDS</td>
+<td>27.829765</td>
+<td>0.7763255</td>
+<td>44,016</td>
+<td>36.6 (FP16_TFLite GPU Delegate)</td>
+<td>5.069</td>
+</tr>
+<tr>
+<td>AFAVSR_2</td>
+<td>Multiple frames aggregation attention (num_feat&#x3D;16, d_atten&#x3D;32, num_blocks&#x3D;2)</td>
+<td>REDS</td>
+<td></td>
+<td></td>
+<td></td>
+<td>(FP16_TFLite GPU Delegate)</td>
+<td></td>
+</tr>
+<tr>
+<td>AFAVSR_3</td>
+<td>All batch frames aggregation attention (num_feat&#x3D;32, d_atten&#x3D;64, num_blocks&#x3D;2)</td>
+<td>REDS</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>SORT_0</td>
+<td>Sliding Window, IMDB</td>
+<td>REDS</td>
+<td>27.738451</td>
+<td>0.77409536</td>
+<td>17,356</td>
+<td>20.6 (FP16_TFLite GPU Delegate)</td>
+<td>2.084</td>
+</tr>
+<tr>
+<td>SORT_1</td>
+<td>Sliding Window, IMDB, ConvTail num_out_channel&#x3D;48</td>
+<td>REDS</td>
+<td>27.75588</td>
+<td>0.7749552</td>
+<td>19,660</td>
+<td>21.6 (FP16_TFLite GPU Delegate)</td>
+<td>2.351</td>
+</tr>
+<tr>
+<td>SORT_2</td>
+<td>Sliding Window, IMDB, multi-branch distillation channel num hyperparameter tunning</td>
+<td>REDS</td>
+<td>27.93981</td>
+<td>0.7808094</td>
+<td>45,264</td>
+<td>35.6 (FP16_TFLite GPU Delegate)</td>
+<td>5.385</td>
+</tr>
+<tr>
+<td>SORT_3</td>
+<td>Sliding Window, IMDB, multi-branch distillation channel num hyperparameter tunning, Replace SEL with CCA( Contrast-Aware Channel Attention)</td>
+<td>REDS</td>
+<td>27.867216</td>
+<td>0.7790734</td>
+<td>39,144</td>
+<td>35.3 (FP16_TFLite GPU Delegate)</td>
+<td>4.414</td>
+</tr>
+<tr>
+<td>SORT_4</td>
+<td>Sliding Window, Modified IMDB equipped with channel attention mechanism</td>
+<td>REDS</td>
+<td>27.769545</td>
+<td>0.7755401</td>
+<td>39,120</td>
+<td>41.3(FP16_TFLite GPU Delegate)</td>
+<td>5.725</td>
+</tr>
+<tr>
+<td>SORT_5</td>
+<td>Sliding Window, Modified IMDB equipped with larger channel width and channel reduction&#x2F;aggregation using 1*1 convs</td>
+<td>REDS</td>
+<td>28.13419</td>
+<td>0.78656757</td>
+<td>166,944</td>
+<td>85.9(FP16_TFLite GPU Delegate)</td>
+<td>19.566</td>
+</tr>
+<tr>
+<td>SORT_6</td>
+<td>Sliding Window, Modified IMDB equipped with dynamic channel width</td>
+<td>REDS</td>
+<td>27.944357</td>
+<td>0.7809873</td>
+<td>48,216</td>
+<td>- (FP16_TFLite GPU Delegate)</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<hr>
+<p><em>AI benchmark setting for Runtime test:</em>  </p>
+<ul>
+<li>Input Values range(min,max): 0,255  </li>
+<li>Inference Mode: INT8&#x2F;FP16  </li>
+<li>Acceleration: CPU&#x2F;TFLite GPU Delegate</li>
+</ul>
+<h3 id="Milestone-2"><a href="#Milestone-2" class="headerlink" title="Milestone_2"></a>Milestone_2</h3><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+<th>FLOPs [G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VSR_0</td>
+<td>Sliding Window, Non Activation Block</td>
+<td>REDS</td>
+<td>27.673386</td>
+<td>0.7725643</td>
+<td>26,368</td>
+<td>57.9 (FP16_TFLite GPU Delegate)</td>
+<td>2.417</td>
+</tr>
+<tr>
+<td>VSR_1</td>
+<td>Attention Alignment_0, Non Activation Block</td>
+<td>REDS</td>
+<td>27.508242</td>
+<td>0.76671493</td>
+<td>17,440</td>
+<td>42.0 (FP16_TFLite GPU Delegate)</td>
+<td>1.677</td>
+</tr>
+<tr>
+<td>VSR_2</td>
+<td>Attention Alignment_1, Non Activation Block,Rectify BSConvolution</td>
+<td>REDS</td>
+<td>27.53437</td>
+<td>0.7678055</td>
+<td>17,776</td>
+<td>error (FP16_TFLite GPU Delegate)</td>
+<td>2.035</td>
+</tr>
+<tr>
+<td>VSR_3</td>
+<td>VSR_2 Ablation: Attention Alignment_1</td>
+<td>REDS</td>
+<td>27.414068</td>
+<td>0.76361054</td>
+<td>17,413</td>
+<td>60.3 (FP16_TFLite GPU Delegate)</td>
+<td>1.793</td>
+</tr>
+<tr>
+<td>VSR_4</td>
+<td>VSR_2 -&gt; modify Non Activation Block using partial conv</td>
+<td>REDS</td>
+<td>27.784992</td>
+<td>0.7769825</td>
+<td>43,120</td>
+<td>error (FP16_TFLite GPU Delegate)</td>
+<td>4.958</td>
+</tr>
+<tr>
+<td>VSR_5</td>
+<td>VSR_4 Ablation: RGB out channels sharing upsample result</td>
+<td>REDS</td>
+<td>27.835686</td>
+<td>0.7776796</td>
+<td>47,728</td>
+<td>- (FP16_TFLite GPU Delegate)</td>
+<td>5.491</td>
+</tr>
+<tr>
+<td>VSR_6</td>
+<td>VSR_5 Finetune: Non Activation Block channel numbers modify</td>
+<td>REDS</td>
+<td>27.783165</td>
+<td>0.7768693</td>
+<td>28,976</td>
+<td>error (FP16_TFLite GPU Delegate)</td>
+<td>3.699</td>
+</tr>
+<tr>
+<td>VSR_7</td>
+<td>Light weight hidden states attention alignment; Blue Print convolution for shallow feature extraction; Multi-Stage ExcavatoR(MSER) combined with partial convolution and simplified channel attention</td>
+<td>REDS</td>
+<td>27.470276</td>
+<td>0.7664948</td>
+<td>81,806</td>
+<td>66.1 (FP16_TFLite GPU Delegate)</td>
+<td>7.938</td>
+</tr>
+<tr>
+<td>VSR_8</td>
+<td>Light weight hidden states attention alignment; Blue Print convolution for shallow feature extraction; Nonlinear activation free block</td>
+<td>REDS</td>
+<td>27.91092</td>
+<td>0.77971315</td>
+<td>66,312</td>
+<td>64.7 (FP16_TFLite GPU Delegate)</td>
+<td>7.269</td>
+</tr>
+<tr>
+<td>VSR_9</td>
+<td>vsr_9 ablation: feature alignment</td>
+<td>REDS</td>
+<td>27.91092</td>
+<td>0.77971315</td>
+<td>39,792</td>
+<td>44.5 (FP16_TFLite GPU Delegate)</td>
+<td>4.218</td>
+</tr>
+<tr>
+<td>VSR_10</td>
+<td>motivation: IMDB + PartialConv + VapSR + BSConv</td>
+<td>REDS</td>
+<td>27.963232</td>
+<td>0.780958</td>
+<td>44,256</td>
+<td>48.6 (FP16_TFLite GPU Delegate)</td>
+<td>5.103</td>
+</tr>
+<tr>
+<td>VSR_11</td>
+<td>VSR_10 ablation: hidden state conv using bias</td>
+<td>REDS</td>
+<td>27.948818</td>
+<td>0.7809571</td>
+<td>44,288</td>
+<td>47.2 (FP16_TFLite GPU Delegate)</td>
+<td>5.103</td>
+</tr>
+<tr>
+<td>VSR_12</td>
+<td>VSR_10 ablation: hidden state process using modified IMDB</td>
+<td>REDS</td>
+<td>27.953104</td>
+<td>0.7807622</td>
+<td>57,696</td>
+<td>62.8 (FP16_TFLite GPU Delegate)</td>
+<td>6.649</td>
+</tr>
+</tbody></table>
+<hr>
+<p><em>AI benchmark setting for Runtime test:</em>  </p>
+<ul>
+<li>Input Values range(min,max): 0,255  </li>
+<li>Inference Mode: INT8&#x2F;FP16  </li>
+<li>Acceleration: CPU&#x2F;TFLite GPU Delegate</li>
+</ul>
+<h3 id="Milestone-3"><a href="#Milestone-3" class="headerlink" title="Milestone_3"></a>Milestone_3</h3><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+<th>FLOPs [G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MVSR_0</td>
+<td>modified IMDB IMDB + PartialConv + VapSR + BSConv; deprecate hidden state forward and backward; light weight feature alignment</td>
+<td>REDS</td>
+<td>27.915539</td>
+<td>0.7799377</td>
+<td>35,777</td>
+<td>38.8 (FP16_TFLite GPU Delegate)</td>
+<td>4.068</td>
+</tr>
+<tr>
+<td>MVSR_1</td>
+<td>modified IMDB IMDB + PartialConv + VapSR + BSConv; deprecate hidden state forward and backward; light weight frame alignment</td>
+<td>REDS</td>
+<td>27.932716</td>
+<td>0.7810435</td>
+<td>34,473</td>
+<td>44.3 (FP16_TFLite GPU Delegate)</td>
+<td>3.976</td>
+</tr>
+<tr>
+<td>MVSR_2</td>
+<td>MVSR_1 Ablation: light weight frame alignment</td>
+<td>REDS</td>
+<td>27.929586</td>
+<td>0.78039753</td>
+<td>34,208</td>
+<td>35.4 (FP16_TFLite GPU Delegate)</td>
+<td>3.944</td>
+</tr>
+<tr>
+<td>MVSR_3</td>
+<td>MVSR_1 Ablation: large receptive field in SMDB -&gt; reduce: 3x3 + 3x3 dilated</td>
+<td>REDS</td>
+<td>27.892586</td>
+<td>0.7790079</td>
+<td>32,169</td>
+<td>41.1 (FP16_TFLite GPU Delegate)</td>
+<td>3.711</td>
+</tr>
+<tr>
+<td>MVSR_4</td>
+<td>MVSR_2 Ablation: large receptive field in SMDB -&gt; increase: 7x7 + 7x7 dilated</td>
+<td>REDS</td>
+<td>27.958328</td>
+<td>0.78145003</td>
+<td>37,664</td>
+<td>42.4 (FP16_TFLite GPU Delegate)</td>
+<td>4.343</td>
+</tr>
+<tr>
+<td>MVSR_5</td>
+<td>MVSR_1 Ablation: large receptive field in SMDB -&gt; increase: 7x7 + 7x7 dilated</td>
+<td>REDS</td>
+<td>27.936714</td>
+<td>0.7809204</td>
+<td>37,929</td>
+<td>49.8 (FP16_TFLite GPU Delegate)</td>
+<td>4.375</td>
+</tr>
+<tr>
+<td>MVSR_6</td>
+<td>modified IMDB IMDB + PartialConv based pixel attention version_0 + VapSR + BSConv; light weight frame alignment</td>
+<td>REDS</td>
+<td>27.884369</td>
+<td>0.7790964</td>
+<td>34,473</td>
+<td>44.4 (FP16_TFLite GPU Delegate)</td>
+<td>4.246</td>
+</tr>
+<tr>
+<td>MVSR_7</td>
+<td>modified IMDB IMDB + PartialConv based pixel attention version_1 + VapSR + BSConv; light weight frame alignment</td>
+<td>REDS</td>
+<td>27.858534</td>
+<td>0.77831227</td>
+<td>35,769</td>
+<td>44.5 (FP16_TFLite GPU Delegate)</td>
+<td>4.387</td>
+</tr>
+<tr>
+<td>MVSR_8</td>
+<td>MVSR_1 Ablation: SEL -&gt; Channel Attention</td>
+<td>REDS</td>
+<td>27.610485</td>
+<td>0.7696045</td>
+<td>29,145</td>
+<td>40.5 (FP16_TFLite GPU Delegate)</td>
+<td>3.001</td>
+</tr>
+<tr>
+<td>MVSR_9</td>
+<td>MVSR_1 Ablation: Channel fuse + SEL -&gt; FlashModule + Channel fuse</td>
+<td>REDS</td>
+<td>28.043566</td>
+<td>0.7842476</td>
+<td>96,249</td>
+<td>72.8 (FP16_TFLite GPU Delegate)</td>
+<td>10.684</td>
+</tr>
+<tr>
+<td>MVSR_10</td>
+<td>Partial conv idea applied to MSDB and Attention(i.e. SEL)</td>
+<td>REDS</td>
+<td>27.86422</td>
+<td>0.7783118</td>
+<td>27,081</td>
+<td>41.2 (FP16_TFLite GPU Delegate)</td>
+<td>3.031</td>
+</tr>
+<tr>
+<td>MVSR_11</td>
+<td>MVSR_10 fintune: deperecae MSDB’s channel fuse; add MDSB blocks</td>
+<td>REDS</td>
+<td>27.90566</td>
+<td>0.7793118</td>
+<td>32,553</td>
+<td>48.7 (FP16_TFLite GPU Delegate)</td>
+<td>3.634</td>
+</tr>
+<tr>
+<td>MVSR_12</td>
+<td>MVSR_11 ablation: MSDB’s group convolution -&gt; standard convolution</td>
+<td>REDS</td>
+<td>27.953104</td>
+<td>0.7807622</td>
+<td>68,169</td>
+<td>38.4 (FP16_TFLite GPU Delegate)</td>
+<td>7.737</td>
+</tr>
+<tr>
+<td>MVSR_13</td>
+<td>MVSR_12 AttentionAlign module evolution</td>
+<td>REDS</td>
+<td>27.966156</td>
+<td>0.7809557</td>
+<td>68,157</td>
+<td>39.8 (FP16_TFLite GPU Delegate)</td>
+<td>7.735</td>
+</tr>
+<tr>
+<td>MVSR_13_1</td>
+<td>MVSR_13 evolution: ConvTail used for increasing dimension -&gt; BSConv</td>
+<td>REDS</td>
+<td>27.879667</td>
+<td>0.7790071</td>
+<td>62,541</td>
+<td>40.6 (FP16_TFLite GPU Delegate)</td>
+<td>7.080</td>
+</tr>
+<tr>
+<td>MVSR_13_2</td>
+<td>MVSR_13 ablation: fractional&#x2F;partial ratio 1&#x2F;2 -&gt; 1&#x2F;4</td>
+<td>REDS</td>
+<td>27.877321</td>
+<td>0.7783568</td>
+<td>37,517</td>
+<td>37.1 (FP16_TFLite GPU Delegate)</td>
+<td>4.152</td>
+</tr>
+<tr>
+<td>MVSR_13_3</td>
+<td>MVSR_13 ablation: fractional&#x2F;partial ratio 1&#x2F;2 -&gt; 1&#x2F;8</td>
+<td>REDS</td>
+<td>27.79014</td>
+<td>0.77567685</td>
+<td>29,829</td>
+<td>35.5 (FP16_TFLite GPU Delegate)</td>
+<td>3.240</td>
+</tr>
+<tr>
+<td>MVSR_13_4</td>
+<td>MVSR_13 ablation: fractional&#x2F;partial ratio 1&#x2F;2 -&gt; 3&#x2F;4</td>
+<td>REDS</td>
+<td>27.955465</td>
+<td>0.78150684</td>
+<td>119,149</td>
+<td>84.1 (FP16_TFLite GPU Delegate)</td>
+<td>13.663</td>
+</tr>
+<tr>
+<td>MVSR_13_4_revalid</td>
+<td>MVSR_13 ablation: fractional&#x2F;partial ratio 1&#x2F;2 -&gt; 3&#x2F;4</td>
+<td>REDS</td>
+<td>27.956861</td>
+<td>0.7814712</td>
+<td>119,149</td>
+<td>84.1 (FP16_TFLite GPU Delegate)</td>
+<td>13.663</td>
+</tr>
+<tr>
+<td>MVSR_13_5</td>
+<td>MVSR_13 ablation: fractional&#x2F;partial ratio 1&#x2F;2 -&gt; 7&#x2F;8</td>
+<td>REDS</td>
+<td>27.993414</td>
+<td>0.7823691</td>
+<td>152,277</td>
+<td>103.0 (FP16_TFLite GPU Delegate)</td>
+<td>17.506</td>
+</tr>
+<tr>
+<td>MVSR_13_6</td>
+<td>MVSR_13 ablation: fractional&#x2F;partial ratio 1&#x2F;2 -&gt; 3&#x2F;8</td>
+<td>REDS</td>
+<td>27.948065</td>
+<td>0.78071</td>
+<td>50,293</td>
+<td>39.0 (FP16_TFLite GPU Delegate)</td>
+<td>5.651</td>
+</tr>
+<tr>
+<td>MVSR_13_7</td>
+<td>MVSR_13 ablation: fractional&#x2F;partial ratio 1&#x2F;2 -&gt; 5&#x2F;8</td>
+<td>REDS</td>
+<td>27.983498</td>
+<td>0.7823881</td>
+<td>91,109</td>
+<td>86.4 (FP16_TFLite GPU Delegate)</td>
+<td>10.406</td>
+</tr>
+<tr>
+<td>MVSR_14</td>
+<td>MVSR_13 ablation: - frame attention align -&gt; standard conv 1 x 1 act as frame information propogation operator</td>
+<td>REDS</td>
+<td>27.930904</td>
+<td>0.78043896</td>
+<td>68,272</td>
+<td>29.7 (FP16_TFLite GPU Delegate)</td>
+<td>7.746</td>
+</tr>
+<tr>
+<td>MVSR_15</td>
+<td>MVSR_13 ablation: MSDB block number 4 -&gt; 3</td>
+<td>REDS</td>
+<td>27.91523</td>
+<td>0.77966064</td>
+<td>52,965</td>
+<td>33.4 (FP16_TFLite GPU Delegate)</td>
+<td>6.016</td>
+</tr>
+<tr>
+<td>MVSR_16</td>
+<td>MVSR_13 ablation: No partial&#x2F;fractional; No BSconv (Blueprint Separable conv); No receptive field decomposition</td>
+<td>REDS</td>
+<td>27.928417</td>
+<td>0.7801167</td>
+<td>920,381</td>
+<td>399.0 (FP16_TFLite GPU Delegate)</td>
+<td>106.045</td>
+</tr>
+<tr>
+<td>MVSR_17</td>
+<td>MVSR_13 evolution: MSDB using standard conv 3 x 3, PPA using split large receptive field conv 5 x 5 + 5 x 5 dilated</td>
+<td>REDS</td>
+<td>27.902325</td>
+<td>0.7794845</td>
+<td>47,101</td>
+<td>36.8 (FP16_TFLite GPU Delegate)</td>
+<td>5.313</td>
+</tr>
+<tr>
+<td>MVSR_18</td>
+<td>MVSR_17 ablation: BSconv</td>
+<td>REDS</td>
+<td>27.893446</td>
+<td>0.77926654</td>
+<td>47,325</td>
+<td>34.4 (FP16_TFLite GPU Delegate)</td>
+<td>5.340</td>
+</tr>
+<tr>
+<td>MVSR_19</td>
+<td>MVSR_13 evolution: MSDB blocks 4 -&gt; 3; Enlarge receptive field of PPA 3 -&gt; 17</td>
+<td>REDS</td>
+<td>27.914143</td>
+<td>0.7799854</td>
+<td>60,861</td>
+<td>35.9 (FP16_TFLite GPU Delegate)</td>
+<td>6.924</td>
+</tr>
+<tr>
+<td>MVSR_20</td>
+<td>MVSR_13 ablation: No receptive field decomposition</td>
+<td>REDS</td>
+<td>27.93524</td>
+<td>0.78071207</td>
+<td>251,613</td>
+<td>119.0 (FP16_TFLite GPU Delegate)</td>
+<td>28.875</td>
+</tr>
+<tr>
+<td>MVSR_21</td>
+<td>MVSR_13 ablation: No frame align; No fractional&#x2F;partial; No BSconv; No receptive field decomposition</td>
+<td>REDS</td>
+<td>27.941408</td>
+<td>0.7807615</td>
+<td>920,128</td>
+<td>400.0 (FP16_TFLite GPU Delegate)</td>
+<td>106.014</td>
+</tr>
+<tr>
+<td>MVSR_21_1</td>
+<td>MVSR_13 ablation: No frame align (directly extraction from 3 consecutive frames); No fractional&#x2F;partial; No BSconv; No receptive field decomposition</td>
+<td>REDS</td>
+<td>27.913836</td>
+<td>0.779473</td>
+<td>920,992</td>
+<td>399.0 (FP16_TFLite GPU Delegate)</td>
+<td>106.114</td>
+</tr>
+<tr>
+<td>MVSR_22</td>
+<td>MVSR_13 ablation: No BSconv; No receptive field decomposition</td>
+<td>REDS</td>
+<td>27.936152</td>
+<td>0.7799803</td>
+<td>251,837</td>
+<td>118.0 (FP16_TFLite GPU Delegate)</td>
+<td>28.902</td>
+</tr>
+<tr>
+<td>MVSR_23</td>
+<td>MVSR_13 ablation: PFE PPA Standard conv -&gt; Depthwise conv</td>
+<td>REDS</td>
+<td>27.867388</td>
+<td>0.7784562</td>
+<td>32,541</td>
+<td>49.5 (FP16_TFLite GPU Delegate)</td>
+<td>3.632</td>
+</tr>
+<tr>
+<td>MVSR_24</td>
+<td>MVSR_13 ablation: - Partial&#x2F;Fractional Extraction</td>
+<td>REDS</td>
+<td>27.952333</td>
+<td>0.78090274</td>
+<td>186,141</td>
+<td>94.3 (FP16_TFLite GPU Delegate)</td>
+<td>21.449</td>
+</tr>
+<tr>
+<td>MVSR_24_revalid</td>
+<td>MVSR_13 ablation: - Partial&#x2F;Fractional Extraction (keep fc)</td>
+<td>REDS</td>
+<td>27.940563</td>
+<td>0.7804851</td>
+<td>190,493</td>
+<td>102.0 (FP16_TFLite GPU Delegate)</td>
+<td>21.935</td>
+</tr>
+<tr>
+<td>MVSR_25</td>
+<td>MVSR_13 ablation: - BSConv</td>
+<td>REDS</td>
+<td>27.929697</td>
+<td>0.780183</td>
+<td>68,381</td>
+<td>38.8 (FP16_TFLite GPU Delegate)</td>
+<td>7.762</td>
+</tr>
+<tr>
+<td>MVSR_26</td>
+<td>MVSR_13 ablation: - Large Receptive Field Decomposition</td>
+<td>REDS</td>
+<td>27.972654</td>
+<td>0.7818956</td>
+<td>251,613</td>
+<td>119.0 (FP16_TFLite GPU Delegate)</td>
+<td>28.875</td>
+</tr>
+<tr>
+<td>MVSR_27</td>
+<td>MVSR_13 ablation: - FC in PFE, PPA</td>
+<td>REDS</td>
+<td>27.945955</td>
+<td>0.78067327</td>
+<td>63,805</td>
+<td>37.8 (FP16_TFLite GPU Delegate)</td>
+<td>7.249</td>
+</tr>
+</tbody></table>
+<hr>
+<p><em>AI benchmark setting for Runtime test:</em>  </p>
+<ul>
+<li>Input Values range(min,max): 0,255  </li>
+<li>Inference Mode: INT8&#x2F;FP16  </li>
+<li>Acceleration: CPU&#x2F;TFLite GPU Delegate</li>
+</ul>
+<h2 id="Benchmark-0"><a href="#Benchmark-0" class="headerlink" title="Benchmark_0"></a>Benchmark_0</h2><table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Model</th>
+<th>Source</th>
+<th>Dataset</th>
+<th>Test PSNR</th>
+<th>Test SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Diggers</td>
+<td>Real-Time Video Super-Resolution based on Bidirectional RNNs(2021 SOTA)</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.98</td>
+<td>-</td>
+<td>39,640</td>
+<td>-</td>
+</tr>
+<tr>
+<td>2</td>
+<td>VSR_12</td>
+<td>Ours</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.981062</td>
+<td>0.7824855</td>
+<td>57,696</td>
+<td>62.8</td>
+</tr>
+<tr>
+<td>3</td>
+<td>MVSR_4</td>
+<td>Ours</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.958328</td>
+<td>0.78145003</td>
+<td>37,664</td>
+<td>42.4</td>
+</tr>
+<tr>
+<td>4</td>
+<td>MVSR_12</td>
+<td>Ours</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.953104</td>
+<td>0.7807622</td>
+<td>68,169</td>
+<td>38.4</td>
+</tr>
+<tr>
+<td>5</td>
+<td>SORT_2</td>
+<td>Ours</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.93981</td>
+<td>0.7808094</td>
+<td>45,264</td>
+<td>35.6</td>
+</tr>
+<tr>
+<td>6</td>
+<td>SWRN</td>
+<td>Sliding Window Recurrent Network for Efficient Video Super-Resolution (2022 SOTA)</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.92</td>
+<td>0.77</td>
+<td>43,472</td>
+<td>31.0</td>
+</tr>
+<tr>
+<td>7</td>
+<td>MVSR_11</td>
+<td>Ours</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.90566</td>
+<td>0.7793118</td>
+<td>32,553</td>
+<td>48.7</td>
+</tr>
+<tr>
+<td>8</td>
+<td>SWAT_3_5</td>
+<td>Ours</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.840628</td>
+<td>0.7774375</td>
+<td>37,312</td>
+<td>39.4</td>
+</tr>
+<tr>
+<td>9</td>
+<td>EESRNet</td>
+<td>EESRNet: A Network for Energy Efficient Super-Resolution(2022)</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.84</td>
+<td>-</td>
+<td>62,550</td>
+<td>-</td>
+</tr>
+<tr>
+<td>10</td>
+<td>LiDeR</td>
+<td>LiDeR: Lightweight Dense Residual Network for Video Super-Resolution on Mobile Devices (2022)</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.51</td>
+<td>0.76</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>11</td>
+<td>EVSRNet</td>
+<td>EVSRNet：Efficient Video Super-Resolution with Neural Architecture Search(2021)</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.42</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>12</td>
+<td>RCBSR</td>
+<td>RCBSR: Re-parameterization Convolution Block for Super-Resolution(2022)</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.28</td>
+<td>0.775</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h2 id="Benchmark-1"><a href="#Benchmark-1" class="headerlink" title="Benchmark_1"></a>Benchmark_1</h2><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Source</th>
+<th>Dataset</th>
+<th>Test PSNR</th>
+<th>Test SSIM</th>
+<th>Params</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SSL-uni</td>
+<td>Structured Sparsity Learning for Efficient Video Super-Resolution (CVPR2023)</td>
+<td>REDS(train:266 test:4)</td>
+<td>30.24</td>
+<td>0.86</td>
+<td>500,000</td>
+</tr>
+</tbody></table>
+<h2 id="PaperWriting"><a href="#PaperWriting" class="headerlink" title="PaperWriting"></a>PaperWriting</h2><h3 id="No-1"><a href="#No-1" class="headerlink" title="No.1"></a>No.1</h3><ol>
+<li>BSConvU as shallow feature extraction</li>
+<li>Recurrent neural network for feature information freedom flow cross frames</li>
+<li>multi distilation module through dynamic routing large ERF attention  </li>
+<li>Bilineared RGB channels share same upsample result</li>
+<li>Nearest conv for shorter residual inference time compared with bilinear residual</li>
+</ol>
+<h3 id="No-2"><a href="#No-2" class="headerlink" title="No.2"></a>No.2</h3><ol>
+<li>Motivation: 移动端视频超分 Inference Time ↓, PSNR ↑, SSIM ↑</li>
+<li>只用当前处理LR帧的前一个预测HR帧做参考补偿当前帧 -&gt; 拍摄的同时实时超分,不受只能对拍摄完成的视频进行超分的限制</li>
+<li>假设模型中间的feature maps对输出结果不是同等贡献度，如何进行高贡献度的feature maps聚集aggregation -&gt; 做Partial Convolution accelerate inference(分析)</li>
+<li>减少模型中的activation -&gt; 利用Multiply产生非线性映射的能力</li>
+<li>RGB三通道共享上采样补偿 -&gt; 常规模型的RGB三通道上采样补偿是否存在高度一致性，若存在则可以共享以起到降低计算量加速推理的效果(分析)</li>
+<li>蓝图卷积作为浅层特征提取 -&gt; 效果反而比标准卷积最终的效果好</li>
+<li>多尺度特征(降采样到不同尺度)基于注意力机制融合 &lt;- motivation: 灵长类动物视觉皮层同一区域不同神经元感受野不同，类比到模型内则是同一层内从不同尺度&#x2F;感受野捕获更精确的空间信息或更多的纹理信息</li>
+<li>短距离shortcut的fusion -&gt; 加速推理</li>
+</ol>
+<h3 id="No-3"><a href="#No-3" class="headerlink" title="No.3"></a>No.3</h3><ol>
+<li>Motivation: 移动端视频超分 Inference Time ↓, PSNR ↑, SSIM ↑</li>
+<li>辅助前后向传播的隐藏状态做对齐(auxiliary forward&#x2F;backward hidden states for feature alignment) -&gt; 提升超分结果PSNR</li>
+<li>假设模型中间的feature maps对输出结果不是同等贡献度，如何进行高贡献度的feature maps聚集aggregation -&gt; 做Partial Convolution accelerate inference(分析)</li>
+<li>减少模型中的activation -&gt; 利用Multiply产生非线性映射的能力,加速推理</li>
+<li>考虑动态深度(adaptive existing) -&gt; 加速推理 -&gt; deprecated</li>
+</ol>
+<h2 id="PaperReference"><a href="#PaperReference" class="headerlink" title="PaperReference"></a>PaperReference</h2><ol>
+<li>Rethinking Alignment in Video Super-Resolution Transformers(NIPS 2022) -&gt; VIT 视频超分(VSR)中帧&#x2F;特征对齐不是必要操作</li>
+<li>An Implicit Alignment for Video Super-Resolution (ArXiv 2023) -&gt; bilinear interpolation&#x2F;resample 改进</li>
+<li>Video Super-Resolution Transformer</li>
+<li>Efficient Reference-based Video Super-Resolution (ERVSR): Single Reference Image Is All You Need (WACV 2023) -&gt; 帧序列中间帧作为参考帧辅助当前帧超分</li>
+<li>MULTI-STAGE FEATURE ALIGNMENT NETWORK FOR VIDEO SUPER-RESOLUTION</li>
+<li>ELSR: Extreme Low-Power Super Resolution Network For Mobile Devices</li>
+<li>LiDeR: Lightweight Dense Residual Network for Video Super-Resolution on Mobile Devices</li>
+<li>Look Back and Forth: Video Super-Resolution with Explicit Temporal Difference Modeling</li>
+<li>COLLAPSIBLE LINEAR BLOCKS FOR SUPER-EFFICIENT SUPER RESOLUTION</li>
+<li>Revisiting Temporal Alignment for Video Restoration</li>
+<li>BasicVSR++: Improving Video Super-Resolution with Enhanced Propagation and Alignment</li>
+<li>EVSRNet：Efficient Video Super-Resolution with Neural Architecture Search</li>
+<li>BasicVSR: The Search for Essential Components in Video Super-Resolution and Beyond</li>
+<li>Revisiting Temporal Modeling for Video Super-resolution  -&gt; MAI 第一届VSR 官方baseline</li>
+<li>TDAN: Temporally-Deformable Alignment Network for Video Super-Resolution (CVPR 2020)</li>
+<li>Video Super-resolution with Temporal Group Attention (CVPR 2020)</li>
+<li>3DSRnet: Video Super-resolution using 3D Convolutional Neural Networks</li>
+<li>Frame-Recurrent Video Super-Resolution</li>
+<li>Video Super-Resolution With Convolutional Neural Networks</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/12/06/Model-Quantization-Papers/" rel="prev" title="Model Quantization Papers">
+                  <i class="fa fa-chevron-left"></i> Model Quantization Papers
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/02/13/OnePlus-Recovery/" rel="next" title="OnePlus Recovery">
+                  OnePlus Recovery <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jarvis</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

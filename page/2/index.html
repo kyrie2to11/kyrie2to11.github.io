@@ -120,7 +120,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -159,7 +159,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/13/OnePlus_Recovery/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/17/Workshop-Log-0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -177,7 +177,1142 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/13/OnePlus_Recovery/" class="post-title-link" itemprop="url">OnePlus Recovery</a>
+          <a href="/2023/02/17/Workshop-Log-0/" class="post-title-link" itemprop="url">MAI 2023 Mobile VSR Workshop Log</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-02-17 10:29:03" itemprop="dateCreated datePublished" datetime="2023-02-17T10:29:03+08:00">2023-02-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-16 11:20:24" itemprop="dateModified" datetime="2024-12-16T11:20:24+08:00">2024-12-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Workshop-and-Challenges-CVPR-2023"><a href="#Workshop-and-Challenges-CVPR-2023" class="headerlink" title="Workshop and Challenges @ CVPR 2023"></a>Workshop and Challenges @ CVPR 2023</h2><ol>
+<li>Efficient Super-Resolution Challenge(ESR)<ul>
+<li>经典baseline:<ul>
+<li>information multi-distillation block,IMDN (2019)</li>
+<li>Residual feature distillation block,RFDN (2020)</li>
+<li>Residual Local Feature Network,RLFN (ByteESR2022)</li>
+</ul>
+</li>
+<li>初期调试跑起来时，目录名称有一点变化就会在别处导致意想不到的错误:(</li>
+<li>很多队伍都用到了Quantization Aware Training (QAT)</li>
+<li>2022参赛上榜的网络结构和权重都有提供</li>
+<li>results</li>
+</ul>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val Time [ms]</th>
+<th>Params [M]</th>
+<th>FLOPs [G]</th>
+<th>Acts [M]</th>
+<th>Mem [M]</th>
+<th>Conv</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>trained_rfdn_best</td>
+<td>DIV2K_val(801-900)</td>
+<td>28.73</td>
+<td>37.62</td>
+<td>0.433</td>
+<td>27.10</td>
+<td>112.03</td>
+<td>788.13</td>
+<td>64</td>
+</tr>
+<tr>
+<td>RFDN_baseline_1</td>
+<td>DIV2K_val(801-900)</td>
+<td>29.04</td>
+<td>41.38</td>
+<td>0.433</td>
+<td>27.10</td>
+<td>112.03</td>
+<td>788.13</td>
+<td>64</td>
+</tr>
+<tr>
+<td>RFDN_baseline_2</td>
+<td>DIV2K_val(801-900)</td>
+<td>29.04</td>
+<td>43.86</td>
+<td>0.433</td>
+<td>27.10</td>
+<td>112.03</td>
+<td>788.13</td>
+<td>64</td>
+</tr>
+<tr>
+<td>RFDN_baseline_3</td>
+<td>DIV2K_val(801-900)</td>
+<td>29.04</td>
+<td>37.59</td>
+<td>0.433</td>
+<td>27.10</td>
+<td>112.03</td>
+<td>788.13</td>
+<td>64</td>
+</tr>
+<tr>
+<td>RFDN_baseline_4</td>
+<td>DIV2K_val(801-900)</td>
+<td>29.04</td>
+<td>34.20</td>
+<td>0.433</td>
+<td>27.10</td>
+<td>112.03</td>
+<td>788.13</td>
+<td>64</td>
+</tr>
+<tr>
+<td>IMDN_baseline_1</td>
+<td>DIV2K_val(801-900)</td>
+<td>29.13</td>
+<td>45.11</td>
+<td>0.894</td>
+<td>58.53</td>
+<td>154.14</td>
+<td>471.78</td>
+<td>43</td>
+</tr>
+<tr>
+<td>IMDN_baseline_2</td>
+<td>DIV2K_val(801-900)</td>
+<td>29.13</td>
+<td>45.03</td>
+<td>0.894</td>
+<td>58.53</td>
+<td>154.14</td>
+<td>471.78</td>
+<td>43</td>
+</tr>
+<tr>
+<td>IMDN_baseline_3</td>
+<td>DIV2K_val(801-900)</td>
+<td>29.13</td>
+<td>44.44</td>
+<td>0.894</td>
+<td>58.53</td>
+<td>154.14</td>
+<td>471.78</td>
+<td>43</td>
+</tr>
+</tbody></table>
+<hr>
+</li>
+<li>Mobile AI workshop 2023<ul>
+<li>测试可以用自己手机，也可使用提供的远程设备(速度慢有延迟)</li>
+<li>2022 tracks</li>
+</ul>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Sponsor</th>
+<th>Evaluate_Platform</th>
+<th>Final_Phase_Team&#x2F;Participants</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Bokeh Effect Rendering 背景虚化</td>
+<td>Huawei</td>
+<td>Kirin 9000’s Mali GPU</td>
+<td>6&#x2F;90</td>
+</tr>
+<tr>
+<td>Depth Estimation</td>
+<td>Raspberry Pi</td>
+<td>Raspberry Pi 4</td>
+<td>7&#x2F;70</td>
+</tr>
+<tr>
+<td>Learned Smartphone ISP</td>
+<td>OPPO</td>
+<td>Snapdragon’s 8 Gen 1</td>
+<td>11&#x2F;140</td>
+</tr>
+<tr>
+<td>Image Super-Resolution</td>
+<td>Synaptics</td>
+<td>Synaptics VS680</td>
+<td>28&#x2F;250</td>
+</tr>
+<tr>
+<td>Video Super-Resolution</td>
+<td>MediaTek 联发科</td>
+<td>MediaTek Dimensity 9000</td>
+<td>11&#x2F;160</td>
+</tr>
+</tbody></table>
+<hr>
+<ul>
+<li>2021 tracks</li>
+</ul>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Sponsor</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Learned Smartphone ISP</td>
+<td>MediaTek 联发科</td>
+</tr>
+<tr>
+<td>Image Denoising</td>
+<td>Samsung</td>
+</tr>
+<tr>
+<td>Image Super-Resolution</td>
+<td>Synaptics</td>
+</tr>
+<tr>
+<td>Video Super-Resolution</td>
+<td>OPPO</td>
+</tr>
+<tr>
+<td>Depth Estimation</td>
+<td>Raspberry Pi</td>
+</tr>
+<tr>
+<td>Camera Scene Detection</td>
+<td>Computer Vision Lab, ETH Zurich, Switzerland</td>
+</tr>
+</tbody></table>
+<hr>
+<ol>
+<li>计划参加track:Image Super-Resolution 3月份开始 -&gt; 调整为track:Video Super-Resolution</li>
+<li>Train 2021 anchor-based plain net (ABPN) 两次<ul>
+<li>200 epoch 时报错停掉一次</li>
+<li>600 epoch 完整跑完，但loss上下波动不收敛</li>
+</ul>
+</li>
+<li>andriod对原作提供的TF-lite模型进行了测试,测试流程掌握了</li>
+</ol>
+</li>
+</ol>
+<h3 id="MobileAI-worshop-Video-Super-Resolution"><a href="#MobileAI-worshop-Video-Super-Resolution" class="headerlink" title="MobileAI worshop: Video Super-Resolution"></a>MobileAI worshop: Video Super-Resolution</h3><ol>
+<li><p>papers</p>
+<ol>
+<li>Ntire 2019 challenge on video super-resolution: Methods and results</li>
+<li>Ntire 2020 challenge on image and video deblurring</li>
+<li>Pynet-v2 mobile: Efficient on-device photo processing with neural networks<ul>
+<li>Image Signal Process(ISP): 手机成像流程 光-&gt;CMOS传感器-&gt;成像引擎ISP-&gt;AI(GPU)-&gt;图片；镜头和CMOS在将光学信号转化为由0、1、0、1组成的数字信号时可能存在细节上的遗漏和错误，而ISP单元的主要任务就是进行“纠错”、“校验”和“补偿”。</li>
+<li>pynet模型便于移动端部署的mobile版本目的是end-to-end learned ISP,时间很近:2022 26th International Conference on Pattern Recognition (ICPR). IEEE, 2022.</li>
+<li>CNN based</li>
+</ul>
+</li>
+<li>Microisp: Processing 32mp photos on mobile devices with deep learning. In: European Conference on Computer Visio(2022)</li>
+<li>Real-Time Video Super-Resolution on Smartphones with Deep Learning,Mobile AI 2021 Challenge: Report<ul>
+<li>Results and Discussion<ul>
+<li>Team Diggers 冠军方案基于Keras&#x2F;Tensorflow 电子科技大学 唯一一个使用循环连接（recurrent connections）来利用帧间依赖性获取更好重建结果，其他方案都是基于单帧超分的。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Power Efficient Video Super-Resolution on Mobile NPUs with Deep Learning, Mobile AI &amp; AIM 2022 challenge: Report<ul>
+<li>tutorial: <a target="_blank" rel="noopener" href="https://github.com/MediaTek-NeuroPilot/mai22-real-time-video-sr">https://github.com/MediaTek-NeuroPilot/mai22-real-time-video-sr</a>. baseline:MobileRNN</li>
+<li>scoring: Final Score &#x3D; α · PSNR + β · (1 - power consumption) α &#x3D; 1.66 and β &#x3D; 50，注重PSNR和power consumption两个指标</li>
+<li>Discussion:<ul>
+<li>The majority of models followed a simple single-frame restoration approach to improve the runtime and power efficiency. 大部分模型技术路线是降低单帧超分的运行时间和能量消耗，网络模型都比较浅</li>
+<li>GenMedia Group(一家韩国公司) 基于上年度单帧超分冠军方案ABPN小改进而来，排名第6但psnr:28.40最好,是唯二psnr超过28的方案之一，另一个是221B团队基于RNN的方法</li>
+<li>基于RNN的方案推理速度较慢且能耗高</li>
+<li>总结：2022年来看设备上的视频超分CNN是适合的，因为CNN取得了runtime energy_consumption restoration_quality 的平衡</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Sliding Window Recurrent Network for Efficient Video Super-Resolution<ul>
+<li>SWRN makes use of the information from neighboring frames to reconstruct the HR frame. 从相邻帧提取信息来重建高清帧,相比单帧超分的方法有丰富的细节。</li>
+<li>An bidirectional hidden state is used to recurrently collect temporal spatial relations over all frames.使用双向隐藏状态来循环收集所有帧的时间空间关系。</li>
+<li>Pioneer network: SRCNN</li>
+<li>Video super-resolution: the most important parts are frame alignment<ul>
+<li>VESPCN and TOFlow: optical flow to align frames</li>
+<li>TDAN and EDVR: deformable convolution. Especially, EDVR enjoys the merits of implicit alignment and its PCD module.</li>
+<li>Incorporates recurrent networks, use the hidden state to record the important temporal information.</li>
+</ul>
+</li>
+<li>在测试平台Runtime 10.1 ms、 0.80 W@30FPS,最后分数低问题就在这里，PSNR SSIM 比第一名MVideoSR（小米）都要好 -&gt; 寻找加速计算和减小耗能的方法</li>
+</ul>
+</li>
+<li>Lightweight Video Super-Resolution for Compressed Video -&gt; Compression-informed Lightweight VSR (CILVSR)<ul>
+<li>Recurrent Frame-based VSR Network (FRVSR, RBPN, RRN)</li>
+<li>Spatio-Temporal VSR Network (SOF-VSR, STVSR, TDAN, TOFlow, TDVSR-L)</li>
+<li>Generative Adversarial Network (GAN)-based SR Network</li>
+<li>Video Compression-informed VSR Network (FAST, COMISR, CDVSR, CIAF)</li>
+</ul>
+</li>
+<li>RCBSR: Re-parameterization Convolution Block for Super-Resolution<ul>
+<li>ECBSR baseline</li>
+<li>Multiple paths <strong>ECB re-parametrization</strong></li>
+<li>FGNAS</li>
+</ul>
+</li>
+<li>Deformable 3D Convolution for Video Super-Resolution<ul>
+<li>deformable 3D convolution</li>
+</ul>
+</li>
+<li>Efficient Image Super-Resolution Using Vast-Receptive-Field Attention(VapSR 有torch代码)<ul>
+<li>improving the attention mechanism<ul>
+<li>large kernel convolutions</li>
+<li>depth-wise separable convolutions</li>
+<li>pixel normalization -&gt; train steadily</li>
+</ul>
+</li>
+<li>相比bytedance的RLFN -&gt; 性能sota,参数更少</li>
+</ul>
+</li>
+<li>LiDeR: Lightweight Dense Residual Network for Video Super-Resolution on Mobile Devices(无代码)<ul>
+<li>针对手机端，结构简单，REDS 320x180 X4 upscaling -&gt; psnr:27.51 ssim:0.769(有疑问这个结果到底是在手机上测出来的还是在手机上?)</li>
+<li><strong>REDS 320x180 X4 upscaling</strong> 执行速度快 139FPS -&gt; FSRCNN: 45FPS ESPCN: 52FPS</li>
+<li>测试平台：<strong>Tensorflow-lite</strong> <strong>fp16</strong> <strong>TF-Lite GPU delegate</strong> <strong>Xiaomi Mi 11</strong> <strong>Qualcomm Snapdragon 888 SoC, Qualcomm Adreno 660 GPU, and 8 GB RAM</strong></li>
+</ul>
+</li>
+<li>Fast Online Video Super-Resolution with Deformable Attention Pyramid<ul>
+<li><p>recurrent VSR architecture based on a deformable attention pyramid (DAP)</p>
+</li>
+<li><p>对比RRN(mobile_rrn MAI VSR官方用例很慢) -&gt;不适合用到MAI VSR中</p>
+<ul>
+<li><table>
+<thead>
+<tr>
+<th>Run[ms]</th>
+<th>fps[1&#x2F;s]</th>
+<th>FLOPs[G]</th>
+<th>MACs[G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>28</strong></td>
+<td>35.7</td>
+<td>387.5</td>
+<td>193.6</td>
+</tr>
+<tr>
+<td><strong>38</strong></td>
+<td>26.3</td>
+<td>330.0</td>
+<td>164.8</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>2022 challenge methods (ranked)</p>
+<ol>
+<li><p>MVideoSR(无代码)</p>
+<ul>
+<li>paper title: ELSR: Extreme Low-Power Super Resolution Network For Mobile Devices</li>
+<li>affiliation: Video Algorithm Group, Camera Department, Xiaomi Inc., China</li>
+<li>methods:<ol>
+<li><strong>core idea</strong>: mobile friendly network which consumes as little energy as possible, discard some complex operations such as optical flow, multi-frame feature alignment, and <strong>start from single frame baselines</strong>.</li>
+<li><strong>multi-branch distillation structure</strong> show significant increase in energy consumption while  a slight increase in PSNR compared with the plain convolutional network of similar parameters. abandon multi-branch network architectures, and focus on plain convolutional SR networks.</li>
+<li>though <strong>attention modules(ESA, CCA and PA)</strong> bring performance improvement, the extra energy consumption introduced is still unacceptable</li>
+<li>architeture<ul>
+<li>discription: single frame input  which only have 6 layers, of which only 5 have learnable parameters, including 4 Conv layers and a PReLU activation layer. Pixel-Shuffle operation (also known as depth2space) is used at last to upscale the size of output without introducing more calculation. The intermediate feature channels are all set to 6.</li>
+<li><img src="/Workshop-Log_-0/MVideoSR_architecture.png" alt="fig_1"></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>ZX VIP(无代码)</p>
+<ul>
+<li>paper title: RCBSR: Re-parameterization Convolution Block for Super-Resolution</li>
+<li>affiliation: Audio &amp; Video Technology Platform Department, ZTE Corp., China</li>
+<li>methods:<ol>
+<li><strong>core idea</strong>: trade-off between SR quality and the energy consumption, <strong>ECBSR as baseline</strong>. In consideration of the low power consumption optimize the baseline from three aspects,<strong>network architecture, NAS and training strategy</strong>.</li>
+<li><strong>network architecture</strong>:<strong>re-parameterization</strong> technique in the deploy stage, <strong>replace the activate function PReLU with ReLU</strong>.the power consumption of tflite model with ReLU is less than PReLU. Meanwhile there is no apparent discrepancy in PSNR.Finally, in order to further reduce power consumption, the <strong>output of first CNN layer</strong> is added into the backbone output instead of original input because original input needs to be copied the number of channels. We use <strong>sub-pixel convolution</strong> to upsample image in the network.</li>
+<li><strong>NAS</strong>: The objective function of FGNAS is <strong>task-specific loss</strong> and <strong>regularizer penalty FLOPs</strong>. FGNAS -&gt; Kim, H., Hong, S., Han, B., Myeong, H., Lee, K.M.: Fine-grained neural architecture search. arXiv preprint arXiv:1911.07478 (2019)</li>
+<li><strong>training strategy</strong>:<strong>replace L1 loss function with Charbonnier loss function</strong> because it causes the problem that the restored image is too smooth and lack of sense of reality.</li>
+<li>architeture<ul>
+<li><img src="/2023/02/17/Workshop-Log-0/ZX_VIP_architecture.png" class="" title="fig2"></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>Fighter(无代码)</p>
+<ul>
+<li>title: Fast Real-Time Video Super-Resolution</li>
+<li>affiliation: None, China</li>
+<li>methods:  <ol>
+<li>shallow CNN model with <strong>depthwise separable convolutions</strong> and <strong>one residual connection</strong>. The number of convolution channels in the model was set to 8, the <strong>depth-to-space op</strong> was used at the end of the model to produce the final output.</li>
+<li>architeture<ul>
+<li><img src="/2023/02/17/Workshop-Log-0/Fighter_architecture.png" class="" title="fig3"></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>XJTU-MIGU SUPER(无代码)</p>
+<ul>
+<li>title: Light and Fast On-Mobile VSR</li>
+<li>affiliation: School of Computer Science and Technology, Xi’an Jiaotong University, China MIGU Video Co. Ltd, China</li>
+<li>methods:<ol>
+<li>small CNN-based model. 示意图如下，总共训练了2600 epochs :(</li>
+<li>architeture<ul>
+<li><img src="/2023/02/17/Workshop-Log-0/XJTU-MIGU_SUPER_architecture.png" class="" title="fig4"></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>BOE-IOT-AIBD(无代码)</p>
+<ul>
+<li>title: Lightweight Quantization CNN-Net for Mobile Video Super-Resolution</li>
+<li>affiliation: BOE Technology Group Co., Ltd., China</li>
+<li>methods:<ol>
+<li>based on the <strong>CNN-Net architecture</strong>, its structure is illustrated in Fig 6. The authors applied <strong>model distillation</strong>, and used the <strong>RFDN CNN</strong> as a teacher model.</li>
+<li>architeture<ul>
+<li><img src="/2023/02/17/Workshop-Log-0/BOE-IOT-AIBD_architecture.png" class="" title="fig5"></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>GenMedia Group(无代码)</p>
+<ul>
+<li>title: SkipSkip Video Super-Resolution</li>
+<li>affiliation: GenGenAI, South Korea</li>
+<li>methods:<ol>
+<li>inspired by the last year’s top solution from the MAI image super-resolution challenge.  <strong>added one extra skip connection to the mentioned anchor-based plain net (ABPN) model</strong>.</li>
+<li>architeture<ul>
+<li><img src="/2023/02/17/Workshop-Log-0/GenMedia-Group_architecture.png" class="" title="fig6"></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>NCUT VGroup(无代码)</p>
+<ul>
+<li>title: EESRNet: A Network for Energy Efficient Super Resolution</li>
+<li>affiliation: North China University of Technology, China Institute of Automation, Chinese Academy of Sciences, China</li>
+<li>methods:<ol>
+<li>also based their solution on the <strong>ABPN model</strong>.</li>
+<li>architeture<ul>
+<li><img src="/2023/02/17/Workshop-Log-0/NCUT-VGroup_architecture.png" class="" title="fig7"></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>ideas</p>
+<ol>
+<li><p>尝试BasicVSR++的轻量化</p>
+</li>
+<li><p>在ABPN的基础上加入BasicVSR++的主要idea进行改进</p>
+</li>
+<li><p>尝试将Pynet_v2应用于video super_resolution -&gt; relative complicated and tailored for ISP, so halt  </p>
+</li>
+<li><p>先train MRNN baseline</p>
+<ul>
+<li><p>环境</p>
+<ol>
+<li><p>Python&#x3D;&#x3D;3.8.10</p>
+</li>
+<li><p>Tensorflow-gpu&#x3D;&#x3D;2.9.0</p>
+<ul>
+<li>查看tensorflow cuda cudnn python 版本对照表： <a target="_blank" rel="noopener" href="https://www.tensorflow.org/install/source_windows">https://www.tensorflow.org/install/source_windows</a></li>
+</ul>
+</li>
+<li><p>Cuda&#x3D;&#x3D;11.2</p>
+<ul>
+<li>CUDA: CUDA是一个<strong>计算平台和编程模型</strong>，用于在GPU上加速应用程序。CUDA版本指的是CUDA软件的版本</li>
+<li>CUDA Toolkit: CUDA Toolkit是包含<strong>CUDA库</strong>和<strong>CUDA工具链</strong>的软件包，用于开发和编译CUDA应用程序。<ul>
+<li>CUDA库: CUDA 库包含了 CUDA 编程所需的核心库文件，例如 <strong>CUDA Runtime 库、CUDA Driver 库、cuBLAS 库、cuDNN 库</strong>等。这些库文件提供了 GPU 加速的基本功能和算法，是 CUDA 编程的基础。</li>
+<li>CUDA工具链：CUDA 工具链则包含了一系列辅助开发和调试 CUDA 程序的工具，例如 <strong>nvcc 编译器、CUDA-GDB 调试器、Visual Profiler 性能分析工具</strong>等。这些工具能够帮助开发者更方便地编写、调试和优化 CUDA 程序。</li>
+</ul>
+</li>
+<li>note: 查看当前安装的显卡驱动最高支持的CUDA版本 nvidia-smi</li>
+<li>note: 查看CUDA工具链版本 nvcc –version</li>
+<li>CUDA Toolkit 与 Driver Version 对照：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html</a></li>
+<li></li>
+</ul>
+</li>
+<li><p>Cudnn&#x3D;&#x3D;v8.7.0</p>
+<ul>
+<li>官网：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cudnn">https://developer.nvidia.com/cudnn</a></li>
+<li>cat &#x2F;etc&#x2F;os-release 查看linux版本</li>
+<li>uname -m 查看cpu架构，cudnn有不同架构的版本 x86_64 PPC SBSA</li>
+<li>tar -xvf解压缩后用以下命令安装并赋予所有用户读取权限</li>
+</ul>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">sudo cp path_to_cudnn/include/cudnn*    /usr/local/cuda-11.2/include</span><br><span class="line">sudo cp path_to_cudnn/lib/libcudnn*    /usr/local/cuda-11.2/lib64</span><br><span class="line">sudo chmod a+r /usr/local/cuda-11.2/include/cudnn*   /usr/local/cuda-11.2/lib64/libcudnn*</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Cudnn和Cuda 安装完需在&#x2F;etc&#x2F;profile配置环境变量PATH和LD_LIBRARY_PATH</li>
+</ul>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64</span><br><span class="line">export PATH=$PATH:/usr/local/cuda/bin</span><br><span class="line">export CUDA_HOME=/usr/local/cuda</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可将文件夹 &#x2F;usr&#x2F;local&#x2F;cuda-11.2 与 &#x2F;usr&#x2F;local&#x2F;cuda 软连接起来</li>
+</ul>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/local/cuda-11.2 /usr/local/cuda</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>也可以通过linux下的<code>update-alternatives</code>命令行工具来进行cuda版本的管理,先用<code>sudo update-alternatives --install /usr/local/cuda(替代项名称) cuda(替代项链表名称) /usr/local/cuda-xx(实际路径) x(优先级)</code>来安装配置cuda的多个替代项,<code>sudo update-alternatives --config cuda</code>切换CUDA默认版本,其本质是更改了以下软连接: <code>/usr/local/cuda -&gt; /etc/alternatives/cuda -&gt; /usr/local/cuda-xx.x</code></p>
+</li>
+<li><p>用下面的命令查看cudnn版本,新版本查看cuDNN版本的命令为</p>
+</li>
+</ul>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2  # -A 选项用来指定匹配成功的行之后显示2行内容</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>结果</p>
+<ol>
+<li>用默认config.yml训练太慢了大约需要1周时间，中途停掉了</li>
+<li>用改进后config.yml训练。8小时左右训练完成，但是loss很大</li>
+<li>结合往年此赛道总结文章放弃训练提供的mobilernn baseline 思考其它基于cnn的模型</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>可以从NTIRE 2022 efficient super-resolution challenge选取baseline运用剪枝蒸馏等改进到移动端</p>
+<ul>
+<li>course project for NCSU’s Computer Science 791-025: Real-Time AI &amp; High-Performance Machine Learning. 三板斧<ol>
+<li>Pruning via NNI</li>
+<li>Quantization via NNI</li>
+<li>Hyper Parameter Optimization via NNI</li>
+<li>Color Optimization: RGB -&gt; YCbCr</li>
+</ol>
+</li>
+<li>选取2022 NTIRE ESR冠军方案RLFN(Byte Dance)作为baseline,先将其模型转换为 tensorflow 版本在 REDS 数据集上直接进行VSR的测试 -&gt; 中间软件依赖兼容性问题放弃RLFN torch-&gt;onnx-&gt;tensorflow路线</li>
+<li>直接用tensorflow 重构 RLFN -&gt; train成功但是精度不达标’psnr’: 25.574987, ‘ssim’: 0.69084775，需要调试改进</li>
+<li>现在的首要问题是确定自己的tensorflow 版本RLFN 与原作的 torch 版本RLFN 是否一致 -&gt; cease</li>
+<li>可以先将其他模型利用torch_to_tensorflow 转化为tensorflow版本模型，并可视化查看效果 -&gt; 可行而且看源代码不复杂，难点在torch onnx onnx-tf tensorflow-gpu 版本对照，静等比赛开始官方scripts</li>
+<li>现在当务之急不是版本对照问题需要尽快找到往年的baseline跑起来，改起来 -&gt; 跑此项目了解剪枝 量化 超参调整三板斧实际运用 ：<a target="_blank" rel="noopener" href="https://github.com/briancpark/video-super-resolution.git">https://github.com/briancpark/video-super-resolution.git</a> -&gt; 都是在调库 NNI</li>
+<li>Train baseline SWRN：<a target="_blank" rel="noopener" href="https://github.com/shermanlian/swrn">https://github.com/shermanlian/swrn</a><ul>
+<li>结构重参数化（structural re-parameterization）:用一个结构的一组参数转换为另一组参数，并用转换得到的参数来参数化（parameterize）另一个结构。只要参数的转换是等价的，这两个结构的替换就是等价的。</li>
+<li>先测试提供的ckpt-98 -&gt; 测试结果’psnr’: 27.931335, ‘ssim’: 0.7803563</li>
+<li>缩减recon_trunk_forward &#x2F; recon_trunk_backward &#x2F; recon_trunk 的 block_num到2, train from scratch 看结果</li>
+</ul>
+</li>
+<li>按照去年赛道冠军方案MVedioSR的ELSR搭建pipeline<ul>
+<li>L1 loss(Mean Absolute Error, MAE) -&gt; 样本预测值与标签之间差的绝对值取平均, 对异常值不敏感,鲁棒性更强; 对于接近零的数, 梯度为常数, 没有逐渐变小的趋势, 容易出现震荡现象</li>
+<li>L2 loss(Mean Squared Error, MSE) -&gt; 样本预测值与标签之间平方差取平均, 对异常值敏感,鲁棒性不强; 对于接近零的数, 梯度随着误差的减小而逐渐减小, 避免了震荡现象。</li>
+<li>TensorFlow中的内置损失函数非常丰富，包括L1、L2、L1_Charbonnier和MSE等常见的损失函数。这些损失函数都在tf.keras.losses模块中实现。具体来说，可以使用以下函数调用这些损失函数：<ul>
+<li>L1损失函数：tf.keras.losses.mean_absolute_error(y_true, y_pred)</li>
+<li>L2损失函数：tf.keras.losses.mean_squared_error(y_true, y_pred)</li>
+<li>L1_Charbonnier损失函数：可以自定义实现，也可以使用以下库中的实现：TensorFlow Addons（需要单独安装）。</li>
+<li>M2损失函数：tf.keras.losses.mean_absolute_percentage_error(y_true, y_pred)</li>
+<li>note: 这些函数的参数都是y_true和y_pred，分别表示真实值和预测值。</li>
+</ul>
+</li>
+<li>L1 Loss: L1 Loss: $L_1 &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \left| y_i - \hat{y_i} \right|$</li>
+<li>L2 Loss (MSE): $L_2 &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \left( y_i - \hat{y_i} \right)^2$</li>
+<li>L1 Charbonnier Loss: $L_{Charbonnier} &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \sqrt{ \left( y_i - \hat{y_i} \right)^2 + \epsilon^2 }$</li>
+<li>M2 Loss: $L_{M2} &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \left( \frac{y_i - \hat{y_i}}{y_i + \epsilon} \right)^2$，其中 $\epsilon$ 为一个较小的数，如 $10^{-6}$，用于防止分母为零。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>可以看看tflite加速的那些operations去更改模型</p>
+</li>
+<li><p>尝试将torch VapSR 从单图像超分向视频超分迁移</p>
+<ul>
+<li>构建模型的tensorflow 代码遇到个小坑: tf.keras.Sequential([upconv1,pixel_shuffle,lrelu,upconv2,pixel_shuffle]) 如果用两个一样的pixel_shuffle模块，用tf.keras.Sequential实现的时候必须用两个不一样的名称，否则无论如何Sequential内都只有一个pixel_shuffle模块</li>
+<li>‘from .XXX import YYY’ 相对导入，Python 解释器会先从当前目录开始查找指定的模块或包,需要当前current.py文件在一个Python包内（创建一个空的 <strong>init</strong>.py 文件，即可将文件夹视为一个Python包）</li>
+<li>[B,H,W,48] - conv1X1升维 -&gt; [B,H,W,64], conv1X1为[64,48,1,1]大小的Tensor</li>
+<li>blueprint conv(M: input_channels N: out_channels); BSconvU: 先用M X 1权重向量对输入作通道聚合, 变为只有1个feature map,然后再用N个K X K的卷积输出N个feature map.<ul>
+<li><img src="/2023/02/17/Workshop-Log-0/BSconv.png" class="" title="fig8"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>对VapSR_2 剪枝量化</p>
+<ul>
+<li><p>列表推导式：list &#x3D; [expression for item in iterable]，其中 expression 是要添加到列表中的表达式，item 是可迭代对象中的每一项，iterable 是要迭代的对象。例如：metric_list &#x3D; [func for name, func in self.metric_functions.items()]</p>
+</li>
+<li><p>tfmot.sparsity.keras.prune_low_magnitude() 封装vapsr_3中的每一个tf.keras.layers.Conv2D进行剪枝</p>
+</li>
+<li><p>同一class下def的method默认第一个参数需要为self;一个method调用另一个method需要用 self.def()不能直接用 def()</p>
+</li>
+<li><p>keras建立网络的方法可以分为keras.models.Sequential() 和keras.models.Model()、继承类三种方式。注意：tensorflow2.* 以后的版本可以直接使用tf.keras.Sequential()和tf.keras.Model()两个类。不用再使用keras.models的API</p>
+<ul>
+<li>Keras提供两种API：Sequential API和Functional API。Sequential API是一种简单的线性堆叠模型，适用于许多简单的模型。但是，如果我们需要构建更加复杂的模型，比如有多个输入或输出的模型，那么就需要使用Functional API。</li>
+<li>Functional API通过tf.keras.Model()实现，它提供了更加灵活的方式来定义模型的结构和层之间的连接。使用Functional API，我们可以创建具有多个输入和输出的模型，可以共享层，可以定义任意的计算图结构等等。相比之下，Sequential API则不能支持这些更高级的模型定义方式。</li>
+<li>因此，使用Functional API来构建复杂的模型是更加灵活和强大的选择，而通过tf.keras.Model()实现这个API是为了提供一种方便和一致的方式来定义和构建深度学习模型。</li>
+</ul>
+</li>
+<li><p>&#x2F; 表示普通的除法运算，例如 5 &#x2F; 2 的结果为 2.5。它返回的是一个浮点数，即使两个操作数都是整数。  &#x2F;&#x2F;表示整除运算，例如5 &#x2F;&#x2F; 2 的结果为 2。</p>
+</li>
+<li><p>&#x3D;和+直接赋值给变量是不好的，因为它们只是简单地创建一个新的变量，而不是对现有变量进行原位操作。assign()和assign_add()是TensorFlow中的<strong>原地操作</strong>，它们直接将结果分配给现有变量，而不是创建一个新的变量。</p>
+</li>
+<li><p>shell scripts(.sh)添加多行注释：<code>&lt;&lt; COMMENT ... COMMENT</code>, 在 Shell 中，&lt;&lt; 是 Here Document（文档嵌入）的语法，它可以用来将一段文本或代码块嵌入到 Shell 脚本中。</p>
+</li>
+<li><p>pruning 过程model type 变化</p>
+<ol>
+<li>initial: type(self.model) &#x3D;&#x3D; &lt;class ‘VapSR_3.vapsr_3’&gt; (i.e. Keras Subclass Model)<ul>
+<li>Keras Subclass Model是一种创建自定义模型的方式，相较于Sequential和Functional API而言，其提供更大的灵活性。使用Subclass Model，用户可以通过定义一个继承自tf.keras.Model的Python类来构建模型。使用Subclass Model的优点在于，它可以自由灵活地创建非线性、复杂的模型结构，也可以方便地重复利用模型代码。</li>
+</ul>
+</li>
+<li>apply tensorflow.keras.Model() method -&gt; type(functional_model) &#x3D;&#x3D; &lt;class ‘keras.engine.functional.Functional’&gt;</li>
+<li>add tfmot.sparsity.keras.prune_low_magnitude() wrapper -&gt; type(pruned_model) &#x3D;&#x3D; &lt;class ‘keras.engine.functional.Functional’&gt;; 如果直接调用tfmot.sparsity.keras.prune_low_magnitude(functional_model, **pruning_params)还是会报错：ValueError: Subclassed models are not supported currently. :(</li>
+<li>add tfmot.sparsity.keras.prune_low_magnitude() wrapper with another method -&gt; type(pruned_model_1) &#x3D;&#x3D; &lt;class ‘keras.engine.functional.Functional’&gt;</li>
+<li>pruning -&gt; type(pruned_model) &#x3D;&#x3D; &lt;class ‘keras.engine.functional.Functional’&gt;</li>
+<li>虽然type(pruned_model) &#x3D;&#x3D; &lt;class ‘keras.engine.functional.Functional’&gt;，但是传入stripped_pruned_model &#x3D; tfmot.sparsity.keras.strip_pruning(pruned_model)就会报错：ValueError: Expected <code>model</code> argument to be a functional <code>Model</code> instance, but got a subclassed model instead: &lt;keras.saving.saved_model.load.BSConvU object at 0x7f66f06fa520&gt;</li>
+<li>pruned_model.layers &#x3D;&#x3D; [&lt;keras.engine.input_layer.InputLayer object at 0x7f66f06fa580&gt;, &lt;keras.saving.saved_model.load.BSConvU object at 0x7f66f06fa520&gt;, &lt;keras.engine.sequential.Sequential object at 0x7f66f06fa4f0&gt;, &lt;keras.layers.convolutional.conv2d.Conv2D object at 0x7f66f0717c40&gt;, &lt;keras.layers.core.tf_op_layer.TFOpLambda object at 0x7f66f80a7fd0&gt;, &lt;keras.engine.sequential.Sequential object at 0x7f66f80a7cd0&gt;]</li>
+</ol>
+</li>
+<li><p>pruning 去除tfmot.sparsity.keras.prune_low_magnitude() wrapper的报错就没停过 -&gt; 直接构建Functional Model VapSR</p>
+</li>
+<li><p>详细解释 Layer Norm &#x2F; Batch Norm &#x2F; Instance Norm &#x2F; Pixel Norm</p>
+<ul>
+<li><p>Batch Norm：对每个特征通道（C）进行归一化，使用整个批次（N）中的样本的均值和方差。在每个 batch 的 channel 维度上计算均值和方差。</p>
+</li>
+<li><p>Layer Norm：对每个样本（N）进行归一化，使用所有特征通道（C）和空间维度（H，W）的均值和方差。在每个 layer 的所有 feature maps 上计算均值和方差。</p>
+</li>
+<li><p>Instance Norm：对每个样本（N）和每个特征通道（C）进行归一化，使用空间维度（H，W）的均值和方差。在每个 instance 的 channel 维度上计算均值和方差。</p>
+</li>
+<li><p>Pixel Norm：对每个样本（N）和每个像素位置（H，W）进行归一化，使用所有特征通道（C）的均值和方差。</p>
+</li>
+<li><img src="/2023/02/17/Workshop-Log-0/BN_LN_IN_PN.png" class="" title="Visualize different normalization methods"></li>
+<li><p>组会可以讨论下具体实现（作为最后一小部分）</p>
+</li>
+<li><p>VapSR 原作者 pixel norm torch 实现  </p>
+</li>
+<li><pre><code class="python"> class VAB(nn.Module):
+     def __init__(self, d_model,d_atten):
+         super().__init__()
+         self.proj_1 = nn.Conv2d(d_model, d_atten, 1)
+         self.activation = nn.GELU()
+         self.atten_branch = Attention(d_atten)
+         self.proj_2 = nn.Conv2d(d_atten, d_model, 1)
+         self.pixel_norm = nn.LayerNorm(d_model)
+         default_init_weights([self.pixel_norm], 0.1)
+     
+     def forward(self, x):
+         shorcut = x.clone()
+         x = self.proj_1(x)
+         x = self.activation(x)
+         x = self.atten_branch(x)
+         x = self.proj_2(x)
+         x = x + shorcut
+         x = x.permute(0, 2, 3, 1) #(B, H, W, C)
+         x = self.pixel_norm(x)
+         x = x.permute(0, 3, 1, 2).contiguous() #(B, C, H, W)
+
+         return x
+     参考：https://blog.csdn.net/weixin_39228381/article/details/107939602    
+</code></pre>
+</li>
+<li><p>x &#x3D; tf.constant([[1.,2.,4.,5.,7.,8.],[6.,7.,9.,10.,11.,12.],[2.,3.,5.,6.,8.,9.],[4.,5.,7.,8.,10.,11]])</p>
+</li>
+<li><p>mean, variance &#x3D; tf.nn.moments(x, axes, shift&#x3D;None, keepdims&#x3D;False, name&#x3D;None) The mean and variance are calculated by <strong>aggregating the contents of x across axes</strong>.  例： tf.nn.moments(x,1)  x.shape &#x3D;&#x3D; [4,2,3] -&gt; mean.shape &#x3D;&#x3D; [4,1,3]</p>
+</li>
+<li><p>后续还需要花时间搞清楚 tf LayerNormalization GroupNormalization 在axis&#x3D;list&#x2F;tuple多轴的情况下，到底计算了多少mean和variance，换言之如何用这两个built-in layer做到随心所欲的控制normalization的粒度,妥协方法我觉得是利用transpose,转换轴(相当于torch permute)间接实现相关功能。</p>
+</li>
+</ul>
+</li>
+<li><p>*args 和 **kwargs 都是 Python 中用于传递可变数量参数的特殊语法。它们的主要区别在于：</p>
+<ul>
+<li>*args 用于传递可变数量的位置参数，以元组(tuple)的形式传递给函数；</li>
+<li>**kwargs 用于传递可变数量的关键字参数，以字典(dictionary)的形式传递给函数。</li>
+</ul>
+</li>
+<li><p>接下来需要尽快完成 pruning clustering quantization pipeline, 将runtime降到10ms左右</p>
+</li>
+<li><p>递归函数的return不是返回一个值然后程序结束，而是返回一个值到上一层的递归函数，直到return到最外层</p>
+</li>
+<li><p>add_pruning_wrapper():</p>
+<ul>
+<li>通过Sequential.add()重建模型,在原模型就是Sequential的时候可行,但是原模型call() method加不进去</li>
+<li>原地替换setattr(object, name, new_model)难点:<ol>
+<li>递归当前tf.keras.layers.Conv2D不知道所属模块object 和 name</li>
+<li>pruned_model &#x3D; copy.deepcopy(model)在复制的pruned_model上应用剪枝封装, subclassed tf.keras.Model() class -&gt; custom object 需要全部重写method: get_config() from_config()</li>
+</ol>
+</li>
+<li>model.__dict__ 与dir(model) 区别<ol>
+<li>model.__dict__ 返回一个字典对象，其中键是模型实例的属性名称(可用model.__dict__.keys()访问)，值是对应的属性值(可用model.__dict__.values()访问)。而 dir(model) 返回一个列表对象，其中包含模型实例的所有属性名称。</li>
+<li>具体来说，model.__dict__ 只返回<strong>实例自身定义的属性，不包括其继承而来的属性</strong>。而 dir(model) 返回实例的所有属性名称，包括其自身定义的属性和继承而来的属性。</li>
+<li>model.__dict__ 返回的字典对象只包含可写的属性。而 dir(model) 返回的属性列表可能包含不可写的属性，例如只读属性或方法等。</li>
+</ol>
+</li>
+<li>pruned_model.layers[3] &#x3D;&#x3D; &lt;keras.layers.convolutional.conv2d.Conv2D object at 0x7ff557c57a60&gt; 这一层是 Keras 自带的 Conv2D 层，而不是通过继承 tf.keras.layers.Layer 类来自定义的。因此，它不会在 __dict__ 属性中出现。</li>
+</ul>
+</li>
+<li><p>strip_pruning_wrapper():</p>
+<ul>
+<li>tfmot.sparsity.keras.strip_pruning(): Only sequential and functional models are supported for now.  </li>
+<li>recursively strip pruning wrapper -&gt; success</li>
+</ul>
+</li>
+<li><p>lr_scheduler: ConsineDecayRestarts</p>
+</li>
+<li><p>pruning_train, clustering_train loss 与 pretraining train loss 相差很大, 50+ vs 10+ 有点问题</p>
+</li>
+<li><p>quantization</p>
+<ol>
+<li><p>tensorflow quantize:</p>
+<ul>
+<li>def quantize_scope(*args)</li>
+<li>def quantize_model(to_quantize, quantized_layer_name_prefix&#x3D;’quant_’)</li>
+<li>def quantize_annotate_model(to_annotate)</li>
+<li>def _add_quant_wrapper(layer)</li>
+<li>def quantize_annotate_layer(to_annotate, quantize_config&#x3D;None)</li>
+<li>def quantize_apply(model, scheme&#x3D;default_8bit_quantize_scheme.Default8BitQuantizeScheme(),           quantized_layer_name_prefix&#x3D;’quant_’)</li>
+<li>def _extract_original_model(model_to_unwrap)</li>
+<li>def _quantize(layer)</li>
+<li>def _unwrap_first_input_name(inbound_nodes)</li>
+<li>def _wrap_fixed_range(quantize_config, num_bits, init_min, init_max, narrow_range)</li>
+<li>def _is_serialized_node_data(nested)</li>
+<li>def _nested_to_flatten_node_data_list(nested)</li>
+<li>def fix_input_output_range(model, num_bits&#x3D;8, input_min&#x3D;0.0, input_max&#x3D;1.0, output_min&#x3D;0.0, output_max&#x3D;1.0, narrow_range&#x3D;False)</li>
+<li>def _is_functional_model(model)</li>
+<li>def remove_input_range(model)</li>
+</ul>
+</li>
+<li><p>*与**二者区别,及与C++ 中指针的区别:</p>
+<ul>
+<li>* 和 ** 都是Python中的特殊符号，用于参数传递和元组、字典的解包操作。它们与C++中的指针有些类似，但也有不同之处。</li>
+<li>* 用于元组的解包操作，可以将一个元组中的元素解包成一个一个的单独元素</li>
+<li>** 用于字典的解包操作，可以将一个字典中的键值对解包成一个一个的单独键和值</li>
+<li>在函数调用时，* 可以用于传递可变数量的位置参数，而 ** 可以用于传递可变数量的关键字参数，如: def foo(*args, **kwargs): …</li>
+<li>与C++中的指针类似，* 可以用于声明指针类型的变量，而 ** 则可以用于声明指向指针的指针类型的变量。但与C++不同的是，Python中的指针实际上是<strong>对象的引用</strong>，而不是内存地址，因此没有C++中的指针算术运算和指针类型转换等操作。<ul>
+<li>与 C++ 不同的是，Python 中的对象引用是一个高级抽象，它们隐藏了对象的实际内存地址，因此 Python 中的引用和指针不是同一概念。在 Python 中，我们不需要显式地管理内存，而是由 Python 解释器自动处理内存管理的细节。因此，Python 中的引用更像是一个符号，它与实际的内存地址之间存在一个间接的映射关系。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>self 与 cls:</p>
+<ul>
+<li>cls 是 Python 中类方法的第一个参数的常规名称。 它指的是类本身而不是类的实例。 它类似于在实例方法中使用 self。</li>
+<li>在类方法中，cls 用于访问类级别的属性和方法，以及创建类的新实例。</li>
+</ul>
+</li>
+<li><p>修好bug,在手机上测好 runtime; 目标: PSNR -&gt; 28, SSIM -&gt; 0.8, runtime -&gt; 30ms</p>
+<ul>
+<li>从VapSR_3_2开始在手机上都跑不通runtime测试了</li>
+<li>通过tf.lite.TFLiteConverter.from_saved_model(‘path_to_model’)创建converter,转换为tflite模型后可以通过netron查看模型结构并分析可能的错误</li>
+<li>使用tf.lite.TFLiteConverter.from_keras_model()或者tf.lite.TFLiteConverter.from_saved_model()使用创建converter的话总会遭遇两个问题<ol>
+<li>model  input_size: [1,1,1,3] output_size[1,1,1,3] 异常</li>
+<li>Make sure you apply&#x2F;link the Flex delegate before inference.</li>
+<li>综上推荐配合model.save(‘path_to_model’)存为SavedModel格式，然后定义好concrete_func &#x3D; model.signatures[tf.saved_model.DEFAULT_SERVING_SIGNATURE_DEF_KEY ],使用tf.lite.TFLiteConverter.from_concrete_functions([concrete_func])规避掉这两个问题</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>通过QuantizeConfig和Quantizer配合实现layer activations weights的自定义量化策略</p>
+</li>
+<li><p>上下文管理器用于管理某个代码块的上下文环境</p>
+<ul>
+<li>Python 中常见的上下文管理器包括 with open() as f 中的 open() 函数和 with tf.Session() as sess 中的 tf.Session() 函数等。</li>
+<li>在 with 代码块结束后，Python 会自动调用上下文管理器的 __exit__ 方法，以确保资源的释放和清理等工作的完成。同时，上下文管理器可以在 __enter__ 方法中完成一些初始化工作。在 with 代码块内部，可以使用上下文管理器返回的对象，来操作上下文环境中的资源</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>tensorflow复现高通torch QuickSRNet 8-bit 量化</p>
+<ul>
+<li>android_aarch64代表的是基于64位ARM架构的Android设备，也被称为ARMv8-A架构.通常用于高端设备，如智能手机和平板电脑。</li>
+<li>android_arm代表的是基于32位ARM架构的Android设备。通常用于低端设备，如廉价智能手机、平板电脑和物联网设备</li>
+</ul>
+</li>
+<li><p>困扰了至少3周的bug： TFlite GPU Delegate init Batch size mismatch -&gt; solved</p>
+<ul>
+<li>根据<a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensorflow/issues/34525#issuecomment-564755977">this link</a>提前规避了tflite gpu delegate不支持全连接层，即利用1*1全连接层替代</li>
+<li>从0到1一点点逐个测试可能出问题的模块，最终定位在pixel norm模块(由tf.reshape和tf.keras.layers.LayerNormalization构成)，换为LayerNormalization得到解决，PSNR甚至有一点点提升:)</li>
+</ul>
+</li>
+<li><p>奇怪的问题，在转换Functional Model为tflite模型时，import tensorflow.keras.backend as K 在模型中使用k.clip()时总是提示K未定义 -&gt; 直接更换为tf.keras.backend.clip()解决</p>
+</li>
+<li><p>在训练Mobile VSR小模型时，GPU利用率低的问题</p>
+<ol>
+<li>不是由于CPU读取处理数据慢造成的，增加线程无效</li>
+<li>也不是batch size大造成的，减小batch size无效</li>
+<li>想要提高GPU利用率估计有两个途径,一是增大模型而是使用nvidia DALI数据读取加速库</li>
+</ol>
+</li>
+<li><p>感受野(receptive field) 计算</p>
+<ul>
+<li><p>假设输入图像大小为$W_{in}\times H_{in}$，卷积核大小为$k\times k$，步长为$s$，当前卷积层的感受野大小为$F_{in}$，则下一层的感受野大小$F_{out}$为：</p>
+<p> $F_{out} &#x3D; F_{in} + (k - 1) \times \text{dilation rate}$</p>
+<p>其中，$\text{dilation rate}$表示卷积核的膨胀率，如果不使用膨胀卷积，则$\text{dilation rate} &#x3D; 1$。如果下一层是池化层，则$s &#x3D; k$，并且不考虑膨胀率。</p>
+<p>设输入图像大小为$224\times 224$，第一个卷积层使用$3\times 3$大小的卷积核，步长为1，不使用膨胀卷积。则第一个卷积层的感受野大小为$3$。</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>results</p>
+</li>
+</ol>
+<h4 id="milestone-0"><a href="#milestone-0" class="headerlink" title="milestone_0:"></a><strong>milestone_0:</strong></h4><hr>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+<th>FLOPs [G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SWRN_0</td>
+<td>Origin</td>
+<td>REDS</td>
+<td>27.931335</td>
+<td>0.7803562</td>
+<td>43,472</td>
+<td>25.6</td>
+<td></td>
+</tr>
+<tr>
+<td>SWRN_1</td>
+<td>recon_trunk block num&#x3D;2</td>
+<td>REDS</td>
+<td>27.820051</td>
+<td>0.77666414</td>
+<td>36,512</td>
+<td>26.9</td>
+<td></td>
+</tr>
+<tr>
+<td>ELSR_0(vsr 22 winner)</td>
+<td>Origin</td>
+<td>REDS</td>
+<td>26.716854</td>
+<td>0.73988235</td>
+<td>3,468</td>
+<td>19.3</td>
+<td></td>
+</tr>
+<tr>
+<td>RLFN_0(esr 22 winner)</td>
+<td>Origin</td>
+<td>REDS</td>
+<td>26.78721</td>
+<td>0.7389487</td>
+<td>306,992</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_0</td>
+<td>Origin</td>
+<td>REDS</td>
+<td>28.103758</td>
+<td>0.7864979</td>
+<td>154,252</td>
+<td>5191.0</td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_1</td>
+<td>Replace feature extraction conv and VAB’s 2 con1X1 with blueprint conv</td>
+<td>REDS</td>
+<td>28.02941</td>
+<td>0.7845887</td>
+<td>155,916</td>
+<td>5798.0</td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_2</td>
+<td>Replace feature extraction conv with blueprint conv and  reduce Attention’s kernel size&#x3D;3X3</td>
+<td>REDS</td>
+<td>28.021387</td>
+<td>0.7831156</td>
+<td>131,276</td>
+<td>2694.0</td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_3</td>
+<td>Correct custom realization of pixel normalization</td>
+<td>REDS</td>
+<td>28.018507</td>
+<td>0.7836466</td>
+<td>131,276</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_3_1</td>
+<td>Reduce VAB blocks from 11 to 5</td>
+<td>REDS</td>
+<td>27.826998</td>
+<td>0.7771207</td>
+<td>73,484</td>
+<td>1222.0</td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_3_2</td>
+<td>Realize Pixel Normalization with tf.reshape() and tf.keras.layers.LayerNormalization(); Reduce VAB blocks from 5 to 4</td>
+<td>REDS</td>
+<td>27.550034</td>
+<td>0.7687168</td>
+<td>64,108</td>
+<td>error</td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_4</td>
+<td>apply pruning, weights clustering to conv kernels</td>
+<td>REDS</td>
+<td>27.833515(suspect)</td>
+<td>0.7771123(suspect)</td>
+<td>32,054(64,108)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_4_2_0</td>
+<td>Functional VapSR_4 with pixel norm realized by layer normalization, VAB activation: GELU</td>
+<td>REDS</td>
+<td>27.666351</td>
+<td>0.77187574</td>
+<td>64,108</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_4_2_1</td>
+<td>Functional VapSR_4 with pixel norm realized by layer normalization, VAB activation: RELU</td>
+<td>REDS</td>
+<td>27.539206</td>
+<td>0.7669671</td>
+<td>64,108</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>VapSR_4_3</td>
+<td>Functional VapSR_4 with self customed pixel normalization get rid of layer normalization</td>
+<td>REDS</td>
+<td>27.651005</td>
+<td>0.7715401</td>
+<td>63,852</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<hr>
+<p><em>AI benchmark setting for Runtime test:</em></p>
+<ul>
+<li>Input Values range(min,max): 0,255  </li>
+<li>Inference Mode: FP16  </li>
+<li>Acceleration: TFLite GPU Delegate</li>
+</ul>
+<hr>
+<h4 id="milestone-1"><a href="#milestone-1" class="headerlink" title="milestone_1:"></a><strong>milestone_1:</strong></h4><hr>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+<th>FLOPs [G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VapSR_4_1</td>
+<td>Functional VapSR_4 with pixel norm realized by layer normalization, VAB activation: RELU, Attention using Partial conv</td>
+<td>REDS</td>
+<td>27.790268</td>
+<td>0.77721727</td>
+<td>59,468</td>
+<td>654.0 (INT8_CPU)</td>
+<td>7.462</td>
+</tr>
+<tr>
+<td>SWAT_0</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;4)</td>
+<td>REDS</td>
+<td>27.842232</td>
+<td>0.77754354</td>
+<td>50,624</td>
+<td>271.0   (FP16_CPU)</td>
+<td>5.803</td>
+</tr>
+<tr>
+<td>SWAT_1</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;2), replace fc with 1*1 conv</td>
+<td>REDS</td>
+<td>27.759375</td>
+<td>0.77492595</td>
+<td>33,984</td>
+<td>252.0 (FP16_CPU)</td>
+<td>3.900</td>
+</tr>
+<tr>
+<td>SWAT_2</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;1), replace fc with 1*1 conv</td>
+<td>REDS</td>
+<td>27.760305</td>
+<td>0.77487457</td>
+<td>25,664</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>SWAT_3</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;1), replace fc with 1*1 conv, replace pixel normalization with layer normalization</td>
+<td>REDS</td>
+<td>27.761642</td>
+<td>0.7748446</td>
+<td>25,664</td>
+<td>27.8 (FP16_TFLite GPU Delegate)</td>
+<td>2.949</td>
+</tr>
+<tr>
+<td>SWAT_3_1</td>
+<td>Sliding Window, VAB Attention(large reception field&#x3D;17), Partial Conv(point_wise: standard, depth_wise: groups&#x3D;out_dim), Channel Shuffle(mix_ratio&#x3D;1), replace fc with 1*1 conv, replace pixel normalization with layer normalization</td>
+<td>REDS</td>
+<td>27.754656</td>
+<td>0.77461684</td>
+<td>24,160</td>
+<td>30.0 (FP16_TFLite GPU Delegate)</td>
+<td>2.776</td>
+</tr>
+<tr>
+<td>SWAT_3_2</td>
+<td>Sliding Window, VAB Attention(receptive field&#x3D;17), Partial Conv(feature fusion maintains standard conv1*1), Channel Shuffle(mix_ratio&#x3D;2), replace fc with 1*1 conv, replace pixel normalization with layer normalization</td>
+<td>REDS</td>
+<td>27.74189</td>
+<td>0.7742521</td>
+<td>26,016</td>
+<td>32.4 (FP16_TFLite GPU Delegate)</td>
+<td>2.996</td>
+</tr>
+<tr>
+<td>SWAT_4</td>
+<td>Sliding Window, VAB Attention, Replace partial conv with standard convlution, Remove Channel Shuffle, replace pixel normalization with layer normalization</td>
+<td>REDS</td>
+<td>27.785185</td>
+<td>0.77523285</td>
+<td>53,696</td>
+<td>38.5 (FP16_TFLite GPU Delegate)</td>
+<td>6.202</td>
+</tr>
+<tr>
+<td>SWAT_5</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;1), replace fc with 1*1 conv, replace pixel normalization with layer normalization, enlarge train step numbers to 250,000</td>
+<td>REDS</td>
+<td>27.811176</td>
+<td>0.7763541</td>
+<td>25,664</td>
+<td>27.6 (FP16_TFLite GPU Delegate)</td>
+<td>2.949</td>
+</tr>
+<tr>
+<td>SWAT_6</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;1), replace fc with 1*1 conv, replace pixel normalization with layer normalization, enlarge train step numbers to 150,000, Remove convs of hidden forward&#x2F;backward</td>
+<td>REDS</td>
+<td>27.738842</td>
+<td>0.7743317</td>
+<td>21,056</td>
+<td>23.6 (FP16_TFLite GPU Delegate)</td>
+<td>2.417</td>
+</tr>
+</tbody></table>
+<hr>
+<p><em>AI benchmark setting for Runtime test:</em></p>
+<ul>
+<li>Input Values range(min,max): 0,255  </li>
+<li>Inference Mode: INT8&#x2F;FP16  </li>
+<li>Acceleration: CPU&#x2F;TFLite GPU Delegate</li>
+</ul>
+<hr>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/13/OnePlus-Recovery/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/02/13/OnePlus-Recovery/" class="post-title-link" itemprop="url">OnePlus Recovery</a>
         </h2>
 
         <div class="post-meta-container">
@@ -266,7 +1401,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/07/Work_Log_0/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/02/07/Work-Log-0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -284,7 +1419,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/07/Work_Log_0/" class="post-title-link" itemprop="url">Mobile Video Super-Resolution Work Log</a>
+          <a href="/2023/02/07/Work-Log-0/" class="post-title-link" itemprop="url">Mobile Video Super-Resolution Work Log</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1766,7 +2901,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/12/06/Model_Quantization_Papers/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/12/06/Model-Quantization-Papers/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1784,7 +2919,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/12/06/Model_Quantization_Papers/" class="post-title-link" itemprop="url">Model Quantization Papers</a>
+          <a href="/2022/12/06/Model-Quantization-Papers/" class="post-title-link" itemprop="url">Model Quantization Papers</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1880,7 +3015,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/11/17/Kill_Issues_Log/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/11/17/Kill-Issues-Log/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1898,7 +3033,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/11/17/Kill_Issues_Log/" class="post-title-link" itemprop="url">Logs of killing issues</a>
+          <a href="/2022/11/17/Kill-Issues-Log/" class="post-title-link" itemprop="url">Logs of killing issues</a>
         </h2>
 
         <div class="post-meta-container">
@@ -2517,7 +3652,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/21/CUDA_Tutorial/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/21/CUDA-Tutorial/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -2535,7 +3670,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/21/CUDA_Tutorial/" class="post-title-link" itemprop="url">CUDA Tutorial</a>
+          <a href="/2022/09/21/CUDA-Tutorial/" class="post-title-link" itemprop="url">CUDA Tutorial</a>
         </h2>
 
         <div class="post-meta-container">
@@ -3125,7 +4260,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/07/Model_Compression_Overview/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/07/Model-Compression-Overview/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -3143,7 +4278,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/07/Model_Compression_Overview/" class="post-title-link" itemprop="url">Model Compression Overview</a>
+          <a href="/2022/09/07/Model-Compression-Overview/" class="post-title-link" itemprop="url">Model Compression Overview</a>
         </h2>
 
         <div class="post-meta-container">
@@ -3267,7 +4402,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/06/Tensor_Dimensions/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/06/Tensor-Dimensions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -3285,7 +4420,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/06/Tensor_Dimensions/" class="post-title-link" itemprop="url">Tensor Dimensions</a>
+          <a href="/2022/09/06/Tensor-Dimensions/" class="post-title-link" itemprop="url">Tensor Dimensions</a>
         </h2>
 
         <div class="post-meta-container">
@@ -3349,7 +4484,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/05/Week_Report/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/05/Week-Report/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -3367,7 +4502,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/05/Week_Report/" class="post-title-link" itemprop="url">Week Report</a>
+          <a href="/2022/09/05/Week-Report/" class="post-title-link" itemprop="url">Week Report</a>
         </h2>
 
         <div class="post-meta-container">
@@ -4403,7 +5538,7 @@
 <li>项目代码整理，上传github</li>
 </ul>
 </li>
-<li>Jetson Nano 部署 ZeroDCE,远远达不到实时性要求,处理单张512×512图片暗光增强耗时 &gt; 2 min。具体结果如下：<img src="/2022/09/05/Week_Report/ZeroDCE_test_result.jpg" class="" title="Elapsed Time(ms)&#x2F;photo"></li>
+<li>Jetson Nano 部署 ZeroDCE,远远达不到实时性要求,处理单张512×512图片暗光增强耗时 &gt; 2 min。具体结果如下：<img src="/Week_Report/ZeroDCE_test_result.jpg" alt="Elapsed Time(ms)/photo"></li>
 <li>NeurIPS 审稿</li>
 <li>补充PPT: 模型压缩部署部分</li>
 </ol>
@@ -4414,7 +5549,7 @@
 <hr>
 <h2 id="进度汇报-（2023-7-17-2023-7-23）"><a href="#进度汇报-（2023-7-17-2023-7-23）" class="headerlink" title="进度汇报 （2023.7.17-2023.7.23）"></a>进度汇报 （2023.7.17-2023.7.23）</h2><ol>
 <li>Jetson Nano 部署暗光增强 ZeroDCE++,处理单张512×512图片耗时约10ms,但有波动(最高4931.46 ms&#x2F;张),基本满足实时性要求。<ul>
-<li><img src="/2022/09/05/Week_Report/ZeroDCE++_test_result.png" class="" title="Elapsed Time(ms)&#x2F;photo"></li>
+<li><img src="/Week_Report/ZeroDCE++_test_result.png" alt="Elapsed Time(ms)/photo"></li>
 </ul>
 </li>
 </ol>
@@ -4425,8 +5560,8 @@
 <hr>
 <h2 id="进度汇报-（2023-8-07-2023-8-13）"><a href="#进度汇报-（2023-8-07-2023-8-13）" class="headerlink" title="进度汇报 （2023.8.07-2023.8.13）"></a>进度汇报 （2023.8.07-2023.8.13）</h2><ol>
 <li>Jetson Nano 部署 Face Tracking,结合之前的Pose Estimation 达不到实时30 frame&#x2F;s的要求<ul>
-<li><img src="/2022/09/05/Week_Report/face_detection_screenshot.png" class="" title="Elapsed Time(ms)&#x2F;photo"></li>
-<li><img src="/2022/09/05/Week_Report/pose_estimation_screenshot.png" class="" title="Elapsed Time(ms)&#x2F;photo"></li>
+<li><img src="/Week_Report/face_detection_screenshot.png" alt="Elapsed Time(ms)/photo"></li>
+<li><img src="/Week_Report/pose_estimation_screenshot.png" alt="Elapsed Time(ms)/photo"></li>
 </ul>
 </li>
 <li>PRCV审稿</li>
@@ -4519,7 +5654,7 @@
 <li>Video Super-Resolution Quantization<ul>
 <li>基于目前在Vid4、Vimeo90k、REDS数据集上SOTA模型 BasicVSR++ 进行channel-wise distribution-aware 量化pipeline的搭建（目前尚没有视频超分量化超分方向的baseline，代码难度较大）</li>
 <li>尝试引入在其它视频感知任务（Human Pose Estimation，Semantic Segmentation，Video Object Segmentation）有效上的方法，参考 ICCV2023 ResQ 将网络中相邻帧的激活之间的残差用于量化，更小的方差有利于缩小量化误差<ul>
-<li>附图：<style>.tonxiwbrsmrd{}</style><img src="/2022/09/05/Week_Report/ResQ.png" class="tonxiwbrsmrd" alt="ResQ Motivation"></li>
+<li>附图：<img src="Week_Report/ResQ.png" alt="ResQ Motivation" width="500" height="300"></li>
 </ul>
 </li>
 </ul>
@@ -4654,7 +5789,7 @@
 <li>Prepare fx: fuse模型，也就是通常的优化，比如conv+bn啥的,利用fx对模型进行transform</li>
 <li>Insert observer: Input&#x2F;Output&#x2F;Weight 均插入observer</li>
 <li>Calibration: 输入数据进行校准，收集 weights 和 activation 的 max 和 min 等统计信息</li>
-<li>Convert fx: 在 observer 位置用相应的 quantize&#x2F;dequantize module代替,并合并到原始的layer中<br>附图：<style>.vbgndvnqjhmb{}</style><img src="/2022/09/05/Week_Report/torch.fx_ptq.PNG" class="vbgndvnqjhmb" alt="torch fx ptq"></li>
+<li>Convert fx: 在 observer 位置用相应的 quantize&#x2F;dequantize module代替,并合并到原始的layer中<br>附图：<img src="Week_Report/torch.fx_ptq.PNG" alt="torch fx ptq" width="800" height="200"></li>
 </ol>
 </li>
 <li>推导验证 RepVGG 重参数轻量化方法与 QAT 联合使用的 weight range 能否获得数学上的等价变换问题: 具体来说，多支路 conv 合并前运用 QAT 提升精度, 在多支路 conv 合并后根据 QAT 训练得到的多分支 conv weight 的浮点数范围 (Real Range) 能否等价得到合并后的 conv weight 的浮点数范围，此浮点数范围与量化&#x2F;反量化过程的 scale factor 和 zero point 基本等价可互推 -&gt; 结论无法无损等价</li>
@@ -4714,7 +5849,7 @@
 </ul>
 </li>
 <li>阅读多模态论文：CogVLM(<a target="_blank" rel="noopener" href="https://github.com/THUDM/CogVLM">https://github.com/THUDM/CogVLM</a>)<ul>
-<li>附图：<style>.fuiwjwiejpvj{}</style><img src="/2022/09/05/Week_Report/cogvlm.png" class="fuiwjwiejpvj" alt="cogvlm"></li>
+<li>附图：<img src="Week_Report/cogvlm.png" alt="cogvlm" width="800" height="400"></li>
 <li>整体思路：先将 image 输入通过 MLP 映射到与 text embedding 相同的空间中(上图左侧)，然后在预训练好的LLM上嫁接用与深度对齐两个模态的 Attention 和 MLP 部分，只训练这部分即可（上图右侧）</li>
 </ul>
 </li>
@@ -4774,7 +5909,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/08/30/Daily_Thoughts/">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/08/30/Daily-Thoughts/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -4792,7 +5927,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/08/30/Daily_Thoughts/" class="post-title-link" itemprop="url">Daily Thoughts</a>
+          <a href="/2022/08/30/Daily-Thoughts/" class="post-title-link" itemprop="url">Daily Thoughts</a>
         </h2>
 
         <div class="post-meta-container">
@@ -4919,105 +6054,6 @@
 </ul>
 <hr>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/08/25/Zeroq_Code_Questions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jarvis">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarvis's Blog">
-      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Jarvis's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/08/25/Zeroq_Code_Questions/" class="post-title-link" itemprop="url">Zeroq Code Questions</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-08-25 16:46:06" itemprop="dateCreated datePublished" datetime="2022-08-25T16:46:06+08:00">2022-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-12-02 11:53:49" itemprop="dateModified" datetime="2024-12-02T11:53:49+08:00">2024-12-02</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="主体框架"><a href="#主体框架" class="headerlink" title="主体框架"></a>主体框架</h2><ol>
-<li>distill_data.py</li>
-<li>reconstruct_data.py</li>
-<li>utils<ul>
-<li>quantization_utils<ul>
-<li>quant_models.py</li>
-<li>quant_utils.py</li>
-</ul>
-</li>
-<li>__init__.py (note: _xxx_且_xxx_前有空格，显示效果为 <em>xxx</em>,在markdown语法中，需要在_前加\以正常显示_)</li>
-<li>data_utils.py</li>
-<li>quantize_model.py</li>
-<li>train_utils.py</li>
-</ul>
-</li>
-</ol>
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ol>
-<li>环境搭建<ul>
-<li>在本地如何切换不同版本pytorch和cuda，具体为从’1.11.0+cu113’切换到’1.2+cu10’。</li>
-<li>如何在服务器搭建上述环境,网页上怎么搭，直接用vscode 命令行怎么搭。</li>
-</ul>
-</li>
-<li>如何把本地和github上的代码加载到集群</li>
-</ol>
-<h2 id="Deprecate"><a href="#Deprecate" class="headerlink" title="Deprecate"></a>Deprecate</h2>
       
     </div>
 

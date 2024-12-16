@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kyrie2to11.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Operation Commander    初始化本地仓库 git init   添加文件到Git暂存区 git add &lt;文件名&gt; 或 git add .   提交暂存区的文件到本地仓库 git commit -m &quot;提交消息&quot;   关联本地仓库与远程仓库 git remote add origin &lt;远程仓库URL&gt;   推送本地仓库的代码到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git Commands">
+<meta property="og:url" content="https://kyrie2to11.github.io/2023/07/12/Git-Commands/index.html">
+<meta property="og:site_name" content="Jarvis&#39;s Blog">
+<meta property="og:description" content="Operation Commander    初始化本地仓库 git init   添加文件到Git暂存区 git add &lt;文件名&gt; 或 git add .   提交暂存区的文件到本地仓库 git commit -m &quot;提交消息&quot;   关联本地仓库与远程仓库 git remote add origin &lt;远程仓库URL&gt;   推送本地仓库的代码到">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-12T06:33:49.000Z">
+<meta property="article:modified_time" content="2024-01-03T05:48:29.881Z">
+<meta property="article:author" content="jarvis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kyrie2to11.github.io/2023/07/12/Git-Commands/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kyrie2to11.github.io/2023/07/12/Git-Commands/","path":"2023/07/12/Git-Commands/","title":"Git Commands"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Git Commands | Jarvis's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jarvis's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活，沉淀自己</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jarvis</p>
+  <div class="site-description" itemprop="description">记录学习和生活，留下时光的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/07/12/Git-Commands/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Git Commands | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git Commands
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-07-12 14:33:49" itemprop="dateCreated datePublished" datetime="2023-07-12T14:33:49+08:00">2023-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-01-03 13:48:29" itemprop="dateModified" datetime="2024-01-03T13:48:29+08:00">2024-01-03</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Commander</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>初始化本地仓库</td>
+<td><code>git init</code></td>
+</tr>
+<tr>
+<td>添加文件到Git暂存区</td>
+<td><code>git add &lt;文件名&gt;</code> 或 <code>git add .</code></td>
+</tr>
+<tr>
+<td>提交暂存区的文件到本地仓库</td>
+<td><code>git commit -m &quot;提交消息&quot;</code></td>
+</tr>
+<tr>
+<td>关联本地仓库与远程仓库</td>
+<td><code>git remote add origin &lt;远程仓库URL&gt;</code></td>
+</tr>
+<tr>
+<td>推送本地仓库的代码到远程仓库</td>
+<td><code>git push origin &lt;分支名&gt;</code></td>
+</tr>
+<tr>
+<td>克隆远程仓库到本地</td>
+<td><code>git clone &lt;远程仓库URL&gt;</code></td>
+</tr>
+<tr>
+<td>拉取远程仓库的更新到本地</td>
+<td><code>git pull origin &lt;分支名&gt;</code></td>
+</tr>
+<tr>
+<td>创建一个新的分支</td>
+<td><code>git branch &lt;分支名&gt;</code></td>
+</tr>
+<tr>
+<td>切换到指定分支</td>
+<td><code>git checkout &lt;分支名&gt;</code></td>
+</tr>
+<tr>
+<td>查看当前分支</td>
+<td><code>git branch</code></td>
+</tr>
+<tr>
+<td>查看仓库的状态</td>
+<td><code>git status</code></td>
+</tr>
+<tr>
+<td>创建并切换到一个新的分支</td>
+<td><code>git checkout -b &lt;分支名&gt;</code></td>
+</tr>
+<tr>
+<td>合并指定分支到当前分支</td>
+<td><code>git merge &lt;分支名&gt;</code></td>
+</tr>
+<tr>
+<td>查看提交历史记录</td>
+<td><code>git log</code></td>
+</tr>
+<tr>
+<td>撤销工作目录中的修改</td>
+<td><code>git restore &lt;文件名&gt;</code></td>
+</tr>
+<tr>
+<td>创建标签并附上注释</td>
+<td><code>git tag -a &lt;标签名&gt; -m &quot;标签注释&quot;</code></td>
+</tr>
+<tr>
+<td>查看标签列表</td>
+<td><code>git tag</code></td>
+</tr>
+<tr>
+<td>切换到指定标签</td>
+<td><code>git checkout &lt;标签名&gt;</code></td>
+</tr>
+<tr>
+<td>同步远程仓库的分支列表</td>
+<td><code>git remote update origin --prune</code></td>
+</tr>
+<tr>
+<td>查看远程仓库列表</td>
+<td><code>git remote -v</code></td>
+</tr>
+<tr>
+<td>从本地仓库中删除指定分支</td>
+<td><code>git branch -d &lt;分支名&gt;</code></td>
+</tr>
+<tr>
+<td>从远程仓库中删除指定分支</td>
+<td><code>git push origin --delete &lt;分支名&gt;</code></td>
+</tr>
+<tr>
+<td>撤销上一次提交</td>
+<td><code>git revert HEAD</code></td>
+</tr>
+<tr>
+<td>撤销上一次提交并丢弃相关的修改</td>
+<td><code>git reset HEAD~</code> 或 <code>git reset &lt;提交ID&gt;</code></td>
+</tr>
+<tr>
+<td>撤销上一次提交并保留相关的修改</td>
+<td><code>git reset HEAD~ --soft</code> 或 <code>git reset &lt;提交ID&gt; --soft</code></td>
+</tr>
+<tr>
+<td>解决合并冲突后，继续合并操作</td>
+<td><code>git merge --continue</code></td>
+</tr>
+<tr>
+<td>取消合并操作</td>
+<td><code>git merge --abort</code></td>
+</tr>
+<tr>
+<td>生成 SSH 密钥</td>
+<td><code>ssh-keygen -t rsa -b 4096 -C &quot;你的邮箱地址&quot;</code></td>
+</tr>
+<tr>
+<td>查看公钥内容</td>
+<td><code>cat ~/.ssh/id_rsa.pub</code></td>
+</tr>
+<tr>
+<td>添加 SSH 密钥至 GitHub</td>
+<td><code>github GUI operation</code></td>
+</tr>
+</tbody></table>
+<p><em>More info:</em> <a target="_blank" rel="noopener" href="https://www.runoob.com/git/git-tutorial.html">https://www.runoob.com/git/git-tutorial.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/07/07/Work-Log-2/" rel="prev" title="Video Super-Resolution Quantization Work Log">
+                  <i class="fa fa-chevron-left"></i> Video Super-Resolution Quantization Work Log
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/09/13/Competition-0/" rel="next" title="Single Image Depth Estimation">
+                  Single Image Depth Estimation <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jarvis</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

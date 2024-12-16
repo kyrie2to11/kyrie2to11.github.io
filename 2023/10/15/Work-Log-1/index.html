@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kyrie2to11.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Time:2023.10.09-2023.11.10Paper Reading VRT: A Video Restoration Transformer (arXiv 2022)-&gt; VRT feature: parallel computation + long-range dependency modelling + mutual attention for frame alignmen">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Quantization of SR Methods Work Log">
+<meta property="og:url" content="https://kyrie2to11.github.io/2023/10/15/Work-Log-1/index.html">
+<meta property="og:site_name" content="Jarvis&#39;s Blog">
+<meta property="og:description" content="Time:2023.10.09-2023.11.10Paper Reading VRT: A Video Restoration Transformer (arXiv 2022)-&gt; VRT feature: parallel computation + long-range dependency modelling + mutual attention for frame alignmen">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-10-15T08:16:29.000Z">
+<meta property="article:modified_time" content="2024-12-02T07:23:21.427Z">
+<meta property="article:author" content="jarvis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kyrie2to11.github.io/2023/10/15/Work-Log-1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kyrie2to11.github.io/2023/10/15/Work-Log-1/","path":"2023/10/15/Work-Log-1/","title":"Quantization of SR Methods Work Log"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Quantization of SR Methods Work Log | Jarvis's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jarvis's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活，沉淀自己</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Time-2023-10-09-2023-11-10"><span class="nav-number">1.</span> <span class="nav-text">Time:2023.10.09-2023.11.10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paper-Reading"><span class="nav-number">2.</span> <span class="nav-text">Paper Reading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Idea"><span class="nav-number">3.</span> <span class="nav-text">Idea</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Issue-Log"><span class="nav-number">4.</span> <span class="nav-text">Issue Log</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Metrics%EF%BC%88Full-Reference%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">Metrics（Full-Reference）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Milestone"><span class="nav-number">6.</span> <span class="nav-text">Milestone</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Benchmark"><span class="nav-number">7.</span> <span class="nav-text">Benchmark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PaperWriting"><span class="nav-number">8.</span> <span class="nav-text">PaperWriting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#No-1"><span class="nav-number">9.</span> <span class="nav-text">No.1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PaperReference"><span class="nav-number">10.</span> <span class="nav-text">PaperReference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jarvis</p>
+  <div class="site-description" itemprop="description">记录学习和生活，留下时光的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/10/15/Work-Log-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Quantization of SR Methods Work Log | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Quantization of SR Methods Work Log
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-15 16:16:29" itemprop="dateCreated datePublished" datetime="2023-10-15T16:16:29+08:00">2023-10-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-02 15:23:21" itemprop="dateModified" datetime="2024-12-02T15:23:21+08:00">2024-12-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="Time-2023-10-09-2023-11-10"><a href="#Time-2023-10-09-2023-11-10" class="headerlink" title="Time:2023.10.09-2023.11.10"></a>Time:2023.10.09-2023.11.10</h2><h2 id="Paper-Reading"><a href="#Paper-Reading" class="headerlink" title="Paper Reading"></a>Paper Reading</h2><ol>
+<li>VRT: A Video Restoration Transformer (arXiv 2022)-&gt; <code>VRT</code><ul>
+<li>feature: parallel computation + long-range dependency modelling + mutual attention for frame alignment</li>
+</ul>
+</li>
+<li>BasicVSR++: Improving Video Super-Resolution with Enhanced Propagation and Alignment (CVPR 2022) -&gt; <code>BasicVSR++</code></li>
+<li>Learning Trajectory-Aware Transformer for Video Super-Resolution (CVPR 2022) -&gt; <code>TTVSR</code></li>
+<li>An Implicit Alignment for Video Super-Resolution (CVPR2023) -&gt; <code>IA-RT/IA-CNN</code></li>
+<li>Rethinking Alignment in Video Super-Resolution Transformers (NIPS2022) -&gt; <code>PSRT</code></li>
+<li>ResQ: Residual Quantization for Video Perception (ICCV 2023) -&gt; <code>ResQ</code><ul>
+<li>motivation: residuals exhibit a significantly lower variance than the frame activations, and can be quantized with lower error.</li>
+<li>verified tasks: Human Pose Estimation&#x2F;Semantic Segmentation</li>
+<li>limitations:<ul>
+<li>requires the propagation of representations to future timesteps, leading to a memory overhead potentially impacting latency -&gt; 对VSR任务影响小,例如BasicVSR++ 本身就是基于帧间传播的,且目前VSR对latency要求不高</li>
+<li>implementing location-specific quantized operations is not trivial and requires specialized hardware or gather-scatter implementations of convolutions -&gt; 实际部署困难问题 特定区域的量化选择 涉及稀疏处理的调度问题</li>
+<li>ResQ is able to reduce the amortized cost of video processing, yet the peak BOPs is not reduced</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Idea"><a href="#Idea" class="headerlink" title="Idea"></a>Idea</h2><ol>
+<li><p><code>BasicVSR++</code> + <code>Paddleslim</code> 量化看结果 -&gt; false</p>
+</li>
+<li><p>openmmlab 的 <code>mmagic</code> project 内置的 <code>BasicVSR++</code> + <code>mmrazor</code> project 进行量化 -&gt; false</p>
+</li>
+<li><p><code>BasicVSR++</code> + <code>Dipoorlet</code> PTQ -&gt; false: ValueError: cannot reshape array of size 3628800 into shape (0,0,3,180,320) dipoorlet可能不支持动态输入</p>
+</li>
+<li><p><code>BasicVSR++</code> + <code>MQBench</code> PTQ -&gt; pending</p>
+<ol>
+<li>使用<code>mmedit</code>构建的<code>BasicVSR++</code>在<code>symbolic traces</code>时会出现报错<code>TypeError: &#39;BasicVSR&#39; object is not subscriptable</code>, 故尝试直接通过模型的<code>archetecture</code>和<code>checkpoint</code>构建模型 -&gt; suspend (必要性不强，工作量不小~)</li>
+<li>torch fx <code>if</code> symbolic trace fause: <code>torch.fx.proxy.TraceError: symbolically traced variables cannot be used as inputs to control flow</code></li>
+</ol>
+</li>
+<li><p><code>BasicVSR++</code> + <code>PPL Quantization Tool(PPQ)</code> PTQ -&gt; inprogress</p>
+</li>
+<li></li>
+</ol>
+<h2 id="Issue-Log"><a href="#Issue-Log" class="headerlink" title="Issue Log"></a>Issue Log</h2><ol>
+<li><p>command: <code>whereis</code> vs <code>which</code></p>
+<ol>
+<li>用途：<code>whereis</code> 用于查找可执行文件、源代码文件和帮助文档等。<br>  输出：它返回指定命令的可执行文件路径、man页面（帮助文档）路径以及源代码路径（如果可用）。<br>  限制：通常，whereis 不搜索PATH环境变量中指定的所有目录，而是搜索标准的系统目录。因此，它可能无法找到用户自定义安装的命令。</li>
+<li>用途：<code>which</code>用于查找可执行命令的位置，通常用于查找命令是否在系统PATH中，并返回找到的第一个匹配的命令。<br>  输出：它会搜索PATH环境变量中指定的目录以查找命令。<br>  注意：which 仅返回第一个匹配的命令的路径，因此如果有多个同名命令，它只会返回一个。</li>
+</ol>
+</li>
+<li><p>environment setup</p>
+<ol>
+<li>NvidiaDriver&#x2F;CUDA&#x2F;CUDNN installation<ul>
+<li>note: 传统上，安装 NVIDIA Driver 和 CUDA Toolkit 的步骤是分开的，但实际上现在可以直接安装 CUDA Toolkit，系统将自动安装与其版本匹配的 NVIDIA Driver。</li>
+</ul>
+</li>
+<li>Pull docker image: torch 1.13.1<ul>
+<li>command: <code>docker pull cnstark/pytorch:1.13.1-py3.9.16-cuda11.7.1-ubuntu20.04</code></li>
+</ul>
+</li>
+<li>Dipoorlet dependency:<ul>
+<li>CUDA Toolkit  &#x3D;&#x3D; 11.8</li>
+<li>CUDNN &#x3D;&#x3D; 8.7.0</li>
+<li>onnxruntime-gpu &#x3D;&#x3D; 1.16.0</li>
+<li>python &#x3D;&#x3D; 3.8.10</li>
+<li>torch &#x3D;&#x3D; 2.0.0</li>
+</ul>
+</li>
+<li>Ubuntu kenerl unroll (回滚)<ul>
+<li><code>sudo dpkg --get-selections | grep linux-image</code>  查看系统已经安装的kernel</li>
+<li><code>sudo apt-get remove linux-image-x.x.x-xx-generic</code> 卸载目前的kernel</li>
+<li><code>sudo update-grub</code> 更新开机引导程序 ps: GRUB（GRand Unified Bootloader）是一个用于管理计算机开机引导过程的引导加载程序,支持引导多操作系统 windows&#x2F;linux发行版&#x2F;BSD</li>
+<li><code>sudo reboot</code> 重启系统</li>
+<li><code>uname -r</code> 查看当前kernel是否已经完成回滚</li>
+<li><code>sudo apt-mark hold/unhold linux-image-5.4.0-xx-generic</code> 设置 hold 参数保持当前kernel不更新, 设置 unhold 解除更新限制</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>command: <code>pip install -U package</code> 命令中的 <code>-U</code> 参数表示升级(update)已安装的 Python package到最新版本。</p>
+</li>
+<li><p>confusion: PTQ static vs dynamic</p>
+<ol>
+<li>PTQ static<ul>
+<li>使用校准数据集离线计算缩放因子(Scale)和零点(Zero Point)</li>
+<li>所有激活(Activation)都使用相同的缩放因子和零点</li>
+</ul>
+</li>
+<li>PTQ dynamic<ul>
+<li>缩放因子(Scale)和零点(Zero Point)是在推理时计算的，并且特定用于每次的激活(Activation)</li>
+<li>因此它们更准确，但引入了额外的计算开销</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>confusion: BI degradation vs BD degradation</p>
+<ol>
+<li>BI -&gt; bicubic-down,降质过程仅包含双三次下采样</li>
+<li>BD -&gt; blur-down,通过高斯模糊下采样</li>
+</ol>
+</li>
+<li><p>confusion: argparse library</p>
+<ol>
+<li>basic: <code>parser = argparse.ArgumetParser(description, epilog)</code> -&gt; 创建 ArgumentParser 对象，其中 description 是一个简要的程序描述，epilog 是一个在帮助信息的结尾显示的额外文本</li>
+<li>basic: <code>add_argument(name or flags, ...)</code> -&gt; 添加命令行参数(<code>xxx</code>: positional argument or <code>--xxx</code>: option that takes a value)。name or flags 参数可以是单个选项（例如 ‘-f’），也可以是多个选项（例如 ‘-f’, ‘–file’）。你可以使用许多其他关键字参数来配置参数的行为，如 type、default、help 等,示例如下<ul>
+<li>整数类型参数: <code>parser.add_argument(&#39;--count&#39;, type=int, help=&#39;An integer value&#39;)</code></li>
+<li>浮点类型参数: <code>parser.add_argument(&#39;--rate&#39;, type=float, help=&#39;A floating-point value&#39;)</code></li>
+<li>字符串类型参数: <code>parser.add_argument(&#39;--name&#39;, type=str, help=&#39;A string value&#39;)</code></li>
+<li>布尔类型参数: <code>parser.add_argument(&#39;--verbose&#39;, action=&#39;store_true&#39;, help=&#39;Enable verbose mode&#39;)</code></li>
+<li>文件路径参数: <code>parser.add_argument(&#39;--file&#39;, type=argparse.FileType(&#39;r&#39;), help=&#39;A file path&#39;)</code></li>
+<li>目录路径参数: <code>parser.add_argument(&#39;--directory&#39;, type=str, help=&#39;A directory path&#39;)</code></li>
+<li><strong>note:</strong> 很奇怪的点在于关键字参数<code>--xx_x</code>中使用<code>_</code>传入参数时会出现<code>error: unrecognized arguments: --xx_x</code>,故用<code>-</code>代替</li>
+</ul>
+</li>
+<li>basic: <code>parse_args()</code>: 解析命令行参数，并返回一个包含所有参数值的命名空间对象</li>
+<li>extension: <code>add_subparsers()</code> -&gt; 添加子命令解析器，允许你为你的程序创建子命令（类似于 git 命令的子命令，如 git clone、git commit 等）</li>
+<li>extension: <code>set_defaults()</code> -&gt; 为参数设置默认值</li>
+<li>extension: <code>add_argument_group()</code> -&gt; 将参数分组到一个组中，用于更好地组织帮助信息</li>
+<li>extension: <code>format_help()</code> -&gt; 生成帮助信息</li>
+<li>extension: <code>error(msg)</code> -&gt; 在参数解析过程中发生错误时触发错误消息</li>
+</ol>
+</li>
+<li><p>confusion: <code>&#123;:08d&#125;.png</code> 字符串格式化模板</p>
+<ol>
+<li><code>&#123;&#125;</code>: 这是一个占位符，用于表示将要插入的值。在这个模板中，{} 用来表示一个整数</li>
+<li><code>:08d</code>: 这是格式说明符，指定了如何格式化这个整数。其中：<ul>
+<li><code>0</code> 表示要用零来填充空白位置</li>
+<li><code>8</code> 表示总共要占用 8 个字符的宽度，包括填充的零和数字本身</li>
+<li><code>d</code> 表示要格式化的值是一个十进制整数</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>confusion: function <code>os.path.splitext()</code></p>
+<ol>
+<li>input: 文件路径（或文件名）</li>
+<li>return: 一个包含两个部分的元组tuple i.e. (文件名, 文件扩展名)</li>
+</ol>
+</li>
+<li><p>confusion: print(model) 实现</p>
+<ol>
+<li>print(model)  # 当你使用 print 函数来打印一个对象时，它会尝试调用该对象的 <code>__str__()</code> 或 <code>__repr__()</code> 方法来获取一个可打印的字符串表示<ul>
+<li><code>model.__repr__</code> 输出model的属性<code>__repr__</code>  i.e. 方法的名称  -&gt; <code>&lt;bound method Module.__repr__ of xxx&gt;</code></li>
+<li><code>model.__repr__()</code> 输出model的method<code>__repr__()</code> i.e. 方法的调用 的结果 -&gt; <code>xxx</code></li>
+<li><strong>note:</strong> 属性是对象的数据成员，而方法是对象上的函数成员，用于定义对象的行为。实际上，方法是对象上的可调用属性</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>confusion: <code>glob.glob(os.path.join(img_dir, &#39;*&#39;))</code></p>
+<ol>
+<li><code>import os</code> 后 <code>os.path.join(img_dir, &#39;*&#39;)</code> 返回值 <code>&#39;img_dir/*&#39;</code>类型为 <code>str</code> -&gt; <code>type(os.path.join(img_dir, &#39;*&#39;)) == &lt;class &#39;str&#39;&gt;</code></li>
+<li><code>import glob</code> 后 <code>glob.glob(os.path.join(img_dir, &#39;*&#39;))</code> 返回值为指定路径下的文件列表 -&gt; <code>type(glob.glob(os.path.join(img_dir, &#39;*&#39;))) == &lt;class &#39;list&#39;&gt;</code></li>
+</ol>
+</li>
+<li><p>confusion: <code>img_dir_split = re.split(r&#39;[\\/]&#39;, img_dir)</code> 这行代码使用正则表达式来分割文件路径</p>
+<ol>
+<li>具体来讲首先<code>import re # re(regular expression) 是 python 中的正则表达式模块</code> , r’[\&#x2F;]’ 表示一个正则表达式的字符集, 它匹配一个正斜杠 &#x2F; 或反斜杠 \ 中的任何一个字符, ‘\‘ 用于转义字符。这在处理文件路径时很有用，因为不同的操作系统使用不同的路径分隔符，有些使用正斜杠 &#x2F;，而有些使用反斜杠 \。使用 [\&#x2F;] 可以在跨平台的情况下匹配路径中的分隔符，而不必担心操作系统差异</li>
+<li><code>img_dir_split = re.split(r&#39;[\\/]&#39;, img_dir)</code>  它会将指定的文件路径 img_dir 按照正斜杠 &#x2F; 或反斜杠 \ 进行分割，并将分割的部分存储在一个列表中。返回值为由文件路径名各部分(str)组成的list -&gt; 例如  img_dir_split &#x3D;&#x3D; [‘data’, ‘demo_000’]</li>
+</ol>
+</li>
+<li><p>confusion: <code>img_dir_split[:-1]</code></p>
+<ol>
+<li>img_dir_split[:-1] 是 Python 中的列表切片（slicing）操作，它用于获取列表 img_dir_split 中的一部分元素</li>
+<li>具体来说，[:-1] 表示切片从列表的开头到倒数第二个元素（不包括倒数第一个元素）。这个操作会返回一个新的列表，包含了 img_dir_split 中从第一个元素到倒数第二个元素（不包括倒数第一个元素）的所有元素</li>
+</ol>
+</li>
+<li><p>confusion: <code>lq_folder = reduce(os.path.join, img_dir_split[:-1])</code></p>
+<ol>
+<li><code>from functools import reduce</code> 导入包<code>reduce</code>，它用于将一个二元函数应用于可迭代的元素，从左到右依次累积结果</li>
+<li>上述代码的目的是将 img_dir_split 列表切片后的元素 i.e. <code>img_dir_split[:-1]</code>通过操作系统路径连接起来，然后返回连接后的结果。</li>
+</ol>
+</li>
+<li><p>confusion: <code>assert isinstance(transforms, Sequence)</code></p>
+<ol>
+<li><code>from collections.abc import Sequence</code> <code>Sequence</code>是在Python中的抽象基类，用于定义一组通用的接口和方法，而不是具体的实现。<code>Sequence</code>它表示序列类型，如列表、元组、字符串等。</li>
+<li><code>assert isinstance(transforms, Sequence)</code>这种检查可以用于确保transforms具有序列类型的行为，以便在代码中安全地使用类似列表或元组的操作。</li>
+</ol>
+</li>
+<li><p>confusion: <code>@PIPELINES.register_module()</code></p>
+<ol>
+<li><code>from ..registry import PIPELINES</code>: 从相对于当前模块的上一级目录中的 registry 模块中导入名为 PIPELINES 的对象</li>
+<li><code>@PIPELINES.register_module()</code>的作用是将被装饰的函数或类注册到名为 PIPELINES 的模块或类的注册表中。这通常在Python中用于实现插件或扩展性架构，以便在运行时动态添加和管理功能。</li>
+</ol>
+</li>
+<li><p>confusion: <code>dict</code>类实例化后的对象<code>object</code>如何访问</p>
+<ol>
+<li>在Python中，字典的键和值是通过方括号<code>[]</code>来访问的(如<code>data[&quot;meta&quot;]</code>, data为dict类的实例, <code>meta</code> 是其中一个key)，而不是通过点.来访问</li>
+<li>在Python中，可以使用点号 <code>.</code>来访问以下类型的成员或属性<ul>
+<li>类的成员(类变量和类方法): <code>MyClass.my_class_variable 或 MyClass.my_class_method()</code></li>
+<li>实例对象的属性和方法: <code>my_object.my_instance_variable 或 my_object.my_instance_method()</code></li>
+<li>模块的函数和变量：<code>math.sqrt()</code></li>
+<li>实例化后的内置类：<code>my_string.upper()</code>，其中 <code>upper()</code> 是字符串(str)对象的一个方法</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>confusion: python func <code>range()</code> 生成有序的整数序列</p>
+<ol>
+<li><code>range(stop)</code>: start（可选）：序列的起始值，默认为 0</li>
+<li><code>range(start, stop)</code>: stop（必需）：序列的结束值，但不包括该值。range() 会生成从 start 到 stop-1 的整数序列</li>
+<li><code>range(start, stop, step)</code>: step（可选）：可选参数，控制序列中的值之间的步长，默认为 1, e.g. <code>list(range(0, 21, 5)) == [0, 5, 10, 15, 20]</code></li>
+</ol>
+</li>
+<li><p>confusion: python slicing operation</p>
+<ol>
+<li>假设data为一维list或str, <code>data[start:end]</code> 选取范围 start -&gt; end-1, step &#x3D;&#x3D; 1; 若start未指定，则默认为0; 若end未指定，则默认选取到最后一个元素(包含最后一个元素)</li>
+<li>假设data为多维NumPy array, <code>data[:, start:end:step]</code> 选取 dim&#x3D;&#x3D;0 所有元素, 选取 dim&#x3D;&#x3D;1 的 start -&gt; end-1, step&#x3D;&#x3D;step的元素</li>
+<li>假设data为一维list或str, <code>data[-5:]</code> 选取从倒数第5个元素直至末尾最后一个元素,最后一个元素index为-1</li>
+</ol>
+</li>
+<li><p>command: <code>find . -name &quot;*.tar&quot; | while read NAME ; do mkdir -p &quot;$&#123;NAME%.tar&#125;&quot;; tar -xvf &quot;$&#123;NAME&#125;&quot; -C &quot;$&#123;NAME%.tar&#125;&quot;; rm -f &quot;$&#123;NAME&#125;&quot;; done</code> recursively unzip files</p>
+<ol>
+<li><code>find . -name &quot;*.tar&quot;</code>: 这部分使用 <code>find</code> 命令来在当前目录及其子目录中查找文件名匹配 <code>*.tar</code> 的文件</li>
+<li><code>|</code>: 这是管道符号，它将 <code>find</code> 命令的输出（即找到的所有 <code>.tar</code>文件的路径列表）传递给管道符号右侧的命令</li>
+<li><code>while read NAME</code>: 这部分创建一个 <code>while</code> 循环，它将逐行读取管道传入的文件路径，并将每行内容赋值给 <code>NAME</code> 变量</li>
+<li><code>do</code>: 这标志着 <code>while</code> 循环的开始</li>
+<li><code>mkdir -p &quot;$&#123;NAME%.tar&#125;&quot;</code>: 这是在循环中的第一个命令。它使用 <code>mkdir</code> 命令创建目录，并且 <code>-p</code> no error if existing, make parent directories as needed. <code>$&#123;NAME%.tar&#125;</code> 是一种变量扩展，它会从 <code>NAME</code> 变量的值中删除 <code>.tar</code>扩展名，然后创建一个对应的目录</li>
+<li><code>tar -xvf &quot;$&#123;NAME&#125;&quot; -C &quot;$&#123;NAME%.tar&#125;&quot;</code>: 这是在循环中的第二个命令。它使用 <code>tar</code> 命令来解压缩 <code>NAME</code>变量中指定的 <code>.tar</code>文件，并将解压后的文件放入对应的目录 <code>$&#123;NAME%.tar&#125;</code>, note: 参数说明 <code>-C, --directory=DIR   change to directory DIR</code> 用于指定解压缩操作的目标目录</li>
+<li><code>rm -f &quot;$&#123;NAME&#125;&quot;</code>: 这是在循环中的第三个命令。它使用 <code>rm</code> 命令删除原始的 <code>.tar</code> 文件。<code>-f</code> 选项表示不会询问确认</li>
+<li><code>done</code>: 这标志着 <code>while</code> 循环的结束</li>
+</ol>
+</li>
+<li><p>command: <code>python -c &quot;Python code to execute&quot;</code></p>
+<ol>
+<li><code>-c</code> 参数是 <code>Python</code> 解释器的一个命令行选项，它允许你在命令行中执行一段 <code>Python</code> 代码，而不必编写一个独立的 <code>Python</code> 脚本文件。</li>
+</ol>
+</li>
+<li><p>confusion: <code>dict(xx=yy) 和 dict = &#123;&#39;xx&#39;: yy&#125;</code>异同</p>
+<ol>
+<li><code>dict(xx=yy)</code> 和 <code>dict = &#123;&#39;xx&#39;: yy&#125;</code> 构造出来的字典在本质上是相同的</li>
+<li><code>dict(xx=yy)</code> 的语法是一种关键字参数的方式，其中 <code>xx</code> 是键，<code>yy</code> 是值。这种方式适用于在函数调用中将多个键值对传递给函数，而不需要明确创建字典对象</li>
+<li><code>dict = &#123;&#39;xx&#39;: yy&#125;</code> 是显式创建一个字典的方式，其中 <code>&#39;xx&#39;</code> 是键，<code>yy</code> 是值。这种方式更适用于创建独立的字典对象，以便在程序中进行操作和访问</li>
+</ol>
+</li>
+<li><p>confusion: <code>from easydict import EasyDict</code> 作用: 可以像访问属性一样访问字典的值<code>value</code>, 而不必使用<code>my_dict[&#39;key&#39;]</code></p>
+</li>
+<li><p>confusion: <code>apt</code> 和 <code>dpkg</code></p>
+<ol>
+<li>dpkg 和 apt 是在 Debian 及其衍生发行版（如 Ubuntu）中用于软件包管理的两个重要工具，它们之间存在密切的关系，但有不同的职责。<ul>
+<li>dpkg(Debian Package): dpkg 是底层的软件包管理工具，用于安装、卸载和管理 Debian 系统上的软件包。它直接处理软件包的安装和卸载，以及配置文件的处理。dpkg 可以从本地 .deb 文件安装软件包，也可以从软件源下载并安装软件包。</li>
+<li>apt(Advanced Package Tool): apt 是一个高级的软件包管理工具，建立在 dpkg 之上，提供更高级的功能。apt 可以自动解决软件包之间的依赖关系，并处理升级、安装、卸载等操作。它使用软件源（repositories）来获取软件包信息，并允许用户方便地搜索、安装和更新软件。</li>
+<li>简而言之，dpkg 是更基础的工具，直接负责软件包的安装和卸载，而 apt 提供了更高级、用户友好的接口，使软件包管理更加方便，它处理了更多的任务，包括依赖解决、更新软件源、搜索软件包等。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>confusion: <code>SIMD</code> <code>MIMD</code> <code>SIMT</code></p>
+<ol>
+<li><code>SIMD</code>: SIMD 是指单指令流多数据流（Single Instruction, Multiple Data）的计算模式。在计算机体系结构中，SIMD 是一种并行计算的方式，它允许同时对多个数据执行相同的操作，以提高并行计算的效率。</li>
+<li><code>SIMT</code>: 类似于 SIMD，SIMT 是 NVIDIA GPU 中一种并行计算模式，它允许执行单一指令在多个线程上。</li>
+<li><code>MIMD</code>: MIMD（Multiple Instruction, Multiple Data）： 在 MIMD 模式中，多个处理单元同时执行不同的指令，处理不同的数据。每个处理单元都有自己的指令流和数据流，可以独立运行。MIMD 适用于处理多个独立的任务，每个任务可能需要不同的指令序列。</li>
+</ol>
+</li>
+<li><p>confusion: <code>GCC编译器</code> <code>Make</code> <code>CMake</code> <code>Makefile</code> <code>CMakeLists.txt</code> 区别</p>
+<ul>
+<li>GCC 编译器：<ol>
+<li>作用： 将高级语言源代码编译成机器码或可执行文件。</li>
+<li>使用场景： 用于直接编译源代码，生成可执行文件。</li>
+</ol>
+</li>
+<li>Make：<ol>
+<li>作用： 构建工具，根据 Makefile 中定义的规则和依赖关系来管理和调度项目(调用GCC编译器)的构建过程。</li>
+<li>使用场景： 用于自动化构建过程，确保只有发生更改的文件被重新编译。</li>
+</ol>
+</li>
+<li>Makefile：<ol>
+<li>作用： 文本文件，包含项目的构建规则、依赖关系和编译动作。</li>
+<li>使用场景： Make 工具根据 Makefile 中的规则来判断哪些文件需要重新构建，然后调用适当的编译器。</li>
+</ol>
+</li>
+<li>CMake：<ol>
+<li>作用： 生成用于不同构建系统的构建配置文件，如 Makefile。</li>
+<li>使用场景： 提供跨平台的构建配置，允许开发者在不同的构建系统上使用相同的配置。</li>
+<li>makefile在一些简单的工程完全可以人工手下，但是当工程非常大的时候，手写makefile也是非常麻烦的，如果换了个平台makefile又要重新修改。这时候就出现了Cmake这个工具，cmake就可以更加简单的生成makefile文件给上面那个make用。当然cmake还有其他功能，就是可以跨平台生成对应平台能用的makefile，你不用再自己去修改了</li>
+</ol>
+</li>
+<li>CMakeLists.txt：<ol>
+<li>作用： 文本文件，包含 CMake 的配置和项目信息。</li>
+<li>使用场景： CMake 使用 CMakeLists.txt 来生成项目的构建配置文件，其中定义了项目的结构、依赖关系和编译选项。</li>
+<li>cmake根据什么生成makefile呢？它又要根据一个叫CMakeLists.txt文件（学名：组态档）去生成makefile。 CMakeLists.txt文件谁写啊？亲，是你自己手写的。</li>
+</ol>
+</li>
+<li>总结：<br>GCC 编译器是用于将源代码编译为机器码的工具。<br>Make 是一个构建工具，使用 Makefile 来自动管理项目的构建过程。<br>CMake 是一个用于生成跨平台构建配置的工具，可以生成 Makefile 或其他构建系统的配置文件。<br>Makefile 包含构建项目所需的规则和命令，由 Make 工具读取执行。<br>CMakeLists.txt 包含项目的配置信息和结构，由 CMake 解析生成构建配置。</li>
+</ul>
+</li>
+<li><p>confusion: ssh 添加 public_key 至目标远程主机实现无需密码登录</p>
+<ul>
+<li>本地host <code>ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com</code><ol>
+<li>-t rsa: 指定密钥类型为 RSA。</li>
+<li>-b 4096: 指定密钥的位数，4096 位是一种常见的安全选择。</li>
+<li>-C “<a href="mailto:&#121;&#x6f;&#x75;&#114;&#x5f;&#x65;&#x6d;&#x61;&#105;&#108;&#x40;&#x65;&#120;&#97;&#109;&#x70;&#x6c;&#101;&#x2e;&#99;&#x6f;&#x6d;">&#121;&#x6f;&#x75;&#114;&#x5f;&#x65;&#x6d;&#x61;&#105;&#108;&#x40;&#x65;&#120;&#97;&#109;&#x70;&#x6c;&#101;&#x2e;&#99;&#x6f;&#x6d;</a>“: 在生成的密钥中添加注释，通常使用你的电子邮件地址。</li>
+</ol>
+</li>
+<li>将生成的ssh public key (id_rsa.pub) 复制到远程target 的 <code>~/.ssh/authorized_keys</code> (如果没有则自建此文件)中即可</li>
+</ul>
+</li>
+<li><p>confusion: <code>chmod mode file</code> 中的 mode 含义 -&gt; 用每个分组读写操作权限用3bit表示， 从左到右依次是 <code>rwx</code></p>
+<ul>
+<li>示例： <code>drwxr--r--</code> : d 代表 directory 目录， 所有者(user)拥有权限 read write 没有 execute,用数字表示为 <code>6 = 4 + 2 + 0</code> ,群组(group)和其他(others)只有权限 read, 数字表示为 <code>4 = 4 + 0 + 0</code>, 综上此文件的 mode 为 <code>644</code></li>
+</ul>
+</li>
+<li><p>confusion: ubuntu 除用 <code>ifconfig</code> 查看本机ip之外，还可以用 <code>ip addr</code> (较新的ubuntu默认安装了 <code>ip</code> 命令), 一般前者失效时后者有效，不用再安装 <code>net-tools</code> 包</p>
+</li>
+<li><p>confusion: <code>register_buffer()</code></p>
+<ul>
+<li><code>register_buffer</code> 是 PyTorch 中 nn.Module 类提供的一个方法，用于注册一个缓冲张量。这个缓冲张量不会被视为模型的参数，但会被包含在模型的状态中，并在模型的 <code>state_dict</code> 中保存。这通常用于存储不需要优化的固定参数，比如在模型中使用的常数或预先计算好的张量。</li>
+</ul>
+</li>
+<li><p>confusion: Slurm（Simple Linux Utility for Resource Management）作业调度系统</p>
+</li>
+<li><p>confusion: github 克隆别人的仓库，修改更新后如何推送到自己的 github 账户下</p>
+<ul>
+<li><p>新建 github 上我的空repo, 可以不需要 readme.md 和 license, 因为克隆别人仓库一般都有</p>
+</li>
+<li><p>clone github 上他人仓库，重命名仓库文件夹名称使之与github上我的repo同名</p>
+</li>
+<li><p>git remote 设定远端repo是我的github新建的repo <code>git remote set-url origin https://github.com/kyrie2to11/gptq_test.git</code></p>
+</li>
+<li><p>修改本地仓库文件后，推送到远端github repo  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git status <span class="comment"># 查看本地仓库哪些文件被修改了</span></span><br><span class="line">git add . <span class="comment"># 把修改的文件放入staging area,准备commit</span></span><br><span class="line">git commit -m <span class="string">&quot;commit remark message&quot;</span> <span class="comment"># 本地仓库正式commit更改</span></span><br><span class="line">git push origin main <span class="comment"># 将本地修改同步到github repo</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>confusion: 更改ubuntu root密码 <code>sudo passwd</code> 或者 <code>sudo passwd root</code></p>
+</li>
+<li><p>confusion: python 切片 slicing 语法 <code>[start:stop:step]</code>  </p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">start：起始位置的索引。</span><br><span class="line">stop：终止位置的索引（不包含在切片内）。</span><br><span class="line">step：步长，表示每次移动的距离。</span><br></pre></td></tr></table></figure>
+
+<p>如果不指定这些值，默认值为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">start 默认为第一个元素（索引 0）。</span><br><span class="line">stop 默认为最后一个元素的下一个位置（即列表的长度）。</span><br><span class="line">step 默认为 1。</span><br></pre></td></tr></table></figure>
+
+<p>当你使用 [::-1] 时，两个冒号 : 表示没有指定 start 和 stop，因此默认取整个序列。而 -1 作为步长表示从最后一个元素开始，以步长为 1 的方向逐步向前取值，实现反向取值。</p>
+</li>
+<li><p><code>results_list = self.get_bboxes(*outs, img_metas=img_metas, rescale=rescale)</code> 中 <code>*outs</code>的作用</p>
+<ul>
+<li>在这个上下文中，*outs 是一种使用在函数调用中的语法，它表示将一个可迭代对象（比如列表或元组）中的元素分别传递给函数作为独立的参数。这个语法称为“拆包”（unpacking）。</li>
+<li>具体到你的代码中，outs 可能是一个包含多个元素的可迭代对象（比如元组），而 self.get_bboxes 函数的参数需要这些元素作为独立的参数传递进去。使用 *outs 就能够方便地将 outs 中的元素拆包传递给函数。</li>
+<li>这种方式在函数参数数量不确定，或者希望通过一个可迭代对象传递参数时非常有用。在这里，*outs 将 outs 中的内容展开，作为 self.get_bboxes 函数的独立参数传递给函数。</li>
+</ul>
+</li>
+</ol>
+<h2 id="Metrics（Full-Reference）"><a href="#Metrics（Full-Reference）" class="headerlink" title="Metrics（Full-Reference）"></a>Metrics（Full-Reference）</h2><ol>
+<li>Peak Signal to Noise Ratio (PSNR)</li>
+<li>Structural SIMilarity (SSIM)</li>
+</ol>
+<h2 id="Milestone"><a href="#Milestone" class="headerlink" title="Milestone"></a>Milestone</h2><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+<th>FLOPs [G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VapSR_4_1</td>
+<td>Functional VapSR_4 with pixel norm realized by layer normalization, VAB activation: RELU, Attention using Partial conv</td>
+<td>REDS</td>
+<td>27.790268</td>
+<td>0.77721727</td>
+<td>59,468</td>
+<td>654.0 (INT8_CPU)</td>
+<td>7.462</td>
+</tr>
+<tr>
+<td>SWAT_0</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;4)</td>
+<td>REDS</td>
+<td>27.842232</td>
+<td>0.77754354</td>
+<td>50,624</td>
+<td>271.0   (FP16_CPU)</td>
+<td>5.803</td>
+</tr>
+</tbody></table>
+<hr>
+<p><em>AI benchmark setting for Runtime test:</em>  </p>
+<ul>
+<li>Input Values range(min,max): 0,255  </li>
+<li>Inference Mode: INT8&#x2F;FP16  </li>
+<li>Acceleration: CPU&#x2F;TFLite GPU Delegate</li>
+</ul>
+<h2 id="Benchmark"><a href="#Benchmark" class="headerlink" title="Benchmark"></a>Benchmark</h2><table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Model</th>
+<th>Source</th>
+<th>Dataset</th>
+<th>Test PSNR</th>
+<th>Test SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Diggers</td>
+<td>Real-Time Video Super-Resolution based on Bidirectional RNNs(2021 SOTA)</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.98</td>
+<td>-</td>
+<td>39,640</td>
+<td>-</td>
+</tr>
+<tr>
+<td>2</td>
+<td>VSR_12</td>
+<td>Ours</td>
+<td>REDS(train_videos: 240, test_videos: 30)</td>
+<td>27.981062</td>
+<td>0.7824855</td>
+<td>57,696</td>
+<td>62.8</td>
+</tr>
+</tbody></table>
+<h2 id="PaperWriting"><a href="#PaperWriting" class="headerlink" title="PaperWriting"></a>PaperWriting</h2><h2 id="No-1"><a href="#No-1" class="headerlink" title="No.1"></a>No.1</h2><ol>
+<li>BSConvU as shallow feature extraction</li>
+</ol>
+<h2 id="PaperReference"><a href="#PaperReference" class="headerlink" title="PaperReference"></a>PaperReference</h2><ol>
+<li>Rethinking Alignment in Video Super-Resolution Transformers(NIPS 2022) -&gt; VIT 视频超分(VSR)中帧&#x2F;特征对齐不是必要操作</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/13/Competition-0/" rel="prev" title="Single Image Depth Estimation">
+                  <i class="fa fa-chevron-left"></i> Single Image Depth Estimation
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/10/19/ZMO-interview/" rel="next" title="Interview">
+                  Interview <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jarvis</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

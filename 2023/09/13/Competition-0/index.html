@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kyrie2to11.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Time: 2023.09.13-2023.10.05Paper ReadingDatasets HR-WSI: Structure-Guided Ranking Loss for Single Image Depth Prediction Holopix50k: A Large-Scale In-the-wild Stereo Image Dataset DiverseDepth: Affine">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Single Image Depth Estimation">
+<meta property="og:url" content="https://kyrie2to11.github.io/2023/09/13/Competition-0/index.html">
+<meta property="og:site_name" content="Jarvis&#39;s Blog">
+<meta property="og:description" content="Time: 2023.09.13-2023.10.05Paper ReadingDatasets HR-WSI: Structure-Guided Ranking Loss for Single Image Depth Prediction Holopix50k: A Large-Scale In-the-wild Stereo Image Dataset DiverseDepth: Affine">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-13T13:10:10.000Z">
+<meta property="article:modified_time" content="2024-12-02T03:46:21.846Z">
+<meta property="article:author" content="jarvis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kyrie2to11.github.io/2023/09/13/Competition-0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kyrie2to11.github.io/2023/09/13/Competition-0/","path":"2023/09/13/Competition-0/","title":"Single Image Depth Estimation"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Single Image Depth Estimation | Jarvis's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jarvis's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活，沉淀自己</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Time-2023-09-13-2023-10-05"><span class="nav-number">1.</span> <span class="nav-text">Time: 2023.09.13-2023.10.05</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paper-Reading"><span class="nav-number">2.</span> <span class="nav-text">Paper Reading</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Datasets"><span class="nav-number">2.1.</span> <span class="nav-text">Datasets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Methods"><span class="nav-number">2.2.</span> <span class="nav-text">Methods</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Metrics"><span class="nav-number">3.</span> <span class="nav-text">Metrics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Milestones"><span class="nav-number">4.</span> <span class="nav-text">Milestones</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jarvis</p>
+  <div class="site-description" itemprop="description">记录学习和生活，留下时光的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/09/13/Competition-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Single Image Depth Estimation | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Single Image Depth Estimation
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-13 21:10:10" itemprop="dateCreated datePublished" datetime="2023-09-13T21:10:10+08:00">2023-09-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-02 11:46:21" itemprop="dateModified" datetime="2024-12-02T11:46:21+08:00">2024-12-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="Time-2023-09-13-2023-10-05"><a href="#Time-2023-09-13-2023-10-05" class="headerlink" title="Time: 2023.09.13-2023.10.05"></a>Time: 2023.09.13-2023.10.05</h2><h2 id="Paper-Reading"><a href="#Paper-Reading" class="headerlink" title="Paper Reading"></a>Paper Reading</h2><h3 id="Datasets"><a href="#Datasets" class="headerlink" title="Datasets"></a>Datasets</h3><ol>
+<li>HR-WSI: Structure-Guided Ranking Loss for Single Image Depth Prediction</li>
+<li>Holopix50k: A Large-Scale In-the-wild Stereo Image Dataset</li>
+<li>DiverseDepth: Affine-invariant Depth Prediction Using Diverse Data</li>
+<li>ReDWeb V1: Monocular Relative Depth Perception with Web Stereo Data Supervision</li>
+<li>The Replica Dataset: A Digital Replica of Indoor Spaces</li>
+<li>Taskonomy: Disentangling Task Transfer Learning</li>
+</ol>
+<h3 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h3><ul>
+<li><p>authority recommend</p>
+<ol>
+<li>ZoeDepth: Zero-shot Transfer by Combining Relative and Metric Depth (arXiv 2023.02)</li>
+<li>Vision Transformers for Dense Prediction (ICCV 2021)</li>
+<li>Learning to Recover 3D Scene Shape from a Single Image (CVPR 2021)</li>
+</ol>
+</li>
+<li><p>lightweight SIDE research</p>
+<ol>
+<li>Deep Neighbor Layer Aggregation for Lightweight Self-Supervised Monocular Depth Estimation (arXiv 2023.09)<ul>
+<li><strong>fully convolutional depth estimation network</strong> using <strong>contextual feature fusion</strong></li>
+<li>use <strong>high-resolution and low-resolution features</strong> to reserve information on small targets and fast-moving objects <strong>instead of long-range fusion</strong></li>
+<li>employing lightweight <strong>channel attention</strong> based on convolution in the <strong>decoder stage</strong></li>
+</ul>
+</li>
+<li>RT-MonoDepth: Real-time Monocular Depth Estimation on Embedded Systems (arXiv 2023.08)<ul>
+<li>Fast inference based on convolution: RT-MonoDepth and RT-MonoDepthS, runs at 18.4&amp;30.5 FPS on NVIDIA Jetson Nano and 253.0&amp;364.1 FPS on NVIDIA Jetson AGX Orin on a single RGB image of resolution 640×192, and achieve relative stateof-the-art accuracy on the KITTI dataset.</li>
+<li>Encoder (downsample inputs): 4-layer pyramid convolution encoder, removing the normalization layer, standard convolutions instead of depth-wise separable convolution.</li>
+<li>Decoder (upsample and fuse): upsampling -&gt; 3 × 3 depth-wise separable convolution followed by nearest-neighbor interpolation with a scale factor of 2; fusion -&gt; mixed use of element-wise addition and concatenate; prediction -&gt; convs + activating functions: leakyReLU, sigmoid.</li>
+</ul>
+</li>
+<li>Lightweight Monocular Depth Estimation via Token-Sharing Transformer (2023 IEEE International Conference on Robotics and Automation (ICRA), CCF-B)<ul>
+<li>Token-Sharing Transformer (TST): On the NYU Depth v2 dataset, TST can deliver depth maps up to 63.4 FPS in NVIDIA Jetson nano and 142.6 FPS in NVIDIA Jetson TX2.</li>
+<li>Design concept: hierarchy-focused architecture (gradually reduces the resolutions of tokens) + <strong>bottleneck-focused architecture</strong> (bottleneck-focused architecture reduces the resolution through CNN and applies self-attention only in low-resolution tokens)</li>
+</ul>
+</li>
+<li>Lite-Mono: A Lightweight CNN and Transformer Architecture for Self-Supervised Monocular Depth Estimation (CVPR 2023)<ul>
+<li>efficient combination of CNNs and Transformers: Consecutive Dilated Convolutions (CDC) module -&gt; shallow CNNs with dilated convolution to enhance local features; Local-Global Features Interaction (LGFI) module -&gt; cross-covariance attention to compute the attention along the feature channels.</li>
+</ul>
+</li>
+<li>Boosting LightWeight Depth Estimation via Knowledge Distillation (International Conference on Knowledge Science, Engineering and Management, KSEM 2023, CCF-C)<ul>
+<li>lightweight network (MobileNet-v2 Encoder, Channel-wise attention) + <strong>Promoting KD with Auxiliary Data</strong></li>
+</ul>
+</li>
+<li>Lightweight Monocular Depth Estimation with an Edge Guided Network (2022 17th International Conference on Control, Automation, Robotics and Vision, ICARCV, CORE Computer Science Conference Rankings: A)<ul>
+<li>Preliminary: edge information are important cues for convolutional neural networks (CNNs) to estimate depth.</li>
+<li>Encoder-Decoder Architecture:<ol>
+<li>Multi-scale Feature Extractor -&gt; MobileNetV2 as the backbone</li>
+<li>Edge Guidance Branch -&gt; <strong>guiding depth estimation</strong></li>
+<li>Transformer-Based Feature Aggregation Module</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>Lightweight Monocular Depth Estimation through Guided Decoding (2022 International Conference on Robotics and Automation (ICRA), CCF-B)<ul>
+<li>lightweight encoder-decoder architecture for embedded platforms + <strong>Guided Upsampling Block</strong></li>
+<li>inference:<ol>
+<li>NYU Depth V2: 35.1 fps on the NVIDIA Jetson Nano and up to 144.5 fps on the NVIDIA Xavier NX</li>
+<li>KITTI: 23.7 fps on the Jetson Nano and 102.9 fps on the Xavier NX</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>MobileXNet: An Efficient Convolutional Neural Network for Monocular Depth Estimation (IEEE Transactions on Intelligent Transportation Systems, 2022, CCF-B)<ul>
+<li>Encoder-Decoder style CNN architecture: Conv, DWConv, DilatedConv, Bilinear Upsampling</li>
+<li>To penalize the errors around edges -&gt; hybrid loss: the regular L1 loss + the image gradient-based L1 loss</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>others</p>
+<ol>
+<li>DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation (arXiv 2023.08)<ul>
+<li>Paradigm innovation: regression or classification -&gt; denoising diffusion</li>
+</ul>
+</li>
+<li>Edge-guided occlusion fading reduction for a light-weighted self-supervised monocular depth estimation (arXiv 2019.11)<ul>
+<li>Atrous Spatial Pyramid Pooling (ASPP) -&gt; (Dilated&#x2F;Atrous Convolution) reduce the computational costs</li>
+<li>Edge-Guided post-processing -&gt; reduce the occlusion fading</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="Metrics"><a href="#Metrics" class="headerlink" title="Metrics"></a>Metrics</h2><ol>
+<li><p><strong>相对误差（Relative Error，REL）</strong>：</p>
+<ul>
+<li>相对误差用于度量模型估计的深度值与真实深度值之间的相对差异。</li>
+<li>公式：$REL &#x3D; \frac{|D_{\text{est}} - D_{\text{gt}}|}{D_{\text{gt}}}$</li>
+</ul>
+</li>
+<li><p><strong>均方根误差（Root Mean Square Error，RMSE）</strong>：</p>
+<ul>
+<li>均方根误差衡量模型估计值与真实值之间的绝对差异，通过平方差的平均值再开平方根得到。</li>
+<li>公式：$RMSE &#x3D; \sqrt{\frac{1}{N} \sum (D_{\text{est}} - D_{\text{gt}})^2}$</li>
+</ul>
+</li>
+<li><p><strong>平均绝对误差（Mean Absolute Error，MAE）</strong>：</p>
+<ul>
+<li>平均绝对误差度量估计深度值与真实深度值之间的平均绝对差异。</li>
+<li>公式：$MAE &#x3D; \frac{1}{N} \sum |D_{\text{est}} - D_{\text{gt}}|$</li>
+</ul>
+</li>
+<li><p><strong>对数均方根误差（Log Root Mean Square Error，Log-RMSE）</strong>：</p>
+<ul>
+<li>对数均方根误差在对数尺度上度量估计深度值与真实深度值之间的均方根差异。</li>
+<li>公式：$Log-RMSE &#x3D; \sqrt{\frac{1}{N} \sum (\log(D_{\text{est}} + \epsilon) - \log(D_{\text{gt}} + \epsilon))^2}$</li>
+<li>这里的$\epsilon$是一个小的常数，通常用于避免对数中的除零错误。</li>
+</ul>
+</li>
+</ol>
+<h2 id="Milestones"><a href="#Milestones" class="headerlink" title="Milestones"></a>Milestones</h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/07/12/Git-Commands/" rel="prev" title="Git Commands">
+                  <i class="fa fa-chevron-left"></i> Git Commands
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/10/15/Work-Log-1/" rel="next" title="Quantization of SR Methods Work Log">
+                  Quantization of SR Methods Work Log <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jarvis</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

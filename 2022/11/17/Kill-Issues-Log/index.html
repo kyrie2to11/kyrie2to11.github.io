@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kyrie2to11.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Issue Method    PytorchCV package Image Classification and Segmentation Models   Parameter-Argument Defining-Calling   Positional 传参时前面不带 “变量名&#x3D;”, 顺序不可变   Keyword 传参时前面加上 “变量名&#x3D;”, 顺序可变   Cl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Logs of killing issues">
+<meta property="og:url" content="https://kyrie2to11.github.io/2022/11/17/Kill-Issues-Log/index.html">
+<meta property="og:site_name" content="Jarvis&#39;s Blog">
+<meta property="og:description" content="Issue Method    PytorchCV package Image Classification and Segmentation Models   Parameter-Argument Defining-Calling   Positional 传参时前面不带 “变量名&#x3D;”, 顺序不可变   Keyword 传参时前面加上 “变量名&#x3D;”, 顺序可变   Cl">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-17T03:12:15.000Z">
+<meta property="article:modified_time" content="2024-12-02T07:26:28.215Z">
+<meta property="article:author" content="jarvis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kyrie2to11.github.io/2022/11/17/Kill-Issues-Log/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kyrie2to11.github.io/2022/11/17/Kill-Issues-Log/","path":"2022/11/17/Kill-Issues-Log/","title":"Logs of killing issues"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Logs of killing issues | Jarvis's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jarvis's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活，沉淀自己</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jarvis</p>
+  <div class="site-description" itemprop="description">记录学习和生活，留下时光的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/11/17/Kill-Issues-Log/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Logs of killing issues | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Logs of killing issues
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-11-17 11:12:15" itemprop="dateCreated datePublished" datetime="2022-11-17T11:12:15+08:00">2022-11-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-02 15:26:28" itemprop="dateModified" datetime="2024-12-02T15:26:28+08:00">2024-12-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PytorchCV package</td>
+<td>Image Classification and Segmentation Models</td>
+</tr>
+<tr>
+<td>Parameter-Argument</td>
+<td>Defining-Calling</td>
+</tr>
+<tr>
+<td>Positional</td>
+<td>传参时前面不带 “变量名&#x3D;”, 顺序不可变</td>
+</tr>
+<tr>
+<td>Keyword</td>
+<td>传参时前面加上 “变量名&#x3D;”, 顺序可变</td>
+</tr>
+<tr>
+<td>Class</td>
+<td>实例化后用self指代</td>
+</tr>
+<tr>
+<td>Method</td>
+<td>类中定义的函数</td>
+</tr>
+<tr>
+<td>Self</td>
+<td>类的方法与普通的函数只有一个特别的区别——必须有一个额外的第一个参数名称, 按照惯例它的名称是self</td>
+</tr>
+<tr>
+<td>model.modules(), model.named_modules(), model.children(), model.named_children(), model.parameters()</td>
+<td>返回iterable可遍历；具有__iter__()或__getitem__()方法的对象，Python就认为它是一个iterable</td>
+</tr>
+<tr>
+<td>卷积神经网络基本原理</td>
+<td>MAC(Multiply Accumulates)乘加</td>
+</tr>
+<tr>
+<td>FLOPs</td>
+<td>is abbreviation of floating operations which includes mul &#x2F; add &#x2F; div … etc.</td>
+</tr>
+<tr>
+<td>FLOPS</td>
+<td>floating point operations per second</td>
+</tr>
+<tr>
+<td>MACs</td>
+<td>stands for multiply–accumulate operation that performs a &lt;- a + (b x c).</td>
+</tr>
+<tr>
+<td>《TVM: End-to-End Optimization Stack for Deep Learning》</td>
+<td>TVM是陈天奇领导的一个DL加速框架项目。它处于DL框架（如tensorflow、pytorch）和硬件后端（如CUDA、OpenCL）之间，兼顾了前者的易用性和后者的执行效率。</td>
+</tr>
+<tr>
+<td>Pytorch Hook 函数</td>
+<td>hook 函数用以获取我们不方便获得的一些中间变量</td>
+</tr>
+<tr>
+<td>Magic Method: __call__()</td>
+<td>将对象当方法使用</td>
+</tr>
+<tr>
+<td>Magic Method: __new__()</td>
+<td>创建类实例的静态方法</td>
+</tr>
+<tr>
+<td>Magic Method: __repr__()</td>
+<td>直接输出某个实例化对象，默认情况下输出是“类名+object at+内存地址”，可重写获得想要的属性信息</td>
+</tr>
+<tr>
+<td>Magic Method: __del__()</td>
+<td>销毁对象</td>
+</tr>
+<tr>
+<td>Magic Method: __dir__()</td>
+<td>列出对象的所有属性名、方法名</td>
+</tr>
+<tr>
+<td>Magic Method: __dict__()</td>
+<td>查看对象内部所有属性名和属性值组成的字典dict</td>
+</tr>
+<tr>
+<td>conda配置文件.condarc</td>
+<td>.condarc是conda 应用程序的配置文件，在用户家目录（windows：C:usersusername，linux：&#x2F;home&#x2F;username&#x2F;）</td>
+</tr>
+<tr>
+<td>conda查看配置</td>
+<td>conda config –show</td>
+</tr>
+<tr>
+<td>conda添加更新镜像源</td>
+<td>conda config –add channels …</td>
+</tr>
+<tr>
+<td>conda删除更新镜像源</td>
+<td>conda config –remove channels …</td>
+</tr>
+<tr>
+<td>conda 代理</td>
+<td>conda config –set proxy_servers.http … config –set proxy_servers.https …</td>
+</tr>
+<tr>
+<td>深度学习—激活函数</td>
+<td>Sigmoid、tanh、ReLU、ReLU6及变体P-R-Leaky、ELU、SELU、Swish、Mish、Maxout、hard-sigmoid、hard-swish</td>
+</tr>
+<tr>
+<td>CUDA Toolkit</td>
+<td>Nvidia 官方提供的 CUDA Toolkit 是一个完整的工具安装包，其中提供了 Nvidia 驱动程序、开发 CUDA 程序相关的开发工具包等可供安装的选项</td>
+</tr>
+<tr>
+<td>cudatoolkit</td>
+<td>Anaconda 在安装 Pytorch 等会使用到 CUDA 的框架时，会自动为用户安装 cudatoolkit，其主要包含应用程序在使用 CUDA 相关的功能时所依赖的动态链接库。在安装了 cudatoolkit 后，只要系统上存在与当前的 cudatoolkit 所兼容的 Nvidia 驱动，则已经编译好的 CUDA 相关的程序就可以直接运行，而不需要安装完整的 Nvidia 官方提供的 CUDA Toolkit</td>
+</tr>
+<tr>
+<td>linux之ls -l命令</td>
+<td>得到一个目录下的文件和子目录的详细信息，一共包含9列</td>
+</tr>
+<tr>
+<td>Linux中bashrc位置</td>
+<td>&#x2F;etc&#x2F;.bashrc</td>
+</tr>
+<tr>
+<td>.bashrc用途</td>
+<td>个性化指令；设置环境变量,所有环境变量名都是大写，Linux区分大小写</td>
+</tr>
+<tr>
+<td>.bashrc 路径修改</td>
+<td>“export PATH&#x3D;$PATH:路径” ，在原来PATH的后面继续添加了新的路径，在运行特定指令时，系统会逐个位置去寻找文件。 $PATH 表示原先设定的路径，不能遗漏。不同于DOS&#x2F;Windows，Unix类系统的环境变量的路径用冒号:分割，而不是分号;</td>
+</tr>
+<tr>
+<td>.bashrc修改生效</td>
+<td>source &#x2F;etc&#x2F;.bashrc</td>
+</tr>
+<tr>
+<td>.bashrc文件没了怎么办？</td>
+<td>从如下路径拷贝一份原始的.bashrc文件到用户home目录下:cp &#x2F;etc&#x2F;skel&#x2F;.bashrc ~&#x2F;</td>
+</tr>
+<tr>
+<td>nvcc: command not found</td>
+<td>1. nvcc安装在&#x2F;usr&#x2F;local&#x2F;cuda&#x2F;bin；2.添加路径 export LD_LIBRARY_PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;cuda&#x2F;lib；export PATH&#x3D;$PATH:&#x2F;usr&#x2F;local&#x2F;cuda&#x2F;bin；3. 更新配置文件 source ~&#x2F;.bashrc</td>
+</tr>
+<tr>
+<td>linux中的“~”、“&#x2F;”、“.&#x2F;”</td>
+<td>~” ：表示主目录，也就是当前登录用户的用户目录。“&#x2F;” ：是指根目录：就是所有目录最顶层的目录。“.&#x2F;” ：表示当前目录。“..” ：表示上级目录</td>
+</tr>
+<tr>
+<td>nvcc -V</td>
+<td>查看当前CUDA的版本，即实际安装的CUDA版本</td>
+</tr>
+<tr>
+<td>nvidia-smi</td>
+<td>不仅可以查看当前NVIDIA驱动的版本，还可以查询与此驱动相匹配的CUDA版本，虽是匹配，但是CUDA的版本可以略低于此时驱动匹配的CUDA版本，因此，我们可以安装版本高一点的驱动，来兼容不同版本的CUDA！</td>
+</tr>
+<tr>
+<td>NVIDIA-SMI has failed because it couldn’t communicate with the NVIDIA driver. Make sure that the latest NVIDIA driver is installed and running</td>
+<td>内核自动升级导致的新内核无法启动驱动, 最终重装显卡驱动, cuda, cudnn解决，参考如下链接：<a target="_blank" rel="noopener" href="https://qii404.me/2021/07/03/ubuntu-install-nvidia-driver.html">https://qii404.me/2021/07/03/ubuntu-install-nvidia-driver.html</a></td>
+</tr>
+<tr>
+<td>linux 命令 wq</td>
+<td>write and quit</td>
+</tr>
+<tr>
+<td>linux 命令 wq!</td>
+<td>forcely write and quit</td>
+</tr>
+<tr>
+<td>linux 命令 x</td>
+<td>storage and quit</td>
+</tr>
+<tr>
+<td>linux netcat</td>
+<td>查看端口 22 是否在主机 192.168.56.10 上打开 –&gt; nc -zv 192.168.1.15 22</td>
+</tr>
+<tr>
+<td>linux 解压缩zip文件</td>
+<td>unzip…</td>
+</tr>
+<tr>
+<td>linux下路径名中含空格如何处理</td>
+<td>1.使用转义字符“\” 2.将路径名加双引号”” 或 单引号‘’</td>
+</tr>
+<tr>
+<td>linux sudo: command not found</td>
+<td>apt-get install sudo</td>
+</tr>
+<tr>
+<td>linux 命令 echo</td>
+<td>1.打印输出 echo -e “hello\tworld” 2.覆盖echo Hello World &gt; log.txt3.追加 echo Hello World &gt;&gt; log.txt</td>
+</tr>
+<tr>
+<td>解决每次打开终端都需要source .bashrc问题</td>
+<td>登录Linux时，执行顺序可以总结为：&#x2F;etc&#x2F;profile→ ( ~&#x2F;.bash_profile | ~&#x2F;.bash_login | ~&#x2F;.profile)→ ~&#x2F;.bashrc →&#x2F;etc&#x2F;bashrc 故只需在&#x2F;etc&#x2F;profile 或 ~&#x2F;.bash_profile 文件中添加：</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># ~/.bash_profile</span></span><br><span class="line"><span class="keyword">if</span> [ -f ~/.bashrc ]; <span class="keyword">then</span></span><br><span class="line">    . ~/.bashrc                </span><br><span class="line"><span class="keyword">fi</span> </span><br><span class="line"></span><br><span class="line"><span class="comment"># /etc/profile</span></span><br><span class="line"> <span class="keyword">if</span> [ -f /etc/.bashrc ]; <span class="keyword">then</span> </span><br><span class="line">     . /etc/.bashrc</span><br><span class="line"> <span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>args 是 arguments 的缩写</td>
+<td><em>args就是就是传递一个可变参数列表给函数实参，</em>args 必须放在 **kwargs 的前面</td>
+</tr>
+<tr>
+<td>kwargs 是 keyword arguments 的缩写</td>
+<td>**kwargs则是将一个可变的关键字参数的字典传给函数实参</td>
+</tr>
+<tr>
+<td>Python startswith()</td>
+<td>检查字符串是否是以指定子字符串开头</td>
+</tr>
+<tr>
+<td>Python os.path.join()</td>
+<td>用于路径拼接，可以传入多个路径</td>
+</tr>
+<tr>
+<td>Python tuple</td>
+<td>元组：有序且不可更改的集合，tup&#x3D;(1,2,3,4)</td>
+</tr>
+<tr>
+<td>Python list</td>
+<td>列表：有序，list&#x3D;[1,2,3,4]</td>
+</tr>
+<tr>
+<td>Python dictionary</td>
+<td>字典：无序，dic&#x3D;{‘a’:12,‘b’:34}</td>
+</tr>
+<tr>
+<td>Python set()</td>
+<td>创建一个无序不重复元素集</td>
+</tr>
+<tr>
+<td>Python lambda</td>
+<td>lambda 函数是一种小的匿名函数。lambda 函数可接受任意数量的参数，但只能有一个表达式。语法 lambda arguments : expression</td>
+</tr>
+<tr>
+<td>Python pdb</td>
+<td>pdb是ptyhon内置的一个调试库</td>
+</tr>
+<tr>
+<td>python print 格式符%</td>
+<td>print (“His name is %s”%(“Aviad”))；print (“He is %d years old”%(25))；print (“His height is %.2f m”%(1.83234)</td>
+</tr>
+<tr>
+<td>python print 格式化字符串f</td>
+<td>print(f’{A}的类型为{type(A)}’)</td>
+</tr>
+<tr>
+<td>python print 转义字符 \</td>
+<td>\n表示换行，\t表示制表符，\r表示回车，\f表示换页</td>
+</tr>
+<tr>
+<td>python print print+format组合</td>
+<td>print(“{1} {0} {1}”.format(“hello”, “world”) ) # 设置指定位置,输出为’world hello world’</td>
+</tr>
+<tr>
+<td>Python3 assert</td>
+<td>语法格式：assert expression 等价于if not expression:    raise AssertionError</td>
+</tr>
+<tr>
+<td>Python logging库</td>
+<td>常用的记录日志库</td>
+</tr>
+<tr>
+<td>Python Try…Except</td>
+<td>Debug</td>
+</tr>
+<tr>
+<td>Python a is b</td>
+<td>a is b , 这是一个同一性运算符。用于比较两个对象的物理id。如果相同则返回True否则返回False.Python为了优化效率,内置了小整数对象池和简单字符串对象池。小整数对象池包括[-5, 256]。两变量如a&#x3D;2 b&#x3D;2,a is b –&gt;return TRUE</td>
+</tr>
+<tr>
+<td>Python a &#x3D;&#x3D; b</td>
+<td>a &#x3D;&#x3D; b , 这是一个比较运算符,用于比较两个对象的value(值)是否相同,相同则返回True 否则返回False</td>
+</tr>
+<tr>
+<td>python super().<strong>init</strong>()</td>
+<td>super().<strong>init</strong>() 就是调用父类的init方法， 同样可以使用super()去调用父类的其他方法。</td>
+</tr>
+<tr>
+<td>torch.arange(start,end)</td>
+<td>produces values in [start, end)</td>
+</tr>
+<tr>
+<td>Python sum(iterable,start)</td>
+<td>sum&#x3D;iterable的和+start的值</td>
+</tr>
+<tr>
+<td>Python “<strong>name</strong>“</td>
+<td>__name__是python的一个内置类属性，它存储模块的名称。python的模块既可以被调用，也可以独立运行。而被调用时__name__存储的是py文件名(模块名称)，独立运行时存储的是”<strong>main</strong>“。</td>
+</tr>
+<tr>
+<td>Python list(set(a))</td>
+<td>set(a)将列表a转换为集合，集合是一个包含不重复元素的无序序列，然后再使用list将集合转换为列表</td>
+</tr>
+<tr>
+<td>Python apply()</td>
+<td>apply(func,*args,**kwargs)</td>
+</tr>
+<tr>
+<td>Python *</td>
+<td>*用在tuple变量之前作为函数参数，可将tuple&#x2F;list 转化为多个参数传入函数</td>
+</tr>
+<tr>
+<td>Python **</td>
+<td>调用函数时，**用在dict变量之前作为函数参数，可将dict转化为多个关键字参数传入函数</td>
+</tr>
+<tr>
+<td>Python 单下划线开头</td>
+<td>半私有变量</td>
+</tr>
+<tr>
+<td>Python 双下划线开头</td>
+<td>私有变量</td>
+</tr>
+<tr>
+<td>Python 双下划线开头、双下划线结尾</td>
+<td>Python内置属性名或者魔法方法名。是Python自己实现的属性和方法，一般不允许自定义类似此种命名方式的属性或者方法。</td>
+</tr>
+<tr>
+<td>Python copy()</td>
+<td>不管多么复杂的数据结构，浅拷贝都只会copy一层。如列表是三层表示的，类似c中指针的指针</td>
+</tr>
+<tr>
+<td>Python deepcopy()</td>
+<td>将整个变量内存全部复制一遍，新变量与原变量没有任何关系。</td>
+</tr>
+<tr>
+<td>Python import…</td>
+<td>导入一个模块，使用：模块.函数</td>
+</tr>
+<tr>
+<td>Python from…import…</td>
+<td>导入了一个模块中的一个函数，使用：直接使用函数名使用就可以了</td>
+</tr>
+<tr>
+<td>Python @staticmethod</td>
+<td>静态方法。不传入代表实例对象的self参数，并且不强制要求传递任何参数，可以被类直接调用。静态方法是独立于类的一个单独函数，只是寄存在一个类名下。静态方法就是类对外部函数的封装，有助于优化代码结构和提高程序的可读性。</td>
+</tr>
+<tr>
+<td>Python @classmethod</td>
+<td>类方法。不传入self示例本身，而是传入cls，代表这个类自身，可以来调用类的属性，类的方法，实例化对象等。类方法是将类本身作为操作对象。当我们需要和类直接进行交互，而不需要和实例进行交互时，自然也就不需要传入实例本身</td>
+</tr>
+<tr>
+<td>Python @abstractmethod</td>
+<td>抽象方法。用于程序接口的控制。含有abstractmethod 方法的类不能实例化，继承了含abstractmethod方法的子类必须复写所有abstractmethod装饰的方法，未被装饰的不重写</td>
+</tr>
+<tr>
+<td>Python @property</td>
+<td>将一个方法伪装成属性。被修饰的特性方法，内部可以实现处理逻辑，但对外提供统一的调用方式（访问方式很友好）</td>
+</tr>
+<tr>
+<td>Python class</td>
+<td>类： 采用 Class 作为关键字进行定义的代码块，表示的是一种类别</td>
+</tr>
+<tr>
+<td>Python object</td>
+<td>对象： 实例化之后的类，对类中的形参进行了赋值，赋予其真正的含义或数值</td>
+</tr>
+<tr>
+<td>Python method</td>
+<td>方法： 使用 def 作为关键词，定义在类内的函数</td>
+</tr>
+<tr>
+<td>Python function</td>
+<td>函数： 使用 def 作为关键词，但是没有在类内进行定义，即 定义在类外</td>
+</tr>
+<tr>
+<td>Python attribute</td>
+<td>属性： 类内的称呼，其实就是类内的变量，同一个类内的不同方法内的变量都是这个类的属性，也就是这个类的变量</td>
+</tr>
+<tr>
+<td>Python None</td>
+<td>与C不同，在python中是没有NULL，但存在相近意义的None。None表示空值，它是一个特殊 Python 对象, None的类型是NoneType</td>
+</tr>
+</tbody></table>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>torch.nn.Parameter()</td>
+<td>torch.nn.Parameter是继承自torch.Tensor的子类，其主要作用是作为nn.Module中的可训练参数使用。它与torch.Tensor的区别就是nn.Parameter会自动被认为是module的可训练参数，即加入到parameter()这个迭代器中去；而module中非nn.Parameter()的普通tensor是不在parameter中的。注意到，nn.Parameter的对象的requires_grad属性的默认值是True，即是可被训练的，这与torth.Tensor对象的默认值相反。</td>
+</tr>
+<tr>
+<td>Pytorch .item()</td>
+<td>.item()用于在只包含一个元素的tensor中提取值，注意是只包含一个元素，否则的话使用.tolist()</td>
+</tr>
+<tr>
+<td>Pytorch model.train()</td>
+<td>启用 Batch Normalization 和 Dropout。</td>
+</tr>
+<tr>
+<td>Pytorch model.eval()</td>
+<td>不启用 Batch Normalization 和 Dropout。eval模式不会影响各层的gradient计算行为，即gradient计算和存储与training模式一样，只是不进行反向传播（back probagation)。</td>
+</tr>
+<tr>
+<td>Pytorch torch.no_grad()</td>
+<td>with torch.no_grad()则主要是用于停止autograd模块的工作，以起到加速和节省显存的作用。它的作用是将该with语句包裹起来的部分停止梯度的更新，从而节省了GPU算力和显存，但是并不会影响dropout和BN层的行为。</td>
+</tr>
+<tr>
+<td>Pytorch torch.max(input,dim)</td>
+<td>dim：input每个元素参与比较的维度</td>
+</tr>
+<tr>
+<td>Pytorch torch.tensor()</td>
+<td>Constructs a tensor with no autograd history (also known as a “leaf tensor”, see Autograd mechanics) by copying data.</td>
+</tr>
+<tr>
+<td>Pytorch torch.Tensor()</td>
+<td>A torch.Tensor is a multi-dimensional matrix containing elements of a single data type.</td>
+</tr>
+<tr>
+<td>Pytorch torch.autograd.Variable()</td>
+<td>Autograd的核心类，浅封装（thin wrapper）了Tensor，用于整合实现反向传播。torch0.4后张量与自动微分变量整合，tensor直接当作自动微分变量使用，旦Variable仍可使用</td>
+</tr>
+<tr>
+<td>Pytorch 自定义autograd中的Function</td>
+<td>自定义pytorch中动态图的算子(operator)，也就是动态图的“边”，需要继承torch.autograd.Function类，并实现forward与backward方法。在使用自定义的算子时，需要使用apply方法。</td>
+</tr>
+<tr>
+<td>Pytorch torch.save(net,path)</td>
+<td>保存模型,模型&#x3D;网络结构+网络参数</td>
+</tr>
+<tr>
+<td>Pytorch torch.save(net.state_dict(),path)</td>
+<td>保存网络参数</td>
+</tr>
+<tr>
+<td>Pytorch中什么时候调用forward()函数</td>
+<td>Module类是nn模块里提供的一个模型构造类，是所有神经网络模块的基类，我们可以继承它来定义我们想要的模型。Module中定义了__call__()函数，该函数调用了forward()函数，前向传播时会自动调用__call__()函数亦即自动调用forward()</td>
+</tr>
+<tr>
+<td>Pytorch nn.Sequential()</td>
+<td>把定义的conv fc relu等层包装起来作为一个整体</td>
+</tr>
+<tr>
+<td>Pytorch torch.squeeze()</td>
+<td>torch.squeeze(input, dim&#x3D;None, *, out&#x3D;None) → Tensor 对输入的张量进行处理，如果张量维度里面有大小为1 的部分，那我们就移除，否则保留.dim可以指定特定的某一维度判断是否为1并进行压缩，若不指定则对input_tensor所有为1的维度进行压缩</td>
+</tr>
+<tr>
+<td>Pytorch import torch import torch.nn as nn</td>
+<td>起到缩写效果： 如果只用import torch，就要用torch.nn.Conv2d这样的代码。如果写成import torch.nn as nn，后面就可以简写成nn.Con2d。两种写法效果都一样，用import …as…  只是起了个别名写代码时可以更精炼。</td>
+</tr>
+<tr>
+<td>Pytorch torch.cuda.is_available()</td>
+<td>查看是否有可用GPU</td>
+</tr>
+<tr>
+<td>Pytorch torch.cuda.device_count()</td>
+<td>查看GPU数量</td>
+</tr>
+<tr>
+<td>Pytorch torch.cuda.current_device()</td>
+<td>查看当前使用的cuda编号</td>
+</tr>
+<tr>
+<td>Pytorch torch.cuda.get_device_capability(device)</td>
+<td>查看指定GPU容量</td>
+</tr>
+<tr>
+<td>Pytorch torch.cuda.get_device_name(device)</td>
+<td>查看指定GPU名称</td>
+</tr>
+<tr>
+<td>Pytorch torch.cuda.manual_seed(seed)</td>
+<td>设置随机种子</td>
+</tr>
+<tr>
+<td>Pytorch register_buffer()</td>
+<td>model中需要设置一些不更新的参数,同时希望通过model.state_dict()将参数保存下来，就用到register_buffer(),buffer也可以通过requires_grad获取其梯度信息，但是optimizer进行更新的是parameter,buffer不会更新</td>
+</tr>
+</tbody></table>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>深度学习之embedding层</td>
+<td>通过矩阵乘法实现降维，信息不变，按照某种映射关系将原本矩阵的信息转换到了一个新的维度的矩阵里面，节省存储空间。也可以逆向升维</td>
+</tr>
+<tr>
+<td>ImageNet 数据集</td>
+<td>ImageNet 是一个计算机视觉系统识别项目，是目前世界上最大的图像识别数据库。此项目由斯坦福大学李飞飞等教授于 2009 年发起.ImageNet 中目前共有 14,197,122 幅图像，总共分为 21,841 个类别（synsets），通常我们所说的 ImageNet 数据集其实是指 ISLVRC2012 比赛用的子数据集，其中 train 有 1,281,167 张照片和标签，共 1000 类，大概每类 1300 张图片，val 有 50,000 副图像，每类 50 个数据，test 有 100,000 副图片，每类 100 个数据。</td>
+</tr>
+<tr>
+<td>海森矩阵</td>
+<td>Hessian Matrix 二阶导数矩阵</td>
+</tr>
+<tr>
+<td>Ubuntu中切换Python版本</td>
+<td>1.列出可用的 Python 替代版本：update-alternatives –list python 2.列出的 Python 版本中选择进行切换：update-alternatives –config python</td>
+</tr>
+<tr>
+<td>目标检测&#x2F;图像分割评价单张图片标准</td>
+<td>IOU(Intersection-Over-Union)交并比</td>
+</tr>
+<tr>
+<td>目标检测&#x2F;图像分割评价一套算法标准</td>
+<td>在整个数据集测试结果 准确率（Pixel Accuracy）：检测出来物体占待检测总体（包含检测出和未检测出）的比例；精确度（Pixel Precision）：检测出来正确的物体占检测出物体总体的比例</td>
+</tr>
+<tr>
+<td>LSTMs</td>
+<td>Long Short Term Memory networks</td>
+</tr>
+<tr>
+<td>参数量Params</td>
+<td>input_feature_map:f&#x3D;(B,c1,H,W),conv_kernel:k * k,bias&#x3D;True且使用BN,即附加两个可学习参数alpha和beta, Params&#x3D;c1<em>c2</em>k<em>k+3</em>c2</td>
+</tr>
+<tr>
+<td>参数量Params</td>
+<td>fc 输入神经元数M,输出神经元数N,bias为True时params&#x3D;M*N+N</td>
+</tr>
+<tr>
+<td>计算量FLOPs</td>
+<td>乘加次数-&gt;输出的每个pixel的得到需要多少次乘加</td>
+</tr>
+</tbody></table>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>APU（Accelerated Processing Unit，加速处理单元）</td>
+<td>最早由AMD提出并生产制作的具有概念性的理念产品。加速芯片对数据图像的处理能力。</td>
+</tr>
+<tr>
+<td>NPU（Neural-network Processing Unit，神经网络处理单元）</td>
+<td>可以自行处理某些数据，将接受到的多元化的数据分担给其他单元处理</td>
+</tr>
+<tr>
+<td>GPU（Graphics Processing Unit，图形处理单元）</td>
+<td>专门处理图像数据，也能为CPU分担部分工作。</td>
+</tr>
+<tr>
+<td>CPU（Central Processing Unit，中央处理单元）</td>
+<td>系统的运算能力，电子产品的核心。负责处理指令和一切逻辑性数据。</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/21/CUDA-Tutorial/" rel="prev" title="CUDA Tutorial">
+                  <i class="fa fa-chevron-left"></i> CUDA Tutorial
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/12/06/Model-Quantization-Papers/" rel="next" title="Model Quantization Papers">
+                  Model Quantization Papers <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jarvis</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

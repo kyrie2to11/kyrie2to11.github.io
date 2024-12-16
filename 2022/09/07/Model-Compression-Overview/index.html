@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kyrie2to11.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="I. INTRODUCTION1.Designing efficient NN model architecturespresent situation    手动优化微观结构如内核类型(深度卷积或低秩分解) 手动优化宏观结构如模块(residual、inception) 自动优化如Automated machine learning (AutoML) and Neural Architectur">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Model Compression Overview">
+<meta property="og:url" content="https://kyrie2to11.github.io/2022/09/07/Model-Compression-Overview/index.html">
+<meta property="og:site_name" content="Jarvis&#39;s Blog">
+<meta property="og:description" content="I. INTRODUCTION1.Designing efficient NN model architecturespresent situation    手动优化微观结构如内核类型(深度卷积或低秩分解) 手动优化宏观结构如模块(residual、inception) 自动优化如Automated machine learning (AutoML) and Neural Architectur">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-09-07T02:39:59.000Z">
+<meta property="article:modified_time" content="2024-12-02T04:31:38.125Z">
+<meta property="article:author" content="jarvis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kyrie2to11.github.io/2022/09/07/Model-Compression-Overview/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kyrie2to11.github.io/2022/09/07/Model-Compression-Overview/","path":"2022/09/07/Model-Compression-Overview/","title":"Model Compression Overview"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Model Compression Overview | Jarvis's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jarvis's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录生活，沉淀自己</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-INTRODUCTION"><span class="nav-number">1.</span> <span class="nav-text">I. INTRODUCTION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Designing-efficient-NN-model-architectures"><span class="nav-number">1.1.</span> <span class="nav-text">1.Designing efficient NN model architectures</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Co-designing-NN-architecture-and-hardware-together"><span class="nav-number">1.2.</span> <span class="nav-text">2.Co-designing NN architecture and hardware together</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Pruning"><span class="nav-number">1.3.</span> <span class="nav-text">3.Pruning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Knowledge-distillation"><span class="nav-number">1.4.</span> <span class="nav-text">4.Knowledge distillation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Quantization"><span class="nav-number">1.5.</span> <span class="nav-text">5.Quantization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Similarity-of-Quantization-and-Neuroscience"><span class="nav-number">1.6.</span> <span class="nav-text">6.Similarity of Quantization and Neuroscience</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-GENERAL-HISTORY-OF-QUANTIZATION"><span class="nav-number">2.</span> <span class="nav-text">II. GENERAL HISTORY OF QUANTIZATION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-BASIC-CONCEPTS-OF-QUANTIZATION"><span class="nav-number">3.</span> <span class="nav-text">III. BASIC CONCEPTS OF QUANTIZATION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IV-ADVANCED-CONCEPTS-QUANTIZATION-BELOW-8-BITS"><span class="nav-number">4.</span> <span class="nav-text">IV. ADVANCED CONCEPTS: QUANTIZATION BELOW 8 BITS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V-QUANTIZATION-AND-HARDWARE-PROCESSORS"><span class="nav-number">5.</span> <span class="nav-text">V. QUANTIZATION AND HARDWARE PROCESSORS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VI-FUTURE-DIRECTIONS-FOR-RESEARCH-IN-QUANTIZATION"><span class="nav-number">6.</span> <span class="nav-text">VI. FUTURE DIRECTIONS FOR RESEARCH IN QUANTIZATION</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jarvis</p>
+  <div class="site-description" itemprop="description">记录学习和生活，留下时光的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/09/07/Model-Compression-Overview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Model Compression Overview | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Model Compression Overview
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-09-07 10:39:59" itemprop="dateCreated datePublished" datetime="2022-09-07T10:39:59+08:00">2022-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-02 12:31:38" itemprop="dateModified" datetime="2024-12-02T12:31:38+08:00">2024-12-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="I-INTRODUCTION"><a href="#I-INTRODUCTION" class="headerlink" title="I. INTRODUCTION"></a>I. INTRODUCTION</h2><h3 id="1-Designing-efficient-NN-model-architectures"><a href="#1-Designing-efficient-NN-model-architectures" class="headerlink" title="1.Designing efficient NN model architectures"></a>1.Designing efficient NN model architectures</h3><p>present situation  </p>
+<ol>
+<li>手动优化微观结构如内核类型(深度卷积或低秩分解)</li>
+<li>手动优化宏观结构如模块(residual、inception)</li>
+<li>自动优化如Automated machine learning (AutoML) and Neural Architecture Search (NAS)</li>
+</ol>
+<h3 id="2-Co-designing-NN-architecture-and-hardware-together"><a href="#2-Co-designing-NN-architecture-and-hardware-together" class="headerlink" title="2.Co-designing NN architecture and hardware together"></a>2.Co-designing NN architecture and hardware together</h3><p>硬件与nn结构共同设计或者针对不同的硬件平台调整神经网络架构。主要mootivation是nn不同组件的开销是依赖于硬件的。</p>
+<h3 id="3-Pruning"><a href="#3-Pruning" class="headerlink" title="3.Pruning"></a>3.Pruning</h3><ol>
+<li><p>unstructured pruning  </p>
+<ul>
+<li>motivation: removes neurons with with small sensitivity, wherever they occur  </li>
+<li>positive: little impact on the generalization performance</li>
+<li>negative: leads to sparse matrix operations, which are known to be hard to accelerate, and which are typically memory-bound</li>
+</ul>
+</li>
+<li><p>structured pruning  </p>
+<ul>
+<li>motivation: a group of parameters (e.g., entire convolutional filters) is removed.  </li>
+<li>positive: still permitting dense matrix operations.  </li>
+<li>negative: aggressive structured pruning often leads to significant accuracy degradation.</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-Knowledge-distillation"><a href="#4-Knowledge-distillation" class="headerlink" title="4.Knowledge distillation"></a>4.Knowledge distillation</h3><ul>
+<li>motivation: training a large model and then using it as a teacher to train a more compact model.  </li>
+<li>positive:  mix knowledge distillation with prior method(i.e.也就是quantization and pruning ) has succeed</li>
+<li>negative:  a major challenge here is to achieve a high compression ratio with distillation alone.non-negligible accuracy degradation with aggressive compression.</li>
+</ul>
+<h3 id="5-Quantization"><a href="#5-Quantization" class="headerlink" title="5.Quantization"></a>5.Quantization</h3><ul>
+<li>present situation: has shown great and consistent success in both training and inference.this survey focused on inference.</li>
+<li>shortcoming: very difficult to go below half-precision without significant tuning, and most of the recent quantization research has focused on inference.</li>
+</ul>
+<h3 id="6-Similarity-of-Quantization-and-Neuroscience"><a href="#6-Similarity-of-Quantization-and-Neuroscience" class="headerlink" title="6.Similarity of Quantization and Neuroscience"></a>6.Similarity of Quantization and Neuroscience</h3><ul>
+<li>motivation: work in neuroscience that suggests that the human brain stores information in a discrete&#x2F;quantized form, rather than in a continuous form.</li>
+</ul>
+<h2 id="II-GENERAL-HISTORY-OF-QUANTIZATION"><a href="#II-GENERAL-HISTORY-OF-QUANTIZATION" class="headerlink" title="II. GENERAL HISTORY OF QUANTIZATION"></a>II. GENERAL HISTORY OF QUANTIZATION</h2><h2 id="III-BASIC-CONCEPTS-OF-QUANTIZATION"><a href="#III-BASIC-CONCEPTS-OF-QUANTIZATION" class="headerlink" title="III. BASIC CONCEPTS OF QUANTIZATION"></a>III. BASIC CONCEPTS OF QUANTIZATION</h2><ul>
+<li>Problem Setup and Notations  </li>
+<li>Uniform Quantization  </li>
+<li>Symmetric and Asymmetric Quantization</li>
+<li>Range Calibration Algorithms: Static vs Dynamic Quantization  </li>
+<li>Quantization Granularity</li>
+<li>Non-Uniform Quantization</li>
+<li>Fine-tuning Methods  <ul>
+<li>Quantization-Aware Training</li>
+<li>Stochastic Quantization</li>
+</ul>
+</li>
+</ul>
+<h2 id="IV-ADVANCED-CONCEPTS-QUANTIZATION-BELOW-8-BITS"><a href="#IV-ADVANCED-CONCEPTS-QUANTIZATION-BELOW-8-BITS" class="headerlink" title="IV. ADVANCED CONCEPTS: QUANTIZATION BELOW 8 BITS"></a>IV. ADVANCED CONCEPTS: QUANTIZATION BELOW 8 BITS</h2><ul>
+<li>Simulated and Integer-only Quantization</li>
+<li>Mixed-Precision Quantization</li>
+<li>Hardware Aware Quantization</li>
+<li>Distillation-Assisted Quantization</li>
+<li>Extreme Quantization<ul>
+<li>Quantization Error Minimization</li>
+<li>Improved Loss function</li>
+<li>Improved Training Method</li>
+</ul>
+</li>
+<li>Vector Quantization</li>
+</ul>
+<h2 id="V-QUANTIZATION-AND-HARDWARE-PROCESSORS"><a href="#V-QUANTIZATION-AND-HARDWARE-PROCESSORS" class="headerlink" title="V. QUANTIZATION AND HARDWARE PROCESSORS"></a>V. QUANTIZATION AND HARDWARE PROCESSORS</h2><h2 id="VI-FUTURE-DIRECTIONS-FOR-RESEARCH-IN-QUANTIZATION"><a href="#VI-FUTURE-DIRECTIONS-FOR-RESEARCH-IN-QUANTIZATION" class="headerlink" title="VI. FUTURE DIRECTIONS FOR RESEARCH IN QUANTIZATION"></a>VI. FUTURE DIRECTIONS FOR RESEARCH IN QUANTIZATION</h2><ul>
+<li>Quantization Software</li>
+<li>Hardware and NN Architecture Co-Design</li>
+<li>Coupled Compression Methods</li>
+<li>Quantized Training</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/06/Tensor-Dimensions/" rel="prev" title="Tensor Dimensions">
+                  <i class="fa fa-chevron-left"></i> Tensor Dimensions
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/21/CUDA-Tutorial/" rel="next" title="CUDA Tutorial">
+                  CUDA Tutorial <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jarvis</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
