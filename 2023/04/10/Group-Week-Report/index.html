@@ -337,12 +337,12 @@
 </ul>
 </li>
 <li>Jetson Nano 部署暗光增强 ZeroDCE++,处理单张512×512图片耗时约10ms,但有波动(最高4931.46 ms&#x2F;张),基本满足实时性要求<ul>
-<li><style>.tlbxxhlurzrl{}</style><img src="/2023/04/10/Group-Week-Report/ZeroDCE++_test_result.png" class="tlbxxhlurzrl" alt="Elapsed Time(ms)&#x2F;photo"></li>
+<li><style>.chjhemlgigfc{}</style><img src="/2023/04/10/Group-Week-Report/ZeroDCE++_test_result.png" class="chjhemlgigfc" alt="Elapsed Time(ms)&#x2F;photo"></li>
 </ul>
 </li>
 <li>Jetson Nano 部署 Face Tracking,结合之前的Pose Estimation 达不到实时30 frame&#x2F;s的要求<ul>
-<li><style>.hcuxygsajtyq{}</style><img src="/2023/04/10/Group-Week-Report/face_detection_screenshot.png" class="hcuxygsajtyq" alt="Elapsed Time(ms)&#x2F;photo"></li>
-<li><style>.ewcytljxirmw{}</style><img src="/2023/04/10/Group-Week-Report/pose_estimation_screenshot.png" class="ewcytljxirmw" alt="Elapsed Time(ms)&#x2F;photo"></li>
+<li><style>.smyhgmetcdqh{}</style><img src="/2023/04/10/Group-Week-Report/face_detection_screenshot.png" class="smyhgmetcdqh" alt="Elapsed Time(ms)&#x2F;photo"></li>
+<li><style>.mvnoiiaqdttu{}</style><img src="/2023/04/10/Group-Week-Report/pose_estimation_screenshot.png" class="mvnoiiaqdttu" alt="Elapsed Time(ms)&#x2F;photo"></li>
 </ul>
 </li>
 </ol>
@@ -432,7 +432,7 @@
 <li>Video Super-Resolution Quantization<ul>
 <li>基于目前在Vid4、Vimeo90k、REDS数据集上SOTA模型 BasicVSR++ 进行channel-wise distribution-aware 量化pipeline的搭建（目前尚没有视频超分量化超分方向的baseline，代码难度较大）</li>
 <li>尝试引入在其它视频感知任务（Human Pose Estimation，Semantic Segmentation，Video Object Segmentation）有效上的方法，参考 ICCV2023 ResQ 将网络中相邻帧的激活之间的残差用于量化，更小的方差有利于缩小量化误差<ul>
-<li><style>.ibtsviuzijvq{}</style><img src="/2023/04/10/Group-Week-Report/ResQ.png" class="ibtsviuzijvq" alt="ResQ Motivation"></li>
+<li><style>.flwsobwgtbtu{}</style><img src="/2023/04/10/Group-Week-Report/ResQ.png" class="flwsobwgtbtu" alt="ResQ Motivation"></li>
 </ul>
 </li>
 </ul>
@@ -543,7 +543,7 @@
 <li>将pytorch的pt文件转化为onnx格式</li>
 <li>将onnx文件输入paddleslim执行脚本输出模型及权重文件</li>
 <li>迁移部署到tensorRT平台部分暂不清楚</li>
-<li>结果： <style>.vgjuvogbhptb{}</style><img src="/2023/04/10/Group-Week-Report/paddleslim_demo.png" class="vgjuvogbhptb" alt="Paddleslim demo"></li>
+<li>结果： <style>.rrsaxutkpiqk{}</style><img src="/2023/04/10/Group-Week-Report/paddleslim_demo.png" class="rrsaxutkpiqk" alt="Paddleslim demo"></li>
 </ul>
 </li>
 </ol>
@@ -570,7 +570,7 @@
 <h2 id="模型压缩与部署组工作进度-（2023-11-06-2023-11-12）"><a href="#模型压缩与部署组工作进度-（2023-11-06-2023-11-12）" class="headerlink" title="模型压缩与部署组工作进度 （2023.11.06-2023.11.12）"></a>模型压缩与部署组工作进度 （2023.11.06-2023.11.12）</h2><h3 id="苗康-16"><a href="#苗康-16" class="headerlink" title="苗康"></a>苗康</h3><ol>
 <li>深度神经网络原理课程ppt制作。</li>
 <li>利用paddleslim其中的AutoCompression接口对yolov5进行自动压缩（包括量化和蒸馏两部分），代码中numpy库的api有冲突，在调试。</li>
-<li>利用3090比较了各类框架在yolov5上的部署测试。<style>.rmjwqjnkewtj{}</style><img src="/2023/04/10/Group-Week-Report/3090_qyolov5.png" class="rmjwqjnkewtj" alt="qyolov5"></li>
+<li>利用3090比较了各类框架在yolov5上的部署测试。<style>.qengthubvsdz{}</style><img src="/2023/04/10/Group-Week-Report/3090_qyolov5.png" class="qengthubvsdz" alt="qyolov5"></li>
 </ol>
 <h3 id="王明申-10"><a href="#王明申-10" class="headerlink" title="王明申"></a>王明申</h3><ol>
 <li>阅读论文<ul>

@@ -195,7 +195,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-12-22 13:18:25" itemprop="dateModified" datetime="2024-12-22T13:18:25+08:00">2024-12-22</time>
+      <time title="修改时间：2024-12-24 17:54:53" itemprop="dateModified" datetime="2024-12-24T17:54:53+08:00">2024-12-24</time>
     </span>
 
   
@@ -208,52 +208,67 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="Frame"><a href="#Frame" class="headerlink" title="Frame"></a>Frame</h2><ol>
-<li><p>基本框架：I&#x2F;O 单元 + 逻辑单元 + 网络存储单元</p>
-<img src="/2024/12/16/Nano-Web-Server/basic_frame.png" class="" title="basic frame">
-<p>半同步&#x2F;半反应堆模式<br>I&#x2F;O 主线程循环处理 HTTP 连接的到达<br>HTTP 连接读写交给线程池<br>MYSQL 查询交给 MYSQL 连接池<br>日志系统单例模式异步&#x2F;同步处理<br>epoller IO 复用<br>小根堆定时器 callback</p>
-</li>
-<li><p>Thread Pool</p>
-</li>
-<li><p>Http Connection</p>
-</li>
-<li><p>Timer</p>
-</li>
-<li><p>Logger</p>
-</li>
-<li><p>SQL Connection Pool</p>
-</li>
-</ol>
-<h2 id="Thread-Pool"><a href="#Thread-Pool" class="headerlink" title="Thread Pool"></a>Thread Pool</h2><ol>
-<li><p>I&#x2F;O 模型</p>
+          <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="服务器框架"><a href="#服务器框架" class="headerlink" title="服务器框架"></a>服务器框架</h3><img src="/2024/12/16/Nano-Web-Server/basic_frame.png" class="" title="basic frame">
+<p>服务器基本框架：I&#x2F;O 单元 + 逻辑单元 + 网络存储单元 （各个单元间通信方式：请求队列）</p>
+<h3 id="四种-I-x2F-O-模型"><a href="#四种-I-x2F-O-模型" class="headerlink" title="四种 I&#x2F;O 模型"></a>四种 I&#x2F;O 模型</h3><img src="/2024/12/16/Nano-Web-Server/IO_compare.png" class="" title="I&#x2F;O model">
+<p>基础概念：</p>
 <ol>
-<li><strong>同步 I&#x2F;O 指内核向应用程序通知的是就绪事件</strong>，比如只通知有客户端连接，要求用户代码自行执行I&#x2F;O操作<ol>
-<li>阻塞 I&#x2F;O</li>
-<li>非阻塞 I&#x2F;O</li>
-<li>信号驱动 I&#x2F;O</li>
-<li>I&#x2F;O 复用</li>
+<li>同步 I&#x2F;O：用户代码自行执行 I&#x2F;O 操作（数据从内核缓冲区读入用户缓冲区或从用户缓冲区写入内核缓冲区），<strong>同步 I&#x2F;O 内核向应用程序通知的是就绪事件</strong></li>
+<li>异步 I&#x2F;O: 数据在内核缓冲区和用户缓冲区之间的移动是由内核在“后台”完成的，<strong>异步 I&#x2F;O 内核向应用程序通知的是完成事件</strong></li>
+<li>阻塞 I&#x2F;O：阻塞的文件描述符，针对阻塞 I&#x2F;O 执行的系统调用可能因为无法立即完成而被操作系统挂起，直到等待的事件发生为止</li>
+<li>非阻塞 I&#x2F;O：非阻塞的文件描述符，针对非阻塞 I&#x2F;O 执行的系统调用总是立即返回，而不管事件是否已经发生</li>
 </ol>
-</li>
-<li><strong>异步 I&#x2F;O 是指内核向应用程序通知的是完成事件</strong>，比如读取客户端的数据后才通知应用程序，由内核完成I&#x2F;O操作</li>
-</ol>
-</li>
-<li><p>事件处理模式</p>
+<h3 id="两种事件处理模式"><a href="#两种事件处理模式" class="headerlink" title="两种事件处理模式"></a>两种事件处理模式</h3><p>服务器程序通常需要处理三类事件： I&#x2F;O 事件、信号及定时事件</p>
 <ol>
-<li><strong>reactor 模式</strong>：主线程(I&#x2F;O处理单元)只负责监听文件描述符上是否有事件发生，有的话立即通知工作线程(逻辑单元)，读写数据、接受新连接及处理客户请求均在工作线程中完成。通常由<strong>同步 I&#x2F;O</strong>实现。</li>
-<li><strong>proactor模式</strong>：主线程和内核负责处理读写数据、接受新连接等I&#x2F;O操作，工作线程仅负责业务逻辑，如处理客户请求。通常由<strong>异步 I&#x2F;O</strong>实现。</li>
-<li>同步I&#x2F;O模拟proactor模式</li>
+<li><p><strong>reactor 模式</strong>：主线程(I&#x2F;O处理单元)只负责监听文件描述符上是否有事件发生，有的话立即通知工作线程(逻辑单元)，读写数据、接受新连接及处理客户请求均在工作线程中完成。通常由<strong>同步 I&#x2F;O</strong>实现。</p>
+<img src="/2024/12/16/Nano-Web-Server/reactor.png" class="" title="reactor">
+</li>
+<li><p><strong>proactor模式</strong>：主线程和内核负责处理读写数据、接受新连接等I&#x2F;O操作，工作线程仅负责业务逻辑，如处理客户请求。通常由<strong>异步 I&#x2F;O</strong>实现。</p>
+<img src="/2024/12/16/Nano-Web-Server/proactor.png" class="" title="reactor"></li>
+</ol>
+<h3 id="两种并发模式"><a href="#两种并发模式" class="headerlink" title="两种并发模式"></a>两种并发模式</h3><ol>
+<li>半同步&#x2F;半异步模式<ol>
+<li>并发模式中的同步和异步：同步指的是程序完全按照代码序列的顺序执行，异步指的是程序的执行需要由系统事件驱动</li>
+<li>I&#x2F;O 模型中的同步和异步区分的是内核向应用程序通知的是何种 I&#x2F;O 事件（就绪事件 or 完成事件），以及由谁完成 I&#x2F;O 读写（应用程序 or 内核）</li>
+<li>半同步&#x2F;半异步模式中，同步线程用于处理客户逻辑，异步线程用于处理 I&#x2F;O 事件</li>
+<li>服务器程序中，综合考虑两种事件处理模式和几种 I&#x2F;O 模型，则半同步&#x2F;半异步模式存在多种变体。其中有一种变体称为半同步&#x2F;半反应堆模式：异步线程只有一个，由主线程充当。同步线程（工作线程）处理客户逻辑。工作模式是 Reactor 模式<img src="/2024/12/16/Nano-Web-Server/half_sync_half_reactive.png" class="" title="half-sync&#x2F;half-reactor"></li>
 </ol>
 </li>
-<li><p>并发编程模式</p>
-<ol>
-<li>并发模式中的同步和异步：<ol>
-<li>同步指的是程序完全按照代码序列的顺序执行</li>
-<li>异步指的是程序的执行需要由系统事件驱动</li>
+<li>领导者&#x2F;追随者模式</li>
 </ol>
-</li>
-<li>半同步&#x2F;半反应堆模式</li>
+<h2 id="项目特性"><a href="#项目特性" class="headerlink" title="项目特性"></a>项目特性</h2><ol>
+<li>利用 epoll 与线程池实现 Reactor 高并发模型</li>
+<li>利用状态机与正则实现 HTTP 请求报文解析和 HTTP 响应生成，可处理 GET 和 POST 请求</li>
+<li>用 vector 容器封装 char,实现一个可自动扩容的缓冲区</li>
+<li>基于 epoll_wait 实现定时功能，关闭超时的非活动连接，并用小根堆作为容器管理定时器</li>
+<li>利用单例模式实现了一个简单的线程池，减少了线程创建与销毁的开销</li>
+<li>利用单例模式实现 MySQL 数据库连接池，减少数据库连接建立与关闭的开销，实现了用户注册登录功能</li>
+<li>利用单例模式与阻塞队列实现异步日志系统，记录服务器运行状态</li>
+<li>能够处理前端发送的<code>multi/form-data</code>类型的 POST 请求，实现了文件上传功能</li>
+<li>通过 jsoncpp 生成 json 数据，向前端发送文件列表，实现文件展示与下载</li>
 </ol>
+<h2 id="Workflow"><a href="#Workflow" class="headerlink" title="Workflow"></a>Workflow</h2><ol>
+<li><p>git push</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加子模块</span></span><br><span class="line">git submodule add https://github.com/open-source-parsers/jsoncpp.git jsoncpp</span><br><span class="line"></span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;message&quot;</span></span><br><span class="line">git push origin main</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>git clone &amp; install</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/kyrie2to11/NanoServer.git</span><br><span class="line">git submodule update --init --recursive</span><br><span class="line"><span class="built_in">cd</span> jsoncpp</span><br><span class="line">cmake -S . -B build</span><br><span class="line"><span class="built_in">cd</span> build &amp;&amp; make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bashrc</span><br><span class="line"><span class="comment"># jsoncpp</span></span><br><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=<span class="variable">$LD_LIBRARY_PATH</span>:/usr/local/lib</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>mysql config</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 报错：ERROR 2002 (HY000): Can&#x27;t connect to local MySQL server through socket &#x27;/var/run/mysqld/mysqld.sock&#x27; (2)</span></span><br><span class="line"><span class="comment"># mysql 服务重启</span></span><br><span class="line">service mysql restart </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创建数据库</span></span><br><span class="line"><span class="keyword">create</span> database webdb;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建user表</span></span><br><span class="line">USE webdb;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">user</span>(</span><br><span class="line">   username <span class="type">char</span>(<span class="number">50</span>) <span class="keyword">NULL</span>,</span><br><span class="line">   passwd <span class="type">char</span>(<span class="number">50</span>) <span class="keyword">NULL</span></span><br><span class="line">)ENGINE<span class="operator">=</span>InnoDB;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 添加数据</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">user</span>(username, passwd) <span class="keyword">VALUES</span>(<span class="string">&#x27;username&#x27;</span>, <span class="string">&#x27;password&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- webdb是数据库名，user是表名，需要在main函数中传入</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>start server</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tmux</span><br><span class="line"><span class="built_in">cd</span> NanoServer</span><br><span class="line">./bin/server</span><br><span class="line"></span><br><span class="line">ctrl + b + d <span class="comment"># detach session</span></span><br><span class="line">tmux attach-session -t 0 <span class="comment"># attach session</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认访问端口： 1316 可在 main.cpp 更改</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><ol>
+<li>Linux高性能服务器编程，游双著</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/markparticle/WebServer">markparticle&#x2F;WebServer</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Sakura1221/SimpleWebServer.git">Sakura1221&#x2F;SimpleWebServer</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wustghj/SimpleServer.git">wustghj&#x2F;SimpleServer</a></li>
 </ol>
 
       
@@ -603,9 +618,9 @@
 </ol>
 </li>
 <li>Method:  <ol>
-<li>Data-free quantization-aware training (QAT) which produces QAT data using next token data generation <code>-&gt;</code> Select appropriate fine-tuning dataset    <style>.lsajrudljkkr{}</style></li>
-<li>Per-channel weight quantization and per-token activation quantization (symmetric MinMax quantization), per-token quantization for KV cache <code>-&gt;</code> Identify suitable quantizer    <style>.jeyiqiwccgkx{}</style></li>
-<li>Cross-entropy based loss <code>-&gt;</code> Knowledge distillation from full precision model    <style>.hzyygvpjqtyd{}</style></li>
+<li>Data-free quantization-aware training (QAT) which produces QAT data using next token data generation <code>-&gt;</code> Select appropriate fine-tuning dataset    <style>.jcvkmyjvooan{}</style></li>
+<li>Per-channel weight quantization and per-token activation quantization (symmetric MinMax quantization), per-token quantization for KV cache <code>-&gt;</code> Identify suitable quantizer    <style>.dhbpdlighgtm{}</style></li>
+<li>Cross-entropy based loss <code>-&gt;</code> Knowledge distillation from full precision model    <style>.kaepladczpho{}</style></li>
 </ol>
 </li>
 <li>Result:<ol>
@@ -614,7 +629,7 @@
 <li>4-bit models quantized using LLM-QAT should be preferred over 8-bit models of similar size <code>-&gt;</code> 4-bit LLM-QAT models towards the best efficiency-accuracy tradeoff</li>
 </ul>
 </li>
-<li>Partial results:    <style>.bbmgjuaogewp{}</style></li>
+<li>Partial results:    <style>.drxiyjnjkosi{}</style></li>
 </ol>
 </li>
 <li>Limitation:<ol>
@@ -630,15 +645,15 @@
 </ol>
 </li>
 <li>Method:<ol>
-<li>Overall pipeline    <style>.ujvsbxsoqumc{}</style></li>
-<li>Solely updating quantization scales while freezing the integer quantization values of pre-trained weights  <style>.apltwtogjetq{}</style></li>
+<li>Overall pipeline    <style>.wrzikysruopj{}</style></li>
+<li>Solely updating quantization scales while freezing the integer quantization values of pre-trained weights  <style>.cbovmxlxoobu{}</style></li>
 </ol>
 </li>
 <li>Result:<ol>
-<li>Memory footprint, inference latency performance  <style>.kvvlqgfuitli{}</style>  
-  <style>.doicknfljlyh{}</style></li>
-<li>Common-sense reasoning and in-context learning performance    <style>.dgkvckrxxxsv{}</style></li>
-<li>Massive Multitask Language Understanding (MMLU) benchmark performance    <style>.goygjtdteish{}</style></li>
+<li>Memory footprint, inference latency performance  <style>.dfgylscqfiyg{}</style>  
+  <style>.mzhcgtsqbrdv{}</style></li>
+<li>Common-sense reasoning and in-context learning performance    <style>.ogmrvjtmhonk{}</style></li>
+<li>Massive Multitask Language Understanding (MMLU) benchmark performance    <style>.orntswowvfoz{}</style></li>
 </ol>
 </li>
 <li>Limitation:<ol>
@@ -653,8 +668,8 @@
 </ol>
 </li>
 <li>Method:<ol>
-<li>Overall pipeline    <style>.kkwbqxlcnyww{}</style></li>
-<li>QLoRA    <style>.kdvdscaxldmo{}</style>
+<li>Overall pipeline    <style>.vwthckgyuqux{}</style></li>
+<li>QLoRA    <style>.jlfuopfqitfg{}</style>
 <ul>
 <li>4-bit NormalFloat Quantization <code>-&gt;</code> better quantization data type for normally distributed data compared with 4-bit Integers and 4-bit Floats (See the paper for details)</li>
 <li>Double Quantization <code>-&gt;</code> combined with NF4 to reduce the memory footprint of quantization constants i.e. weights (See the paper for details)</li>
@@ -664,8 +679,8 @@
 </ol>
 </li>
 <li>Result:<ol>
-<li>MMLU test accuracy    <style>.zmslohcujiyo{}</style></li>
-<li>Memory footprint <code>-&gt;</code> enables the finetuning of 33B parameter models on a single consumer GPU and 65B parameter models on a single professional GPU, even 7B parameter models on mobile phones(e.g. iPhone 12 Plus)  <style>.dggemckprykt{}</style></li>
+<li>MMLU test accuracy    <style>.wicmruugvsow{}</style></li>
+<li>Memory footprint <code>-&gt;</code> enables the finetuning of 33B parameter models on a single consumer GPU and 65B parameter models on a single professional GPU, even 7B parameter models on mobile phones(e.g. iPhone 12 Plus)  <style>.qmhtpwqoandr{}</style></li>
 </ol>
 </li>
 <li>Limitation:<ol>
@@ -1143,7 +1158,7 @@
 <li>本地host <code>ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com</code><ol>
 <li>-t rsa: 指定密钥类型为 RSA。</li>
 <li>-b 4096: 指定密钥的位数，4096 位是一种常见的安全选择。</li>
-<li>-C “<a href="mailto:&#x79;&#111;&#117;&#114;&#x5f;&#x65;&#x6d;&#x61;&#x69;&#x6c;&#64;&#101;&#x78;&#97;&#x6d;&#x70;&#x6c;&#x65;&#46;&#99;&#x6f;&#109;">&#x79;&#111;&#117;&#114;&#x5f;&#x65;&#x6d;&#x61;&#x69;&#x6c;&#64;&#101;&#x78;&#97;&#x6d;&#x70;&#x6c;&#x65;&#46;&#99;&#x6f;&#109;</a>“: 在生成的密钥中添加注释，通常使用你的电子邮件地址。</li>
+<li>-C “<a href="mailto:&#x79;&#x6f;&#117;&#x72;&#95;&#101;&#109;&#x61;&#x69;&#108;&#x40;&#101;&#x78;&#x61;&#109;&#112;&#x6c;&#x65;&#x2e;&#99;&#111;&#109;">&#x79;&#x6f;&#117;&#x72;&#95;&#101;&#109;&#x61;&#x69;&#108;&#x40;&#101;&#x78;&#x61;&#109;&#112;&#x6c;&#x65;&#x2e;&#99;&#111;&#109;</a>“: 在生成的密钥中添加注释，通常使用你的电子邮件地址。</li>
 </ol>
 </li>
 <li>将生成的ssh public key (id_rsa.pub) 复制到远程target 的 <code>~/.ssh/authorized_keys</code> (如果没有则自建此文件)中即可</li>
@@ -2024,12 +2039,12 @@
 </ul>
 </li>
 <li>Jetson Nano 部署暗光增强 ZeroDCE++,处理单张512×512图片耗时约10ms,但有波动(最高4931.46 ms&#x2F;张),基本满足实时性要求<ul>
-<li><style>.tlbxxhlurzrl{}</style><img src="/2023/04/10/Group-Week-Report/ZeroDCE++_test_result.png" class="tlbxxhlurzrl" alt="Elapsed Time(ms)&#x2F;photo"></li>
+<li><style>.chjhemlgigfc{}</style><img src="/2023/04/10/Group-Week-Report/ZeroDCE++_test_result.png" class="chjhemlgigfc" alt="Elapsed Time(ms)&#x2F;photo"></li>
 </ul>
 </li>
 <li>Jetson Nano 部署 Face Tracking,结合之前的Pose Estimation 达不到实时30 frame&#x2F;s的要求<ul>
-<li><style>.hcuxygsajtyq{}</style><img src="/2023/04/10/Group-Week-Report/face_detection_screenshot.png" class="hcuxygsajtyq" alt="Elapsed Time(ms)&#x2F;photo"></li>
-<li><style>.ewcytljxirmw{}</style><img src="/2023/04/10/Group-Week-Report/pose_estimation_screenshot.png" class="ewcytljxirmw" alt="Elapsed Time(ms)&#x2F;photo"></li>
+<li><style>.smyhgmetcdqh{}</style><img src="/2023/04/10/Group-Week-Report/face_detection_screenshot.png" class="smyhgmetcdqh" alt="Elapsed Time(ms)&#x2F;photo"></li>
+<li><style>.mvnoiiaqdttu{}</style><img src="/2023/04/10/Group-Week-Report/pose_estimation_screenshot.png" class="mvnoiiaqdttu" alt="Elapsed Time(ms)&#x2F;photo"></li>
 </ul>
 </li>
 </ol>
@@ -2119,7 +2134,7 @@
 <li>Video Super-Resolution Quantization<ul>
 <li>基于目前在Vid4、Vimeo90k、REDS数据集上SOTA模型 BasicVSR++ 进行channel-wise distribution-aware 量化pipeline的搭建（目前尚没有视频超分量化超分方向的baseline，代码难度较大）</li>
 <li>尝试引入在其它视频感知任务（Human Pose Estimation，Semantic Segmentation，Video Object Segmentation）有效上的方法，参考 ICCV2023 ResQ 将网络中相邻帧的激活之间的残差用于量化，更小的方差有利于缩小量化误差<ul>
-<li><style>.ibtsviuzijvq{}</style><img src="/2023/04/10/Group-Week-Report/ResQ.png" class="ibtsviuzijvq" alt="ResQ Motivation"></li>
+<li><style>.flwsobwgtbtu{}</style><img src="/2023/04/10/Group-Week-Report/ResQ.png" class="flwsobwgtbtu" alt="ResQ Motivation"></li>
 </ul>
 </li>
 </ul>
@@ -2230,7 +2245,7 @@
 <li>将pytorch的pt文件转化为onnx格式</li>
 <li>将onnx文件输入paddleslim执行脚本输出模型及权重文件</li>
 <li>迁移部署到tensorRT平台部分暂不清楚</li>
-<li>结果： <style>.vgjuvogbhptb{}</style><img src="/2023/04/10/Group-Week-Report/paddleslim_demo.png" class="vgjuvogbhptb" alt="Paddleslim demo"></li>
+<li>结果： <style>.rrsaxutkpiqk{}</style><img src="/2023/04/10/Group-Week-Report/paddleslim_demo.png" class="rrsaxutkpiqk" alt="Paddleslim demo"></li>
 </ul>
 </li>
 </ol>
@@ -2257,7 +2272,7 @@
 <h2 id="模型压缩与部署组工作进度-（2023-11-06-2023-11-12）"><a href="#模型压缩与部署组工作进度-（2023-11-06-2023-11-12）" class="headerlink" title="模型压缩与部署组工作进度 （2023.11.06-2023.11.12）"></a>模型压缩与部署组工作进度 （2023.11.06-2023.11.12）</h2><h3 id="苗康-16"><a href="#苗康-16" class="headerlink" title="苗康"></a>苗康</h3><ol>
 <li>深度神经网络原理课程ppt制作。</li>
 <li>利用paddleslim其中的AutoCompression接口对yolov5进行自动压缩（包括量化和蒸馏两部分），代码中numpy库的api有冲突，在调试。</li>
-<li>利用3090比较了各类框架在yolov5上的部署测试。<style>.rmjwqjnkewtj{}</style><img src="/2023/04/10/Group-Week-Report/3090_qyolov5.png" class="rmjwqjnkewtj" alt="qyolov5"></li>
+<li>利用3090比较了各类框架在yolov5上的部署测试。<style>.qengthubvsdz{}</style><img src="/2023/04/10/Group-Week-Report/3090_qyolov5.png" class="qengthubvsdz" alt="qyolov5"></li>
 </ol>
 <h3 id="王明申-10"><a href="#王明申-10" class="headerlink" title="王明申"></a>王明申</h3><ol>
 <li>阅读论文<ul>
