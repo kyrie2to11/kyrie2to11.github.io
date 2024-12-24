@@ -120,7 +120,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -150,6 +150,467 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2023/04/10/Group-Week-Report/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jarvis">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis's Blog">
+      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Jarvis's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/10/Group-Week-Report/" class="post-title-link" itemprop="url">Group Week Report</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-10 10:47:22" itemprop="dateCreated datePublished" datetime="2023-04-10T10:47:22+08:00">2023-04-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-16 13:36:19" itemprop="dateModified" datetime="2024-12-16T13:36:19+08:00">2024-12-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="模型压缩与部署组工作进度-（2023-4-3-2023-4-9）"><a href="#模型压缩与部署组工作进度-（2023-4-3-2023-4-9）" class="headerlink" title="模型压缩与部署组工作进度 （2023.4.3-2023.4.9）"></a>模型压缩与部署组工作进度 （2023.4.3-2023.4.9）</h2><h3 id="高扬城"><a href="#高扬城" class="headerlink" title="高扬城"></a>高扬城</h3><ul>
+<li>I-ViT模块复现：完成I-LayerNorm的复现；</li>
+<li>基金申请审稿意见回复；</li>
+<li>长江流域非法活动监测项目初版方案及可行性分析；</li>
+<li>组会ppt编写；</li>
+</ul>
+<h3 id="李亚伟"><a href="#李亚伟" class="headerlink" title="李亚伟"></a>李亚伟</h3><ul>
+<li>workshop<ul>
+<li><p>在用L1 charbonnier损失进行预训练后，继续使用L2损失训练 -&gt; PSNR：27.76 -&gt; 27.81 上升</p>
+</li>
+<li><p>改进注意力模块：1.增大感受野 2.部分卷积用分组卷积替代 -&gt; Params: 25,664 -&gt; 24,160 下降 FLOPs: 2.949 -&gt; 2.776 下降，但是runtime反而上涨了 27.8 -&gt; 30.0，tflite对分组卷积算子的支持不好</p>
+</li>
+<li><p>目前最好结果</p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+<th>Dataset</th>
+<th>Val PSNR</th>
+<th>Val SSIM</th>
+<th>Params</th>
+<th>Runtime on oneplus7T [ms]</th>
+<th>FLOPs [G]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SWAT_5</td>
+<td>Sliding Window, VAB Attention, Partial Conv, Channel Shuffle(mix_ratio&#x3D;1), replace fc with 1*1 conv, replace pixel normalization with layer normalization, enlarge train step numbers to 250,000</td>
+<td>REDS</td>
+<td>27.811176</td>
+<td>0.7763541</td>
+<td>25,664</td>
+<td>27.6 (FP16_TFLite GPU Delegate)</td>
+<td>2.949</td>
+</tr>
+</tbody></table>
+<hr>
+</li>
+</ul>
+</li>
+<li>work<ul>
+<li>搜集在REDS数据集上完全相同实验设置的paper，汇总相关指标情况</li>
+<li>剪枝&#x2F;权重聚类的代码之前在基于单帧的单输入单输出模型上跑通，现模型多输入多输出，进行调整后现已跑通</li>
+</ul>
+</li>
+</ul>
+<h2 id="后期计划"><a href="#后期计划" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="高扬城-1"><a href="#高扬城-1" class="headerlink" title="高扬城"></a>高扬城</h3><ul>
+<li>完成I-ViT模型复现；</li>
+<li>完成组会ppt编写；</li>
+<li>尝试在Jetson nano或raspberry pi上使用TVM进行模型部署；</li>
+</ul>
+<h3 id="李亚伟-1"><a href="#李亚伟-1" class="headerlink" title="李亚伟"></a>李亚伟</h3><ul>
+<li>work<ul>
+<li>完成当前多输入多输出模型的INT8&#x2F;FP16的量化部分</li>
+</ul>
+</li>
+</ul>
+<h2 id="模型压缩与部署组工作进度-（2023-7-03-2023-7-16）"><a href="#模型压缩与部署组工作进度-（2023-7-03-2023-7-16）" class="headerlink" title="模型压缩与部署组工作进度 （2023.7.03-2023.7.16）"></a>模型压缩与部署组工作进度 （2023.7.03-2023.7.16）</h2><h3 id="李亚伟-2"><a href="#李亚伟-2" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>video super-resolution on mobile device<ul>
+<li>FANI 代码整理，上传github</li>
+</ul>
+</li>
+<li>NeurIPS 审稿</li>
+<li>补充PPT: 模型压缩部署部分</li>
+<li>Jetson Nano 部署 ZeroDCE,远远达不到实时性要求,处理单张512×512图片暗光增强耗时 &gt; 2 min。具体结果如下：<ul>
+<li><img src="/2023/04/10/Group-Week-Report/ZeroDCE_test_result.jpg" class="" title="Elapsed Time(ms)&#x2F;photo"></li>
+</ul>
+</li>
+</ol>
+<h3 id="苗康"><a href="#苗康" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>调研了李亚伟推荐的几篇量化文献:ZeroQ,HAWQ-V3，调试了 micronet 项目上几个量化操作的 demo:QAT&#x2F;PTQ -&gt; QAFT</li>
+<li>请假回家，处理家里一些杂事</li>
+</ol>
+<h2 id="后期计划-1"><a href="#后期计划-1" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="李亚伟-3"><a href="#李亚伟-3" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>调研了解最新压缩量化进展，寻找下个工作方向</li>
+<li>8-bit 浮点数量化项目(FP8 quantization)高通已开源，测试了解下有无follow的空间</li>
+<li>trt_pose 姿态估计项目摄像头随动功能实现</li>
+<li>Bingda机器人小车文档学习<ul>
+<li><img src="/2023/04/10/Group-Week-Report/Robot_Tutorial.png" class="" title="Robot Tutorial"></li>
+</ul>
+</li>
+</ol>
+<h3 id="苗康-1"><a href="#苗康-1" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>和模型压缩组内成员讨论下一步的选题方向</li>
+<li>熟悉模型压缩方向的最新进展</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-8-07-2023-8-13）"><a href="#模型压缩与部署组工作进度-（2023-8-07-2023-8-13）" class="headerlink" title="模型压缩与部署组工作进度 （2023.8.07-2023.8.13）"></a>模型压缩与部署组工作进度 （2023.8.07-2023.8.13）</h2><h3 id="苗康-2"><a href="#苗康-2" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>撰写 icdm审稿意见</li>
+<li>参与韦炎炎师兄项目书撰写，即围绕“复杂环境下对监控画面进行增强和实时分析”主题，调研了两个比较细分的小方向，一篇综述是Areview ofcomputer visionbased structuralhealth monitoring at localand globallevels，利用计算机视觉对建筑进行健康检测;另一篇综述是 Anomaly Detection in RoadTrafic Using Visual Surveillance:ASurvey，调查了基于计算机视觉和视觉监控的技术来理解交通违规或其他类型的道路异常的相关技术</li>
+<li>撰写开题报告，以轻量化超分为主题</li>
+</ol>
+<h3 id="李亚伟-4"><a href="#李亚伟-4" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>PRCV审稿</li>
+<li>FP8 Quantization 调研<ul>
+<li>FP8 Quantization: The Power of the Exponent (Qualcomm_NeurIPS 2022)<ol>
+<li>FP8更适应离群值多的场景</li>
+<li>PTQ时精度优于INT8，QAT时精度比INT8略差</li>
+</ol>
+</li>
+<li>FP8 FORMATS FOR DEEP LEARNING (NVIDIA&#x2F;Arm&#x2F;Intel_ArXiv 2022.09) -&gt; 训练推理统一数据格式FP8<ol>
+<li>FP8 可以加速训练和减少训练所需的资源，同时方便部署且可以保证训练出的精度</li>
+<li>INT8 量化模型通常需要进行校准或微调，训练与推理数据类型不一致不便于部署，且通常精度会下降</li>
+</ol>
+</li>
+<li>FP8 versus INT8 for efficient deep learning inference (Qualcomm_ArXiv 2023.06) -&gt; FP8 目前在性能和精度上不能取代INT8推理，目前INT4-INT8-INT16是边缘端推理的最优解<ol>
+<li>PTQ时在离群值显著的情况下，FP8相较INT8有精度优势; 通常这种情况可以通过W8A16混合精度以及QAT来解决</li>
+<li>FP8推理硬件开销大, FP8 MAC 单元效率比 INT8 低50%至180%</li>
+<li>为了更高效，已经有一些INT4量化的工具, 但到目前为止并没有FP4相关的工作</li>
+</ol>
+</li>
+<li>Integer or Floating Point? New Outlooks for Low-Bit Quantization on Large Language Models (MSRA_ArXiv 2023.05) -&gt; Layer wise混合精度LLM</li>
+</ul>
+</li>
+<li>Jetson Nano 部署暗光增强 ZeroDCE++,处理单张512×512图片耗时约10ms,但有波动(最高4931.46 ms&#x2F;张),基本满足实时性要求<ul>
+<li><style>.higuodigishd{}</style><img src="/2023/04/10/Group-Week-Report/ZeroDCE++_test_result.png" class="higuodigishd" alt="Elapsed Time(ms)&#x2F;photo"></li>
+</ul>
+</li>
+<li>Jetson Nano 部署 Face Tracking,结合之前的Pose Estimation 达不到实时30 frame&#x2F;s的要求<ul>
+<li><style>.szpjjuqllnyp{}</style><img src="/2023/04/10/Group-Week-Report/face_detection_screenshot.png" class="szpjjuqllnyp" alt="Elapsed Time(ms)&#x2F;photo"></li>
+<li><style>.rftfowobxhqg{}</style><img src="/2023/04/10/Group-Week-Report/pose_estimation_screenshot.png" class="rftfowobxhqg" alt="Elapsed Time(ms)&#x2F;photo"></li>
+</ul>
+</li>
+</ol>
+<h2 id="后期计划-2"><a href="#后期计划-2" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-3"><a href="#苗康-3" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>确定项目书的模板论文，补充项目书</li>
+<li>寻找新工作的方向</li>
+</ol>
+<h3 id="李亚伟-5"><a href="#李亚伟-5" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>撰写开题报告</li>
+<li>尝试集成Face Tracking 和 Pose Estimation实现相机角度跟随人体并进行姿态估计</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-8-14-2023-8-27）"><a href="#模型压缩与部署组工作进度-（2023-8-14-2023-8-27）" class="headerlink" title="模型压缩与部署组工作进度 （2023.8.14-2023.8.27）"></a>模型压缩与部署组工作进度 （2023.8.14-2023.8.27）</h2><h3 id="苗康-4"><a href="#苗康-4" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>完成了项目申请书的撰写工作，在师兄的指导下修改了项目书的背景，相关工作，技术路线等内容</li>
+<li>开题报告</li>
+<li>调研并学习了商汤的MOBench 量化工具，针对不同工作的训练pipeline存在差异导致复现结果不同，其提供了统一的理论算法和量化策略。打算作为接下来一段时间的研究方向</li>
+</ol>
+<h3 id="李亚伟-6"><a href="#李亚伟-6" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>机载广域持续监视方案调研,PPT制作</li>
+<li>开题报告</li>
+<li>jetson nano 项目：Face Tracking + Pose Estimation<ul>
+<li>原有基于nvidia官方trt_pose项目的姿态估计推理速度慢,现基于Shanghai AI Lab 2023最新的轻量姿态估计项目RTMPose进行部署</li>
+<li>调研了解商汤MMdeploy 和 MMPose项目，编译安装相关依赖并在jetson nano上搭建了部署环境</li>
+<li>完成了驱动舵机调整摄像头位置的C++代码，后续通过ctypes库实现在py文件中调用此部分调整摄像头姿态的C++代码</li>
+</ul>
+</li>
+</ol>
+<h2 id="后期计划-3"><a href="#后期计划-3" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-5"><a href="#苗康-5" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>深入了解运用MQBenche</li>
+</ol>
+<h3 id="李亚伟-7"><a href="#李亚伟-7" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>完成jetson nano 项目：Face Tracking + Pose Estimation</li>
+<li>调研了解TensorRT&#x2F;TNN&#x2F;MNN&#x2F;NCNN等推理框架，重点尝试运用TensorRT加速RTMPose的推理</li>
+<li>参加大湾区算法比赛： 视频插帧 + 单目深度估计</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-9-25-2023-10-08）"><a href="#模型压缩与部署组工作进度-（2023-9-25-2023-10-08）" class="headerlink" title="模型压缩与部署组工作进度 （2023.9.25-2023.10.08）"></a>模型压缩与部署组工作进度 （2023.9.25-2023.10.08）</h2><h3 id="苗康-6"><a href="#苗康-6" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>参加视频插帧赛道的比赛，结果不太行。</li>
+<li>和师兄交流，修改icdm论文里的语法、格式问题。</li>
+<li>找到一篇23CVPR的论文“CABM: Content-Aware Bit Mapping for Single Image Super-Resolution Network with Large Input”，其动机与我icdm大致相同，区别在于这篇论文为每个patch选择量化比特，我的论文为每个patch选择block数。而且这篇论文很大程度上借鉴了21CVPR “ARM: Any-Time Super-Resolution Method”依然能中，说明这个方向仍然可以继续探索。</li>
+</ol>
+<h3 id="王明申"><a href="#王明申" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li><p>审硕士论文抽检</p>
+</li>
+<li><p>和师兄一起参加大湾区比赛，熟悉比赛流程，学习不同任务的模型调参工作等。</p>
+</li>
+<li><p>EfficientDM: Efficient Quantization-Aware Fine-Tuning of Low-Bit Diffusion Models（arXiv 23.10.05）PTQ的时间 QAT的精度</p>
+<ul>
+<li>动机：现有PTQ量化在DM中W4A4量化时无法产生较好效果，QLoRA缺点：无法将LoRA权重与量化模型权重相融合。</li>
+<li>提出量化感知低秩适配器QALoRA，将LoRA权重与FP模型权重合并共同量化至目标位宽，权重量化：channel-wise，激活量化：layer-wise。</li>
+<li>Activation量化：将LSQ量化方法运用在每一步去噪步骤中，单独优化激活量化尺度。</li>
+</ul>
+</li>
+</ol>
+<h3 id="李亚伟-8"><a href="#李亚伟-8" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>大湾区单目深度估计比赛：<ul>
+<li>数据的理解存在偏差，涉及共计6个不同数据集的ground truth, label的标签意义未能理解清(如单位mm还是m, skymask, validmask等等)</li>
+<li>选择部分结构清晰(仅包含imgs, gts)的数据集送入目前的SOTA模型 ZoeDepth 对其 metric bins module 进行微调，结果训练后的精度比原作只在 NYU Depth V2 数据集上进行微调的效果还差</li>
+<li>目前的提交的结果：A榜 42&#x2F;60, B榜决定最终排名尚未出结果</li>
+</ul>
+</li>
+<li>ICDM camera ready 版本修改&#x2F;国奖申请答辩</li>
+</ol>
+<h2 id="后期计划-4"><a href="#后期计划-4" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-7"><a href="#苗康-7" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>研究CABM的量化部分，然后迁移到我借鉴的baseline论文“Adaptive patch<br>   exiting for scalable single image super-resolution”里看看效果。</li>
+</ol>
+<h3 id="王明申-1"><a href="#王明申-1" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>从ECCV 2022 CADyQ和CVPR2023 CABM 两篇论文中，寻找优化量化SISR任务的角度。</li>
+<li>从其他方向寻找量化工作角度，如大模型Diffusion Model。</li>
+</ol>
+<h3 id="李亚伟-9"><a href="#李亚伟-9" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>参照SISR量化思路(ECCV 2022 CADyQ, WACV 2022 DAQ)，搭建基于目前SOTA模型 (BasicVSR++&#x2F;VRT&#x2F;RVRT) 的量化baseline</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-10-09-2023-10-15）"><a href="#模型压缩与部署组工作进度-（2023-10-09-2023-10-15）" class="headerlink" title="模型压缩与部署组工作进度 （2023.10.09-2023.10.15）"></a>模型压缩与部署组工作进度 （2023.10.09-2023.10.15）</h2><h3 id="苗康-8"><a href="#苗康-8" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>注册提交icdm终稿</li>
+<li>研究几篇超分量化相关工作ARM、CABM、CADYQ代码，ARM代码有一处存在疑问，作者暂未回复</li>
+<li>确定工作思路，即基于patch确定对应的网络block数，再根据block数确定量化位数，不过原理方面解释性不强</li>
+</ol>
+<h3 id="王明申-2"><a href="#王明申-2" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>复现SR量化任务APE、CADyQ、CABM模型中baseline效果</li>
+<li>寻找SR量化trick</li>
+<li>EQ-Net：Elastic Quantization Neural Networks（ICCV 2023）<br>OFA 动机：不同硬件支持的量化形式多样，现有解决方案局限性需要迭代训练优化<ul>
+<li>对于权重量化提出从偏度和峰度信息正则化</li>
+<li>提出GPG类似知识蒸馏结构组渐进式指导，CQAP MLP结构选择粒度和对称性，最后用遗传算法加快搜索</li>
+</ul>
+</li>
+</ol>
+<h3 id="李亚伟-10"><a href="#李亚伟-10" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>Video Super-Resolution Quantization<ul>
+<li>基于目前在Vid4、Vimeo90k、REDS数据集上SOTA模型 BasicVSR++ 进行channel-wise distribution-aware 量化pipeline的搭建（目前尚没有视频超分量化超分方向的baseline，代码难度较大）</li>
+<li>尝试引入在其它视频感知任务（Human Pose Estimation，Semantic Segmentation，Video Object Segmentation）有效上的方法，参考 ICCV2023 ResQ 将网络中相邻帧的激活之间的残差用于量化，更小的方差有利于缩小量化误差<ul>
+<li><style>.vtgrswgfonbd{}</style><img src="/2023/04/10/Group-Week-Report/ResQ.png" class="vtgrswgfonbd" alt="ResQ Motivation"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ICDM注册提交</li>
+</ol>
+<h2 id="后期计划-5"><a href="#后期计划-5" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-9"><a href="#苗康-9" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>根据上述工作思路，继续搭建模型架构，同时查找相关论文，思索更好的原理解释</li>
+</ol>
+<h3 id="王明申-3"><a href="#王明申-3" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>继续寻找SR量化trick</li>
+<li>深度阅读现有SR量化工作代码</li>
+</ol>
+<h3 id="李亚伟-11"><a href="#李亚伟-11" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>结合 ResQ 完成 BasicVSR++ 量化pipeline的搭建</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-10-16-2023-10-22）"><a href="#模型压缩与部署组工作进度-（2023-10-16-2023-10-22）" class="headerlink" title="模型压缩与部署组工作进度 （2023.10.16-2023.10.22）"></a>模型压缩与部署组工作进度 （2023.10.16-2023.10.22）</h2><h3 id="苗康-10"><a href="#苗康-10" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>继续上周计划，基于patch做超分量化任务，调试代码，修改模型结构</li>
+<li>修改专利</li>
+<li>调研了几篇剪枝超分方面的文章，Aligned Structured Sparsity Learning for Efficient Image Super-Resolution (nips2021),  Learning efficient image super-resolution networks through structural regular pruning (ICLR2022), 结论是由于超分网络存在不少跳连和残差，剪枝在超分领域应用的泛化性不是很好</li>
+</ol>
+<h3 id="王明申-4"><a href="#王明申-4" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>SCIS审稿</li>
+<li>通过pdb方式阅读SR量化代码</li>
+</ol>
+<h3 id="李亚伟-12"><a href="#李亚伟-12" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>Video Super-Resolution Quantization<ul>
+<li>参考 GPTQ 完成了 BasicVSR++ (未涉及ViT)量化的基础部分</li>
+<li>阅读论文,了解其它几个SOTA模型(ViTs)是否有需要单独改进的模块：<ul>
+<li>CVPR2022: TTVSR</li>
+<li>NIPS2022: PSRT, RVRT</li>
+<li>CVPR2023: IART</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>SelecQ latex 排版调整,期刊注册提交</li>
+<li>学校HPC实例到期, 实验室浪潮集群上 Docker 镜像搭建</li>
+<li>专利修改</li>
+</ol>
+<h2 id="后期计划-6"><a href="#后期计划-6" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-11"><a href="#苗康-11" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>继续搭建模型结构</li>
+</ol>
+<h3 id="王明申-5"><a href="#王明申-5" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>阅读ICCV2023中Workshop关于Low-Bit Quantized Neural Networks的汇报</li>
+<li>阅读Transformer或LLM有关量化的文章</li>
+</ol>
+<h3 id="李亚伟-13"><a href="#李亚伟-13" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>结合 ResQ 改进视频超分ViTs量化模块</li>
+<li>深度神经网络课程PPT制作</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-10-23-2023-10-29）"><a href="#模型压缩与部署组工作进度-（2023-10-23-2023-10-29）" class="headerlink" title="模型压缩与部署组工作进度 （2023.10.23-2023.10.29）"></a>模型压缩与部署组工作进度 （2023.10.23-2023.10.29）</h2><h3 id="苗康-12"><a href="#苗康-12" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>初步搭建出基于patch的超分量化框架，效果很差，判定是代码问题，又因为存在创新型的问题，暂时放一放</li>
+<li>与组内协作，参与视频超分工作，研究BasicVsr++视频超分模型。</li>
+</ol>
+<h3 id="王明申-6"><a href="#王明申-6" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li><p>阅读论文</p>
+<ul>
+<li>VSR：BasicVSR（CVPR 2021）、BasicVSR++（CVPR2022）</li>
+<li>Quantization：<ul>
+<li>EfficientViT（ICCV 2023 MIT Transformer轻量化 对分类、分割、复原三个领域中general的模型轻量化且效果极好）</li>
+<li>Solving Oscillation Problem in Post-Training Quantization Through a Theoretical Perspective（CVPR 2023 从量化误差导致震荡角度出发，优化量化结果）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>跑通BasicVSR++代码</p>
+</li>
+<li><p>通过TensorRT量化框架对Yolov7模型实现自动插入量化节点量化，mAP掉了0.03%</p>
+</li>
+</ol>
+<h3 id="李亚伟-14"><a href="#李亚伟-14" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>Video Super-Resolution Quantization<ul>
+<li>试用百度 paddleslim 分别用静态动态量化（PTQ）对 BasicVSR++ 进行量化</li>
+</ul>
+</li>
+<li>深度神经网络课程PPT制作</li>
+</ol>
+<h2 id="后期计划-7"><a href="#后期计划-7" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-13"><a href="#苗康-13" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>参与视频超分工作</li>
+</ol>
+<h3 id="王明申-7"><a href="#王明申-7" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>阅读量化文章</li>
+<li>学习网络模型量化，并完成VSR任务量化</li>
+</ol>
+<h3 id="李亚伟-15"><a href="#李亚伟-15" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>配合完成 paddleslim 量化 BasicVSR++</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-10-30-2023-11-05）"><a href="#模型压缩与部署组工作进度-（2023-10-30-2023-11-05）" class="headerlink" title="模型压缩与部署组工作进度 （2023.10.30-2023.11.05）"></a>模型压缩与部署组工作进度 （2023.10.30-2023.11.05）</h2><h3 id="李亚伟-16"><a href="#李亚伟-16" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>Video Super-Resolution Quantization<ul>
+<li>BasicVSR++ PTQ： 量化过程有bug正在解决<ol>
+<li>BasicVSR++ torch模型转onnx模型并检查</li>
+<li>激活校准，产出量化参数: scale zero_point</li>
+<li>权重调整，提升量化精度</li>
+<li>量化误差分析，定位量化问题</li>
+</ol>
+</li>
+<li><strong>note:</strong> 目前 BasicVSR++ 的 PTQ 基于开源工具 Dipoorlet 进行，优点代码简洁明了易修改，相较百度框架 paddleslim 便于快捷验证idea; VSR 量化方法成熟后可进一步迁移至 paddleslim</li>
+</ul>
+</li>
+<li>读文献找idea提升PTQ精度</li>
+</ol>
+<h3 id="苗康-14"><a href="#苗康-14" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li><p>一篇 Neural Network 审稿工作</p>
+</li>
+<li><p>参考 paddleslim 官方文档示例完成yolov5 PTQ:</p>
+<ul>
+<li>将pytorch的pt文件转化为onnx格式</li>
+<li>将onnx文件输入paddleslim执行脚本输出模型及权重文件</li>
+<li>迁移部署到tensorRT平台部分暂不清楚</li>
+<li>结果： <style>.yzedjcdzcegx{}</style><img src="/2023/04/10/Group-Week-Report/paddleslim_demo.png" class="yzedjcdzcegx" alt="Paddleslim demo"></li>
+</ul>
+</li>
+</ol>
+<h3 id="王明申-8"><a href="#王明申-8" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>阅读论文<ul>
+<li>VSR：ESPCN(CVPR 2017)</li>
+<li>Quantization：<br>1. Efficient LLM Inference on CPUs (arxiv 2311.00502, Intel 精度几乎无损)<br>2. DAQ: Channel-Wise Distribution-Aware Quantization for Deep Image Super-Resolution Networks (WACV 2022 ISRQ; 在Ablation Study中分析了 Gaussian, Uniform, Laplacian, Gamma分布对channel-wise量化的影响)</li>
+</ul>
+</li>
+<li>ICASSP 2024审稿</li>
+<li>完成对YOLOv7网络模型的手动量化节点插入，并通过敏感层分析，逐层网络分析及打印量化对精度影响最大的Top10层。</li>
+</ol>
+<h2 id="后期计划-8"><a href="#后期计划-8" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-15"><a href="#苗康-15" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>paddleslim yolov5 PTQ 过程迁移到 BasicVSR++ 上</li>
+<li>尝试将 ResQ 思路用 paddleslim 实现</li>
+</ol>
+<h3 id="王明申-9"><a href="#王明申-9" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>阅读量化文章，寻找新的视频超分量化idea</li>
+<li>学习网络模型量化</li>
+</ol>
+<h3 id="李亚伟-17"><a href="#李亚伟-17" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>解决 dipoorlet 量化 BasicVSR++ 遇到的bug</li>
+</ol>
+<h2 id="模型压缩与部署组工作进度-（2023-11-06-2023-11-12）"><a href="#模型压缩与部署组工作进度-（2023-11-06-2023-11-12）" class="headerlink" title="模型压缩与部署组工作进度 （2023.11.06-2023.11.12）"></a>模型压缩与部署组工作进度 （2023.11.06-2023.11.12）</h2><h3 id="苗康-16"><a href="#苗康-16" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>深度神经网络原理课程ppt制作。</li>
+<li>利用paddleslim其中的AutoCompression接口对yolov5进行自动压缩（包括量化和蒸馏两部分），代码中numpy库的api有冲突，在调试。</li>
+<li>利用3090比较了各类框架在yolov5上的部署测试。<style>.boquxpdbhpcn{}</style><img src="/2023/04/10/Group-Week-Report/3090_qyolov5.png" class="boquxpdbhpcn" alt="qyolov5"></li>
+</ol>
+<h3 id="王明申-10"><a href="#王明申-10" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>阅读论文<ul>
+<li>VSR：DRDVSR(CVPR 2018)</li>
+<li>Quantization：Overcoming Distribution Mismatch in Quantizing Image Super-Resolution Networks(解决正则化损失与复原损失冲突问题)</li>
+</ul>
+</li>
+<li>Neurocomputing审稿</li>
+<li>完成YOLOv7网络PTQ、QAT量化学习，从手动加入QDQ节点，到逐层分析量化的敏感度，对于敏感度高的层进行处理，对输入Concat节点前的多个输出节点做统一scale处理，最后通过训练迭代优化量化损失，导出量化模型的ONNX模型。</li>
+<li>分析VSR量化任务的难点，早期VSR任务模型具有更简单的网路结构，近几年的VSR任务模型结构中可能含有不利于通用量化的网络模块，这样就需要手动去加入适配的QDQ节点，难度大且无法做公平的对比实验。</li>
+</ol>
+<h3 id="李亚伟-18"><a href="#李亚伟-18" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li><p>Video Super-Resolution Quantization</p>
+<ul>
+<li>BasicVSR++ 采用 <code>Dipoorlet</code> PTQ： 量化过程有不支持动态输入的问题, 即不支持视频随机长度(time_step)的问题, github提了issue 暂未有回复</li>
+<li>BasicVSR++ 采用 <code>MQBench</code> PTQ: BasicVSR++ 模型 forward 过程存在动态控制流, 即控制流的判断条件含有运算变量(Input&#x2F;Activation)参与, 而<code>MQBench</code>调用 <code>torch.fx</code> 的 <code>symbolic_trace</code> 完成 forward 过程计算图捕捉, 其本身的限制不支持动态控制流。正尝试：<ol>
+<li>把模型的动态控制流用静态的代替</li>
+<li>torch 2.0 新发布的 <code>torch.compile</code> 也即 (TorchDynamo), 了解后尝试来解决模型 forward 中广泛存在的动态控制流</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>RustDesk 中继服务搭建, 降低远程桌面的延迟</p>
+</li>
+</ol>
+<h2 id="后期计划-9"><a href="#后期计划-9" class="headerlink" title="后期计划"></a>后期计划</h2><h3 id="苗康-17"><a href="#苗康-17" class="headerlink" title="苗康"></a>苗康</h3><ol>
+<li>解决自动压缩的bug, 采用paddleslim对yolov5 PTQ, 分析其量化分析工具及精度重构工具。</li>
+</ol>
+<h3 id="王明申-11"><a href="#王明申-11" class="headerlink" title="王明申"></a>王明申</h3><ol>
+<li>从较早的VSR任务模型开始着手, 类比用TensorRT框架对YOLOv7的量化尝试对VSR模型进行量化。</li>
+<li>学习对于不同结构的量化op方法。</li>
+</ol>
+<h3 id="李亚伟-19"><a href="#李亚伟-19" class="headerlink" title="李亚伟"></a>李亚伟</h3><ol>
+<li>推进 VSR 模型的常规量化(Naive PTQ)的工作</li>
+<li>实习相关工作</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -5883,176 +6344,6 @@
 <li>阅读 VSR 近期论文，了解最新进展</li>
 <li>其它交代的事项</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kyrie2to11.github.io/2022/08/30/Daily-Thoughts/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jarvis">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarvis's Blog">
-      <meta itemprop="description" content="记录学习和生活，留下时光的痕迹">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Jarvis's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/08/30/Daily-Thoughts/" class="post-title-link" itemprop="url">Daily Thoughts</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-08-30 08:44:00" itemprop="dateCreated datePublished" datetime="2022-08-30T08:44:00+08:00">2022-08-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-12-02 12:35:09" itemprop="dateModified" datetime="2024-12-02T12:35:09+08:00">2024-12-02</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="2022-08-16-判断（你自己）研究工作的价值"><a href="#2022-08-16-判断（你自己）研究工作的价值" class="headerlink" title="2022-08-16 判断（你自己）研究工作的价值"></a>2022-08-16 判断（你自己）研究工作的价值</h2><ul>
-<li>用有新意的方法有效地解决一个研究问题</li>
-<li>价值量化 i.e. 新意度×有效性×问题大小&#x3D;价值</li>
-</ul>
-<hr>
-<h2 id="2022-08-16-如何读论文"><a href="#2022-08-16-如何读论文" class="headerlink" title="2022-08-16 如何读论文"></a>2022-08-16 如何读论文</h2><ul>
-<li><p>文章一般结构</p>
-<ol>
-<li>title(标题)</li>
-<li>abstract(摘要)</li>
-<li>introduction（导言）</li>
-<li>method(算法)</li>
-<li>experiment(实验)</li>
-<li>conclusion(结论)</li>
-</ol>
-</li>
-<li><p>三遍法读论文</p>
-<ol>
-<li><p>pass 1 i.e. 1 2 6这三部分速览十几分钟，捎带看一下method和exp中的图表看上去怎么样，是否适合自己，不适合就放掉</p>
-</li>
-<li><p>pass 2 i.e. 不用太注意细节，比如公式、证明。主要是搞清楚重要的图和表，知道图表的每一个字是在干什么。比如:你的方法里整个流程图长什么样子、算法的图长什么样子、exp实验里每张图的x轴在干什么，y轴在干什么，每个点在干什么、作者提出的方法和别人是怎么对比的，之间差距有多大。这时可能还是没有特别搞懂他在干什么，但对文章有了一个大概的了解，在中间可以把相关文献标出来，重要文献。如果太难读不懂可以先从前人相关文章读起，或者说当前目标不需要完全搞懂他在干嘛，只需了解大概即可，决定是否需要再读下去。</p>
-</li>
-<li><p>pass 3 i.e. 这一遍当然需要每句话每段话在干什么。在读这篇文章的时候，在脑子里不断重复如何实现这篇文章，或者说一句话说我提出了什么问题用什么方法来解决这个问题，如果是我来做这个事的话怎么办，我应该可以用什么什么来实现这个东西，然后作者在做实验的时候怎么做的，换我会怎么做，能不能比他做得更好；然后作者说我这个文章在有些地方没有往下走，留在之后的结果中，如果我来做能不能往下进行下去。看了这一遍，之后再提到他的时候可以完完全全地复述出来，达到这个效果</p>
-</li>
-</ol>
-</li>
-</ul>
-<hr>
-<h2 id="2022-08-17-压力山大的难受记忆"><a href="#2022-08-17-压力山大的难受记忆" class="headerlink" title="2022-08-17 压力山大的难受记忆"></a>2022-08-17 压力山大的难受记忆</h2><ul>
-<li>压力山大，喘不过气<ul>
-<li>2022年8月17日，压力在研0组会前夕的一天集中爆发，十分难受，这个时刻特别像初高中放假完不成作业的巨大压力感，那种时刻可以称之为在人生的局部最不想经历的某件事之一。难受到一旦过去，除非是又遇到相似情况下，否则再也不愿意想起，简直是一种折磨。</li>
-</ul>
-</li>
-<li>毫无疑问，这种压力是对身体十分有害的<ul>
-<li>想来初中开始为什么开始有白头发，可能原因就是那些没写作业的压力山大导致的肝火旺盛，压抑、惶恐、而又暴躁。可能自己的性格一直以来都不太自洽，内心独白一套，外部表现又不太合内心独白，中间别扭的力量全部积压再内心。我感觉这是一种病，要改，否则早晚有一天会后悔。从身心健康的角度，我想以后做一个乐于交流，表里如一，内外自洽的人。</li>
-</ul>
-</li>
-<li>为什么缺乏和别人的交流<ul>
-<li>想来这不是一朝一夕养成的问题，小学3年级以前印象中自己是个调皮捣蛋又活泼的人，后来不知怎的越发沉默寡言，在初中程度不断加深，高中达到顶峰。一大原因可能是从小学到初中的成绩始终名列班级前茅的原因，不知道怎么回事，也并没有一套现在看来多么厉害的方法指导学习，特别是并不注重总结复习，但确实又一直很好。可能是总结复习的量没有达到自己的心理预期，但是达到了科目考试要求的程度。这种单一的沉浸在自己小世界里的学习经历让自己越发缺少与他人的交流。这是一种解释。缺乏交流，衍生来的比较孤僻，在独处的时候往往导致不自律，也就导致不会按计划的去完成各种作业，导致最后的压力山大、无处排解、压抑惶恐。这需要改，为了好好的活下去，一定要改。</li>
-</ul>
-</li>
-<li>展望未来<ol>
-<li>研究生期间能再有一些志同道合、志趣相投的好朋友，最好能找一个一起走下去的对象（虽然此时此刻期望值很低，可能跟最近一段时间太闲，太懒散导致的做什么事都没有兴趣和动力，只想躺尸有关）</li>
-<li>未来还是要多一些需求，多些新鲜，更像个年轻人的样子。自我感觉无欲无求，可能的原因是自己想要的太多 太大，得到又很难很难，超出了自己的能力范畴（简称野心与能力不匹配），最终导致摆烂，干脆连想要的欲望也没有了- -。</li>
-<li>俗话说的好，好死不如赖活着，自己都感觉无欲无求了，为什么还会躺尸式的活着，本质上是因为本能的自己从未想过靠死亡逃避来结束自己的一生，本能地要活出点意义来，虽然当前局部时间确实闲而又压抑的玩给自己带来了很不好的影响。</li>
-<li>能找到自已想一生为之奋斗的目标真的是世间一大幸事，我的明天 明年 下个十年会在哪里，身边会有谁，一切都未知。自己从小都是个恋家的人，虽然不得已长期在外，离开的太久压抑了那种情感，但是想想每次要脱离自己熟悉的家乡，总是会生出一丝悲凉。最近又更跟赵茜的不想要小孩的想法深度绑定，没有了之前那种，自然地小孩的意愿，或者说几乎不会想到不要小孩。但是又觉得让自己的小孩重走一遍河北艰难的高考之路，实在是于心不忍。种种的种种都让我最近十分消极，躺尸，仿佛从某个瞬间开始，自己的三观崩塌了，我以后应该会再站起来的，但是重构的三观肯定不是原来的样子了，那么以后的那个自己会是自己四个月前所期望的那样吗？我们慢慢看，加油好好地活下去。</li>
-</ol>
-</li>
-<li>2022-8-17结束思考吧，表里如一，能讲多少讲多少，想想自己本身就很菜，事实上也是如此距离组里的学术优秀的前辈差距甚远，但是不妨碍我就是我，慢慢走，完成明天的汇报ppt吧。</li>
-</ul>
-<hr>
-<h2 id="2022-08-18-自我肯定"><a href="#2022-08-18-自我肯定" class="headerlink" title="2022-08-18 自我肯定"></a>2022-08-18 自我肯定</h2><ul>
-<li>我遇到了什么？ 能不能解决？<ol>
-<li>有办法解决，去解决</li>
-<li>没有办法解决，承认事情失败，但不是人失败</li>
-</ol>
-</li>
-<li>自我批评之后紧跟着自我肯定，这里不好那里不好，不能代表一个人完全没有价值，也不能代表这个世界上就没有人欣赏你或者爱你。—&gt;心理学认知行为疗法</li>
-<li>“如何面对自己的普通”<ol>
-<li>这个世界上绝大部分人确实都只是普通人，会犯普通人犯的错，有着普通人的缺点，可能一辈子没什么大的成就，也实现不了几个梦想，但这些不能代表一个人就是糟糕的，也不能代表他就是失败的，哪里有点不好，这就是人生的常态而已。说的矫情一点，真正的自信与自爱，就是去学着爱这样的人生，爱这样的自己。</li>
-<li>就像那句金句“看透了生活的本质依然热爱生活”</li>
-</ol>
-</li>
-</ul>
-<hr>
-<h2 id="2022-8-30-困顿迷茫下的小方向"><a href="#2022-8-30-困顿迷茫下的小方向" class="headerlink" title="2022-8-30 困顿迷茫下的小方向"></a>2022-8-30 困顿迷茫下的小方向</h2><ul>
-<li>男孩不要太多虑，对脾不好，把身体搞好自然各方面都会变好</li>
-<li>人无远虑，必有近忧</li>
-<li>减少耍手机的时间，花时间看点书，静下来关注自身</li>
-<li>2020年7月份想的是能站在信息科技时代潮头做弄潮儿，2022年却没有了心劲儿</li>
-<li>客观上自己生活在中国底层，能养活自己就足够了，如果再能做出点小成就，那真的太好了，从这个角度看自己毫无心理压力</li>
-<li>健康问题在身体还好的时候不会想到，但它又是这一切的基石</li>
-<li>自己得学会点最基础的赖以生存的技能</li>
-<li>朋友尽量不要合伙做生意</li>
-<li>暂时想到这么多</li>
-</ul>
-<hr>
-<h2 id="2022-9-27-近一两个月的迷茫"><a href="#2022-9-27-近一两个月的迷茫" class="headerlink" title="2022-9-27 近一两个月的迷茫"></a>2022-9-27 近一两个月的迷茫</h2><ul>
-<li>失去了对自己身体和头脑的掌控，客观上有两方面的原因<ul>
-<li>面临的问题是什么没有定义清楚</li>
-<li>问题的解决不够彻底，导致时间花在刀把上</li>
-<li>缺少与师兄的交流</li>
-</ul>
-</li>
-<li>一旦自己克服了以上，就很自信！ Find Questions, Fix Them.</li>
-</ul>
-<hr>
-<h2 id="2023-09-14-生活需要靶子"><a href="#2023-09-14-生活需要靶子" class="headerlink" title="2023-09-14 生活需要靶子"></a>2023-09-14 生活需要靶子</h2><ul>
-<li>一直以来都需要一个靶子，在打靶的过程中会收获能力、见识增长的喜悦，只有这时自己才会感觉身心舒适</li>
-<li>长久地留在一个舒适区，同一个地方、同一个任务、同一个工作水平等会令自己感到不安(情感需求除外，土象魔羯的我很渴望稳定的情感联结和依赖)</li>
-<li>在辛苦工作一段时间后，能作为真正放松自己的靶子我甚至还没有找到,刷刷奶头乐视频,打打游戏并不能真正释放出工作所积累的负能量,仅仅起到一个延迟释放的作用。往往靠的都是在重新开始工作之前遗忘掉了之前的不堪…</li>
-<li>天赋一直不用是会丢失的(比如静静地看论文复现实验), 接下来两个月的靶子已经有好几个矗立在前方了</li>
-<li>如果不主动找靶子的话，一段时间后无所事事烦躁的心情就会袭上心头，迫使自己不得不去找靶子，综上需要主动的找到靶子，无论是感兴趣的，还是必须干的，得为每段时光找一个奔头</li>
-</ul>
-<hr>
 
       
     </div>
