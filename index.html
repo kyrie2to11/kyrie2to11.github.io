@@ -263,7 +263,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-12-24 21:50:42" itemprop="dateModified" datetime="2024-12-24T21:50:42+08:00">2024-12-24</time>
+      <time title="修改时间：2024-12-24 23:49:36" itemprop="dateModified" datetime="2024-12-24T23:49:36+08:00">2024-12-24</time>
     </span>
 
   
@@ -327,12 +327,16 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成 NanoServer 可执行文件 </span></span><br><span class="line"><span class="built_in">cd</span> NanoServer</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>mysql config</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 报错：ERROR 2002 (HY000): Can&#x27;t connect to local MySQL server through socket &#x27;/var/run/mysqld/mysqld.sock&#x27; (2)</span></span><br><span class="line"><span class="comment"># mysql 服务重启</span></span><br><span class="line">service mysql restart </span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 报错：ERROR 2002 (HY000): Can&#x27;t connect to local MySQL server through socket &#x27;/var/run/mysqld/mysqld.sock&#x27; (2)</span></span><br><span class="line"><span class="comment"># mysql 服务重启即可</span></span><br><span class="line">service mysql restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># mysql 服务关闭</span></span><br><span class="line">service mysql stop</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创建数据库</span></span><br><span class="line"><span class="keyword">create</span> database webdb;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建user表</span></span><br><span class="line">USE webdb;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">user</span>(</span><br><span class="line">   username <span class="type">char</span>(<span class="number">50</span>) <span class="keyword">NULL</span>,</span><br><span class="line">   passwd <span class="type">char</span>(<span class="number">50</span>) <span class="keyword">NULL</span></span><br><span class="line">)ENGINE<span class="operator">=</span>InnoDB;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 添加数据</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">user</span>(username, passwd) <span class="keyword">VALUES</span>(<span class="string">&#x27;username&#x27;</span>, <span class="string">&#x27;password&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- webdb是数据库名，user是表名，需要在main函数中传入</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>start server</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tmux</span><br><span class="line"><span class="built_in">cd</span> NanoServer</span><br><span class="line">./bin/server</span><br><span class="line"></span><br><span class="line">ctrl + b + d <span class="comment"># detach session</span></span><br><span class="line">tmux attach-session -t 0 <span class="comment"># attach session</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认访问端口： 1316 可在 main.cpp 更改</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Bug"><a href="#Bug" class="headerlink" title="Bug"></a>Bug</h2><ol>
+<li><p>运行一段时间后 buffer 报错，暂不清楚原因</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(base) jarvis@zephyrus:~/Projects/webserver/NanoServer$ ./bin/server </span><br><span class="line">server: ../src/buffer/buffer.cpp:21: void Buffer::Retrieve(size_t): Assertion <span class="string">&#x27;len &lt;= ReadableBytes()&#x27;</span> failed.</span><br><span class="line">Aborted (core dumped)</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><ol>
 <li>Linux高性能服务器编程，游双著</li>
@@ -688,9 +692,9 @@
 </ol>
 </li>
 <li>Method:  <ol>
-<li>Data-free quantization-aware training (QAT) which produces QAT data using next token data generation <code>-&gt;</code> Select appropriate fine-tuning dataset    <style>.mhnsxkgpxmlq{}</style></li>
-<li>Per-channel weight quantization and per-token activation quantization (symmetric MinMax quantization), per-token quantization for KV cache <code>-&gt;</code> Identify suitable quantizer    <style>.znrpzwlespeg{}</style></li>
-<li>Cross-entropy based loss <code>-&gt;</code> Knowledge distillation from full precision model    <style>.mpvhygjgiitd{}</style></li>
+<li>Data-free quantization-aware training (QAT) which produces QAT data using next token data generation <code>-&gt;</code> Select appropriate fine-tuning dataset    <style>.hzoxhnyankll{}</style></li>
+<li>Per-channel weight quantization and per-token activation quantization (symmetric MinMax quantization), per-token quantization for KV cache <code>-&gt;</code> Identify suitable quantizer    <style>.zzhdcragjhdd{}</style></li>
+<li>Cross-entropy based loss <code>-&gt;</code> Knowledge distillation from full precision model    <style>.omalqdgvuwrm{}</style></li>
 </ol>
 </li>
 <li>Result:<ol>
@@ -699,7 +703,7 @@
 <li>4-bit models quantized using LLM-QAT should be preferred over 8-bit models of similar size <code>-&gt;</code> 4-bit LLM-QAT models towards the best efficiency-accuracy tradeoff</li>
 </ul>
 </li>
-<li>Partial results:    <style>.fodrlcmcwshr{}</style></li>
+<li>Partial results:    <style>.schxlygtuhuo{}</style></li>
 </ol>
 </li>
 <li>Limitation:<ol>
@@ -715,15 +719,15 @@
 </ol>
 </li>
 <li>Method:<ol>
-<li>Overall pipeline    <style>.ekjwpnwbkkpo{}</style></li>
-<li>Solely updating quantization scales while freezing the integer quantization values of pre-trained weights  <style>.uvgneojsyvvc{}</style></li>
+<li>Overall pipeline    <style>.vejevrymbvuj{}</style></li>
+<li>Solely updating quantization scales while freezing the integer quantization values of pre-trained weights  <style>.ssqtbujrdmpd{}</style></li>
 </ol>
 </li>
 <li>Result:<ol>
-<li>Memory footprint, inference latency performance  <style>.qndxvtyrpbtj{}</style>  
-  <style>.qkdvhpnbtduj{}</style></li>
-<li>Common-sense reasoning and in-context learning performance    <style>.erfzgvyrtxsm{}</style></li>
-<li>Massive Multitask Language Understanding (MMLU) benchmark performance    <style>.fbfqjyzlxxho{}</style></li>
+<li>Memory footprint, inference latency performance  <style>.cmusyylbgqkb{}</style>  
+  <style>.erdgevnmxcmv{}</style></li>
+<li>Common-sense reasoning and in-context learning performance    <style>.bdxkrscsljik{}</style></li>
+<li>Massive Multitask Language Understanding (MMLU) benchmark performance    <style>.jwtenhesorbu{}</style></li>
 </ol>
 </li>
 <li>Limitation:<ol>
@@ -738,8 +742,8 @@
 </ol>
 </li>
 <li>Method:<ol>
-<li>Overall pipeline    <style>.wjddfhgfnoyq{}</style></li>
-<li>QLoRA    <style>.tawlofurwvyn{}</style>
+<li>Overall pipeline    <style>.kmocbwpuwoyx{}</style></li>
+<li>QLoRA    <style>.wupjhvfcsicg{}</style>
 <ul>
 <li>4-bit NormalFloat Quantization <code>-&gt;</code> better quantization data type for normally distributed data compared with 4-bit Integers and 4-bit Floats (See the paper for details)</li>
 <li>Double Quantization <code>-&gt;</code> combined with NF4 to reduce the memory footprint of quantization constants i.e. weights (See the paper for details)</li>
@@ -749,8 +753,8 @@
 </ol>
 </li>
 <li>Result:<ol>
-<li>MMLU test accuracy    <style>.xmxufmowgang{}</style></li>
-<li>Memory footprint <code>-&gt;</code> enables the finetuning of 33B parameter models on a single consumer GPU and 65B parameter models on a single professional GPU, even 7B parameter models on mobile phones(e.g. iPhone 12 Plus)  <style>.mfnibexickqq{}</style></li>
+<li>MMLU test accuracy    <style>.gdjbjhgzmhjd{}</style></li>
+<li>Memory footprint <code>-&gt;</code> enables the finetuning of 33B parameter models on a single consumer GPU and 65B parameter models on a single professional GPU, even 7B parameter models on mobile phones(e.g. iPhone 12 Plus)  <style>.rzwyozoxkkgs{}</style></li>
 </ol>
 </li>
 <li>Limitation:<ol>
@@ -1228,7 +1232,7 @@
 <li>本地host <code>ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com</code><ol>
 <li>-t rsa: 指定密钥类型为 RSA。</li>
 <li>-b 4096: 指定密钥的位数，4096 位是一种常见的安全选择。</li>
-<li>-C “<a href="mailto:&#x79;&#111;&#x75;&#114;&#95;&#x65;&#x6d;&#97;&#105;&#x6c;&#64;&#101;&#x78;&#x61;&#109;&#112;&#108;&#101;&#x2e;&#x63;&#x6f;&#109;">&#x79;&#111;&#x75;&#114;&#95;&#x65;&#x6d;&#97;&#105;&#x6c;&#64;&#101;&#x78;&#x61;&#109;&#112;&#108;&#101;&#x2e;&#x63;&#x6f;&#109;</a>“: 在生成的密钥中添加注释，通常使用你的电子邮件地址。</li>
+<li>-C “<a href="mailto:&#121;&#111;&#117;&#114;&#x5f;&#101;&#109;&#x61;&#x69;&#x6c;&#64;&#x65;&#x78;&#x61;&#x6d;&#112;&#x6c;&#101;&#46;&#x63;&#x6f;&#109;">&#121;&#111;&#117;&#114;&#x5f;&#101;&#109;&#x61;&#x69;&#x6c;&#64;&#x65;&#x78;&#x61;&#x6d;&#112;&#x6c;&#101;&#46;&#x63;&#x6f;&#109;</a>“: 在生成的密钥中添加注释，通常使用你的电子邮件地址。</li>
 </ol>
 </li>
 <li>将生成的ssh public key (id_rsa.pub) 复制到远程target 的 <code>~/.ssh/authorized_keys</code> (如果没有则自建此文件)中即可</li>
